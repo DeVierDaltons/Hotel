@@ -7,7 +7,7 @@ using System.Windows.Input;
 
 namespace Hotel.Command
 {
-    class AddGuestCommand : ICommand
+    class OpenAddGuestWindowCommand : ICommand
     {
         public event EventHandler CanExecuteChanged;
 
