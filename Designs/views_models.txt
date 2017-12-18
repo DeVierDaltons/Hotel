@@ -1,0 +1,27 @@
+Views:
+MainWindow
+Booking: 	SelectDatePeriodView
+			ShowAvailableRooms
+			SearchGuestView
+			AddGuestView
+			BookingOverviewView
+			
+GuestDetailsView = AddGuestView (uneditable)
+
+SearchRoomView
+	EditRoomView
+	AddRoomView
+	
+SearchGuestView
+	SearchBookingView
+		EditBookingView
+		
+SearchGuestView
+	EditGuestView
+	
+
+Models:
+Room
+Booking
+Guest
+DatePeriod

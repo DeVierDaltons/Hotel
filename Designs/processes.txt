@@ -1,0 +1,12 @@
+UserChange Process:
+Select User -> Modify
+
+Checkin/out/cancelbooking Process:
+Select Name -> Select Booking -> Modify
+
+Booking Process:
+Select DatePeriod -> Show Available Rooms -> Select Room -> Search Guests -> (user exists) Select User
+                                                                          -> Add User
+																		  
+RoomChange Process
+Select Room -> Modify
