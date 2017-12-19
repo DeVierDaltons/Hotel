@@ -17,9 +17,9 @@
         </Grid.RowDefinitions>
         <StackPanel Grid.Row="1">
             <Button Content="Add Guest" Click="Button_Click"/>
-            <Button Content="Edit Selected Guest" Click="Button_Click_1"/>
+            <Button Content="Edit Selected Guest"/>
         </StackPanel>
-        <ListBox ItemsSource="{Binding guests}" Name="GuestsList">
+        <ListBox ItemsSource="{Binding Guests}" Name="GuestsList">
             <ListBox.ItemTemplate>
                 <DataTemplate>
                     <ListBoxItem>
