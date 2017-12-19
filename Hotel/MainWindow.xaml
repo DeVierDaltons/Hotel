@@ -7,6 +7,11 @@
         mc:Ignorable="d"
         Title="MainWindow" Height="350" Width="525">
     <Grid>
-        <Button Name="AddGuestView" Click="AddGuestView_Click" Content="Add Guest"/>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="*"></RowDefinition>
+            <RowDefinition Height="*"></RowDefinition>
+        </Grid.RowDefinitions>
+        <Button Name="AddGuestView" Click="AddGuestView_Click" Content="Add Guest" Grid.Row="0"/>
+        <Button Name="ShowGuests" Content="ShowGuests" Grid.Row="1" Click="ShowGuests_Click"/>
     </Grid>
 </Window>

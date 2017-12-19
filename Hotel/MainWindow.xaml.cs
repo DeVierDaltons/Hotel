@@ -31,5 +31,11 @@ namespace Hotel
             AddGuestView view = new AddGuestView();
             view.Show();
         }
+
+        private void ShowGuests_Click(object sender, RoutedEventArgs e)
+        {
+            GuestsView view = new GuestsView();
+            view.Show();
+        }
     }
 }
