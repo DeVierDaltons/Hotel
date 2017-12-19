@@ -11,6 +11,6 @@
         <local:MainWindowViewModel/>
     </Window.DataContext>
     <Grid>
-        <Button Name="AddGuestView" Command="{Binding ShowAddGuestWindowCommand}" CommandParameter="{Binding Guest}" Content="Add Guest"/>
+        <Button Name="AddGuestView" Command="{Binding ShowAddGuestWindowCommand}" Content="Add Guest"/>
     </Grid>
 </Window>

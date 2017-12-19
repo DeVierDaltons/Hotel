@@ -4,7 +4,9 @@ using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Linq;
+using System.Runtime.CompilerServices;
 using System.Text;
+using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 using System.Windows.Input;
 
@@ -21,45 +23,66 @@ namespace Hotel.ViewModel
         public string FirstName
         {
             get { return guest.FirstName; }
-            set { guest.FirstName = value; OnPropertyChanged(nameof(FirstName)); }
+            set { guest.FirstName = value; OnPropertyChanged(); }
         }
 
         public string LastName
         {
             get { return guest.LastName; }
-            set { guest.LastName = value; OnPropertyChanged(nameof(LastName)); }
+            set { guest.LastName = value; OnPropertyChanged(); }
         }
 
         public string PhoneNumber
         {
             get { return guest.PhoneNumber; }
-            set { guest.PhoneNumber = value; OnPropertyChanged(nameof(PhoneNumber)); }
+            set { guest.PhoneNumber = value; OnPropertyChanged(); }
         }
 
         public string EmailAdress
         {
             get { return guest.EmailAdress; }
-            set { guest.EmailAdress = value; OnPropertyChanged(nameof(EmailAdress)); }
+            set { guest.EmailAdress = value; OnPropertyChanged(); }
         }
         public string ICEPhoneNumber
         {
             get { return guest.ICEPhoneNumber; }
-            set { guest.ICEPhoneNumber = value; OnPropertyChanged(nameof(ICEPhoneNumber)); }
+            set { guest.ICEPhoneNumber = value; OnPropertyChanged(); }
         }
 
         #endregion Properties
+
         public AddGuestViewModel()
         {
             AddGuestCommand = new AddGuestCommand(this);
         }
+        /// <summary>
+        /// Checks if the userinput is correct
+        /// </summary>
+        /// <returns></returns>
         internal bool ValidateInput()
         {
+            Regex regex = new Regex("[A-z]*");
+            if(guest==null || FirstName == null)
+            {
+                return false;
+            }
+
+            if (FirstName == String.Empty || LastName == String.Empty || PhoneNumber == String.Empty || EmailAdress == String.Empty || ICEPhoneNumber == String.Empty)
+            {
+                return false;
+            }
+
+            if (regex.IsMatch(PhoneNumber) || regex.IsMatch(ICEPhoneNumber))
+            {
+                return false;
+            }
             return true ;
         }
 
-        public void OnPropertyChanged(string name)
+        public void OnPropertyChanged([CallerMemberName] string name = "")
         {
             PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(name));
+            AddGuestCommand.CanExecute(null);
         }
 
     }
