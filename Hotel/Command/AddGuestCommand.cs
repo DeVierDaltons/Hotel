@@ -35,7 +35,7 @@ namespace Hotel.Command
         /// <param name="parameter"></param>
         public void Execute(object parameter)
         {
-            viewModel.HotelGuestsList.Add(viewModel.guest);
+            viewModel.AddGuest();
         }
     }
 }
