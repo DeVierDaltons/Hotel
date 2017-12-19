@@ -11,9 +11,9 @@ namespace Hotel.ViewModel
 
         private HotelManager hotelManager;
 
-        public OpenAddRoomWindowCommand(HotelManager hotelManager)
+        public OpenAddRoomWindowCommand(HotelManager hm)
         {
-            this.hotelManager = hotelManager;
+            hotelManager = hm;
         }
 
         public bool CanExecute(object parameter)

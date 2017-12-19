@@ -10,9 +10,9 @@ namespace Hotel.Command
     {
         private HotelManager hotelManager;
 
-        public OpenAddGuestWindowCommand(HotelManager vm)
+        public OpenAddGuestWindowCommand(HotelManager hm)
         {
-            hotelManager = vm;
+            hotelManager = hm;
         }
 
         public event EventHandler CanExecuteChanged;
