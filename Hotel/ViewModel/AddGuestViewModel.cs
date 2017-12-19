@@ -18,7 +18,7 @@ namespace Hotel.ViewModel
 
         #region Properties
         public HotelManager HotelManager { get; set; }
-        private ICommand AddGuestCommand { get; set; }
+        public AddGuestCommand AddGuestCommand { get; set; }
         public Guest guest { get; set; } = new Guest();
 
         public string FirstName
@@ -53,7 +53,7 @@ namespace Hotel.ViewModel
 
         public AddGuestViewModel()
         {
-            AddGuestCommand = new AddGuestCommand(this);
+           AddGuestCommand  = new AddGuestCommand(this);
         }
 
         /// <summary>
@@ -62,11 +62,11 @@ namespace Hotel.ViewModel
         /// <returns></returns>
         public bool ValidateInput()
         {
-            if (String.IsNullOrEmpty(FirstName) || String.IsNullOrEmpty(LastName) || String.IsNullOrEmpty(PhoneNumber) || String.IsNullOrEmpty(EmailAdress) || String.IsNullOrEmpty(ICEPhoneNumber))
+            if (String.IsNullOrEmpty(FirstName) || String.IsNullOrEmpty(LastName) || String.IsNullOrEmpty(PhoneNumber))
             {
                 return false;
             }
-            return true ;
+            return true;
         }
         public void AddGuest()
         {
@@ -75,7 +75,7 @@ namespace Hotel.ViewModel
         public void OnPropertyChanged([CallerMemberName] string name = "")
         {
             PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(name));
-            AddGuestCommand.CanExecute(null);
+            CommandManager.InvalidateRequerySuggested();
         }
     }
 }
