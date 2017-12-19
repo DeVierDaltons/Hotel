@@ -5,7 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:Hotel.ViewModel"
         mc:Ignorable="d"
-        Title="AddBookingView" Height="187.2" Width="300"
+        Title="AddBookingView" Height="180" Width="300"
         >
     <Window.DataContext>
         <local:AddBookingViewModel/>
@@ -22,5 +22,17 @@
             <ColumnDefinition Width="*" />
             <ColumnDefinition Width="*" />
         </Grid.ColumnDefinitions>
+
+        <Label Grid.Row="0" Grid.Column="0" Content="Guest:"/>
+        <ComboBox Grid.Row="0" Grid.Column="1" Name="GuestDropdown" SelectedItem="{Binding Guest}"/>
+
+        <Label Grid.Row="1" Grid.Column="0" Content="Room:"/>
+        <ComboBox Grid.Row="1" Grid.Column="1" Name="RoomDropdown" SelectedItem="{Binding Room}"/>
+
+        <Label Grid.Row="2" Grid.Column="0" Content="Begin date:"/>
+
+        <Label Grid.Row="3" Grid.Column="0" Content="End date:"/>
+
+        <Button Grid.Row ="5" Grid.Column="0" Grid.ColumnSpan="2" Command="{Binding AddBookingCommand}" Content="Save"></Button>
     </Grid>
 </Window>
