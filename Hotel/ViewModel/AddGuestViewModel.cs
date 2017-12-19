@@ -17,7 +17,7 @@ namespace Hotel.ViewModel
         public event PropertyChangedEventHandler PropertyChanged;
 
         #region Properties
-        public HotelManager HotelManager { get; internal set; }
+        public HotelManager HotelManager { get; set; }
         private ICommand AddGuestCommand { get; set; }
         public Guest guest { get; set; } = new Guest();
 

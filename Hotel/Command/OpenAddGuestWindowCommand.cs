@@ -2,10 +2,6 @@
 using Hotel.View;
 using Hotel.ViewModel;
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Input;
 
 namespace Hotel.Command
@@ -13,10 +9,12 @@ namespace Hotel.Command
     class OpenAddGuestWindowCommand : ICommand
     {
         public event EventHandler CanExecuteChanged;
-        MainWindowViewModel viewModel;
-        public OpenAddGuestWindowCommand(MainWindowViewModel vm)
+
+        private HotelManager _hotelManager;
+
+        public OpenAddGuestWindowCommand(HotelManager vm)
         {
-            viewModel = vm;
+            _hotelManager = vm;
         }
 
         public bool CanExecute(object parameter)
@@ -27,8 +25,8 @@ namespace Hotel.Command
         public void Execute(object parameter)
         {
             AddGuestView view = new AddGuestView();
+            ((AddGuestViewModel)view.DataContext).HotelManager = _hotelManager;
             view.Show();
-            ((AddGuestViewModel)view.DataContext).HotelManager = parameter as HotelManager;
         }
     }
 }

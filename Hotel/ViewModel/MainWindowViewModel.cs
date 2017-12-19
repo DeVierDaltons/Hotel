@@ -9,14 +9,14 @@ using System.Windows.Input;
 
 namespace Hotel.ViewModel
 {
-    class MainWindowViewModel
+    public class MainWindowViewModel
     {
-        public HotelManager HotelManager { get; set; } 
+        private HotelManager HotelManager = new HotelManager();
         public ICommand ShowAddGuestWindowCommand { get; }
+
         public MainWindowViewModel()
         {
-            HotelManager = new HotelManager(); 
-            ShowAddGuestWindowCommand = new Command.OpenAddGuestWindowCommand(this);
+            ShowAddGuestWindowCommand = new OpenAddGuestWindowCommand(HotelManager);
         }
     }
 }
