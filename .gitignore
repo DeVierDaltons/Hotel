@@ -259,3 +259,5 @@ paket-files/
 # Python Tools for Visual Studio (PTVS)
 __pycache__/
 *.pyc
+/Hotel/View/ModifyGuest.xaml
+/Hotel/View/ModifyGuest.xaml.cs
