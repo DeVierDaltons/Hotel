@@ -54,6 +54,7 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Compile Include="Command\AddGuestCommand.cs" />
     <Compile Include="ViewModel\AddGuestViewModel.cs" />
     <Compile Include="ViewModel\AddRoomViewModel.cs" />
     <Compile Include="View\AddGuestView.cs" />
