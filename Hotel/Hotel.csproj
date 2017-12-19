@@ -60,7 +60,6 @@
     <Compile Include="Model\Booking.cs" />
     <Compile Include="Model\HotelManager.cs" />
     <Compile Include="Model\Room.cs" />
-    <Compile Include="Model\Guests.cs" />
     <Compile Include="ViewModel\AddGuestViewModel.cs" />
     <Compile Include="ViewModel\MainWindowViewModel.cs" />
     <Compile Include="ViewModel\GuestsViewModel.cs" />

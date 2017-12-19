@@ -17,19 +17,19 @@
         </Grid.RowDefinitions>
         <StackPanel Grid.Row="1">
             <Button Content="Add Guest" Click="Button_Click"/>
-            <Button Content="Edit Selected Guest"/>
+            <Button Content="Edit Selected Guest" Click="Button_Click_1"/>
         </StackPanel>
-        <ListBox ItemsSource="{Binding guests}">
+        <ListBox ItemsSource="{Binding guests}" Name="GuestsList">
             <ListBox.ItemTemplate>
                 <DataTemplate>
                     <ListBoxItem>
-                        <StackPanel>
-                            <TextBox Text="{Binding FirstName}"/>
-                            <TextBox Text="{Binding LastName}"/>
-                            <TextBox Text="{Binding EmailAdress}"/>
-                            <TextBox Text="{Binding PhoneNumber}"/>
-                            <TextBox Text="{Binding ICEPhoneNumber}"/>
-                        </StackPanel>
+                        <DockPanel HorizontalAlignment="Left" VerticalAlignment="Top">
+                            <TextBox Text="{Binding FirstName}" Background="#FF2C2CCA"/>
+                            <TextBox Text="{Binding LastName}" Background="#FFA3694D"/>
+                            <TextBox Text="{Binding EmailAdress}" Background="#FFA5B625"/>
+                            <TextBox Text="{Binding PhoneNumber}" Background="#FFEAE1C0"/>
+                            <TextBox Text="{Binding ICEPhoneNumber}" Background="#FF375130"/>
+                        </DockPanel>
                     </ListBoxItem>
                 </DataTemplate>
             </ListBox.ItemTemplate>
