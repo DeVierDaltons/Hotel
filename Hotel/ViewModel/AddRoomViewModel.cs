@@ -41,6 +41,8 @@ namespace Hotel.ViewModel
             set { room.PricePerDay = value; OnNotifyPropertyChanged(); }
         }
 
+        public HotelManager HotelManager { get; set; }
+
         private void OnNotifyPropertyChanged([CallerMemberName] string propertyName = "")
         {
             PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName)); 

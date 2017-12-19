@@ -10,11 +10,11 @@ namespace Hotel.Command
     {
         public event EventHandler CanExecuteChanged;
 
-        private HotelManager _hotelManager;
+        private HotelManager hotelManager;
 
         public OpenAddGuestWindowCommand(HotelManager vm)
         {
-            _hotelManager = vm;
+            hotelManager = vm;
         }
 
         public bool CanExecute(object parameter)
@@ -25,7 +25,7 @@ namespace Hotel.Command
         public void Execute(object parameter)
         {
             AddGuestView view = new AddGuestView();
-            ((AddGuestViewModel)view.DataContext).HotelManager = _hotelManager;
+            ((AddGuestViewModel)view.DataContext).HotelManager = hotelManager;
             view.Show();
         }
     }
