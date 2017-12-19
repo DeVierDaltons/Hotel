@@ -58,9 +58,8 @@ namespace Hotel.ViewModel
         /// Checks if the userinput is correct
         /// </summary>
         /// <returns></returns>
-        internal bool ValidateInput()
+        public bool ValidateInput()
         {
-            Regex regex = new Regex("[a-zA-Z]*");
             if(guest==null)
             {
                 return false;
@@ -71,6 +70,7 @@ namespace Hotel.ViewModel
                 return false;
             }
 
+            Regex regex = new Regex("[a-zA-Z]+");
             if (regex.IsMatch(PhoneNumber) || regex.IsMatch(ICEPhoneNumber))
             {
                 return false;
@@ -86,6 +86,5 @@ namespace Hotel.ViewModel
             PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(name));
             AddGuestCommand.CanExecute(null);
         }
-
     }
 }
