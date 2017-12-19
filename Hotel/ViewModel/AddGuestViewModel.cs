@@ -55,6 +55,7 @@ namespace Hotel.ViewModel
         {
             AddGuestCommand = new AddGuestCommand(this);
         }
+
         /// <summary>
         /// Checks if the userinput is correct
         /// </summary>
@@ -62,12 +63,6 @@ namespace Hotel.ViewModel
         public bool ValidateInput()
         {
             if (String.IsNullOrEmpty(FirstName) || String.IsNullOrEmpty(LastName) || String.IsNullOrEmpty(PhoneNumber) || String.IsNullOrEmpty(EmailAdress) || String.IsNullOrEmpty(ICEPhoneNumber))
-            {
-                return false;
-            }
-
-            Regex regex = new Regex("[a-zA-Z]+");
-            if (regex.IsMatch(PhoneNumber) || regex.IsMatch(ICEPhoneNumber))
             {
                 return false;
             }
