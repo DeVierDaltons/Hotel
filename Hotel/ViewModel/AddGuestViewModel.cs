@@ -61,13 +61,13 @@ namespace Hotel.ViewModel
         /// <returns></returns>
         internal bool ValidateInput()
         {
-            Regex regex = new Regex("[A-z]*");
-            if(guest==null || FirstName == null)
+            Regex regex = new Regex("[a-zA-Z]*");
+            if(guest==null)
             {
                 return false;
             }
 
-            if (FirstName == String.Empty || LastName == String.Empty || PhoneNumber == String.Empty || EmailAdress == String.Empty || ICEPhoneNumber == String.Empty)
+            if (String.IsNullOrEmpty(FirstName) || String.IsNullOrEmpty(LastName) || String.IsNullOrEmpty(PhoneNumber) || String.IsNullOrEmpty(EmailAdress) || String.IsNullOrEmpty(ICEPhoneNumber))
             {
                 return false;
             }
