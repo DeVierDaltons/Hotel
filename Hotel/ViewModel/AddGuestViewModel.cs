@@ -44,6 +44,7 @@ namespace Hotel.ViewModel
         #endregion Properties
         public AddGuestViewModel()
         {
+            guest.FirstName = "Henk";
         }
 
     }
