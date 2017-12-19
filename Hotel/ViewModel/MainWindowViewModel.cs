@@ -9,7 +9,7 @@ using System.Windows.Input;
 
 namespace Hotel.ViewModel
 {
-    class MainWindowViewModel
+    public class MainWindowViewModel
     {
         public HotelManager HotelManager { get; set; }
         public ICommand ShowAddGuestWindowCommand { get; }
@@ -17,8 +17,8 @@ namespace Hotel.ViewModel
         public MainWindowViewModel()
         {
             HotelManager = new HotelManager();
-            ShowAddGuestWindowCommand = new Command.OpenAddGuestWindowCommand(this);
-            ShowGuestsWindow = new Command.ShowGuestsWindow(this);
+            ShowAddGuestWindowCommand = new Command.OpenAddGuestWindowCommand(HotelManager);
+            ShowGuestsWindow = new Command.ShowGuestsWindow(HotelManager);
         }
     }
 }

@@ -17,9 +17,10 @@ namespace Hotel.ViewModel
         public event PropertyChangedEventHandler PropertyChanged;
 
         #region Properties
-        public HotelManager HotelManager { get; internal set; }
-        public ICommand AddGuestCommand { get; set; }
+        public HotelManager HotelManager { get; set; }
+        private ICommand AddGuestCommand { get; set; }
         public Guest guest { get; set; } = new Guest();
+
         public string FirstName
         {
             get { return guest.FirstName; }
@@ -54,24 +55,14 @@ namespace Hotel.ViewModel
         {
             AddGuestCommand = new AddGuestCommand(this);
         }
+
         /// <summary>
         /// Checks if the userinput is correct
         /// </summary>
         /// <returns></returns>
         public bool ValidateInput()
         {
-            if(guest==null)
-            {
-                return false;
-            }
-
             if (String.IsNullOrEmpty(FirstName) || String.IsNullOrEmpty(LastName) || String.IsNullOrEmpty(PhoneNumber) || String.IsNullOrEmpty(EmailAdress) || String.IsNullOrEmpty(ICEPhoneNumber))
-            {
-                return false;
-            }
-
-            Regex regex = new Regex("[a-zA-Z]+");
-            if (regex.IsMatch(PhoneNumber) || regex.IsMatch(ICEPhoneNumber))
             {
                 return false;
             }
