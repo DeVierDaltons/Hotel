@@ -19,35 +19,35 @@ namespace Hotel.ViewModel
         #region Properties
         public HotelManager HotelManager { get; set; }
         public AddGuestCommand AddGuestCommand { get; set; }
-        public Guest guest { get; set; } = new Guest();
+        public Guest Guest { get; set; } = new Guest();
 
         public string FirstName
         {
-            get { return guest.FirstName; }
-            set { guest.FirstName = value; OnPropertyChanged(); }
+            get { return Guest.FirstName; }
+            set { Guest.FirstName = value; OnPropertyChanged(); }
         }
 
         public string LastName
         {
-            get { return guest.LastName; }
-            set { guest.LastName = value; OnPropertyChanged(); }
+            get { return Guest.LastName; }
+            set { Guest.LastName = value; OnPropertyChanged(); }
         }
 
         public string PhoneNumber
         {
-            get { return guest.PhoneNumber; }
-            set { guest.PhoneNumber = value; OnPropertyChanged(); }
+            get { return Guest.PhoneNumber; }
+            set { Guest.PhoneNumber = value; OnPropertyChanged(); }
         }
 
         public string EmailAdress
         {
-            get { return guest.EmailAdress; }
-            set { guest.EmailAdress = value; OnPropertyChanged(); }
+            get { return Guest.EmailAdress; }
+            set { Guest.EmailAdress = value; OnPropertyChanged(); }
         }
         public string ICEPhoneNumber
         {
-            get { return guest.ICEPhoneNumber; }
-            set { guest.ICEPhoneNumber = value; OnPropertyChanged(); }
+            get { return Guest.ICEPhoneNumber; }
+            set { Guest.ICEPhoneNumber = value; OnPropertyChanged(); }
         }
         #endregion Properties
 
@@ -70,7 +70,7 @@ namespace Hotel.ViewModel
         }
         public void AddGuest()
         {
-            HotelManager.Guests.Add(guest);
+            HotelManager.Guests.Add(Guest);
         }
         public void OnPropertyChanged([CallerMemberName] string name = "")
         {
