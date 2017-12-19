@@ -6,12 +6,33 @@
         xmlns:local="clr-namespace:Hotel.View"
         xmlns:viewModel="clr-namespace:Hotel.ViewModel"
         mc:Ignorable="d"
-        Title="GuestsViewModel" Height="300" Width="300">
+        Title="GuestsViewModel" Height="404.126" Width="417.576">
     <Window.DataContext>
         <viewModel:GuestsViewModel/>
     </Window.DataContext>
     <Grid>
-        <DataGrid ItemsSource="{Binding guests}"/>
-
+        <Grid.RowDefinitions>
+            <RowDefinition Height="6*"/>
+            <RowDefinition Height="1*"/>
+        </Grid.RowDefinitions>
+        <StackPanel Grid.Row="1">
+            <Button Content="Add Guest" Click="Button_Click"/>
+            <Button Content="Edit Selected Guest"/>
+        </StackPanel>
+        <ListBox ItemsSource="{Binding guests}">
+            <ListBox.ItemTemplate>
+                <DataTemplate>
+                    <ListBoxItem>
+                        <StackPanel>
+                            <TextBox Text="{Binding FirstName}"/>
+                            <TextBox Text="{Binding LastName}"/>
+                            <TextBox Text="{Binding EmailAdress}"/>
+                            <TextBox Text="{Binding PhoneNumber}"/>
+                            <TextBox Text="{Binding ICEPhoneNumber}"/>
+                        </StackPanel>
+                    </ListBoxItem>
+                </DataTemplate>
+            </ListBox.ItemTemplate>
+        </ListBox>
     </Grid>
 </Window>

@@ -24,5 +24,10 @@ namespace Hotel.View
         {
             InitializeComponent();
         }
+
+        private void Button_Click(object sender, RoutedEventArgs e)
+        {
+            ((GuestsViewModel)DataContext).guests.Add(new Model.Guest());
+        }
     }
 }
