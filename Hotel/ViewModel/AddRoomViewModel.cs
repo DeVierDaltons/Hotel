@@ -1,6 +1,7 @@
 ﻿using Hotel.Model;
 using System;
 using System.ComponentModel;
+using System.Runtime.CompilerServices;
 
 namespace Hotel.ViewModel
 {
@@ -13,34 +14,34 @@ namespace Hotel.ViewModel
         public string RoomNumber
         {
             get { return room.RoomNumber; }
-            set { room.RoomNumber = value; OnNotifyPropertyChanged(nameof(RoomNumber)); }
+            set { room.RoomNumber = value; OnNotifyPropertyChanged(); }
         }
 
         public int Beds
         {
             get { return room.Beds; }
-            set { room.Beds = value; OnNotifyPropertyChanged(nameof(Beds)); }
+            set { room.Beds = value; OnNotifyPropertyChanged(); }
         }
 
         public RoomQuality Quality
         {
             get { return room.Quality; }
-            set { room.Quality = value; OnNotifyPropertyChanged(nameof(Quality)); }
+            set { room.Quality = value; OnNotifyPropertyChanged(); }
         }
 
         public bool HasNiceView
         {
             get { return room.HasNiceView; }
-            set { room.HasNiceView = value; OnNotifyPropertyChanged(nameof(HasNiceView)); }
+            set { room.HasNiceView = value; OnNotifyPropertyChanged(); }
         }
 
         public Decimal PricePerDay
         {
             get { return room.PricePerDay; }
-            set { room.PricePerDay = value; OnNotifyPropertyChanged(nameof(PricePerDay)); }
+            set { room.PricePerDay = value; OnNotifyPropertyChanged(); }
         }
 
-        private void OnNotifyPropertyChanged(string propertyName)
+        private void OnNotifyPropertyChanged([CallerMemberName] string propertyName = "")
         {
             PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName)); 
         }
