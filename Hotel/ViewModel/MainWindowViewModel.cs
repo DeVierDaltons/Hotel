@@ -11,12 +11,14 @@ namespace Hotel.ViewModel
 {
     class MainWindowViewModel
     {
-        public HotelManager HotelManager { get; set; } 
+        public HotelManager HotelManager { get; set; }
         public ICommand ShowAddGuestWindowCommand { get; }
+        public ICommand ShowGuestsWindow { get; }
         public MainWindowViewModel()
         {
-            HotelManager = new HotelManager(); 
+            HotelManager = new HotelManager();
             ShowAddGuestWindowCommand = new Command.OpenAddGuestWindowCommand(this);
+            ShowGuestsWindow = new Command.ShowGuestsWindow(this);
         }
     }
 }
