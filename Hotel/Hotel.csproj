@@ -54,9 +54,23 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Compile Include="Model\RoomQuality.cs" />
     <Compile Include="ViewModel\AddRoomViewModel.cs" />
     <Compile Include="View\AddRoomView.xaml.cs">
       <DependentUpon>AddRoomView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Command\AddGuestCommand.cs" />
+    <Compile Include="Command\OpenAddGuestWindowCommand.cs" />
+    <Compile Include="Model\Booking.cs" />
+    <Compile Include="Model\HotelManager.cs" />
+    <Compile Include="Model\Room.cs" />
+    <Compile Include="ViewModel\AddGuestViewModel.cs" />
+    <Compile Include="ViewModel\MainWindowViewModel.cs" />
+    <Compile Include="View\AddGuestView.xaml.cs">
+      <DependentUpon>AddGuestView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="View\ModifyRoom.xaml.cs">
+      <DependentUpon>ModifyRoom.xaml</DependentUpon>
     </Compile>
     <Page Include="MainWindow.xaml">
       <Generator>MSBuild:Compile</Generator>
@@ -76,8 +90,17 @@
     </Page>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Model\Room.cs" />
-    <Compile Include="Model\RoomQuality.cs" />
+    <Page Include="View\AddGuestView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="View\ModifyRoom.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="Model\Guest.cs" />
     <Compile Include="Properties\AssemblyInfo.cs">
       <SubType>Code</SubType>
     </Compile>
@@ -103,8 +126,6 @@
   <ItemGroup>
     <None Include="App.config" />
   </ItemGroup>
-  <ItemGroup>
-    <Folder Include="Command\" />
-  </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>
