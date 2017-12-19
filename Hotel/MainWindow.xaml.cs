@@ -26,10 +26,5 @@ namespace Hotel
             InitializeComponent();
         }
 
-        private void AddGuestView_Click(object sender, RoutedEventArgs e)
-        {
-            AddGuestView view = new AddGuestView();
-            view.Show();
-        }
     }
 }

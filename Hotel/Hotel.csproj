@@ -56,6 +56,7 @@
     </ApplicationDefinition>
     <Compile Include="Command\AddGuestCommand.cs" />
     <Compile Include="ViewModel\AddGuestViewModel.cs" />
+    <Compile Include="ViewModel\MainWindowViewModel.cs" />
     <Compile Include="View\AddGuestView.xaml.cs">
       <DependentUpon>AddGuestView.xaml</DependentUpon>
     </Compile>
