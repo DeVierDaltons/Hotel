@@ -1,5 +1,4 @@
-﻿using Hotel.ViewModel;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -16,13 +15,23 @@ using System.Windows.Shapes;
 namespace Hotel.View
 {
     /// <summary>
-    /// Interaction logic for AddGuestView.xaml
+    /// Interaction logic for ModifyRoom.xaml
     /// </summary>
-    public partial class AddGuestView : Window
+    public partial class ModifyRoom : Window
     {
-        public AddGuestView()
+        public ModifyRoom()
         {
             InitializeComponent();
+        }
+
+        private void Button_Click(object sender, RoutedEventArgs e)
+        {
+
+        }
+
+        private void ListBox_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+
         }
     }
 }

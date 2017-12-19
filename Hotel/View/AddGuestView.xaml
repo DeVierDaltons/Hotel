@@ -18,6 +18,7 @@
             <RowDefinition Height="*"></RowDefinition>
             <RowDefinition Height="*"></RowDefinition>
             <RowDefinition Height="*"></RowDefinition>
+            <RowDefinition Height="*"></RowDefinition>
         </Grid.RowDefinitions>
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="*" />
@@ -25,18 +26,19 @@
         </Grid.ColumnDefinitions>
 
         <Label Grid.Row="0" Grid.Column="0" Content="Firstname:"></Label>
-        <TextBox Grid.Row="0" Grid.Column="1" Text="{Binding FirstName}"></TextBox>
+        <TextBox Grid.Row="0" Grid.Column="1" Text="{Binding FirstName, Mode=TwoWay}"></TextBox>
 
         <Label Grid.Row="1" Grid.Column="0" Content="Lastname:"></Label>
-        <TextBox Grid.Row="1" Grid.Column="1" Text="{Binding LastName}"></TextBox>
+        <TextBox Grid.Row="1" Grid.Column="1" Text="{Binding LastName,  Mode=TwoWay}"></TextBox>
 
         <Label Grid.Row="2" Grid.Column="0" Content="Phone:"></Label>
-        <TextBox Grid.Row="2" Grid.Column="1" Text="{Binding EmailAdress}"></TextBox>
+        <TextBox Grid.Row="2" Grid.Column="1" Text="{Binding PhoneNumber, Mode=TwoWay}"></TextBox>
 
         <Label Grid.Row="3" Grid.Column="0" Content="Email:"></Label>
-        <TextBox Grid.Row="3" Grid.Column="1" Text="{Binding PhoneNumber}"></TextBox>
+        <TextBox Grid.Row="3" Grid.Column="1" Text="{Binding EmailAdress, Mode=TwoWay}"></TextBox>
 
-        <Label Grid.Row="4" Grid.Column="0" Content="In case of emergency:"></Label>
-        <TextBox Grid.Row="4" Grid.Column="1" Text="{Binding ICEPhoneNumber}"></TextBox>
+        <Label Grid.Row="4" Grid.Column="0" Content="ICE Phone:"></Label>
+        <TextBox Grid.Row="4" Grid.Column="1" Text="{Binding ICEPhoneNumber, Mode=TwoWay}"></TextBox>
+        <Button Grid.Row ="5" Grid.Column="0" Grid.ColumnSpan="2" Command="{Binding AddGuestCommand, NotifyOnSourceUpdated=True, NotifyOnTargetUpdated=True}" Content="Submit" Name="AddGuestButton"></Button>
     </Grid>
 </Window>
