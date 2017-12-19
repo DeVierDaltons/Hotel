@@ -9,11 +9,15 @@ using System.Windows.Input;
 
 namespace Hotel.Command
 {
-    class AddGuestCommand : ICommand
+     class AddGuestCommand : ICommand
     {
-        public event EventHandler CanExecuteChanged;
-
+        public event EventHandler CanExecuteChanged
+        {
+            add { CommandManager.RequerySuggested += value; }
+            remove { CommandManager.RequerySuggested -= value; }
+        }
         AddGuestViewModel viewModel;
+
         public AddGuestCommand(AddGuestViewModel vm)
         {
             viewModel = vm;

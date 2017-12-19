@@ -8,14 +8,14 @@ namespace Hotel.Command
 {
     class OpenAddGuestWindowCommand : ICommand
     {
-        public event EventHandler CanExecuteChanged;
-
         private HotelManager _hotelManager;
 
         public OpenAddGuestWindowCommand(HotelManager vm)
         {
             _hotelManager = vm;
         }
+
+        public event EventHandler CanExecuteChanged;
 
         public bool CanExecute(object parameter)
         {
