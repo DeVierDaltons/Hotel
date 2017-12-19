@@ -2,9 +2,10 @@
 {
     public class Room
     {
+        public string RoomNumber;
+        public int Beds;
         public RoomQuality Quality;
-        public int Rooms;
         public bool HasNiceView;
-        public float PricePerDay;
+        public decimal PricePerDay;
     }
 }

@@ -1,4 +1,8 @@
-﻿using System.Windows;
+﻿using Hotel.Model;
+using Hotel.ViewModel;
+using System;
+using System.Linq;
+using System.Windows;
 
 namespace Hotel.View
 {
@@ -7,6 +11,13 @@ namespace Hotel.View
         public AddRoomView()
         {
             InitializeComponent();
+            DataContext = new AddRoomViewModel();
+            RoomQualityDropdown.ItemsSource = Enum.GetValues(typeof(RoomQuality)).Cast<RoomQuality>();
+        }
+
+        private void Button_Click(object sender, RoutedEventArgs e)
+        {
+            MessageBox.Show((DataContext as AddRoomViewModel).room.Quality.ToString());
         }
     }
 }
