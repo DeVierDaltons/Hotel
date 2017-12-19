@@ -39,6 +39,6 @@
 
         <Label Grid.Row="4" Grid.Column="0" Content="ICE Phone:"></Label>
         <TextBox Grid.Row="4" Grid.Column="1" Text="{Binding ICEPhoneNumber, Mode=TwoWay}"></TextBox>
-        <Button Grid.Row ="5" Grid.Column="0" Grid.ColumnSpan="2" Command="{Binding AddGuestCommand}" Content="Submit" Name="AddGuestButton"></Button>
+        <Button Grid.Row ="5" Grid.Column="0" Grid.ColumnSpan="2" Command="{Binding AddGuestCommand}" Content="Save" Name="AddGuestButton"></Button>
     </Grid>
 </Window>

@@ -18,7 +18,7 @@ namespace Hotel.ViewModel
 
         #region Properties
         public HotelManager HotelManager { get; set; }
-        public AddGuestCommand AddGuestCommand { get; set; }
+        public ICommand AddGuestCommand { get; set; }
         public Guest guest { get; set; } = new Guest();
 
         public string FirstName
@@ -53,7 +53,7 @@ namespace Hotel.ViewModel
 
         public AddGuestViewModel()
         {
-           AddGuestCommand  = new AddGuestCommand(this);
+           AddGuestCommand = new AddGuestCommand(this);
         }
 
         /// <summary>
@@ -68,10 +68,12 @@ namespace Hotel.ViewModel
             }
             return true;
         }
+
         public void AddGuest()
         {
             HotelManager.Guests.Add(guest);
         }
+
         public void OnPropertyChanged([CallerMemberName] string name = "")
         {
             PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(name));

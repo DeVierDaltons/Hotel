@@ -1,15 +1,20 @@
-﻿using Hotel.Model;
+﻿using Hotel.Command;
+using Hotel.Model;
 using System;
 using System.ComponentModel;
 using System.Runtime.CompilerServices;
+using System.Windows.Input;
 
 namespace Hotel.ViewModel
 {
     public class AddRoomViewModel : INotifyPropertyChanged
     {
-        public Room room { get; set; } = new Room();
-
         public event PropertyChangedEventHandler PropertyChanged;
+
+        #region Properties
+        public HotelManager HotelManager { get; set; }
+        public ICommand AddRoomCommand { get; set; }
+        public Room room { get; set; } = new Room();
 
         public string RoomNumber
         {
@@ -40,12 +45,21 @@ namespace Hotel.ViewModel
             get { return room.PricePerDay; }
             set { room.PricePerDay = value; OnNotifyPropertyChanged(); }
         }
+        #endregion
 
-        public HotelManager HotelManager { get; set; }
-
-        public void SaveRoom()
+        public AddRoomViewModel()
         {
-            HotelManager.AddRoom(room);
+           AddRoomCommand = new AddRoomCommand(this);
+        }
+
+        public bool ValidateInput()
+        {
+            return !string.IsNullOrEmpty(room.RoomNumber);
+        }
+
+        public void AddRoom()
+        {
+            HotelManager.Rooms.Add(room);
         }
 
         private void OnNotifyPropertyChanged([CallerMemberName] string propertyName = "")

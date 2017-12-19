@@ -11,13 +11,12 @@ namespace Hotel.View
         public AddRoomView()
         {
             InitializeComponent();
-            DataContext = new AddRoomViewModel();
             RoomQualityDropdown.ItemsSource = Enum.GetValues(typeof(RoomQuality)).Cast<RoomQuality>();
         }
 
         private void SaveRoom(object sender, RoutedEventArgs e)
         {
-            (DataContext as AddRoomViewModel).SaveRoom();
+            (DataContext as AddRoomViewModel).AddRoom();
         }
     }
 }
