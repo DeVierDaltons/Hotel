@@ -54,8 +54,10 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Compile Include="Command\AddGuestCommand.cs" />
     <Compile Include="Command\OpenAddGuestWindowCommand.cs" />
     <Compile Include="ViewModel\AddGuestViewModel.cs" />
+    <Compile Include="ViewModel\MainWindowViewModel.cs" />
     <Compile Include="View\AddGuestView.xaml.cs">
       <DependentUpon>AddGuestView.xaml</DependentUpon>
     </Compile>
@@ -110,6 +112,5 @@
   <ItemGroup>
     <None Include="App.config" />
   </ItemGroup>
-  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>
