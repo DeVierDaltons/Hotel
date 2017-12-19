@@ -19,7 +19,7 @@ namespace Hotel.ViewModel
         #region Properties
         private ICommand AddGuestCommand { get; set; }
         public List<Guest> HotelGuestsList { get; set; } = new List<Guest>();
-        public Guest guest { get; set; } = new Guest();
+        public Guest guest { get; private set; } = new Guest();
         public string FirstName
         {
             get { return guest.FirstName; }
@@ -61,11 +61,6 @@ namespace Hotel.ViewModel
         /// <returns></returns>
         public bool ValidateInput()
         {
-            if(guest==null)
-            {
-                return false;
-            }
-
             if (String.IsNullOrEmpty(FirstName) || String.IsNullOrEmpty(LastName) || String.IsNullOrEmpty(PhoneNumber) || String.IsNullOrEmpty(EmailAdress) || String.IsNullOrEmpty(ICEPhoneNumber))
             {
                 return false;
