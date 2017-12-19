@@ -54,6 +54,19 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Compile Include="Command\AddGuestCommand.cs" />
+    <Compile Include="Command\OpenAddGuestWindowCommand.cs" />
+    <Compile Include="Model\Booking.cs" />
+    <Compile Include="Model\HotelManager.cs" />
+    <Compile Include="Model\Room.cs" />
+    <Compile Include="ViewModel\AddGuestViewModel.cs" />
+    <Compile Include="ViewModel\MainWindowViewModel.cs" />
+    <Compile Include="View\AddGuestView.xaml.cs">
+      <DependentUpon>AddGuestView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="View\ModifyRoom.xaml.cs">
+      <DependentUpon>ModifyRoom.xaml</DependentUpon>
+    </Compile>
     <Page Include="MainWindow.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
@@ -66,8 +79,17 @@
       <DependentUpon>MainWindow.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
+    <Page Include="View\AddGuestView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="View\ModifyRoom.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Model\Guest.cs" />
     <Compile Include="Properties\AssemblyInfo.cs">
       <SubType>Code</SubType>
     </Compile>
