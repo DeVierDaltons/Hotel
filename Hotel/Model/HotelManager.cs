@@ -12,5 +12,10 @@ namespace Hotel.Model
         public ObservableCollection<Guest> Guests { get;} = new ObservableCollection<Guest>();
         public ObservableCollection<Room> Rooms { get;} = new ObservableCollection<Room>();
         public ObservableCollection<Booking> Bookings { get; } = new ObservableCollection<Booking>();
+
+        public void AddRoom(Room room)
+        {
+            Rooms.Add(room);
+        }
     }
 }

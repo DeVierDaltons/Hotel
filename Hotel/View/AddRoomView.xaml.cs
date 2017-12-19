@@ -17,7 +17,7 @@ namespace Hotel.View
 
         private void SaveRoom(object sender, RoutedEventArgs e)
         {
-            MessageBox.Show((DataContext as AddRoomViewModel).room.Quality.ToString());
+            (DataContext as AddRoomViewModel).SaveRoom();
         }
     }
 }

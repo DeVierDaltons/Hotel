@@ -43,6 +43,11 @@ namespace Hotel.ViewModel
 
         public HotelManager HotelManager { get; set; }
 
+        public void SaveRoom()
+        {
+            HotelManager.AddRoom(room);
+        }
+
         private void OnNotifyPropertyChanged([CallerMemberName] string propertyName = "")
         {
             PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName)); 
