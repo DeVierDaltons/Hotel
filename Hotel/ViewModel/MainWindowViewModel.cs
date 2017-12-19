@@ -1,4 +1,5 @@
 ﻿using Hotel.Command;
+using Hotel.Model;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -10,10 +11,12 @@ namespace Hotel.ViewModel
 {
     class MainWindowViewModel
     {
+        public HotelManager HotelManager { get; set; } 
         public ICommand ShowAddGuestWindowCommand { get; }
         public MainWindowViewModel()
         {
-            ShowAddGuestWindowCommand = new Command.OpenAddGuestWindowCommand();
+            HotelManager = new HotelManager(); 
+            ShowAddGuestWindowCommand = new Command.OpenAddGuestWindowCommand(this);
         }
     }
 }

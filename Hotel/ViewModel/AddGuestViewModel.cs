@@ -17,9 +17,10 @@ namespace Hotel.ViewModel
         public event PropertyChangedEventHandler PropertyChanged;
 
         #region Properties
+        public HotelManager HotelManager { get; internal set; }
         private ICommand AddGuestCommand { get; set; }
-        public List<Guest> HotelGuestsList { get; set; } = new List<Guest>();
-        public Guest guest { get; private set; } = new Guest();
+        public Guest guest { get; set; } = new Guest();
+
         public string FirstName
         {
             get { return guest.FirstName; }
@@ -48,7 +49,6 @@ namespace Hotel.ViewModel
             get { return guest.ICEPhoneNumber; }
             set { guest.ICEPhoneNumber = value; OnPropertyChanged(); }
         }
-
         #endregion Properties
 
         public AddGuestViewModel()
@@ -68,7 +68,10 @@ namespace Hotel.ViewModel
             }
             return true ;
         }
-
+        public void AddGuest()
+        {
+            HotelManager.Guests.Add(guest);
+        }
         public void OnPropertyChanged([CallerMemberName] string name = "")
         {
             PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(name));
