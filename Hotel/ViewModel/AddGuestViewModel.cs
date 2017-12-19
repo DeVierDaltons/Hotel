@@ -12,7 +12,7 @@ using System.Windows.Input;
 
 namespace Hotel.ViewModel
 {
-    class AddGuestViewModel : INotifyPropertyChanged
+    public class AddGuestViewModel : INotifyPropertyChanged
     {
         public event PropertyChangedEventHandler PropertyChanged;
 

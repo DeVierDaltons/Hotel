@@ -54,6 +54,7 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Compile Include="Command\AddBookingCommand.cs" />
     <Compile Include="Command\AddRoomCommand.cs" />
     <Compile Include="ViewModel\AddBookingViewModel.cs" />
     <Compile Include="Model\RoomQuality.cs" />
