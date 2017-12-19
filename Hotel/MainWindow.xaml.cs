@@ -24,8 +24,6 @@ namespace Hotel
         public MainWindow()
         {
             InitializeComponent();
-            AddRoomView addRoomView = new AddRoomView();
-            addRoomView.Show();
         }
     }
 }
