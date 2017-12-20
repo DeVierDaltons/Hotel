@@ -16,7 +16,7 @@
             <RowDefinition Height="1*"/>
         </Grid.RowDefinitions>
         <StackPanel Grid.Row="1">
-            <Button Content="Add Guest" Click="Button_Click"/>
+            <Button Content="Add Guest" Command="{Binding ShowAddGuestWindowCommand}"/>
             <Button Content="Edit Selected Guest"/>
         </StackPanel>
         <ListBox ItemsSource="{Binding Guests, Mode=TwoWay}" Name="GuestsList">

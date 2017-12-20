@@ -9,6 +9,7 @@ using System.Text;
 using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 using System.Windows.Input;
+using System.Collections.ObjectModel;
 
 namespace Hotel.ViewModel
 {
@@ -17,7 +18,7 @@ namespace Hotel.ViewModel
         public event PropertyChangedEventHandler PropertyChanged;
 
         #region Properties
-        public HotelManager HotelManager { get; set; }
+        public ObservableCollection<Guest> Guests { get; internal set; }
         public AddGuestCommand AddGuestCommand { get; set; }
         public Guest guest { get; set; } = new Guest();
 
@@ -49,6 +50,7 @@ namespace Hotel.ViewModel
             get { return guest.ICEPhoneNumber; }
             set { guest.ICEPhoneNumber = value; OnPropertyChanged(); }
         }
+
         #endregion Properties
 
         public AddGuestViewModel()
@@ -70,7 +72,7 @@ namespace Hotel.ViewModel
         }
         public void AddGuest()
         {
-            HotelManager.Guests.Add(guest);
+            Guests.Add(guest);
         }
         public void OnPropertyChanged([CallerMemberName] string name = "")
         {

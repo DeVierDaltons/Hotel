@@ -12,8 +12,10 @@ using System.Windows.Input;
 
 namespace Hotel.ViewModel
 {
-    class GuestsViewModel : INotifyPropertyChanged
+    public class GuestsViewModel : INotifyPropertyChanged
     {
+        public ICommand ShowAddGuestWindowCommand { get; }
+
         private ObservableCollection<Guest> _guests;
 
         public ObservableCollection<Guest> Guests
@@ -22,7 +24,6 @@ namespace Hotel.ViewModel
             set { _guests = value; OnPropertyChanged(); }
         }
 
-
         public ICommand AddGuestToHotelManagerList { get; set; }
 
         public event PropertyChangedEventHandler PropertyChanged;
@@ -30,6 +31,7 @@ namespace Hotel.ViewModel
         public GuestsViewModel()
         {
             AddGuestToHotelManagerList = new AddGuestToHotelManagerList(this);
+            ShowAddGuestWindowCommand = new ShowAddGuestWindowCommand(Guests);
         }
 
         public void AddGuest()
@@ -37,6 +39,7 @@ namespace Hotel.ViewModel
             var guest = new Guest();
             Guests.Add(guest);
         }
+
         public void OnPropertyChanged([CallerMemberName] string name = "")
         {
             PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(name));

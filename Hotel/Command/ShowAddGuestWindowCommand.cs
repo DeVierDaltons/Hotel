@@ -2,17 +2,18 @@
 using Hotel.View;
 using Hotel.ViewModel;
 using System;
+using System.Collections.ObjectModel;
 using System.Windows.Input;
 
 namespace Hotel.Command
 {
     class ShowAddGuestWindowCommand : ICommand
     {
-        private HotelManager _hotelManager;
+        private ObservableCollection<Guest> Guests;
 
-        public ShowAddGuestWindowCommand(HotelManager vm)
+        public ShowAddGuestWindowCommand(ObservableCollection<Guest> guests)
         {
-            _hotelManager = vm;
+            Guests = guests;
         }
 
         public event EventHandler CanExecuteChanged;
@@ -25,7 +26,7 @@ namespace Hotel.Command
         public void Execute(object parameter)
         {
             AddGuestView view = new AddGuestView();
-            ((AddGuestViewModel)view.DataContext).HotelManager = _hotelManager;
+            ((AddGuestViewModel)view.DataContext).Guests = Guests;
             view.Show();
         }
     }
