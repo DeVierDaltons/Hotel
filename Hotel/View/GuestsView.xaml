@@ -7,9 +7,6 @@
         xmlns:viewModel="clr-namespace:Hotel.ViewModel"
         mc:Ignorable="d"
         Title="GuestsViewModel" Height="404.126" Width="417.576">
-    <Window.DataContext>
-        <viewModel:GuestsViewModel/>
-    </Window.DataContext>
     <Grid>
         <Grid.RowDefinitions>
             <RowDefinition Height="6*"/>

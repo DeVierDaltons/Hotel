@@ -22,7 +22,7 @@ namespace Hotel.Command
         public void Execute(object parameter)
         {
             GuestsView view = new GuestsView();
-            ((GuestsViewModel)view.DataContext).Guests = _hotelManager.Guests;
+            view.DataContext = new GuestsViewModel(_hotelManager.Guests);
             view.Show();
         }
     }

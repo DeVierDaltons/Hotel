@@ -28,8 +28,9 @@ namespace Hotel.ViewModel
 
         public event PropertyChangedEventHandler PropertyChanged;
 
-        public GuestsViewModel()
+        public GuestsViewModel(ObservableCollection<Guest> guests)
         {
+            Guests = guests;
             AddGuestToHotelManagerList = new AddGuestToHotelManagerList(this);
             ShowAddGuestWindowCommand = new ShowAddGuestWindowCommand(Guests);
         }
