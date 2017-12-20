@@ -20,9 +20,8 @@ namespace Hotel.ViewModel
 
         public event PropertyChangedEventHandler PropertyChanged;
 
-        public GuestsViewModel(HotelManager hm)
+        public GuestsViewModel()
         {
-            Guests = hm.Guests;
             AddGuestToHotelManagerList = new AddGuestToHotelManagerList(this);
         }
 

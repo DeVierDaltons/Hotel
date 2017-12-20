@@ -6,12 +6,12 @@ using Hotel.Model;
 
 namespace Hotel.Command
 {
-    internal class ShowGuestsWindow : ICommand
+    internal class ShowGuestsWindowCommand : ICommand
     {
         public event EventHandler CanExecuteChanged;
         private HotelManager _hotelManager;
         
-        public ShowGuestsWindow(HotelManager hotelmanager)
+        public ShowGuestsWindowCommand(HotelManager hotelmanager)
         {
             this._hotelManager = hotelmanager;
         }
@@ -21,7 +21,8 @@ namespace Hotel.Command
         }
         public void Execute(object parameter)
         {
-            GuestsView view = new GuestsView(_hotelManager);
+            GuestsView view = new GuestsView();
+            ((GuestsViewModel)view.DataContext).Guests = _hotelManager.Guests;
             view.Show();
         }
     }
