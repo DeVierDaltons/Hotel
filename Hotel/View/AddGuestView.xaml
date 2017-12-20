@@ -7,10 +7,6 @@
         mc:Ignorable="d"
         Title="AddGuestView" Height="300" Width="300"
         >
-    <Window.DataContext>
-        <local:AddGuestViewModel/>
-    </Window.DataContext>
-
     <Grid>
         <Grid.RowDefinitions>
             <RowDefinition Height="*"></RowDefinition>
@@ -39,6 +35,6 @@
 
         <Label Grid.Row="4" Grid.Column="0" Content="ICE Phone:"></Label>
         <TextBox Grid.Row="4" Grid.Column="1" Text="{Binding ICEPhoneNumber, Mode=TwoWay}"></TextBox>
-        <Button Grid.Row ="5" Grid.Column="0" Grid.ColumnSpan="2" Command="{Binding AddGuestCommand}" Content="Submit" Name="AddGuestButton"></Button>
+        <Button Grid.Row ="5" Grid.Column="0" Grid.ColumnSpan="2" Command="{Binding SubmitCommand}" Content="Submit" Name="AddGuestButton"></Button>
     </Grid>
 </Window>

@@ -24,21 +24,12 @@ namespace Hotel.ViewModel
             set { _guests = value; OnPropertyChanged(); }
         }
 
-        public ICommand AddGuestToHotelManagerList { get; set; }
-
         public event PropertyChangedEventHandler PropertyChanged;
 
         public GuestsViewModel(ObservableCollection<Guest> guests)
         {
             Guests = guests;
-            AddGuestToHotelManagerList = new AddGuestToHotelManagerList(this);
-            ShowAddGuestWindowCommand = new ShowAddGuestWindowCommand(Guests);
-        }
-
-        public void AddGuest()
-        {
-            var guest = new Guest();
-            Guests.Add(guest);
+            ShowAddGuestWindowCommand = new ShowAddGuestWindowCommand(new AddGuestCommand(guests));
         }
 
         public void OnPropertyChanged([CallerMemberName] string name = "")

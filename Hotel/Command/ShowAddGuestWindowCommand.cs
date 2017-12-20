@@ -9,11 +9,11 @@ namespace Hotel.Command
 {
     class ShowAddGuestWindowCommand : ICommand
     {
-        private ObservableCollection<Guest> Guests;
+        private ICommand SubmitCommand;
 
-        public ShowAddGuestWindowCommand(ObservableCollection<Guest> guests)
+        public ShowAddGuestWindowCommand(ICommand submitCommand)
         {
-            Guests = guests;
+            SubmitCommand = submitCommand;
         }
 
         public event EventHandler CanExecuteChanged;
@@ -25,8 +25,10 @@ namespace Hotel.Command
 
         public void Execute(object parameter)
         {
-            AddGuestView view = new AddGuestView();
-            ((AddGuestViewModel)view.DataContext).Guests = Guests;
+            AddGuestView view = new AddGuestView
+            {
+                DataContext = new AddGuestViewModel(SubmitCommand)
+            };
             view.Show();
         }
     }

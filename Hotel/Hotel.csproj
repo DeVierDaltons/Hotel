@@ -54,8 +54,8 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
-    <Compile Include="Command\AddGuestToHotelManagerList.cs" />
     <Compile Include="Command\AddGuestCommand.cs" />
+    <Compile Include="Command\RelayCommand.cs" />
     <Compile Include="Command\ShowAddGuestWindowCommand.cs" />
     <Compile Include="Command\ShowGuestsWindow.cs" />
     <Compile Include="Model\Booking.cs" />
