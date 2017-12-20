@@ -5,7 +5,7 @@ using Hotel.Model;
 namespace UnitTests
 {
     [TestClass]
-    public class UnitTest1
+    public class AddGuestTests
     {
         [TestMethod]
         public void AddGuestToHotelManagerTest()

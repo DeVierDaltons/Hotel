@@ -16,6 +16,7 @@ namespace Hotel.Command
             add { CommandManager.RequerySuggested += value; }
             remove { CommandManager.RequerySuggested -= value; }
         }
+
         AddGuestViewModel viewModel;
 
         public AddGuestCommand(AddGuestViewModel vm)
