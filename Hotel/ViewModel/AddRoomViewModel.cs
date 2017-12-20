@@ -14,36 +14,36 @@ namespace Hotel.ViewModel
         #region Properties
         public HotelManager HotelManager { get; set; }
         public ICommand AddRoomCommand { get; set; }
-        public Room room { get; set; } = new Room();
+        public Room Room { get; set; } = new Room();
 
         public string RoomNumber
         {
-            get { return room.RoomNumber; }
-            set { room.RoomNumber = value; OnNotifyPropertyChanged(); }
+            get { return Room.RoomNumber; }
+            set { Room.RoomNumber = value; OnNotifyPropertyChanged(); }
         }
 
         public int Beds
         {
-            get { return room.Beds; }
-            set { room.Beds = value; OnNotifyPropertyChanged(); }
+            get { return Room.Beds; }
+            set { Room.Beds = value; OnNotifyPropertyChanged(); }
         }
 
         public RoomQuality Quality
         {
-            get { return room.Quality; }
-            set { room.Quality = value; OnNotifyPropertyChanged(); }
+            get { return Room.Quality; }
+            set { Room.Quality = value; OnNotifyPropertyChanged(); }
         }
 
         public bool HasNiceView
         {
-            get { return room.HasNiceView; }
-            set { room.HasNiceView = value; OnNotifyPropertyChanged(); }
+            get { return Room.HasNiceView; }
+            set { Room.HasNiceView = value; OnNotifyPropertyChanged(); }
         }
 
         public Decimal PricePerDay
         {
-            get { return room.PricePerDay; }
-            set { room.PricePerDay = value; OnNotifyPropertyChanged(); }
+            get { return Room.PricePerDay; }
+            set { Room.PricePerDay = value; OnNotifyPropertyChanged(); }
         }
         #endregion
 
@@ -54,12 +54,12 @@ namespace Hotel.ViewModel
 
         public bool ValidateInput()
         {
-            return !string.IsNullOrEmpty(room.RoomNumber);
+            return !string.IsNullOrEmpty(Room.RoomNumber);
         }
 
         public void AddRoom()
         {
-            HotelManager.Rooms.Add(room);
+            HotelManager.Rooms.Add(Room);
         }
 
         private void OnNotifyPropertyChanged([CallerMemberName] string propertyName = "")
