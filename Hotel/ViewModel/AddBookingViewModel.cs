@@ -4,6 +4,7 @@ using System;
 using System.ComponentModel;
 using System.Runtime.CompilerServices;
 using System.Windows.Input;
+using System.Windows.Controls;
 
 namespace Hotel.ViewModel
 {
@@ -39,6 +40,8 @@ namespace Hotel.ViewModel
             get { return Booking.EndDay; }
             set { Booking.EndDay = value; }
         }
+
+        public SelectedDatesCollection SelectedDates { get; set; }
         #endregion
 
         public AddBookingViewModel()
@@ -53,6 +56,7 @@ namespace Hotel.ViewModel
 
         public void AddBooking()
         {
+            Booking.SetDates(SelectedDates);
             HotelManager.Bookings.Add(Booking);
         }
 

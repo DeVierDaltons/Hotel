@@ -1,4 +1,6 @@
 ﻿using System;
+using System.Linq;
+using System.Windows.Controls;
 
 namespace Hotel.Model
 {
@@ -8,5 +10,11 @@ namespace Hotel.Model
         public Room Room;
         public DateTime StartDay;
         public DateTime EndDay;
+
+        public void SetDates(SelectedDatesCollection selectedDates)
+        {
+            StartDay = selectedDates.FirstOrDefault();
+            EndDay = selectedDates.LastOrDefault();
+        }
     }
 }
