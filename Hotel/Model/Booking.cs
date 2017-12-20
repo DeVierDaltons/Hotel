@@ -24,7 +24,16 @@ namespace Hotel.Model
             set { _room = value; }
         }
 
-        enum status
+        private BookingPeriod _bookingPeriod;
+
+        public BookingPeriod BookingPeriod
+        {
+            get { return _bookingPeriod; }
+            set { _bookingPeriod = value; }
+        }
+
+
+        enum Status
         {
             available,
             occupied
@@ -34,45 +43,4 @@ namespace Hotel.Model
 
     }
 
-    public class BookingPeriod
-    {
-        private DateTime _startTime;
-
-        public DateTime StartTime
-        {
-            get { return _startTime; }
-            set { _startTime = value; }
-        }
-
-        private DateTime _endTime;
-
-        public DateTime EndTime
-        {
-            get { return _endTime; }
-            set { _endTime = value; }
-        }
-
-        public BookingPeriod(int startDay, int startMonth, int startYear, int endDay, int endMonth, int endYear)
-        {
-            StartTime = new DateTime(startYear, startMonth, startDay);
-            EndTime = new DateTime(endYear, endMonth, endDay);
-        }
-
-        public BookingPeriod(int startDay, int startMonth, int startYear, int days)
-        {
-            StartTime = new DateTime(startYear, startMonth, startDay);
-            EndTime =  StartTime.Add((double)days);
-        }
-
-        public bool overlaps(int startDay, int startMonth, int startYear, int endDay, int endMonth, int endYear)
-        {
-            DateTime start = new DateTime(startYear, startMonth, startDay);
-            DateTime end = new DateTime(endYear, endMonth, endDay);
-
-
-
-        }
-
-
-    }
 }

@@ -54,6 +54,8 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Compile Include="Model\BookingPeriod.cs" />
+    <Compile Include="Model\Date.cs" />
     <Compile Include="ViewModel\AddGuestViewModel.cs" />
     <Compile Include="View\AddGuestView.cs" />
     <Page Include="MainWindow.xaml">
