@@ -23,13 +23,15 @@
             <ListBox.ItemTemplate>
                 <DataTemplate>
                     <ListBoxItem>
-                        <DockPanel HorizontalAlignment="Left" VerticalAlignment="Top">
-                            <TextBox Text="{Binding FirstName}" Background="#FF2C2CCA"/>
-                            <TextBox Text="{Binding LastName}" Background="#FFA3694D"/>
-                            <TextBox Text="{Binding EmailAdress}" Background="#FFA5B625"/>
-                            <TextBox Text="{Binding PhoneNumber}" Background="#FFEAE1C0"/>
-                            <TextBox Text="{Binding ICEPhoneNumber}" Background="#FF375130"/>
-                        </DockPanel>
+                        <StackPanel HorizontalAlignment="Left" Orientation="Horizontal">
+                            <TextBlock Background="#FF2C2CCA" TextWrapping="Wrap" Text="Name:" FontWeight="Bold" Margin="2"/>
+                            <TextBlock Background="#FFA3694D" TextWrapping="Wrap" Text="{Binding FirstName}" Margin="2,2,0,2"/>
+                            <TextBlock Background="#FFA3694D" TextWrapping="Wrap" Text="{Binding LastName}" Margin="2"/>
+                            <TextBlock Background="#FFA5B625" TextWrapping="Wrap" Text="@: " FontWeight="Bold" Margin="2"/>
+                            <TextBlock Background="#FFEAE1C0" TextWrapping="Wrap" Text="{Binding EmailAdress}" Margin="2"/>
+                            <TextBlock Background="#FFEAE1C0" TextWrapping="Wrap" Text="Phone:" Margin="2" FontWeight="Bold"  />
+                            <TextBlock Background="#FF375130" TextWrapping="Wrap" Text="{Binding PhoneNumber}" Margin="2" />
+                        </StackPanel>
                     </ListBoxItem>
                 </DataTemplate>
             </ListBox.ItemTemplate>
