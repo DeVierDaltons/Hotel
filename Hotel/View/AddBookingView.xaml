@@ -30,8 +30,10 @@
         <ComboBox Grid.Row="1" Grid.Column="1" Name="RoomDropdown" SelectedItem="{Binding Room}"/>
 
         <Label Grid.Row="2" Grid.Column="0" Content="Begin date:"/>
+        <DatePicker Grid.Row="2" Grid.Column="1" SelectedDate="{Binding StartDay}"/>
 
         <Label Grid.Row="3" Grid.Column="0" Content="End date:"/>
+        <DatePicker Grid.Row="3" Grid.Column="1" SelectedDate="{Binding EndDay}"/>
 
         <Button Grid.Row ="5" Grid.Column="0" Grid.ColumnSpan="2" Command="{Binding AddBookingCommand}" Content="Save"></Button>
     </Grid>
