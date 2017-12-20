@@ -3,6 +3,7 @@ using Hotel.Model;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
+using System.IO;
 using System.Linq;
 using System.Runtime.CompilerServices;
 using System.Text;
@@ -12,7 +13,7 @@ using System.Windows.Input;
 
 namespace Hotel.ViewModel
 {
-    class AddGuestViewModel : INotifyPropertyChanged
+    public class AddGuestViewModel : INotifyPropertyChanged
     {
         public event PropertyChangedEventHandler PropertyChanged;
 
@@ -24,7 +25,7 @@ namespace Hotel.ViewModel
         public string FirstName
         {
             get { return Guest.FirstName; }
-            set { Guest.FirstName = value; OnPropertyChanged(); }
+            set { Guest.FirstName = value; OnPropertyChanged(nameof(FirstName)); }
         }
 
         public string LastName
