@@ -19,7 +19,7 @@
             <Button Content="Add Guest" Click="Button_Click"/>
             <Button Content="Edit Selected Guest"/>
         </StackPanel>
-        <ListBox ItemsSource="{Binding Guests}" Name="GuestsList">
+        <ListBox ItemsSource="{Binding Guests, Mode=TwoWay}" Name="GuestsList">
             <ListBox.ItemTemplate>
                 <DataTemplate>
                     <ListBoxItem>

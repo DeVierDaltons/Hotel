@@ -14,7 +14,14 @@ namespace Hotel.ViewModel
 {
     class GuestsViewModel : INotifyPropertyChanged
     {
-        public ObservableCollection<Guest> Guests { get; set; } 
+        private ObservableCollection<Guest> _guests;
+
+        public ObservableCollection<Guest> Guests
+        {
+            get { return _guests; }
+            set { _guests = value; OnPropertyChanged(); }
+        }
+
 
         public ICommand AddGuestToHotelManagerList { get; set; }
 

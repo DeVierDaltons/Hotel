@@ -9,7 +9,7 @@ namespace Hotel.Model
 {
     public class HotelManager
     {
-        public ObservableCollection<Guest> Guests { get;} = new ObservableCollection<Guest>();
+        public ObservableCollection<Guest> Guests { get;} = new ObservableCollection<Guest>() { new Guest(), new Guest()};
         public ObservableCollection<Room> Rooms { get;} = new ObservableCollection<Room>();
         public ObservableCollection<Booking> Bookings { get; } = new ObservableCollection<Booking>();
     }
