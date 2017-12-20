@@ -6,11 +6,11 @@ using System.Windows.Input;
 
 namespace Hotel.Command
 {
-    class OpenAddGuestWindowCommand : ICommand
+    class ShowAddGuestWindowCommand : ICommand
     {
         private HotelManager _hotelManager;
 
-        public OpenAddGuestWindowCommand(HotelManager vm)
+        public ShowAddGuestWindowCommand(HotelManager vm)
         {
             _hotelManager = vm;
         }
