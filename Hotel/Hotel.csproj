@@ -57,7 +57,7 @@
     <Compile Include="Command\AddRoomCommand.cs" />
     <Compile Include="Command\OpenAddGuestWindowCommand.cs" />
     <Compile Include="Command\OpenAddRoomWindowCommand.cs" />
-    <Compile Include="Command\OpenRoomWindowCommand.cs" />
+    <Compile Include="Command\OpenModifyRoomWindowCommand.cs" />
     <Compile Include="Model\Room.cs" />
     <Compile Include="Model\RoomQuality.cs" />
     <Compile Include="ViewModel\AddBookingViewModel.cs" />
@@ -78,8 +78,8 @@
     <Compile Include="View\AddGuestView.xaml.cs">
       <DependentUpon>AddGuestView.xaml</DependentUpon>
     </Compile>
-    <Compile Include="View\ModifyRoom.xaml.cs">
-      <DependentUpon>ModifyRoom.xaml</DependentUpon>
+    <Compile Include="View\ModifyRoomView.xaml.cs">
+      <DependentUpon>ModifyRoomView.xaml</DependentUpon>
     </Compile>
     <Page Include="MainWindow.xaml">
       <Generator>MSBuild:Compile</Generator>
@@ -107,7 +107,7 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="View\ModifyRoom.xaml">
+    <Page Include="View\ModifyRoomView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

@@ -10,11 +10,11 @@ using Hotel.ViewModel;
 
 namespace Hotel.Command
 {
-    public class OpenRoomWindowCommand : ICommand
+    public class OpenModifyRoomWindowCommand : ICommand
     {
         private HotelManager hotelManager;
 
-        public OpenRoomWindowCommand(HotelManager hotelManager)
+        public OpenModifyRoomWindowCommand(HotelManager hotelManager)
         {
             this.hotelManager = hotelManager;
         }

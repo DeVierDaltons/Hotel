@@ -21,7 +21,7 @@ namespace Hotel.ViewModel
             ShowAddGuestWindowCommand = new OpenAddGuestWindowCommand(HotelManager);
             ShowAddRoomWindowCommand = new OpenAddRoomWindowCommand(HotelManager);
             ShowAddBookingWindowCommand = new OpenAddBookingWindowCommand(HotelManager);
-            ShowAddModifyRoomWindow = new OpenRoomWindowCommand(HotelManager);
+            ShowAddModifyRoomWindow = new OpenModifyRoomWindowCommand(HotelManager);
         }
     }
 }
