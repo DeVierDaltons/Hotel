@@ -24,14 +24,10 @@ namespace Hotel.View
             InitializeComponent();
         }
 
-        private void Button_Click(object sender, RoutedEventArgs e)
+        void DataGrid_Unloaded(object sender, RoutedEventArgs e)
         {
-
-        }
-
-        private void ListBox_SelectionChanged(object sender, SelectionChangedEventArgs e)
-        {
-
+            var grid = (DataGrid)sender;
+            grid.CommitEdit(DataGridEditingUnit.Row, true);
         }
     }
 }
