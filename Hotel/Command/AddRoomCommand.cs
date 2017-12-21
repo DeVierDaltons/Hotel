@@ -9,7 +9,7 @@ using System.Windows.Input;
 
 namespace Hotel.Command
 {
-     class AddGuestCommand : ICommand
+     class AddRoomCommand : ICommand
     {
         public event EventHandler CanExecuteChanged
         {
@@ -17,9 +17,9 @@ namespace Hotel.Command
             remove { CommandManager.RequerySuggested -= value; }
         }
 
-        AddGuestViewModel viewModel;
+        AddRoomViewModel viewModel;
 
-        public AddGuestCommand(AddGuestViewModel vm)
+        public AddRoomCommand(AddRoomViewModel vm)
         {
             viewModel = vm;
         }
@@ -40,7 +40,7 @@ namespace Hotel.Command
         /// <param name="parameter"></param>
         public void Execute(object parameter)
         {
-            viewModel.AddGuest();
+            viewModel.AddRoom();
         }
     }
 }

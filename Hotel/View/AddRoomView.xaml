@@ -1,0 +1,41 @@
+﻿<Window x:Class="Hotel.View.AddRoomView"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:Hotel.ViewModel"
+        mc:Ignorable="d"
+        Title="AddRoomView" Height="187.2" Width="300"
+        >
+    <Window.DataContext>
+        <local:AddRoomViewModel/>
+    </Window.DataContext>
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="*"></RowDefinition>
+            <RowDefinition Height="*"></RowDefinition>
+            <RowDefinition Height="*"></RowDefinition>
+            <RowDefinition Height="*"></RowDefinition>
+            <RowDefinition Height="*"></RowDefinition>
+        </Grid.RowDefinitions>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="*" />
+            <ColumnDefinition Width="*" />
+        </Grid.ColumnDefinitions>
+
+        <Label Grid.Row="0" Grid.Column="0" Content="Room Number:"/>
+        <TextBox Grid.Row="0" Grid.Column="1" Text="{Binding RoomNumber}"></TextBox>
+
+        <Label Grid.Row="1" Grid.Column="0" Content="Beds:"/>
+        <TextBox Grid.Row="1" Grid.Column="1" Text="{Binding Beds}"></TextBox>
+
+        <Label Grid.Row="2" Grid.Column="0" Content="Quality:"/>
+        <ComboBox Grid.Row="2" Grid.Column="1" Name="RoomQualityDropdown" SelectedItem="{Binding Quality}"/>
+
+        <Label Grid.Row="3" Grid.Column="0" Content="Price per day:"/>
+        <TextBox Grid.Row="3" Grid.Column="1" Text="{Binding PricePerDay}"></TextBox>
+
+        <CheckBox Grid.Row="4" Grid.Column="0" IsChecked="{Binding HasNiceView}" Content="Has a nice view"/>
+        <Button Grid.Row="4" Grid.Column="1" Content="Save" Command="{Binding AddRoomCommand}"/>
+    </Grid>
+</Window>
