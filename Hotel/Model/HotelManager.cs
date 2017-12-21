@@ -10,7 +10,7 @@ namespace Hotel.Model
     {
         private IRepository<Guest> GuestRepository = new NHibernateRepository<Guest>();
 
-        public ObservableCollection<Guest> Guests { get; }
+        public RepositoryBackedObservableCollection<Guest> Guests { get; }
         public ObservableCollection<Room> Rooms { get; set; } = new ObservableCollection<Room>();
 
         public List<Booking> GetAllBookings()

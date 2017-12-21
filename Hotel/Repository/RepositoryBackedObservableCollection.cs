@@ -6,10 +6,11 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using Hotel.Extensions;
+using System.ComponentModel;
 
 namespace Hotel.Repository
 {
-    public class RepositoryBackedObservableCollection<T> : ObservableCollection<T>
+    public class RepositoryBackedObservableCollection<T> : ObservableCollection<T> where T : INotifyPropertyChanged
     {
         private IRepository<T> repository;
 
@@ -17,12 +18,30 @@ namespace Hotel.Repository
         {
             this.repository = repository;
             this.AddRange(repository.GetAll());
+            foreach(T item in this)
+            {
+                item.PropertyChanged += OnItemChanged;
+            }
+        }
+
+        private void OnItemChanged(object sender, PropertyChangedEventArgs e)
+        {
+            T changedItem = (T)sender;
+            repository.Update(changedItem);
         }
 
         public void AddItem(T item)
         {
             Add(item);
             repository.Save(item);
+            item.PropertyChanged += OnItemChanged;
+        }
+
+        public void RemoveItem(T item)
+        {
+            item.PropertyChanged -= OnItemChanged;
+            Remove(item);
+            repository.Delete(item);
         }
     }
 }
