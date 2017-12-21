@@ -57,12 +57,14 @@
     <Compile Include="Command\AddRoomCommand.cs" />
     <Compile Include="Command\OpenAddGuestWindowCommand.cs" />
     <Compile Include="Command\OpenAddRoomWindowCommand.cs" />
+    <Compile Include="Command\OpenRoomWindowCommand.cs" />
     <Compile Include="Model\Room.cs" />
     <Compile Include="Model\RoomQuality.cs" />
     <Compile Include="ViewModel\AddBookingViewModel.cs" />
     <Compile Include="ViewModel\AddGuestViewModel.cs" />
     <Compile Include="ViewModel\AddRoomViewModel.cs" />
     <Compile Include="Command\OpenAddBookingWindowCommand.cs" />
+    <Compile Include="ViewModel\RoomViewModel.cs" />
     <Compile Include="View\AddBookingView.xaml.cs">
       <DependentUpon>AddBookingView.xaml</DependentUpon>
     </Compile>
