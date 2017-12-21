@@ -61,7 +61,6 @@ namespace UnitTests
             vm.Guest.ICEPhoneNumber = "0031231982498";
             vm.Guest.EmailAdress = "janklaassen@hotmail.com";
         }
-
        
         public void CreateInvalidGuestInViewModel(AddGuestViewModel vm)
         {
