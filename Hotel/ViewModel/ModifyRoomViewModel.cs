@@ -11,11 +11,8 @@ namespace Hotel.ViewModel
     public class ModifyRoomViewModel
     {
         public HotelManager HotelManager { get; set; }
-        public ObservableCollection<Room> rooms { get; set; }
         public ModifyRoomViewModel()
         {
         }
-        
-        
     }
 }

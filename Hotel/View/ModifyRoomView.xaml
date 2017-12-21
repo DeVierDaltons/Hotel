@@ -14,6 +14,14 @@
         <Grid.RowDefinitions>
             <RowDefinition Height="*"></RowDefinition>
         </Grid.RowDefinitions>
-        <DataGrid Grid.Row="0" CanUserAddRows="False"  Grid.Column="0" Unloaded="DataGrid_Unloaded" ItemsSource="{Binding HotelManager.Rooms, Mode=TwoWay}" Margin="0,0,0,20"></DataGrid>
+        <DataGrid Grid.Row="0" CanUserAddRows="False"  Grid.Column="0" Unloaded="DataGrid_Unloaded" ItemsSource="{Binding HotelManager.Rooms, Mode=TwoWay}" Margin="0,0,0,20" AutoGenerateColumns="False" >
+            <DataGrid.Columns>
+                <DataGridTextColumn Binding="{Binding RoomNumber}" Header="Room number" IsReadOnly="True"></DataGridTextColumn>
+                <DataGridTextColumn Binding="{Binding Beds}" Header="Amount of beds" IsReadOnly="True"></DataGridTextColumn>
+                <DataGridTextColumn Binding="{Binding Quality}" Header="Quality" IsReadOnly="True"></DataGridTextColumn>
+                <DataGridTextColumn Binding="{Binding HasNiceView}" Header="Has a nice view" IsReadOnly="True"></DataGridTextColumn>
+                <DataGridTextColumn Binding="{Binding PricePerDay}" Header="Price per day" IsReadOnly="True"></DataGridTextColumn>
+            </DataGrid.Columns>
+        </DataGrid>
     </Grid>
 </Window>
