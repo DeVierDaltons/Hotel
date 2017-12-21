@@ -86,10 +86,11 @@
     <Compile Include="Model\BookingPeriod.cs" />
     <Compile Include="Dao\GuestMap.cs" />
     <Compile Include="Dao\NHibernateHelper.cs" />
-    <Compile Include="Model\IGuestRepository.cs" />
-    <Compile Include="Model\NHibernateGuestRepository.cs" />
+    <Compile Include="Dao\NHibernateGuestRepository.cs" />
     <Compile Include="Model\Room.cs" />
     <Compile Include="Model\RoomQuality.cs" />
+    <Compile Include="Repository\IRepository.cs" />
+    <Compile Include="Repository\RepositoryBackedObservableCollection.cs" />
     <Compile Include="ViewModel\AddBookingViewModel.cs" />
     <Compile Include="ViewModel\AddRoomViewModel.cs" />
     <Compile Include="Command\OpenAddBookingWindowCommand.cs" />

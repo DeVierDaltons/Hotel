@@ -2,13 +2,14 @@
 using Hotel.Model;
 using NHibernate.Tool.hbm2ddl;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
+using Hotel.Repository;
 
 namespace Hotel.Dao.Test
 {
     [TestClass]
     public class NHibernateGuestRepositoryTest
     {
-        private IGuestRepository _personRepo;
+        private IRepository<Guest> _personRepo;
 
         [TestInitialize]
         public void CreateSchema()
@@ -18,7 +19,7 @@ namespace Hotel.Dao.Test
             var schemaUpdate = new SchemaUpdate(NHibernateHelper.Configuration);
             schemaUpdate.Execute(false, true);
 
-            _personRepo = new NHibernateGuestRepository();
+            _personRepo = new NHibernateRepository<Guest>();
         }
 
         [TestMethod]

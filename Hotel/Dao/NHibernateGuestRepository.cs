@@ -1,14 +1,14 @@
 ﻿using System;
-using Hotel.Model;
 using NHibernate;
 using System.Linq;
 using System.Collections.Generic;
+using Hotel.Repository;
 
 namespace Hotel.Dao
 {
-    public class NHibernateGuestRepository : IGuestRepository
+    public class NHibernateRepository<T> : IRepository<T> where T : class
     {
-        public void Save(Guest person)
+        public void Save(T person)
         {
             using (ISession session = NHibernateHelper.OpenSession())
             using (ITransaction transaction = session.BeginTransaction())
@@ -18,13 +18,13 @@ namespace Hotel.Dao
             }
         }
 
-        public Guest Get(Guid id)
+        public T Get(Guid id)
         {
             using (ISession session = NHibernateHelper.OpenSession())
-                return session.Get<Guest>(id);
+                return session.Get<T>(id);
         }
 
-        public void Update(Guest person)
+        public void Update(T person)
         {
             using (ISession session = NHibernateHelper.OpenSession())
             using (ITransaction transaction = session.BeginTransaction())
@@ -34,16 +34,16 @@ namespace Hotel.Dao
             }
         }
 
-        public List<Guest> GetAll()
+        public List<T> GetAll()
         {
             using (ISession session = NHibernateHelper.OpenSession())
             using (ITransaction transaction = session.BeginTransaction())
             {
-                return session.Query<Guest>().ToList();
+                return session.Query<T>().ToList();
             }
         }
 
-        public void Delete(Guest person)
+        public void Delete(T person)
         {
             using (ISession session = NHibernateHelper.OpenSession())
             using (ITransaction transaction = session.BeginTransaction())
@@ -57,7 +57,7 @@ namespace Hotel.Dao
         {
             using (ISession session = NHibernateHelper.OpenSession())
             {
-                return session.QueryOver<Guest>().RowCountInt64();
+                return session.QueryOver<T>().RowCountInt64();
             }
         }
     }

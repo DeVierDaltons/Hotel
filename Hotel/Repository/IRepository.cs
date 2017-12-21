@@ -1,40 +1,40 @@
 ﻿using System;
 using System.Collections.Generic;
 
-namespace Hotel.Model
+namespace Hotel.Repository
 {
-    public interface IGuestRepository
+    public interface IRepository<T>
     {
         /// <summary>
         /// Get person entity by id
         /// </summary>
         /// <param name="id">id</param>
         /// <returns>person</returns>
-        Guest Get(Guid id);
+        T Get(Guid guid);
 
         /// <summary>
         /// Save person entity
         /// </summary>
         /// <param name="person">person</param>
-        void Save(Guest person);
+        void Save(T person);
 
         /// <summary>
         /// Update person entity
         /// </summary>
         /// <param name="person">person</param>
-        void Update(Guest person);
+        void Update(T person);
 
         /// <summary>
         /// Delete person entity
         /// </summary>
         /// <param name="person">person</param>
-        void Delete(Guest person);
+        void Delete(T person);
 
         /// <summary>
         /// Retrieve all guests
         /// </summary>
         /// <returns>All the guests</returns>
-        List<Guest> GetAll();
+        List<T> GetAll();
 
         /// <summary>
         /// Row count person in db
