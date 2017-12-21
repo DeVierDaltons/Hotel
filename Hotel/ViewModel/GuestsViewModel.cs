@@ -32,6 +32,11 @@ namespace Hotel.ViewModel
             ShowAddGuestWindowCommand = new ShowAddGuestWindowCommand(new AddGuestCommand(guests));
         }
 
+        public void ShowEditGuestWindow(object selectedGuest)
+        {
+            new ShowAddGuestWindowCommand(new EditGuestCommand((Guest)selectedGuest)).Execute(null);
+        }
+
         public void OnPropertyChanged([CallerMemberName] string name = "")
         {
             PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(name));

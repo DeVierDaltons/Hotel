@@ -1,6 +1,7 @@
 ﻿using Hotel.ViewModel;
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -23,6 +24,11 @@ namespace Hotel.View
         public GuestsView()
         {
             InitializeComponent();
+        }
+
+        private void OnEditGuestClicked(object sender, RoutedEventArgs e)
+        {
+            (DataContext as GuestsViewModel).ShowEditGuestWindow(GuestsList.SelectedItem);
         }
     }
 }

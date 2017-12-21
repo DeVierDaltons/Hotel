@@ -14,7 +14,7 @@
         </Grid.RowDefinitions>
         <StackPanel Grid.Row="1">
             <Button Content="Add Guest" Command="{Binding ShowAddGuestWindowCommand}"/>
-            <Button Content="Edit Selected Guest"/>
+            <Button Content="Edit Selected Guest" Click="OnEditGuestClicked"/>
         </StackPanel>
         <ListBox ItemsSource="{Binding Guests, Mode=TwoWay}" Name="GuestsList">
             <ListBox.ItemTemplate>

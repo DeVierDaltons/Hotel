@@ -62,6 +62,7 @@
     <Compile Include="Model\HotelManager.cs" />
     <Compile Include="Model\Room.cs" />
     <Compile Include="ViewModel\AddGuestViewModel.cs" />
+    <Compile Include="Command\EditGuestCommand.cs" />
     <Compile Include="ViewModel\MainWindowViewModel.cs" />
     <Compile Include="ViewModel\GuestsViewModel.cs" />
     <Compile Include="View\AddGuestView.xaml.cs">
