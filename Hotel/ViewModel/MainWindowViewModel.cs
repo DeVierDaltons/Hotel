@@ -18,7 +18,7 @@ namespace Hotel.ViewModel
         public MainWindowViewModel()
         {
             HotelManager = new HotelManager();
-            ShowAddGuestWindowCommand = new ShowAddGuestWindowCommand(new AddGuestCommand(HotelManager.Guests));
+            ShowAddGuestWindowCommand = new ShowGuestDetailWindowCommand(new AddGuestCommand(HotelManager.Guests));
             ShowGuestsWindowCommand = new ShowGuestsWindowCommand(HotelManager);
         }
     }

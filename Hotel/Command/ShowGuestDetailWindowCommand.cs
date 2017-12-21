@@ -7,11 +7,11 @@ using System.Windows.Input;
 
 namespace Hotel.Command
 {
-    class ShowAddGuestWindowCommand : ICommand
+    class ShowGuestDetailWindowCommand : ICommand
     {
         private ICommand SubmitCommand;
 
-        public ShowAddGuestWindowCommand(ICommand submitCommand)
+        public ShowGuestDetailWindowCommand(ICommand submitCommand)
         {
             SubmitCommand = submitCommand;
         }
@@ -25,9 +25,9 @@ namespace Hotel.Command
 
         public void Execute(object parameter)
         {
-            AddGuestView view = new AddGuestView
+            GuestDetailView view = new GuestDetailView
             {
-                DataContext = new AddGuestViewModel(SubmitCommand)
+                DataContext = new GuestDetailViewModel(SubmitCommand)
             };
             view.Show();
         }

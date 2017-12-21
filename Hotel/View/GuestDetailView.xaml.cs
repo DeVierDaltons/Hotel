@@ -5,9 +5,9 @@ namespace Hotel.View
     /// <summary>
     /// Interaction logic for AddGuestView.xaml
     /// </summary>
-    public partial class AddGuestView : Window
+    public partial class GuestDetailView : Window
     {
-        public AddGuestView()
+        public GuestDetailView()
         {
             InitializeComponent();
         }

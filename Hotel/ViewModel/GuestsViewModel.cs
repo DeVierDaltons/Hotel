@@ -29,12 +29,12 @@ namespace Hotel.ViewModel
         public GuestsViewModel(ObservableCollection<Guest> guests)
         {
             Guests = guests;
-            ShowAddGuestWindowCommand = new ShowAddGuestWindowCommand(new AddGuestCommand(guests));
+            ShowAddGuestWindowCommand = new ShowGuestDetailWindowCommand(new AddGuestCommand(guests));
         }
 
         public void ShowEditGuestWindow(object selectedGuest)
         {
-            new ShowAddGuestWindowCommand(new EditGuestCommand((Guest)selectedGuest)).Execute(null);
+            new ShowGuestDetailWindowCommand(new EditGuestCommand((Guest)selectedGuest)).Execute(null);
         }
 
         public void OnPropertyChanged([CallerMemberName] string name = "")

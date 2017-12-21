@@ -13,7 +13,7 @@ using System.Collections.ObjectModel;
 
 namespace Hotel.ViewModel
 {
-    class AddGuestViewModel : INotifyPropertyChanged
+    class GuestDetailViewModel : INotifyPropertyChanged
     {
         public event PropertyChangedEventHandler PropertyChanged;
 
@@ -56,7 +56,7 @@ namespace Hotel.ViewModel
 
         #endregion Properties
 
-        public AddGuestViewModel(ICommand guestCommand)
+        public GuestDetailViewModel(ICommand guestCommand)
         {
             GuestCommand = guestCommand;
             SubmitCommand = new RelayCommand(OnSubmitClicked, (_) => ValidateInput());
