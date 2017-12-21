@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 
 namespace Hotel.Model
 {
@@ -28,6 +29,12 @@ namespace Hotel.Model
         /// </summary>
         /// <param name="person">person</param>
         void Delete(Guest person);
+
+        /// <summary>
+        /// Retrieve all guests
+        /// </summary>
+        /// <returns>All the guests</returns>
+        List<Guest> GetAll();
 
         /// <summary>
         /// Row count person in db

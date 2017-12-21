@@ -1,6 +1,8 @@
 ﻿using System;
 using Hotel.Model;
 using NHibernate;
+using System.Linq;
+using System.Collections.Generic;
 
 namespace Hotel.Dao
 {
@@ -29,6 +31,15 @@ namespace Hotel.Dao
             {
                 session.Update(person);
                 transaction.Commit();
+            }
+        }
+
+        public List<Guest> GetAll()
+        {
+            using (ISession session = NHibernateHelper.OpenSession())
+            using (ITransaction transaction = session.BeginTransaction())
+            {
+                return session.Query<Guest>().ToList();
             }
         }
 

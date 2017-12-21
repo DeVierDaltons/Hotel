@@ -82,6 +82,7 @@
     <Compile Include="Command\OpenAddRoomWindowCommand.cs" />
     <Compile Include="Command\OpenModifyBookingWindowCommand.cs" />
     <Compile Include="Command\OpenModifyRoomWindowCommand.cs" />
+    <Compile Include="Extensions\ObservableCollectionExtensions.cs" />
     <Compile Include="Model\BookingPeriod.cs" />
     <Compile Include="Dao\GuestMap.cs" />
     <Compile Include="Dao\NHibernateHelper.cs" />

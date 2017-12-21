@@ -1,4 +1,7 @@
-﻿using System;
+﻿using Hotel.Dao;
+using Hotel.Extensions;
+using NHibernate.Tool.hbm2ddl;
+using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Linq;
@@ -12,51 +15,7 @@ namespace Hotel.Model
         public ObservableCollection<Guest> Guests { get; } = new ObservableCollection<Guest>();
         public ObservableCollection<Room> Rooms { get; set; } = new ObservableCollection<Room>();
 
-        public HotelManager()
-        {
-            AddSomeRooms();
-            AddSomeGuests();
-        }
-
-        private void AddSomeRooms()
-        {
-            Room r = new Room()
-            {
-                RoomNumber = "0",
-                Beds = 2,
-                HasNiceView = true,
-                PricePerDay = 100,
-                Quality = RoomQuality.Budget
-            };
-            Room r2 = new Room()
-            {
-                RoomNumber = "1",
-                Beds = 2,
-                HasNiceView = true,
-                PricePerDay = 100,
-                Quality = RoomQuality.Budget
-            };
-            Room r3 = new Room()
-            {
-                RoomNumber = "2",
-                Beds = 2,
-                HasNiceView = false,
-                PricePerDay = 50,
-                Quality = RoomQuality.Comfort
-            };
-            Room r4 = new Room()
-            {
-                RoomNumber = "3",
-                Beds = 4,
-                HasNiceView = false,
-                PricePerDay = 200,
-                Quality = RoomQuality.Luxe
-            };
-            Rooms.Add(r);
-            Rooms.Add(r2);
-            Rooms.Add(r3);
-            Rooms.Add(r4);
-        }
+        IGuestRepository PersonRepo = new NHibernateGuestRepository();
 
         public List<Booking> GetAllBookings()
         {
@@ -73,60 +32,17 @@ namespace Hotel.Model
             booking.Room.Bookings.Add(booking);
         }
 
-        private void AddSomeGuests()
+        public HotelManager()
         {
-            Guest olaf = new Guest()
-            {
-                FirstName = "Olaf",
-                LastName = "van der Kruk",
-                PhoneNumber = "0612345678",
-                EmailAdress = "olaf@krukempire.nl",
-                Adress = "Nergensniet 12",
-                PostalCode = "1234 AB",
-                City = "Utrecht",
-                Country = "The Netherlands",
-                ICEPhoneNumber = "0612345678"
-            };
-            Guest michael = new Guest()
-            {
-                FirstName = "Michael",
-                LastName = "Paul Kleijn",
-                PhoneNumber = "0612345678",
-                EmailAdress = "michael@kleinmaarfijn.nl",
-                Adress = "Nergensniet 11",
-                PostalCode = "1234 AB",
-                City = "Verweggie",
-                Country = "The Netherlands",
-                ICEPhoneNumber = "0612345678"
-            };
-            Guest dirkjan = new Guest()
-            {
-                FirstName = "Dirk-Jan",
-                LastName = "Sleurink",
-                PhoneNumber = "0612345678",
-                EmailAdress = "dirkjan@exmilitarybadass.nl",
-                Adress = "Nergensniet 13",
-                PostalCode = "1234 AB",
-                City = "Verweggie",
-                Country = "The Netherlands",
-                ICEPhoneNumber = "0612345678"
-            };
-            Guest tama = new Guest()
-            {
-                FirstName = "Tama",
-                LastName = "McGlinn",
-                PhoneNumber = "0612345678",
-                EmailAdress = "tama@mcglinn.nl",
-                Adress = "Nergensniet 14",
-                PostalCode = "1234 AB",
-                City = "Verweggie",
-                Country = "The Netherlands",
-                ICEPhoneNumber = "0612345678"
-            };
-            Guests.Add(olaf);
-            Guests.Add(michael);
-            Guests.Add(dirkjan);
-            Guests.Add(tama);
+            var schemaUpdate = new SchemaUpdate(NHibernateHelper.Configuration);
+            schemaUpdate.Execute(false, true);
+            Guests.AddRange(PersonRepo.GetAll()); 
+        }
+
+        public void AddGuest(Guest guest)
+        {
+            Guests.Add(guest);
+            PersonRepo.Save(guest);
         }
     }
 }
