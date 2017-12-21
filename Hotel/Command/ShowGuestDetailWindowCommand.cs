@@ -10,6 +10,12 @@ namespace Hotel.Command
     class ShowGuestDetailWindowCommand : ICommand
     {
         private ICommand SubmitCommand;
+        private Guest CurrentGuest;
+
+        public ShowGuestDetailWindowCommand(ICommand submitCommand, Guest currentGuestData) : this(submitCommand)
+        {
+            CurrentGuest = currentGuestData;
+        }
 
         public ShowGuestDetailWindowCommand(ICommand submitCommand)
         {
@@ -27,7 +33,7 @@ namespace Hotel.Command
         {
             GuestDetailView view = new GuestDetailView
             {
-                DataContext = new GuestDetailViewModel(SubmitCommand)
+                DataContext = new GuestDetailViewModel(SubmitCommand, CurrentGuest)
             };
             view.Show();
         }

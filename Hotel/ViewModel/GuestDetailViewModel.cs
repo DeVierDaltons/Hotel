@@ -56,6 +56,11 @@ namespace Hotel.ViewModel
 
         #endregion Properties
 
+        public GuestDetailViewModel(ICommand guestCommand, Guest currentGuestData) : this(guestCommand)
+        {
+            Guest.CopyFrom(currentGuestData);
+        }
+
         public GuestDetailViewModel(ICommand guestCommand)
         {
             GuestCommand = guestCommand;

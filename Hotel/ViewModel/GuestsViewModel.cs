@@ -34,7 +34,8 @@ namespace Hotel.ViewModel
 
         public void ShowEditGuestWindow(object selectedGuest)
         {
-            new ShowGuestDetailWindowCommand(new EditGuestCommand((Guest)selectedGuest)).Execute(null);
+            Guest currentGuest = (Guest)selectedGuest;
+            new ShowGuestDetailWindowCommand(new EditGuestCommand(currentGuest), currentGuest).Execute(null);
         }
 
         public void OnPropertyChanged([CallerMemberName] string name = "")
