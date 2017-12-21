@@ -20,7 +20,7 @@
             <ColumnDefinition Width="300" />
             <ColumnDefinition Width="*" />
         </Grid.ColumnDefinitions>        
-        <Button Grid.Row="0" Grid.Column="0" Command="{Binding ShowEditGuestWindowCommand}" Content="Guests"/>
+        <Button Grid.Row="0" Grid.Column="0" Command="{Binding ShowGuestsWindowCommand}" Content="Guests"/>
         <Button Grid.Row="0" Grid.Column="1" Command="{Binding ShowAddGuestWindowCommand}" Content="Add Guest"/>
         <Button Grid.Row="1" Grid.Column="0" Command="{Binding ShowEditRoomWindowCommand}" Content="Rooms"/>
         <Button Grid.Row="1" Grid.Column="1" Command="{Binding ShowAddRoomWindowCommand}" Content="Add Room"/>

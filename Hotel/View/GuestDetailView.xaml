@@ -1,16 +1,12 @@
-﻿<Window x:Class="Hotel.View.AddGuestView"
+﻿<Window x:Class="Hotel.View.GuestDetailView"
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:Hotel.ViewModel"
         mc:Ignorable="d"
-        Title="AddGuestView" Height="300" Width="300"
+        Title="Guest" Height="300" Width="300"
         >
-    <Window.DataContext>
-        <local:AddGuestViewModel/>
-    </Window.DataContext>
-
     <Grid>
         <Grid.RowDefinitions>
             <RowDefinition Height="*"></RowDefinition>
@@ -39,6 +35,7 @@
 
         <Label Grid.Row="4" Grid.Column="0" Content="ICE Phone:"></Label>
         <TextBox Grid.Row="4" Grid.Column="1" Text="{Binding ICEPhoneNumber, Mode=TwoWay}"></TextBox>
-        <Button Grid.Row ="5" Grid.Column="0" Grid.ColumnSpan="2" Command="{Binding AddGuestCommand}" Content="Save" Name="AddGuestButton"></Button>
+
+        <Button Grid.Row ="5" Grid.Column="0" Grid.ColumnSpan="2" Command="{Binding SubmitCommand}" Content="Submit" Name="AddGuestButton"></Button>
     </Grid>
 </Window>

@@ -1,4 +1,4 @@
-﻿<?xml version="1.0" encoding="utf-8"?>
+<?xml version="1.0" encoding="utf-8"?>
 <Project ToolsVersion="15.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
   <PropertyGroup>
@@ -55,12 +55,10 @@
       <SubType>Designer</SubType>
     </ApplicationDefinition>
     <Compile Include="Command\AddRoomCommand.cs" />
-    <Compile Include="Command\OpenAddGuestWindowCommand.cs" />
     <Compile Include="Command\OpenAddRoomWindowCommand.cs" />
     <Compile Include="Model\Room.cs" />
     <Compile Include="Model\RoomQuality.cs" />
     <Compile Include="ViewModel\AddBookingViewModel.cs" />
-    <Compile Include="ViewModel\AddGuestViewModel.cs" />
     <Compile Include="ViewModel\AddRoomViewModel.cs" />
     <Compile Include="Command\OpenAddBookingWindowCommand.cs" />
     <Compile Include="View\AddBookingView.xaml.cs">
@@ -72,9 +70,18 @@
     <Compile Include="Command\AddGuestCommand.cs" />
     <Compile Include="Model\Booking.cs" />
     <Compile Include="Model\HotelManager.cs" />
+    <Compile Include="Command\EditGuestCommand.cs" />
+    <Compile Include="Command\RelayCommand.cs" />
+    <Compile Include="Command\ShowGuestDetailWindowCommand.cs" />
+    <Compile Include="Command\ShowGuestsWindow.cs" />
+    <Compile Include="ViewModel\GuestDetailViewModel.cs" />
     <Compile Include="ViewModel\MainWindowViewModel.cs" />
-    <Compile Include="View\AddGuestView.xaml.cs">
-      <DependentUpon>AddGuestView.xaml</DependentUpon>
+    <Compile Include="ViewModel\GuestsViewModel.cs" />
+    <Compile Include="View\GuestDetailView.xaml.cs">
+      <DependentUpon>GuestDetailView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="View\GuestsView.xaml.cs">
+      <DependentUpon>GuestsView.xaml</DependentUpon>
     </Compile>
     <Compile Include="View\ModifyRoom.xaml.cs">
       <DependentUpon>ModifyRoom.xaml</DependentUpon>
@@ -101,7 +108,11 @@
     </Page>
   </ItemGroup>
   <ItemGroup>
-    <Page Include="View\AddGuestView.xaml">
+    <Page Include="View\GuestDetailView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="View\GuestsView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
