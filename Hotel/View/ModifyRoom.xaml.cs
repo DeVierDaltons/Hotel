@@ -23,5 +23,11 @@ namespace Hotel.View
         {
             InitializeComponent();
         }
+
+        void DataGrid_Unloaded(object sender, RoutedEventArgs e)
+        {
+            var grid = (DataGrid)sender;
+            grid.CommitEdit(DataGridEditingUnit.Row, true);
+        }
     }
 }

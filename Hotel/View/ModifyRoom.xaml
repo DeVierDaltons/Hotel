@@ -7,10 +7,6 @@
         mc:Ignorable="d"
         Title="Add / Modify rooms" Height="388.312" Width="350" SizeToContent="WidthAndHeight">
 
-    <Window.DataContext>
-        <local:ModifyRoomViewModel/>
-    </Window.DataContext>
-
     <Grid>
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="*"></ColumnDefinition>
@@ -18,6 +14,6 @@
         <Grid.RowDefinitions>
             <RowDefinition Height="*"></RowDefinition>
         </Grid.RowDefinitions>
-        <DataGrid Grid.Row="0" Grid.Column="0"  ItemsSource="{Binding Rooms, Mode=TwoWay}"></DataGrid>
+        <DataGrid Grid.Row="0" CanUserAddRows="False" Grid.Column="0" Unloaded="DataGrid_Unloaded" ItemsSource="{Binding HotelManager.Rooms, Mode=TwoWay}" Margin="0,0,0,20"></DataGrid>
     </Grid>
 </Window>
