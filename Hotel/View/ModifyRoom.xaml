@@ -5,10 +5,10 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:Hotel.ViewModel"
         mc:Ignorable="d"
-        Title="Add / Modify rooms" Height="388.312" Width="350">
+        Title="Add / Modify rooms" Height="388.312" Width="350" SizeToContent="WidthAndHeight">
 
     <Window.DataContext>
-        <local:RoomViewModel/>
+        <local:ModifyRoomViewModel/>
     </Window.DataContext>
 
     <Grid>

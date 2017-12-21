@@ -64,7 +64,7 @@
     <Compile Include="ViewModel\AddGuestViewModel.cs" />
     <Compile Include="ViewModel\AddRoomViewModel.cs" />
     <Compile Include="Command\OpenAddBookingWindowCommand.cs" />
-    <Compile Include="ViewModel\RoomViewModel.cs" />
+    <Compile Include="ViewModel\ModifyRoomViewModel.cs" />
     <Compile Include="View\AddBookingView.xaml.cs">
       <DependentUpon>AddBookingView.xaml</DependentUpon>
     </Compile>
