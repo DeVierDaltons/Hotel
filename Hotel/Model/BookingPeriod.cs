@@ -50,45 +50,42 @@ namespace Hotel.Model
         /// <summary>
         /// Helper method to determine if a specified BookingPeriod is to the 'left' of the current BookingPeriod
         /// </summary>
-        /// <param name="compareWithStartDate"></param>
-        /// <param name="compareWithEndDate"></param>
-        /// <returns></returns>
-        private bool BookingPeriodOfArgIsLeftOfCurrentBookingPeriod(Date compareWithStartDate, Date compareWithEndDate)
+        /// <param name="compareWith">BookingPeriod to compare with</param>
+        /// <returns>True if the BookingPeriod is to the left of the current one. False otherwise.</returns>
+        private bool BookingPeriodOfArgIsLeftOfCurrentBookingPeriod(BookingPeriod compareWith)
         {
-            return ((compareWithStartDate.TheDate < StartTime.TheDate) && (compareWithEndDate.TheDate <= StartTime.TheDate));
+            return ((compareWith.StartTime.TheDate < StartTime.TheDate) && (compareWith.EndTime.TheDate <= StartTime.TheDate));
         }
 
         /// <summary>
         /// Helper method to determine if a specified BookingPeriod is to the 'right' of the current BookingPeriod
         /// </summary>
-        /// <param name="compareWithStartDate"></param>
-        /// <param name="compareWithEndDate"></param>
-        /// <returns></returns>
-        private bool BookingPeriodOfArgIsRightOfCurrentBookingPeriod(Date compareWithStartDate, Date compareWithEndDate)
+        /// <param name="compareWith">BookingPeriod to compare with</param>
+        /// <returns>True if the BookingPeriod is to the right of the current one. False otherwise.</returns>
+        private bool BookingPeriodOfArgIsRightOfCurrentBookingPeriod(BookingPeriod compareWith)
         {
-            return ((compareWithStartDate.TheDate >= EndTime.TheDate) && (compareWithEndDate.TheDate > EndTime.TheDate));
+            return ((compareWith.StartTime.TheDate >= EndTime.TheDate) && (compareWith.EndTime.TheDate > EndTime.TheDate));
         }
 
         /// <summary>
         /// Determines if the specified BookingPeriod does not overlap with the current one
         /// </summary>
-        /// <param name="compareWithStartDate">Start Date of BookingPeriod to compare with</param>
-        /// <param name="compareWithEndDate">End Date of BookingPeriod to compare with</param>
+        /// <param name="compareWith">BookingPeriod to compare with</param>
         /// <returns>True if it they do not overlap. False otherwise.</returns>
-        public bool DoesNotoverlapWith(Date compareWithStartDate, Date compareWithEndDate)
+        public bool DoesNotoverlapWith(BookingPeriod compareWith)
         {
-            return (BookingPeriodOfArgIsLeftOfCurrentBookingPeriod(compareWithStartDate, compareWithEndDate) || BookingPeriodOfArgIsRightOfCurrentBookingPeriod(compareWithStartDate, compareWithEndDate));
+            return (BookingPeriodOfArgIsLeftOfCurrentBookingPeriod(compareWith) || BookingPeriodOfArgIsRightOfCurrentBookingPeriod(compareWith));
         }
+
 
         /// <summary>
         /// Determines if the specified BookingPeriod does  overlap with the current one
         /// </summary>
-        /// <param name="compareWithStartDate">Start Date of BookingPeriod to compare with</param>
-        /// <param name="compareWithEndDate">End Date of BookingPeriod to compare with</param>
+        /// <param name="compareWith">BookingPeriod to compare with</param>
         /// <returns>True if it they do  overlap. False otherwise.</returns>
-        public bool OverlapWith(Date compareWithStartDate, Date compareWithEndDate)
+        public bool OverlapWith(BookingPeriod compareWith)
         {
-            return !DoesNotoverlapWith(compareWithStartDate, compareWithEndDate);
+            return !DoesNotoverlapWith(compareWith);
         }
 
     }

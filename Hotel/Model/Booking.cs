@@ -32,6 +32,16 @@ namespace Hotel.Model
             set { _bookingPeriod = value; }
         }
 
+        public bool ConflictsWith(Booking booking)
+        {
+            return BookingPeriod.OverlapWith(booking.BookingPeriod);
+        }
+
+        public bool DoesNotConflictWith(Booking booking)
+        {
+            return BookingPeriod.DoesNotoverlapWith(booking.BookingPeriod);
+        }
+
 
         enum Status
         {
