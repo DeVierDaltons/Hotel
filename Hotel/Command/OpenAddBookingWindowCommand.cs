@@ -25,6 +25,7 @@ namespace Hotel.ViewModel
         {
             AddBookingView view = new AddBookingView();
             ((AddBookingViewModel)view.DataContext).HotelManager = hotelManager;
+            view.SetDropdownContents();
             view.Show();
         }
     }

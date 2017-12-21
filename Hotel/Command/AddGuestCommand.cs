@@ -25,20 +25,11 @@ namespace Hotel.Command
             Guests = guests;
         }
 
-        /// <summary>
-        /// Validates the fields in the add guest window
-        /// </summary>
-        /// <param name="parameter"></param>
-        /// <returns></returns>
         public bool CanExecute(object parameter)
         {
             return true;
         }
 
-        /// <summary>
-        /// Adds a new guest to the list of guests in the hotel.
-        /// </summary>
-        /// <param name="parameter"></param>
         public void Execute(object parameter)
         {
             Guests.Add(parameter as Guest);

@@ -8,11 +8,13 @@ namespace Hotel.View
         public AddBookingView()
         {
             InitializeComponent();
-            DataContext = new AddBookingViewModel();
         }
 
-        private void SaveBooking(object sender, RoutedEventArgs e)
-        {
+        public void SetDropdownContents() {
+            AddBookingViewModel viewModel = DataContext as AddBookingViewModel;
+            GuestDropdown.ItemsSource = viewModel.HotelManager.Guests;
+            RoomDropdown.ItemsSource = viewModel.HotelManager.Rooms;
+            viewModel.SelectedDates = BookingRangeCalendar.SelectedDates;
         }
     }
 }
