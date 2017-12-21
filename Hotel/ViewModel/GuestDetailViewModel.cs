@@ -13,49 +13,63 @@ using System.Collections.ObjectModel;
 
 namespace Hotel.ViewModel
 {
-    class AddGuestViewModel : INotifyPropertyChanged
+    class GuestDetailViewModel : INotifyPropertyChanged
     {
         public event PropertyChangedEventHandler PropertyChanged;
 
         #region Properties
-        public ObservableCollection<Guest> Guests { get; internal set; }
-        public AddGuestCommand AddGuestCommand { get; set; }
-        public Guest guest { get; set; } = new Guest();
+        public Guest Guest { get; set; } = new Guest();
 
         public string FirstName
         {
-            get { return guest.FirstName; }
-            set { guest.FirstName = value; OnPropertyChanged(); }
+            get { return Guest.FirstName; }
+            set { Guest.FirstName = value; OnPropertyChanged(); }
         }
 
         public string LastName
         {
-            get { return guest.LastName; }
-            set { guest.LastName = value; OnPropertyChanged(); }
+            get { return Guest.LastName; }
+            set { Guest.LastName = value; OnPropertyChanged(); }
         }
 
         public string PhoneNumber
         {
-            get { return guest.PhoneNumber; }
-            set { guest.PhoneNumber = value; OnPropertyChanged(); }
+            get { return Guest.PhoneNumber; }
+            set { Guest.PhoneNumber = value; OnPropertyChanged(); }
         }
 
         public string EmailAdress
         {
-            get { return guest.EmailAdress; }
-            set { guest.EmailAdress = value; OnPropertyChanged(); }
+            get { return Guest.EmailAdress; }
+            set { Guest.EmailAdress = value; OnPropertyChanged(); }
         }
+
         public string ICEPhoneNumber
         {
-            get { return guest.ICEPhoneNumber; }
-            set { guest.ICEPhoneNumber = value; OnPropertyChanged(); }
+            get { return Guest.ICEPhoneNumber; }
+            set { Guest.ICEPhoneNumber = value; OnPropertyChanged(); }
         }
+
+        public ICommand SubmitCommand { get; set; }
+
+        private ICommand GuestCommand;
 
         #endregion Properties
 
-        public AddGuestViewModel()
+        public GuestDetailViewModel(ICommand guestCommand, Guest currentGuestData) : this(guestCommand)
         {
-           AddGuestCommand  = new AddGuestCommand(this);
+            Guest.CopyFrom(currentGuestData);
+        }
+
+        public GuestDetailViewModel(ICommand guestCommand)
+        {
+            GuestCommand = guestCommand;
+            SubmitCommand = new RelayCommand(OnSubmitClicked, (_) => ValidateInput());
+        }
+
+        private void OnSubmitClicked(object _)
+        {
+            GuestCommand.Execute(Guest);
         }
 
         /// <summary>
@@ -70,10 +84,7 @@ namespace Hotel.ViewModel
             }
             return true;
         }
-        public void AddGuest()
-        {
-            Guests.Add(guest);
-        }
+
         public void OnPropertyChanged([CallerMemberName] string name = "")
         {
             PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(name));

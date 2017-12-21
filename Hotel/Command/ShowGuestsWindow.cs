@@ -21,8 +21,10 @@ namespace Hotel.Command
         }
         public void Execute(object parameter)
         {
-            GuestsView view = new GuestsView();
-            view.DataContext = new GuestsViewModel(_hotelManager.Guests);
+            GuestsView view = new GuestsView
+            {
+                DataContext = new GuestsViewModel(_hotelManager.Guests)
+            };
             view.Show();
         }
     }

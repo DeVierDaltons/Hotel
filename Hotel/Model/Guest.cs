@@ -42,13 +42,21 @@ namespace Hotel.Model
             get { return _emailAdress; }
             set { _emailAdress = value; }
         }
-
         private string _ICEPhoneNumber;
 
         public string ICEPhoneNumber
         {
             get { return _ICEPhoneNumber; }
             set { _ICEPhoneNumber = value; }
+        }
+
+        public void CopyFrom(Guest newGuest)
+        {
+            _firstName = newGuest._firstName;
+            _lastName = newGuest._lastName;
+            _phoneNumber = newGuest._phoneNumber;
+            _emailAdress = newGuest._emailAdress;
+            _ICEPhoneNumber = newGuest._ICEPhoneNumber;
         }
     }
 }

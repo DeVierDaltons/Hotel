@@ -2,6 +2,7 @@
 using Hotel.ViewModel;
 using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -9,18 +10,19 @@ using System.Windows.Input;
 
 namespace Hotel.Command
 {
-     class AddGuestCommand : ICommand
+    public class AddGuestCommand : ICommand
     {
         public event EventHandler CanExecuteChanged
         {
             add { CommandManager.RequerySuggested += value; }
             remove { CommandManager.RequerySuggested -= value; }
         }
-        AddGuestViewModel viewModel;
 
-        public AddGuestCommand(AddGuestViewModel vm)
+        private ObservableCollection<Guest> Guests;
+
+        public AddGuestCommand(ObservableCollection<Guest> guests)
         {
-            viewModel = vm;
+            Guests = guests;
         }
 
         /// <summary>
@@ -30,7 +32,7 @@ namespace Hotel.Command
         /// <returns></returns>
         public bool CanExecute(object parameter)
         {
-            return viewModel.ValidateInput();
+            return true;
         }
 
         /// <summary>
@@ -39,7 +41,7 @@ namespace Hotel.Command
         /// <param name="parameter"></param>
         public void Execute(object parameter)
         {
-            viewModel.AddGuest();
+            Guests.Add(parameter as Guest);
         }
     }
 }
