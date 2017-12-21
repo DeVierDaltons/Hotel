@@ -17,7 +17,7 @@ namespace Hotel.Model
 
         private string _firstName;
 
-        public string FirstName
+        public virtual string FirstName
         {
             get { return _firstName; }
             set { _firstName = value; OnPropertyChanged();  }
@@ -25,7 +25,7 @@ namespace Hotel.Model
 
         private string _lastName;
 
-        public string LastName
+        public virtual string LastName
         {
             get { return _lastName; }
             set { _lastName = value; OnPropertyChanged(); }
@@ -36,7 +36,7 @@ namespace Hotel.Model
         /// <summary>
         /// Storing phone number as string to perserve preceding zeros
         /// </summary>
-        public string PhoneNumber
+        public virtual string PhoneNumber
         {
             get { return _phoneNumber; }
             set { _phoneNumber = value; OnPropertyChanged(); }
@@ -44,7 +44,7 @@ namespace Hotel.Model
 
         private string _emailAdress;
 
-        public string EmailAdress
+        public virtual string EmailAdress
         {
             get { return _emailAdress; }
             set { _emailAdress = value; OnPropertyChanged(); }
@@ -81,7 +81,7 @@ namespace Hotel.Model
 
         private string _ICEPhoneNumber;
 
-        public string ICEPhoneNumber
+        public virtual string ICEPhoneNumber
         {
             get { return _ICEPhoneNumber; }
             set { _ICEPhoneNumber = value; OnPropertyChanged(); }

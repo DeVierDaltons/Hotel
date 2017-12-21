@@ -1,9 +1,7 @@
-﻿using System;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System.Collections.ObjectModel;
 using Hotel.Model;
 using Hotel.Command;
-using Hotel.View;
 using Hotel.ViewModel;
 
 namespace TestHotel
