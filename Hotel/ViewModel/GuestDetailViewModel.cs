@@ -1,15 +1,9 @@
 ﻿using Hotel.Command;
 using Hotel.Model;
 using System;
-using System.Collections.Generic;
 using System.ComponentModel;
-using System.Linq;
 using System.Runtime.CompilerServices;
-using System.Text;
-using System.Text.RegularExpressions;
-using System.Threading.Tasks;
 using System.Windows.Input;
-using System.Collections.ObjectModel;
 
 namespace Hotel.ViewModel
 {
@@ -56,13 +50,12 @@ namespace Hotel.ViewModel
 
         #endregion Properties
 
-        public GuestDetailViewModel(ICommand guestCommand, Guest currentGuestData) : this(guestCommand)
+        public GuestDetailViewModel(ICommand guestCommand, Guest currentGuestData)
         {
-            Guest.CopyFrom(currentGuestData);
-        }
-
-        public GuestDetailViewModel(ICommand guestCommand)
-        {
+            if (currentGuestData != null)
+            {
+                Guest.CopyFrom(currentGuestData);
+            }
             GuestCommand = guestCommand;
             SubmitCommand = new RelayCommand(OnSubmitClicked, (_) => ValidateInput());
         }

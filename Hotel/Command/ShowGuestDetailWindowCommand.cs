@@ -12,13 +12,9 @@ namespace Hotel.Command
         private ICommand SubmitCommand;
         private Guest CurrentGuest;
 
-        public ShowGuestDetailWindowCommand(ICommand submitCommand, Guest currentGuestData) : this(submitCommand)
+        public ShowGuestDetailWindowCommand(ICommand submitCommand, Guest currentGuestData = null)
         {
             CurrentGuest = currentGuestData;
-        }
-
-        public ShowGuestDetailWindowCommand(ICommand submitCommand)
-        {
             SubmitCommand = submitCommand;
         }
 
