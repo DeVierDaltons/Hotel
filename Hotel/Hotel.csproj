@@ -83,6 +83,10 @@
     <Compile Include="Command\OpenModifyBookingWindowCommand.cs" />
     <Compile Include="Command\OpenModifyRoomWindowCommand.cs" />
     <Compile Include="Model\BookingPeriod.cs" />
+    <Compile Include="Dao\GuestMap.cs" />
+    <Compile Include="Dao\NHibernateHelper.cs" />
+    <Compile Include="Model\IGuestRepository.cs" />
+    <Compile Include="Model\NHibernateGuestRepository.cs" />
     <Compile Include="Model\Room.cs" />
     <Compile Include="Model\RoomQuality.cs" />
     <Compile Include="ViewModel\AddBookingViewModel.cs" />

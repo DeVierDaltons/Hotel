@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Linq;
@@ -12,6 +12,8 @@ namespace Hotel.Model
     public class Guest : INotifyPropertyChanged
     {
         public event PropertyChangedEventHandler PropertyChanged;
+
+        public virtual Guid Id { get; set; }
 
         private string _firstName;
 
