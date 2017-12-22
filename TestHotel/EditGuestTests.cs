@@ -1,13 +1,13 @@
+﻿using System;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
-using Hotel.ViewModel;
+using System.Collections.ObjectModel;
 using Hotel.Model;
 using Hotel.Command;
-using System.Collections.ObjectModel;
 
-namespace UnitTests
+namespace TestHotel
 {
     [TestClass]
-    public class AddGuestTests
+    public class EditGuestTests
     {
         [TestMethod]
         public void AddGuestUsingCommandTest()
