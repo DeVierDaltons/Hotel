@@ -36,6 +36,6 @@
         <TextBox Grid.Row="3" Grid.Column="1" Text="{Binding PricePerDay}"></TextBox>
 
         <CheckBox Grid.Row="4" Grid.Column="0" IsChecked="{Binding HasNiceView}" Content="Has a nice view"/>
-        <Button Grid.Row="4" Grid.Column="1" Content="Save" Command="{Binding AddRoomCommand}"/>
+        <Button Grid.Row="4" Grid.Column="1" Content="Save" Command="{Binding AddRoomCommand}" Click="Button_Click"/>
     </Grid>
 </Window>
