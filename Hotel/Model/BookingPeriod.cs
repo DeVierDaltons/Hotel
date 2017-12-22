@@ -9,62 +9,54 @@ namespace Hotel.Model
     public class BookingPeriod
     {
 
-        private Date _startTime;
+        private DateTime _startDate;
 
-        public Date StartTime
+        public DateTime StartDate
         {
-            get { return _startTime; }
-            set { _startTime = value; }
+            get { return _startDate; }
+            set { _startDate = value; }
         }
 
-        private Date _endTime;
+        private DateTime _endDate;
 
-        public Date EndTime
+        public DateTime EndDate
         {
-            get { return _endTime; }
-            set { _endTime = value; }
+            get { return _endDate; }
+            set { _endDate = value; }
         }
 
         /// <summary>
         /// Creates a new BookingPeriod based on a start and end date
         /// </summary>
-        /// <param name="start">Start date</param>
-        /// <param name="end">End date</param>
-        public BookingPeriod(Date start, Date end)
+        /// <param name="startDate">Start date</param>
+        /// <param name="endDate">End date</param>
+        public BookingPeriod(DateTime startDate, DateTime endDate)
         {
-            StartTime = start;
-            EndTime = end;
+            StartDate = startDate;
+            EndDate = endDate;
         }
 
         /// <summary>
         /// Creates a new BookingPeriod based on a start date and timespan
         /// </summary>
-        /// <param name="start">Start date</param>
+        /// <param name="startDays">Start date</param>
         /// <param name="days">Timespan</param>
-        public BookingPeriod(Date start, int days)
+        public BookingPeriod(DateTime startDate, int days)
         {
-            StartTime = start;
-            EndTime = StartTime.Add(days);
+            StartDate = startDate;
+            EndDate = startDate.Add(TimeSpan.FromDays((double)days));
         }
 
         /// <summary>
-        /// Helper method to determine if a specified BookingPeriod is to the 'left' of the current BookingPeriod
+        /// Helper method to determine if the BookingPeriods do not overlap
         /// </summary>
         /// <param name="compareWith">BookingPeriod to compare with</param>
-        /// <returns>True if the BookingPeriod is to the left of the current one. False otherwise.</returns>
-        private bool BookingPeriodOfArgIsLeftOfCurrentBookingPeriod(BookingPeriod compareWith)
+        /// <returns>True if the BookingPeriod is not overlapping. False otherwise.</returns>
+        private bool NonOverlapcheck(BookingPeriod compareWith)
         {
-            return ((compareWith.StartTime.TheDate < StartTime.TheDate) && (compareWith.EndTime.TheDate <= StartTime.TheDate));
-        }
-
-        /// <summary>
-        /// Helper method to determine if a specified BookingPeriod is to the 'right' of the current BookingPeriod
-        /// </summary>
-        /// <param name="compareWith">BookingPeriod to compare with</param>
-        /// <returns>True if the BookingPeriod is to the right of the current one. False otherwise.</returns>
-        private bool BookingPeriodOfArgIsRightOfCurrentBookingPeriod(BookingPeriod compareWith)
-        {
-            return ((compareWith.StartTime.TheDate >= EndTime.TheDate) && (compareWith.EndTime.TheDate > EndTime.TheDate));
+            return ((compareWith.StartDate >= EndDate) && (compareWith.EndDate > EndDate)
+                || ((compareWith.StartDate < StartDate) && (compareWith.EndDate < StartDate))
+                );
         }
 
         /// <summary>
@@ -74,7 +66,7 @@ namespace Hotel.Model
         /// <returns>True if it they do not overlap. False otherwise.</returns>
         public bool DoesNotoverlapWith(BookingPeriod compareWith)
         {
-            return (BookingPeriodOfArgIsLeftOfCurrentBookingPeriod(compareWith) || BookingPeriodOfArgIsRightOfCurrentBookingPeriod(compareWith));
+            return (NonOverlapcheck(compareWith));
         }
 
 
