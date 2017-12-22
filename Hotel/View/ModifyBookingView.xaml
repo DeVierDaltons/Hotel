@@ -15,7 +15,7 @@
         <Grid.RowDefinitions>
             <RowDefinition Height="*"></RowDefinition>
         </Grid.RowDefinitions>
-        <DataGrid Grid.Row="0" CanUserAddRows="False"  Grid.Column="0" Unloaded="DataGrid_Unloaded" ItemsSource="{Binding Bookings, Mode=TwoWay}" Margin="0,0,0,20" AutoGenerateColumns="False" >
+        <DataGrid Grid.Row="0" CanUserAddRows="False"  Grid.Column="0" Unloaded="DataGrid_Unloaded" ItemsSource="{Binding Bookings}" Margin="0,0,0,20" AutoGenerateColumns="False" >
             <DataGrid.Columns>
                 <DataGridTextColumn Binding="{Binding StartDayString}" Header="Start day"></DataGridTextColumn>
                 <DataGridTextColumn Binding="{Binding EndDayString}" Header="End day"></DataGridTextColumn>
