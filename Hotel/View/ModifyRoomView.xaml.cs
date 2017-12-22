@@ -17,9 +17,9 @@ namespace Hotel.View
     /// <summary>
     /// Interaction logic for ModifyRoom.xaml
     /// </summary>
-    public partial class ModifyRoom : Window
+    public partial class ModifyRoomView : Window
     {
-        public ModifyRoom()
+        public ModifyRoomView()
         {
             InitializeComponent();
         }

@@ -1,4 +1,4 @@
-﻿<Window x:Class="Hotel.View.ModifyRoom"
+﻿<Window x:Class="Hotel.View.ModifyRoomView"
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
@@ -14,6 +14,6 @@
         <Grid.RowDefinitions>
             <RowDefinition Height="*"></RowDefinition>
         </Grid.RowDefinitions>
-        <DataGrid Grid.Row="0" CanUserAddRows="False"  Grid.Column="0" Unloaded="DataGrid_Unloaded" ItemsSource="{Binding HotelManager.Rooms, Mode=TwoWay}" Margin="0,0,0,20"></DataGrid>
+        <DataGrid Grid.Row="0" CanUserAddRows="False"  Grid.Column="0" Unloaded="DataGrid_Unloaded" ItemsSource="{Binding Rooms, Mode=TwoWay}" Margin="0,0,0,20"></DataGrid>
     </Grid>
 </Window>

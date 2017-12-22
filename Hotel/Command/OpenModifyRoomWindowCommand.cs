@@ -28,9 +28,8 @@ namespace Hotel.Command
 
         public void Execute(object parameter)
         {
-            ModifyRoom view = new ModifyRoom();
-            ModifyRoomViewModel viewmodel = new ModifyRoomViewModel();
-            viewmodel.HotelManager = hotelManager;
+            ModifyRoomView view = new ModifyRoomView();
+            ModifyRoomViewModel viewmodel = new ModifyRoomViewModel(hotelManager.Rooms);
             view.DataContext = viewmodel;
             view.Show();
         }

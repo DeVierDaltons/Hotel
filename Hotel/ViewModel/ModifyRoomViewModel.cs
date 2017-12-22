@@ -5,17 +5,18 @@ using System.Collections.ObjectModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows.Controls;
+using Hotel.View;
 
 namespace Hotel.ViewModel
 {
     public class ModifyRoomViewModel
     {
-        public HotelManager HotelManager { get; set; }
-        public ObservableCollection<Room> rooms { get; set; }
-        public ModifyRoomViewModel()
+        public ObservableCollection<Room> Rooms { get; set; }
+        public ModifyRoomViewModel(ObservableCollection<Room> rooms)
         {
+            Rooms = rooms;
         }
-        
         
     }
 }
