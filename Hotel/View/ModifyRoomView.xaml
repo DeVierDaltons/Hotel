@@ -24,8 +24,8 @@
         </Grid.RowDefinitions>
         <DataGrid Grid.Row="0" CanUserAddRows="False"  Grid.Column="0" Unloaded="DataGrid_Unloaded" ItemsSource="{Binding Rooms, Mode=TwoWay}" Margin="0,0,0,20" AutoGenerateColumns="False" >
             <DataGrid.Columns>
-                <DataGridTextColumn Binding="{Binding RoomNumber, Mode=TwoWay}" Header="Room number" IsReadOnly="True"></DataGridTextColumn>
-                <DataGridTextColumn Binding="{Binding Beds, Mode=TwoWay}" Header="Amount of beds" IsReadOnly="True"></DataGridTextColumn>
+                <DataGridTextColumn Binding="{Binding RoomNumber, Mode=TwoWay}" Header="Room number"></DataGridTextColumn>
+                <DataGridTextColumn Binding="{Binding Beds, Mode=TwoWay}" Header="Amount of beds" ></DataGridTextColumn>
                 <DataGridComboBoxColumn ItemsSource="{Binding Source={StaticResource myEnum}}" SelectedItemBinding="{Binding Quality, Mode=TwoWay}" Header="Quality"></DataGridComboBoxColumn>
                 <DataGridTextColumn Binding="{Binding HasNiceView, Mode=TwoWay}" Header="Has a nice view"></DataGridTextColumn>
                 <DataGridTextColumn Binding="{Binding PricePerDay, Mode=TwoWay}" Header="Price per day"></DataGridTextColumn>
