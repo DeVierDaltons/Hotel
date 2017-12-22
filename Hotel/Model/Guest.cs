@@ -103,5 +103,10 @@ namespace Hotel.Model
             PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(name));
             CommandManager.InvalidateRequerySuggested();
         }
+
+        public override string ToString()
+        {
+            return FirstName;
+        }
     }
 }

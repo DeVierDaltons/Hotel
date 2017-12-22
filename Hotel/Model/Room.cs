@@ -7,5 +7,10 @@
         public RoomQuality Quality { get; set; }
         public bool HasNiceView { get; set; }
         public decimal PricePerDay { get; set; }
+
+        public override string ToString()
+        {
+            return RoomNumber;
+        }
     }
 }
