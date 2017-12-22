@@ -3,26 +3,31 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.ComponentModel;
+using System.Runtime.CompilerServices;
 using System.Windows.Controls;
+using System.Windows.Input;
 
 namespace Hotel.Model
 {
-    public class Booking
+    public class Booking : INotifyPropertyChanged
     {
-        private Guest _guest;
+        public virtual Guid Id { get; set; }
 
+        public virtual event PropertyChangedEventHandler PropertyChanged;
+
+        private Guest _guest;
         public Guest Guest
         {
             get { return _guest; }
-            set { _guest = value; }
+            set { _guest = value; OnPropertyChanged(); }
         }
 
         private Room _room;
-
         public Room Room
         {
             get { return _room; }
-            set { _room = value; }
+            set { _room = value; OnPropertyChanged(); }
         }
 
         private BookingPeriod _bookingPeriod;
@@ -66,6 +71,12 @@ namespace Hotel.Model
         public void SetDates(SelectedDatesCollection selectedDates)
         {
             BookingPeriod = new BookingPeriod(selectedDates.FirstOrDefault(), selectedDates.LastOrDefault());
+        }
+
+        public virtual void OnPropertyChanged([CallerMemberName] string name = "")
+        {
+            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(name));
+            CommandManager.InvalidateRequerySuggested();
         }
     }
 }

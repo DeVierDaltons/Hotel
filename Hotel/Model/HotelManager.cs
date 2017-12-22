@@ -3,30 +3,37 @@ using Hotel.Repository;
 using NHibernate.Tool.hbm2ddl;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using System;
 
 namespace Hotel.Model
 {
     public class HotelManager
     {
         private IRepository<Guest> GuestRepository = new NHibernateRepository<Guest>();
+        private IRepository<Room> RoomRepository = new NHibernateRepository<Room>();
+        private IRepository<Booking> BookingRepository = new NHibernateRepository<Booking>();
 
         public RepositoryBackedObservableCollection<Guest> Guests { get; }
-        public ObservableCollection<Room> Rooms { get; set; } = new ObservableCollection<Room>();
-
-        public List<Booking> GetAllBookings()
-        {
-            List<Booking> bookingList = new List<Booking>();
-            foreach(Room room in Rooms) {
-                bookingList.AddRange(room.Bookings);
-            }
-            return bookingList;
-        }
+        public RepositoryBackedObservableCollection<Room> Rooms { get; }
+        public RepositoryBackedObservableCollection<Booking> Bookings { get; }
 
         public HotelManager()
         {
             var schemaUpdate = new SchemaUpdate(NHibernateHelper.Configuration);
             schemaUpdate.Execute(false, true);
             Guests = new RepositoryBackedObservableCollection<Guest>(GuestRepository);
+            Rooms = new RepositoryBackedObservableCollection<Room>(RoomRepository);
+            Bookings = new RepositoryBackedObservableCollection<Booking>(BookingRepository);
+        }
+
+        public List<Booking> GetAllBookings()
+        {
+            List<Booking> allBookings = new List<Booking>();
+            foreach(Room room in Rooms)
+            {
+                allBookings.AddRange(room.Bookings);
+            }
+            return allBookings;
         }
 
         public void AddBooking(Booking booking)
