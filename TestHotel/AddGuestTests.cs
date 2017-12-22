@@ -22,9 +22,7 @@ namespace TestHotel
         [TestMethod]
         public void InvalidGuestCommandFails()
         {
-            ObservableCollection<Guest> guestList = new ObservableCollection<Guest>();
-            new AddGuestCommand(guestList).Execute(new Guest());
-            var guestsVM = new GuestDetailViewModel(new AddGuestCommand(guestList), new Guest());
+            var guestsVM = new GuestDetailViewModel(new AddGuestCommand(new ObservableCollection<Guest>()), new Guest());
             Assert.IsFalse(guestsVM.SubmitCommand.CanExecute(null));
         }
     }
