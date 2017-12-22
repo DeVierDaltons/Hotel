@@ -35,7 +35,7 @@ namespace Hotel.Model
 
         public bool OverlapsWith(Booking booking)
         {
-            return BookingPeriod.OverlapWith(booking.BookingPeriod);
+            return BookingPeriod.OverlapsWith(booking.BookingPeriod);
         }
 
         public bool DoesNotOverlapWith(Booking booking)

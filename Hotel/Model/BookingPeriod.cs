@@ -64,7 +64,7 @@ namespace Hotel.Model
         /// </summary>
         /// <param name="compareWith">BookingPeriod to compare with</param>
         /// <returns>True if it they do  overlap. False otherwise.</returns>
-        public bool OverlapWith(BookingPeriod compareWith)
+        public bool OverlapsWith(BookingPeriod compareWith)
         {
             return !DoesNotoverlapWith(compareWith);
         }
