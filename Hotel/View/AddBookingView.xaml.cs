@@ -16,5 +16,10 @@ namespace Hotel.View
             RoomDropdown.ItemsSource = viewModel.HotelManager.Rooms;
             viewModel.SelectedDates = BookingRangeCalendar.SelectedDates;
         }
+
+        private void Button_Click(object sender, RoutedEventArgs e)
+        {
+            this.Close();
+        }
     }
 }

@@ -18,7 +18,7 @@
             <Label Content="Room:"/>
             <ComboBox Name="RoomDropdown" Width="80" SelectedItem="{Binding Room}"/>
 
-            <Button Width="80" Command="{Binding AddBookingCommand}" Content="Save"></Button>
+            <Button Width="80" Command="{Binding AddBookingCommand}" Content="Save" Click="Button_Click"></Button>
         </WrapPanel>
         <Calendar Name="BookingRangeCalendar" SelectionMode="SingleRange">
 

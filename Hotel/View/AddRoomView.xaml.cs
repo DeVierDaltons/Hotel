@@ -18,5 +18,10 @@ namespace Hotel.View
         {
             (DataContext as AddRoomViewModel).AddRoom();
         }
+
+        private void Button_Click(object sender, RoutedEventArgs e)
+        {
+            this.Close();
+        }
     }
 }
