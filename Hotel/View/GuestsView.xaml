@@ -17,19 +17,17 @@
         <ListBox ItemsSource="{Binding Guests, Mode=TwoWay}" Name="GuestsList">
             <ListBox.ItemTemplate>
                 <DataTemplate>
-                    <ListBoxItem>
-                        <StackPanel HorizontalAlignment="Left" Orientation="Horizontal">
-                            <TextBlock TextWrapping="Wrap" Text="Name:" FontWeight="Bold" Margin="2"/>
-                            <TextBlock TextWrapping="Wrap" Text="{Binding FirstName}" Margin="2,2,0,2"/>
-                            <TextBlock TextWrapping="Wrap" Text="{Binding LastName}" Margin="2"/>
-                            <TextBlock TextWrapping="Wrap" Text="@: " FontWeight="Bold" Margin="2"/>
-                            <TextBlock TextWrapping="Wrap" Text="{Binding EmailAdress}" Margin="2"/>
-                            <TextBlock TextWrapping="Wrap" Text="Phone:" Margin="2" FontWeight="Bold"  />
-                            <TextBlock TextWrapping="Wrap" Text="{Binding PhoneNumber}" Margin="2" />
-                            <TextBlock TextWrapping="Wrap" Text="Country:" Margin="2" FontWeight="Bold"  />
-                            <TextBlock TextWrapping="Wrap" Text="{Binding Country}" Margin="2" />
-                        </StackPanel>
-                    </ListBoxItem>
+                    <StackPanel HorizontalAlignment="Left" Orientation="Horizontal">
+                        <TextBlock TextWrapping="Wrap" Text="Name:" FontWeight="Bold" Margin="2"/>
+                        <TextBlock TextWrapping="Wrap" Text="{Binding FirstName}" Margin="2,2,0,2"/>
+                        <TextBlock TextWrapping="Wrap" Text="{Binding LastName}" Margin="2"/>
+                        <TextBlock TextWrapping="Wrap" Text="@: " FontWeight="Bold" Margin="2"/>
+                        <TextBlock TextWrapping="Wrap" Text="{Binding EmailAdress}" Margin="2"/>
+                        <TextBlock TextWrapping="Wrap" Text="Phone:" Margin="2" FontWeight="Bold"  />
+                        <TextBlock TextWrapping="Wrap" Text="{Binding PhoneNumber}" Margin="2" />
+                        <TextBlock TextWrapping="Wrap" Text="Country:" Margin="2" FontWeight="Bold"  />
+                        <TextBlock TextWrapping="Wrap" Text="{Binding Country}" Margin="2" />
+                    </StackPanel>
                 </DataTemplate>
             </ListBox.ItemTemplate>
         </ListBox>
