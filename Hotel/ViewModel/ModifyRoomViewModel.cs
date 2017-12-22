@@ -17,6 +17,5 @@ namespace Hotel.ViewModel
         {
             Rooms = rooms;
         }
-        
     }
 }
