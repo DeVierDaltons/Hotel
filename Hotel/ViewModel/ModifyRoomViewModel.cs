@@ -11,6 +11,7 @@ namespace Hotel.ViewModel
     public class ModifyRoomViewModel
     {
         public HotelManager HotelManager { get; set; }
+        public RoomQuality Quality { get; set; }
         public ModifyRoomViewModel()
         {
         }
