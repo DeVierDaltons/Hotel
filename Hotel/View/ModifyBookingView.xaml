@@ -4,9 +4,10 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:Hotel.ViewModel"
+        xmlns:core="clr-namespace:System;assembly=mscorlib"
+        xmlns:models="clr-namespace:Hotel.Model"
         mc:Ignorable="d"
-        Title="Modify Bookings" Height="388.312" Width="350" SizeToContent="WidthAndHeight">
-
+        Title="Modify rooms" Height="400" Width="500" SizeToContent="WidthAndHeight">
     <Grid>
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="*"></ColumnDefinition>
@@ -14,6 +15,13 @@
         <Grid.RowDefinitions>
             <RowDefinition Height="*"></RowDefinition>
         </Grid.RowDefinitions>
-        <DataGrid Grid.Row="0" CanUserAddRows="False"  Grid.Column="0" Unloaded="DataGrid_Unloaded" ItemsSource="{Binding Bookings, Mode=TwoWay}" Margin="0,0,0,20"></DataGrid>
+        <DataGrid Grid.Row="0" CanUserAddRows="False"  Grid.Column="0" Unloaded="DataGrid_Unloaded" ItemsSource="{Binding Bookings, Mode=TwoWay}" Margin="0,0,0,20" AutoGenerateColumns="False" >
+            <DataGrid.Columns>
+                <DataGridTextColumn Binding="{Binding StartDayString}" Header="Start day"></DataGridTextColumn>
+                <DataGridTextColumn Binding="{Binding EndDayString}" Header="End day"></DataGridTextColumn>
+                <DataGridTextColumn Binding="{Binding GuestName}" Header="Guest name"></DataGridTextColumn>
+                <DataGridTextColumn Binding="{Binding RoomNumber}" Header="Room number"></DataGridTextColumn>
+            </DataGrid.Columns>
+        </DataGrid>
     </Grid>
 </Window>
