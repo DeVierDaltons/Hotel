@@ -26,6 +26,8 @@
                             <TextBlock TextWrapping="Wrap" Text="{Binding EmailAdress}" Margin="2"/>
                             <TextBlock TextWrapping="Wrap" Text="Phone:" Margin="2" FontWeight="Bold"  />
                             <TextBlock TextWrapping="Wrap" Text="{Binding PhoneNumber}" Margin="2" />
+                            <TextBlock TextWrapping="Wrap" Text="Country:" Margin="2" FontWeight="Bold"  />
+                            <TextBlock TextWrapping="Wrap" Text="{Binding Country}" Margin="2" />
                         </StackPanel>
                     </ListBoxItem>
                 </DataTemplate>
