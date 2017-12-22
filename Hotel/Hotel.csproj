@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?>
+﻿<?xml version="1.0" encoding="utf-8"?>
 <Project ToolsVersion="15.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
   <PropertyGroup>
@@ -57,12 +57,14 @@
     <Compile Include="Command\AddBookingCommand.cs" />
     <Compile Include="Command\AddRoomCommand.cs" />
     <Compile Include="Command\OpenAddRoomWindowCommand.cs" />
+    <Compile Include="Command\OpenModifyBookingWindowCommand.cs" />
     <Compile Include="Command\OpenModifyRoomWindowCommand.cs" />
     <Compile Include="Model\Room.cs" />
     <Compile Include="Model\RoomQuality.cs" />
     <Compile Include="ViewModel\AddBookingViewModel.cs" />
     <Compile Include="ViewModel\AddRoomViewModel.cs" />
     <Compile Include="Command\OpenAddBookingWindowCommand.cs" />
+    <Compile Include="ViewModel\ModifyBookingViewModel.cs" />
     <Compile Include="ViewModel\ModifyRoomViewModel.cs" />
     <Compile Include="View\AddBookingView.xaml.cs">
       <DependentUpon>AddBookingView.xaml</DependentUpon>
@@ -85,6 +87,9 @@
     </Compile>
     <Compile Include="View\GuestsView.xaml.cs">
       <DependentUpon>GuestsView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="View\ModifyBookingView.xaml.cs">
+      <DependentUpon>ModifyBookingView.xaml</DependentUpon>
     </Compile>
     <Compile Include="View\ModifyRoomView.xaml.cs">
       <DependentUpon>ModifyRoomView.xaml</DependentUpon>
@@ -118,6 +123,10 @@
     <Page Include="View\GuestsView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="View\ModifyBookingView.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
     </Page>
     <Page Include="View\ModifyRoomView.xaml">
       <SubType>Designer</SubType>
