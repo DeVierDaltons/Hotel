@@ -54,9 +54,7 @@ namespace Hotel.Model
         /// <returns>True if it they do not overlap. False otherwise.</returns>
         public bool DoesNotoverlapWith(BookingPeriod compareWith)
         {
-            return ((compareWith.StartDate > EndDate) && (compareWith.EndDate > EndDate)
-                || ((compareWith.StartDate < StartDate) && (compareWith.EndDate < StartDate))
-                );
+            return (compareWith.StartDate > EndDate) || (compareWith.EndDate < StartDate);
         }
 
         /// <summary>
