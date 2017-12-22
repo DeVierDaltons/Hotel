@@ -48,27 +48,16 @@ namespace Hotel.Model
         }
 
         /// <summary>
-        /// Helper method to determine if the BookingPeriods do not overlap
-        /// </summary>
-        /// <param name="compareWith">BookingPeriod to compare with</param>
-        /// <returns>True if the BookingPeriod is not overlapping. False otherwise.</returns>
-        private bool NonOverlapcheck(BookingPeriod compareWith)
-        {
-            return ((compareWith.StartDate > EndDate) && (compareWith.EndDate > EndDate)
-                || ((compareWith.StartDate < StartDate) && (compareWith.EndDate < StartDate))
-                );
-        }
-
-        /// <summary>
         /// Determines if the specified BookingPeriod does not overlap with the current one
         /// </summary>
         /// <param name="compareWith">BookingPeriod to compare with</param>
         /// <returns>True if it they do not overlap. False otherwise.</returns>
         public bool DoesNotoverlapWith(BookingPeriod compareWith)
         {
-            return (NonOverlapcheck(compareWith));
+            return ((compareWith.StartDate > EndDate) && (compareWith.EndDate > EndDate)
+                || ((compareWith.StartDate < StartDate) && (compareWith.EndDate < StartDate))
+                );
         }
-
 
         /// <summary>
         /// Determines if the specified BookingPeriod does  overlap with the current one
