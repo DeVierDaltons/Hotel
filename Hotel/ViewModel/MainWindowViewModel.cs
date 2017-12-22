@@ -11,16 +11,24 @@ namespace Hotel.ViewModel
 {
     public class MainWindowViewModel
     {
-        private HotelManager HotelManager = new HotelManager();
+        public HotelManager HotelManager { get; set; }
         public ICommand ShowAddGuestWindowCommand { get; }
+        public ICommand ShowGuestsWindowCommand { get; }
         public ICommand ShowAddRoomWindowCommand { get; }
+        public ICommand ShowAddModifyRoomWindow { get; }
         public ICommand ShowAddBookingWindowCommand { get; }
+        public ICommand ShowBookingsWindowCommand { get; }
 
         public MainWindowViewModel()
         {
-            ShowAddGuestWindowCommand = new OpenAddGuestWindowCommand(HotelManager);
+            HotelManager = new HotelManager();
+            ShowAddGuestWindowCommand = new ShowGuestDetailWindowCommand(new AddGuestCommand(HotelManager.Guests));
+            ShowGuestsWindowCommand = new ShowGuestsWindowCommand(HotelManager);
             ShowAddRoomWindowCommand = new OpenAddRoomWindowCommand(HotelManager);
             ShowAddBookingWindowCommand = new OpenAddBookingWindowCommand(HotelManager);
+            ShowAddModifyRoomWindow = new OpenModifyRoomWindowCommand(HotelManager);
+            ShowAddModifyRoomWindow = new OpenModifyRoomWindowCommand(HotelManager);
+            ShowBookingsWindowCommand = new OpenModifyBookingWindowCommand(HotelManager);
         }
     }
 }

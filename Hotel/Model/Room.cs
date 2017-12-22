@@ -2,10 +2,15 @@
 {
     public class Room
     {
-        public string RoomNumber;
-        public int Beds;
-        public RoomQuality Quality;
-        public bool HasNiceView;
-        public decimal PricePerDay;
+        public string RoomNumber { get; set; }
+        public int Beds { get; set; }
+        public RoomQuality Quality { get; set; }
+        public bool HasNiceView { get; set; }
+        public decimal PricePerDay { get; set; }
+
+        public override string ToString()
+        {
+            return RoomNumber;
+        }
     }
 }

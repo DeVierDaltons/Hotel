@@ -54,14 +54,19 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Compile Include="Command\AddBookingCommand.cs" />
     <Compile Include="Command\AddRoomCommand.cs" />
-    <Compile Include="Command\OpenAddGuestWindowCommand.cs" />
     <Compile Include="Command\OpenAddRoomWindowCommand.cs" />
+    <Compile Include="Command\OpenModifyBookingWindowCommand.cs" />
+    <Compile Include="Command\OpenModifyRoomWindowCommand.cs" />
+    <Compile Include="Model\BookingPeriod.cs" />
     <Compile Include="Model\Room.cs" />
     <Compile Include="Model\RoomQuality.cs" />
     <Compile Include="ViewModel\AddBookingViewModel.cs" />
     <Compile Include="ViewModel\AddRoomViewModel.cs" />
     <Compile Include="Command\OpenAddBookingWindowCommand.cs" />
+    <Compile Include="ViewModel\ModifyBookingViewModel.cs" />
+    <Compile Include="ViewModel\ModifyRoomViewModel.cs" />
     <Compile Include="View\AddBookingView.xaml.cs">
       <DependentUpon>AddBookingView.xaml</DependentUpon>
     </Compile>
@@ -69,15 +74,25 @@
       <DependentUpon>AddRoomView.xaml</DependentUpon>
     </Compile>
     <Compile Include="Model\HotelManager.cs" />
+    <Compile Include="Command\EditGuestCommand.cs" />
+    <Compile Include="Command\RelayCommand.cs" />
+    <Compile Include="Command\ShowGuestDetailWindowCommand.cs" />
+    <Compile Include="Command\ShowGuestsWindow.cs" />
+    <Compile Include="ViewModel\GuestDetailViewModel.cs" />
     <Compile Include="ViewModel\MainWindowViewModel.cs" />
-    <Compile Include="View\AddGuestView.xaml.cs">
-      <DependentUpon>AddGuestView.xaml</DependentUpon>
+    <Compile Include="ViewModel\GuestsViewModel.cs" />
+    <Compile Include="View\GuestDetailView.xaml.cs">
+      <DependentUpon>GuestDetailView.xaml</DependentUpon>
     </Compile>
-    <Compile Include="View\ModifyRoom.xaml.cs">
-      <DependentUpon>ModifyRoom.xaml</DependentUpon>
+    <Compile Include="View\GuestsView.xaml.cs">
+      <DependentUpon>GuestsView.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Model\BookingPeriod.cs" />
-    <Compile Include="ViewModel\AddGuestViewModel.cs" />
+    <Compile Include="View\ModifyBookingView.xaml.cs">
+      <DependentUpon>ModifyBookingView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="View\ModifyRoomView.xaml.cs">
+      <DependentUpon>ModifyRoomView.xaml</DependentUpon>
+    </Compile>
     <Page Include="MainWindow.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
@@ -101,11 +116,19 @@
     </Page>
   </ItemGroup>
   <ItemGroup>
-    <Page Include="View\AddGuestView.xaml">
+    <Page Include="View\GuestDetailView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="View\ModifyRoom.xaml">
+    <Page Include="View\GuestsView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="View\ModifyBookingView.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="View\ModifyRoomView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

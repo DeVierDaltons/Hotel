@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows.Controls;
 
 namespace Hotel.Model
 {
@@ -42,7 +43,29 @@ namespace Hotel.Model
             return BookingPeriod.DoesNotoverlapWith(booking.BookingPeriod);
         }
 
+        public string StartDayString
+        {
+            get { return BookingPeriod.StartDate.ToShortDateString(); }
+        }
 
+        public string EndDayString
+        {
+            get { return BookingPeriod.EndDate.ToShortDateString(); }
+        }
+
+        public string GuestName
+        {
+            get { return Guest.FirstName ?? "null"; }
+        }
+
+        public string RoomNumber
+        {
+            get { return Room.RoomNumber ?? "null"; }
+        }
+
+        public void SetDates(SelectedDatesCollection selectedDates)
+        {
+            BookingPeriod = new BookingPeriod(selectedDates.FirstOrDefault(), selectedDates.LastOrDefault());
+        }
     }
-
 }

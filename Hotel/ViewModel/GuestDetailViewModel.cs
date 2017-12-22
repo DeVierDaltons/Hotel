@@ -1,31 +1,23 @@
 ﻿using Hotel.Command;
 using Hotel.Model;
 using System;
-using System.Collections.Generic;
 using System.ComponentModel;
-using System.IO;
-using System.Linq;
 using System.Runtime.CompilerServices;
-using System.Text;
-using System.Text.RegularExpressions;
-using System.Threading.Tasks;
 using System.Windows.Input;
 
 namespace Hotel.ViewModel
 {
-    public class AddGuestViewModel : INotifyPropertyChanged
+    public class GuestDetailViewModel : INotifyPropertyChanged
     {
         public event PropertyChangedEventHandler PropertyChanged;
 
         #region Properties
-        public HotelManager HotelManager { get; set; }
-        public ICommand AddGuestCommand { get; set; }
         public Guest Guest { get; set; } = new Guest();
 
         public string FirstName
         {
             get { return Guest.FirstName; }
-            set { Guest.FirstName = value; OnPropertyChanged(nameof(FirstName)); }
+            set { Guest.FirstName = value; OnPropertyChanged(); }
         }
 
         public string LastName
@@ -45,16 +37,62 @@ namespace Hotel.ViewModel
             get { return Guest.EmailAdress; }
             set { Guest.EmailAdress = value; OnPropertyChanged(); }
         }
+
+        public string Adress
+        {
+            get { return Guest.Adress; }
+            set { Guest.Adress = value; OnPropertyChanged(); }
+        }
+
+        public string PostalCode
+        {
+            get { return Guest.PostalCode; }
+            set
+            {
+                Guest.PostalCode = value; OnPropertyChanged();
+            }
+        }
+
+        public string City
+        {
+            get { return Guest.City; }
+            set
+            {
+                Guest.City = value; OnPropertyChanged();
+            }
+        }
+
+        public string Country
+        {
+            get { return Guest.Country; }
+            set { Guest.Country = value; OnPropertyChanged(); }
+        }
+
         public string ICEPhoneNumber
         {
             get { return Guest.ICEPhoneNumber; }
             set { Guest.ICEPhoneNumber = value; OnPropertyChanged(); }
         }
+
+        public ICommand SubmitCommand { get; set; }
+
+        private ICommand GuestCommand;
+
         #endregion Properties
 
-        public AddGuestViewModel()
+        public GuestDetailViewModel(ICommand guestCommand, Guest currentGuestData)
         {
-           AddGuestCommand = new AddGuestCommand(this);
+            if (currentGuestData != null)
+            {
+                Guest.CopyFrom(currentGuestData);
+            }
+            GuestCommand = guestCommand;
+            SubmitCommand = new RelayCommand(OnSubmitClicked, (_) => ValidateInput());
+        }
+
+        private void OnSubmitClicked(object _)
+        {
+            GuestCommand.Execute(Guest);
         }
 
         /// <summary>
@@ -68,11 +106,6 @@ namespace Hotel.ViewModel
                 return false;
             }
             return true;
-        }
-
-        public void AddGuest()
-        {
-            HotelManager.Guests.Add(Guest);
         }
 
         public void OnPropertyChanged([CallerMemberName] string name = "")
