@@ -24,6 +24,10 @@ namespace Hotel.Model
             Guests = new RepositoryBackedObservableCollection<Guest>(GuestRepository);
             Rooms = new RepositoryBackedObservableCollection<Room>(RoomRepository);
             Bookings = new RepositoryBackedObservableCollection<Booking>(BookingRepository);
+
+            foreach (Booking booking in Bookings) {
+                Console.WriteLine(booking.Guest.FirstName + " booked room " + booking.Room.RoomNumber);
+            }
         }
 
         public List<Booking> GetAllBookings()
