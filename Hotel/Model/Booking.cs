@@ -17,14 +17,14 @@ namespace Hotel.Model
         public virtual event PropertyChangedEventHandler PropertyChanged;
 
         private Guest _guest;
-        public Guest Guest
+        public virtual Guest Guest
         {
             get { return _guest; }
             set { _guest = value; OnPropertyChanged(); }
         }
 
         private Room _room;
-        public Room Room
+        public virtual Room Room
         {
             get { return _room; }
             set { _room = value; OnPropertyChanged(); }
@@ -32,7 +32,7 @@ namespace Hotel.Model
 
         private BookingPeriod _bookingPeriod;
 
-        public BookingPeriod BookingPeriod
+        public virtual BookingPeriod BookingPeriod
         {
             get { return _bookingPeriod; }
             set { _bookingPeriod = value; }
@@ -68,7 +68,7 @@ namespace Hotel.Model
             get { return Room.RoomNumber ?? "null"; }
         }
 
-        public void SetDates(SelectedDatesCollection selectedDates)
+        public virtual void SetDates(SelectedDatesCollection selectedDates)
         {
             BookingPeriod = new BookingPeriod(selectedDates.FirstOrDefault(), selectedDates.LastOrDefault());
         }

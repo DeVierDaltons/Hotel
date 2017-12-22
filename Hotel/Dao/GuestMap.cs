@@ -11,6 +11,9 @@ namespace Hotel.Dao
             Id(x => x.Id, m => m.Generator(Generators.GuidComb));
             Property(x => x.FirstName);
             Property(x => x.LastName);
+            Property(x => x.PhoneNumber);
+            Property(x => x.EmailAdress);
+            Property(x => x.ICEPhoneNumber);
         }
     }
 }

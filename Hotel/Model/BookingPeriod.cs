@@ -8,10 +8,11 @@ namespace Hotel.Model
 {
     public class BookingPeriod
     {
+        public virtual Guid Id { get; set; }
 
         private DateTime _startDate;
 
-        public DateTime StartDate
+        public virtual DateTime StartDate
         {
             get { return _startDate; }
             set { _startDate = value; }
@@ -19,7 +20,7 @@ namespace Hotel.Model
 
         private DateTime _endDate;
 
-        public DateTime EndDate
+        public virtual DateTime EndDate
         {
             get { return _endDate; }
             set { _endDate = value; }
