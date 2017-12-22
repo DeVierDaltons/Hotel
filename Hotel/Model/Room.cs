@@ -66,5 +66,10 @@ namespace Hotel.Model
             }
             return true;
         }
+
+        public override string ToString()
+        {
+            return RoomNumber;
+        }
     }
 }
