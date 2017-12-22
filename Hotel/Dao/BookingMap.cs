@@ -9,16 +9,8 @@ namespace Hotel.Dao
         public BookingMap()
         {
             Id(x => x.Id, m => m.Generator(Generators.GuidComb));
-            ManyToOne(x => x.Guest, x =>
-            {
-                x.PropertyRef("Id");
-                x.Column("Guest");
-            });
-            ManyToOne(x => x.Room, x =>
-            {
-                x.PropertyRef("Id");
-                x.Column("Room");
-            });
+            ManyToOne(x => x.Guest);
+            ManyToOne(x => x.Room);
             OneToOne(x => x.BookingPeriod, x =>
             {            });
         }
