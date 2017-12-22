@@ -38,6 +38,36 @@ namespace Hotel.ViewModel
             set { Guest.EmailAdress = value; OnPropertyChanged(); }
         }
 
+        public string Adress
+        {
+            get { return Guest.Adress; }
+            set { Guest.Adress = value; OnPropertyChanged(); }
+        }
+
+        public string PostalCode
+        {
+            get { return Guest.PostalCode; }
+            set
+            {
+                Guest.PostalCode = value; OnPropertyChanged();
+            }
+        }
+
+        public string City
+        {
+            get { return Guest.City; }
+            set
+            {
+                Guest.City = value; OnPropertyChanged();
+            }
+        }
+
+        public string Country
+        {
+            get { return Guest.Country; }
+            set { Guest.Country = value; OnPropertyChanged(); }
+        }
+
         public string ICEPhoneNumber
         {
             get { return Guest.ICEPhoneNumber; }

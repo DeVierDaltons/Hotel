@@ -5,10 +5,14 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:Hotel.ViewModel"
         mc:Ignorable="d"
-        Title="Guest" Height="300" Width="300"
+        Title="Guest" Height="auto" Width="300"
         >
     <Grid>
         <Grid.RowDefinitions>
+            <RowDefinition Height="*"></RowDefinition>
+            <RowDefinition Height="*"></RowDefinition>
+            <RowDefinition Height="*"></RowDefinition>
+            <RowDefinition Height="*"></RowDefinition>
             <RowDefinition Height="*"></RowDefinition>
             <RowDefinition Height="*"></RowDefinition>
             <RowDefinition Height="*"></RowDefinition>
@@ -33,9 +37,21 @@
         <Label Grid.Row="3" Grid.Column="0" Content="Email:"></Label>
         <TextBox Grid.Row="3" Grid.Column="1" Text="{Binding EmailAdress, Mode=TwoWay}"></TextBox>
 
-        <Label Grid.Row="4" Grid.Column="0" Content="ICE Phone:"></Label>
-        <TextBox Grid.Row="4" Grid.Column="1" Text="{Binding ICEPhoneNumber, Mode=TwoWay}"></TextBox>
+        <Label Grid.Row="4" Grid.Column="0" Content="Adress:"></Label>
+        <TextBox Grid.Row="4" Grid.Column="1" Text="{Binding Adress, Mode=TwoWay}"></TextBox>
+        
+        <Label Grid.Row="5" Grid.Column="0" Content="Postal Code:"></Label>
+        <TextBox Grid.Row="5" Grid.Column="1" Text="{Binding PostalCode, Mode=TwoWay}"></TextBox>
+        
+        <Label Grid.Row="6" Grid.Column="0" Content="City:"></Label>
+        <TextBox Grid.Row="6" Grid.Column="1" Text="{Binding City, Mode=TwoWay}"></TextBox>
 
-        <Button Grid.Row ="5" Grid.Column="0" Grid.ColumnSpan="2" Command="{Binding SubmitCommand}" Content="Submit" Name="AddGuestButton"></Button>
+        <Label Grid.Row="7" Grid.Column="0" Content="Country:"></Label>
+        <TextBox Grid.Row="7" Grid.Column="1" Text="{Binding Country, Mode=TwoWay}"></TextBox>
+
+        <Label Grid.Row="8" Grid.Column="0" Content="ICE Phone:"></Label>
+        <TextBox Grid.Row="8" Grid.Column="1" Text="{Binding ICEPhoneNumber, Mode=TwoWay}"></TextBox>
+
+        <Button Grid.Row ="9" Grid.Column="0" Grid.ColumnSpan="2" Command="{Binding SubmitCommand}" Content="Submit" Name="AddGuestButton"></Button>
     </Grid>
 </Window>

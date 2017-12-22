@@ -47,6 +47,36 @@ namespace Hotel.Model
             get { return _emailAdress; }
             set { _emailAdress = value; OnPropertyChanged(); }
         }
+        private string _adress;
+
+        public string Adress
+        {
+            get { return _adress; }
+            set { _adress = value; OnPropertyChanged(); }
+        }
+
+        private string _postalCode;
+        public string PostalCode
+        {
+            get { return _postalCode; }
+            set { _postalCode = value; OnPropertyChanged(); }
+        }
+
+        private string _city;
+        public string City
+        {
+            get { return _city; }
+            set { _city = value; OnPropertyChanged(); }
+        }
+
+        private string _country;
+
+        public string Country
+        {
+            get { return _country; }
+            set { _country = value; OnPropertyChanged(); }
+        }
+
         private string _ICEPhoneNumber;
 
         public string ICEPhoneNumber
@@ -61,6 +91,10 @@ namespace Hotel.Model
             LastName = newGuest._lastName;
             PhoneNumber = newGuest._phoneNumber;
             EmailAdress = newGuest._emailAdress;
+            Adress = newGuest.Adress;
+            PostalCode = newGuest.PostalCode;
+            City = newGuest.City;
+            Country = newGuest.Country;
             ICEPhoneNumber = newGuest._ICEPhoneNumber;
         }
 
