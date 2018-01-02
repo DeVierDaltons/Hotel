@@ -32,8 +32,15 @@ namespace Hotel.Model
         /// <param name="endDate">End date</param>
         public BookingPeriod(DateTime startDate, DateTime endDate)
         {
-            StartDate = endDate >= startDate ? startDate : endDate;
-            EndDate = endDate >= startDate ? endDate : startDate;
+            if(endDate >= startDate)
+            {
+                StartDate = startDate;
+                EndDate = endDate;
+            } else
+            {
+                StartDate = endDate;
+                EndDate = startDate;
+            }
         }
 
         /// <summary>

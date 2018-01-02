@@ -60,12 +60,12 @@ namespace Hotel.Model
 
         public List<Booking> GetAllBookings()
         {
-            List<Booking> result = new List<Booking>();
+            List<Booking> bookingList = new List<Booking>();
             foreach(Room room in Rooms)
             {
-                result.AddRange(room.Bookings);
+                bookingList.AddRange(room.Bookings);
             }
-            return result;
+            return bookingList;
         }
 
         public void AddBooking(Booking booking)
