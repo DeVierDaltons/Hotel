@@ -1,24 +1,56 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
 using System.Windows.Controls;
 
 namespace Hotel.Model
 {
     public class Booking
     {
-        public Guest Guest;
-        public Room Room;
-        public DateTime StartDay;
-        public DateTime EndDay;
+        private Guest _guest;
+
+        public Guest Guest
+        {
+            get { return _guest; }
+            set { _guest = value; }
+        }
+
+        private Room _room;
+
+        public Room Room
+        {
+            get { return _room; }
+            set { _room = value; }
+        }
+
+        private BookingPeriod _bookingPeriod;
+
+        public BookingPeriod BookingPeriod
+        {
+            get { return _bookingPeriod; }
+            set { _bookingPeriod = value; }
+        }
+
+        public bool OverlapsWith(Booking booking)
+        {
+            return BookingPeriod.OverlapsWith(booking.BookingPeriod);
+        }
+
+        public bool DoesNotOverlapWith(Booking booking)
+        {
+            return BookingPeriod.DoesNotoverlapWith(booking.BookingPeriod);
+        }
 
         public string StartDayString
         {
-            get { return StartDay.ToShortDateString(); }
+            get { return BookingPeriod.StartDate.ToShortDateString(); }
         }
 
         public string EndDayString
         {
-            get { return EndDay.ToShortDateString(); }
+            get { return BookingPeriod.EndDate.ToShortDateString(); }
         }
 
         public string GuestName
@@ -33,8 +65,7 @@ namespace Hotel.Model
 
         public void SetDates(SelectedDatesCollection selectedDates)
         {
-            StartDay = selectedDates.FirstOrDefault();
-            EndDay = selectedDates.LastOrDefault();
+            BookingPeriod = new BookingPeriod(selectedDates.FirstOrDefault(), selectedDates.LastOrDefault());
         }
     }
 }

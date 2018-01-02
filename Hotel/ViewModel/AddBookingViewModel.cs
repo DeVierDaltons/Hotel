@@ -5,6 +5,7 @@ using System.ComponentModel;
 using System.Runtime.CompilerServices;
 using System.Windows.Input;
 using System.Windows.Controls;
+using System.Linq;
 
 namespace Hotel.ViewModel
 {
@@ -31,14 +32,14 @@ namespace Hotel.ViewModel
 
         public DateTime StartDay
         {
-            get { return Booking.StartDay; }
-            set { Booking.StartDay = value; }
+            get { return Booking.BookingPeriod.StartDate; }
+            set { Booking.BookingPeriod.StartDate = value; }
         }
 
         public DateTime EndDay
         {
-            get { return Booking.EndDay; }
-            set { Booking.EndDay = value; }
+            get { return Booking.BookingPeriod.EndDate; }
+            set { Booking.BookingPeriod.EndDate = value; }
         }
 
         public SelectedDatesCollection SelectedDates { get; set; }
@@ -51,13 +52,17 @@ namespace Hotel.ViewModel
 
         public bool ValidateInput()
         {
-            return true;
+            if( Booking.Guest == null || Booking.Room == null)
+            {
+                return false;
+            }
+            return Booking.Room.TimePeriodAvailable(new BookingPeriod(SelectedDates.FirstOrDefault(), SelectedDates.LastOrDefault()));
         }
 
         public void AddBooking()
         {
             Booking.SetDates(SelectedDates);
-            HotelManager.Bookings.Add(Booking);
+            HotelManager.AddBooking(Booking);
         }
 
         public void OnPropertyChanged([CallerMemberName] string name = "")
