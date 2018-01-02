@@ -3,6 +3,7 @@ using NHibernate;
 using System.Linq;
 using System.Collections.Generic;
 using Hotel.Repository;
+using Hotel.Model;
 
 namespace Hotel.Dao
 {
@@ -38,7 +39,17 @@ namespace Hotel.Dao
         {
             using (ISession session = NHibernateHelper.OpenSession())
             {
-                return session.Query<T>().ToList();
+                var result = session.Query<T>().ToList();
+                foreach(T item in result)
+                {
+                    Booking booking = item as Booking;
+                    if( booking != null)
+                    {
+                        NHibernateUtil.Initialize(booking.Guest);
+                        NHibernateUtil.Initialize(booking.Room);
+                    }
+                }
+                return result;
             }
         }
 
