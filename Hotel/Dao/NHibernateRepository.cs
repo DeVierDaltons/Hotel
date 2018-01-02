@@ -37,7 +37,6 @@ namespace Hotel.Dao
         public List<T> GetAll()
         {
             using (ISession session = NHibernateHelper.OpenSession())
-            using (ITransaction transaction = session.BeginTransaction())
             {
                 return session.Query<T>().ToList();
             }
