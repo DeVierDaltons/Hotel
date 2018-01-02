@@ -38,32 +38,32 @@ namespace Hotel.Model
             set { _bookingPeriod = value; }
         }
 
-        public bool OverlapsWith(Booking booking)
+        public virtual bool OverlapsWith(Booking booking)
         {
             return BookingPeriod.OverlapsWith(booking.BookingPeriod);
         }
 
-        public bool DoesNotOverlapWith(Booking booking)
+        public virtual bool DoesNotOverlapWith(Booking booking)
         {
             return BookingPeriod.DoesNotoverlapWith(booking.BookingPeriod);
         }
 
-        public string StartDayString
+        public virtual string StartDayString
         {
             get { return BookingPeriod.StartDate.ToShortDateString(); }
         }
 
-        public string EndDayString
+        public virtual string EndDayString
         {
             get { return BookingPeriod.EndDate.ToShortDateString(); }
         }
 
-        public string GuestName
+        public virtual string GuestName
         {
             get { return Guest.FirstName ?? "null"; }
         }
 
-        public string RoomNumber
+        public virtual string RoomNumber
         {
             get { return Room.RoomNumber ?? "null"; }
         }

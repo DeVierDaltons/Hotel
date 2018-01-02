@@ -11,12 +11,11 @@ namespace Hotel.Model
 {
     public class Guest : INotifyPropertyChanged
     {
-        public event PropertyChangedEventHandler PropertyChanged;
+        public virtual event PropertyChangedEventHandler PropertyChanged;
 
         public virtual Guid Id { get; set; }
 
         private string _firstName;
-
         public virtual string FirstName
         {
             get { return _firstName; }
@@ -24,7 +23,6 @@ namespace Hotel.Model
         }
 
         private string _lastName;
-
         public virtual string LastName
         {
             get { return _lastName; }
@@ -32,7 +30,6 @@ namespace Hotel.Model
         }
 
         private string _phoneNumber;
-
         /// <summary>
         /// Storing phone number as string to perserve preceding zeros
         /// </summary>
@@ -43,51 +40,48 @@ namespace Hotel.Model
         }
 
         private string _emailAdress;
-
         public virtual string EmailAdress
         {
             get { return _emailAdress; }
             set { _emailAdress = value; OnPropertyChanged(); }
         }
-        private string _adress;
 
-        public string Adress
+        private string _adress;
+        public virtual string Adress
         {
             get { return _adress; }
             set { _adress = value; OnPropertyChanged(); }
         }
 
         private string _postalCode;
-        public string PostalCode
+        public virtual string PostalCode
         {
             get { return _postalCode; }
             set { _postalCode = value; OnPropertyChanged(); }
         }
 
         private string _city;
-        public string City
+        public virtual string City
         {
             get { return _city; }
             set { _city = value; OnPropertyChanged(); }
         }
 
         private string _country;
-
-        public string Country
+        public virtual string Country
         {
             get { return _country; }
             set { _country = value; OnPropertyChanged(); }
         }
 
         private string _ICEPhoneNumber;
-
         public virtual string ICEPhoneNumber
         {
             get { return _ICEPhoneNumber; }
             set { _ICEPhoneNumber = value; OnPropertyChanged(); }
         }
 
-        public void CopyFrom(Guest newGuest)
+        public virtual void CopyFrom(Guest newGuest)
         {
             FirstName = newGuest._firstName;
             LastName = newGuest._lastName;
@@ -100,7 +94,7 @@ namespace Hotel.Model
             ICEPhoneNumber = newGuest._ICEPhoneNumber;
         }
 
-        public void OnPropertyChanged([CallerMemberName] string name = "")
+        public virtual void OnPropertyChanged([CallerMemberName] string name = "")
         {
             PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(name));
             CommandManager.InvalidateRequerySuggested();

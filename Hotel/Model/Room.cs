@@ -12,7 +12,14 @@ namespace Hotel.Model
 
         public virtual event PropertyChangedEventHandler PropertyChanged;
 
-        public List<Booking> Bookings = new List<Booking>();
+        private List<Booking> _bookings = new List<Booking>();
+        public virtual List<Booking> Bookings
+        {
+            get
+            {
+                return _bookings;
+            }
+        }
 
         private string _roomNumber;
         public virtual string RoomNumber
@@ -55,7 +62,7 @@ namespace Hotel.Model
             CommandManager.InvalidateRequerySuggested();
         }
 
-        public bool TimePeriodAvailable(BookingPeriod period)
+        public virtual bool TimePeriodAvailable(BookingPeriod period)
         {
             foreach (BookingPeriod bookingPeriod in Bookings.ConvertAll((Booking booking) => booking.BookingPeriod))
             {
