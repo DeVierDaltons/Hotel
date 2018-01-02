@@ -8,6 +8,8 @@ namespace Hotel.Model
 {
     public class Room : INotifyPropertyChanged
     {
+        public static readonly int MaxLengthForRoomNames = 100;
+
         public virtual Guid Id { get; set; }
 
         public virtual event PropertyChangedEventHandler PropertyChanged;

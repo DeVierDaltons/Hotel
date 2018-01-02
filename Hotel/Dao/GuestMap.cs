@@ -9,11 +9,11 @@ namespace Hotel.Dao
         public GuestMap()
         {
             Id(x => x.Id, m => m.Generator(Generators.GuidComb));
-            Property(x => x.FirstName);
-            Property(x => x.LastName);
-            Property(x => x.PhoneNumber);
-            Property(x => x.EmailAdress);
-            Property(x => x.ICEPhoneNumber);
+            Property(x => x.FirstName, m => m.Length(Guest.MaxLengthForNames));
+            Property(x => x.LastName, m => m.Length(Guest.MaxLengthForNames));
+            Property(x => x.PhoneNumber, m => m.Length(Guest.MaxLengthForPhoneNumbers));
+            Property(x => x.EmailAdress, m => m.Length(Guest.MaxLengthForEmailAddresses));
+            Property(x => x.ICEPhoneNumber, m => m.Length(Guest.MaxLengthForPhoneNumbers));
         }
     }
 }

@@ -11,6 +11,10 @@ namespace Hotel.Model
 {
     public class Guest : INotifyPropertyChanged
     {
+        public static readonly int MaxLengthForNames = 100;
+        public static readonly int MaxLengthForPhoneNumbers = 20;
+        public static readonly int MaxLengthForEmailAddresses = 200;
+
         public virtual event PropertyChangedEventHandler PropertyChanged;
 
         public virtual Guid Id { get; set; }
