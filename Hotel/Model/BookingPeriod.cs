@@ -26,6 +26,11 @@ namespace Hotel.Model
             set { _endDate = value; }
         }
 
+        // a constructor so that NHibernate doesn't complain
+        public BookingPeriod()
+        {
+        }
+
         /// <summary>
         /// Creates a new BookingPeriod based on a start and end date
         /// </summary>
@@ -60,7 +65,7 @@ namespace Hotel.Model
         /// </summary>
         /// <param name="compareWith">BookingPeriod to compare with</param>
         /// <returns>True if it they do not overlap. False otherwise.</returns>
-        public bool DoesNotoverlapWith(BookingPeriod compareWith)
+        public virtual bool DoesNotoverlapWith(BookingPeriod compareWith)
         {
             return (compareWith.StartDate > EndDate) || (compareWith.EndDate < StartDate);
         }
@@ -70,7 +75,7 @@ namespace Hotel.Model
         /// </summary>
         /// <param name="compareWith">BookingPeriod to compare with</param>
         /// <returns>True if it they do  overlap. False otherwise.</returns>
-        public bool OverlapsWith(BookingPeriod compareWith)
+        public virtual bool OverlapsWith(BookingPeriod compareWith)
         {
             return !DoesNotoverlapWith(compareWith);
         }

@@ -15,10 +15,8 @@ namespace Hotel.Model
         private List<Booking> _bookings = new List<Booking>();
         public virtual List<Booking> Bookings
         {
-            get
-            {
-                return _bookings;
-            }
+            get { return _bookings; }
+            set { _bookings = value ?? new List<Booking>(); }
         }
 
         private string _roomNumber;
