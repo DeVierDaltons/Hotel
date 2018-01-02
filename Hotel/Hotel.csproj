@@ -89,7 +89,7 @@
     <Compile Include="Dao\NHibernateHelper.cs" />
     <Compile Include="Dao\RoomMap.cs" />
     <Compile Include="Extensions\ObservableCollectionExtensions.cs" />
-    <Compile Include="Dao\NHibernateGuestRepository.cs" />
+    <Compile Include="Dao\NHibernateRepository.cs" />
     <Compile Include="Model\Room.cs" />
     <Compile Include="Model\RoomQuality.cs" />
     <Compile Include="Repository\IRepository.cs" />
