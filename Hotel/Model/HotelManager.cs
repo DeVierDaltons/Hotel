@@ -11,7 +11,6 @@ namespace Hotel.Model
     {
         public ObservableCollection<Guest> Guests { get; } = new ObservableCollection<Guest>();
         public ObservableCollection<Room> Rooms { get; set; } = new ObservableCollection<Room>();
-        public ObservableCollection<Booking> Bookings { get; } = new ObservableCollection<Booking>();
 
         public HotelManager()
         {
@@ -57,6 +56,21 @@ namespace Hotel.Model
             Rooms.Add(r2);
             Rooms.Add(r3);
             Rooms.Add(r4);
+        }
+
+        public List<Booking> GetAllBookings()
+        {
+            List<Booking> result = new List<Booking>();
+            foreach(Room room in Rooms)
+            {
+                result.AddRange(room.Bookings);
+            }
+            return result;
+        }
+
+        public void AddBooking(Booking booking)
+        {
+            booking.Room.Bookings.Add(booking);
         }
 
         private void AddSomeGuests()
