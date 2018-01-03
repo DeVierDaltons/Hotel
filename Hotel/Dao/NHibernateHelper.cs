@@ -13,7 +13,7 @@ namespace Hotel.Dao
         private static HbmMapping _mapping;
         private static ISession _session;
 
-        public static ISession OpenSession()
+        public static ISession GetSession()
         {
             if (_session == null)
             {
