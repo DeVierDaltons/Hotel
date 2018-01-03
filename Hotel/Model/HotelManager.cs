@@ -25,10 +25,10 @@ namespace Hotel.Model
             Guests = new RepositoryBackedObservableCollection<Guest>(GuestRepository);
             Rooms = new RepositoryBackedObservableCollection<Room>(RoomRepository);
             Bookings = new RepositoryBackedObservableCollection<Booking>(BookingRepository);
-            AddBookingsToRooms();
+            AddAllBookingsToRoom();
         }
 
-        private void AddBookingsToRooms()
+        private void AddAllBookingsToRoom()
         {
             foreach(Booking booking in Bookings)
             {
