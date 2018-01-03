@@ -4,6 +4,7 @@ using NHibernate.Tool.hbm2ddl;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System;
+using System.Diagnostics;
 
 namespace Hotel.Model
 {
@@ -35,8 +36,9 @@ namespace Hotel.Model
             }
         }
 
-        private static void AddBookingToRoom(Booking booking)
+        private void AddBookingToRoom(Booking booking)
         {
+            Debug.Assert(Rooms.Contains(booking.Room));
             booking.Room.Bookings.Add(booking);
         }
 
