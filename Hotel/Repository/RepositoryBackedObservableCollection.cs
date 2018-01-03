@@ -14,10 +14,9 @@ namespace Hotel.Repository
     {
         private IRepository<T> repository;
 
-        public RepositoryBackedObservableCollection(IRepository<T> repository)
+        public RepositoryBackedObservableCollection(IRepository<T> repository) : base(repository.GetAll())
         {
             this.repository = repository;
-            this.AddRange(repository.GetAll());
             foreach(T item in this)
             {
                 item.PropertyChanged += OnItemChanged;
