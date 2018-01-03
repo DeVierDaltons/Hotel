@@ -9,12 +9,12 @@ namespace Hotel.Dao
 {
     public class NHibernateRepository<T> : IRepository<T> where T : class
     {
-        public void Save(T person)
+        public void Save(T item)
         {
             using (ISession session = NHibernateHelper.OpenSession())
             using (ITransaction transaction = session.BeginTransaction())
             {
-                session.Save(person);
+                session.Save(item);
                 transaction.Commit();
             }
         }
@@ -25,12 +25,12 @@ namespace Hotel.Dao
                 return session.Get<T>(id);
         }
 
-        public void Update(T person)
+        public void Update(T item)
         {
             using (ISession session = NHibernateHelper.OpenSession())
             using (ITransaction transaction = session.BeginTransaction())
             {
-                session.Update(person);
+                session.Update(item);
                 transaction.Commit();
             }
         }
@@ -39,17 +39,7 @@ namespace Hotel.Dao
         {
             using (ISession session = NHibernateHelper.OpenSession())
             {
-                var result = session.Query<T>().ToList();
-                foreach(T item in result)
-                {
-                    Booking booking = item as Booking;
-                    if( booking != null)
-                    {
-                        NHibernateUtil.Initialize(booking.Guest);
-                        NHibernateUtil.Initialize(booking.Room);
-                    }
-                }
-                return result;
+                return session.Query<T>().ToList();
             }
         }
 
