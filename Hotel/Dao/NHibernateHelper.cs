@@ -11,11 +11,16 @@ namespace Hotel.Dao
         private static ISessionFactory _sessionFactory;
         private static Configuration _configuration;
         private static HbmMapping _mapping;
+        private static ISession _session;
 
         public static ISession OpenSession()
         {
-            //Open and return the nhibernate session
-            return SessionFactory.OpenSession();
+            if (_session == null)
+            {
+                //Open and return the nhibernate session
+                _session = SessionFactory.OpenSession();
+            }
+            return _session;
         }
 
         public static ISessionFactory SessionFactory
