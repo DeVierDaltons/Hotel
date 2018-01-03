@@ -42,13 +42,13 @@ namespace Hotel.Model
 
         public void AddBooking(Booking booking)
         {
-            Bookings.Add(booking);
+            Bookings.AddItem(booking);
             AddBookingToRoom(booking);
         }
 
         public void AddGuest(Guest guest)
         {
-            Guests.Add(guest);
+            Guests.AddItem(guest);
         }
     }
 }
