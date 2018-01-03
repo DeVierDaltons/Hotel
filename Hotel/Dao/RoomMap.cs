@@ -9,7 +9,6 @@ namespace Hotel.Dao
         public RoomMap()
         {
             Id(x => x.Id, m => m.Generator(Generators.GuidComb));
-            Property(x => x.Bookings);
             Property(x => x.RoomNumber, m => m.Length(Room.MaxLengthForRoomNames));
             Property(x => x.Beds);
             Property(x => x.Quality);
