@@ -14,7 +14,7 @@ namespace TestHotel
         [TestMethod]
         public void AddGuestUsingCommandTest()
         {
-            IRepository<Guest> repository = new NHibernateRepository<Guest>();
+            IRepository<Guest> repository = new TestRepository<Guest>();
             RepositoryBackedObservableCollection<Guest> guestList = new RepositoryBackedObservableCollection<Guest>(repository);
             new AddGuestCommand(guestList).Execute(new Guest());
             Assert.IsTrue(guestList.Count > 0);
@@ -23,7 +23,7 @@ namespace TestHotel
         [TestMethod]
         public void InvalidGuestCommandFails()
         {
-            IRepository<Guest> repository = new NHibernateRepository<Guest>();
+            IRepository<Guest> repository = new TestRepository<Guest>();
             RepositoryBackedObservableCollection<Guest> guestList = new RepositoryBackedObservableCollection<Guest>(repository);
             var guestsVM = new GuestDetailViewModel(new AddGuestCommand(guestList), new Guest());
             Assert.IsFalse(guestsVM.SubmitCommand.CanExecute(null));
