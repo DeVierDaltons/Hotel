@@ -1,5 +1,7 @@
 ﻿using Hotel.Command;
+using Hotel.Dao;
 using Hotel.Model;
+using NHibernate.Tool.hbm2ddl;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -21,7 +23,11 @@ namespace Hotel.ViewModel
 
         public MainWindowViewModel()
         {
-            HotelManager = new HotelManager();
+            var schemaUpdate = new SchemaUpdate(NHibernateHelper.Configuration);
+            schemaUpdate.Execute(false, true);
+            HotelManager = new HotelManager(new NHibernateRepository<Guest>(), 
+                                            new NHibernateRepository<Room>(), 
+                                            new NHibernateRepository<Booking>());
             ShowAddGuestWindowCommand = new ShowGuestDetailWindowCommand(new AddGuestCommand(HotelManager.Guests));
             ShowGuestsWindowCommand = new ShowGuestsWindowCommand(HotelManager);
             ShowAddRoomWindowCommand = new OpenAddRoomWindowCommand(HotelManager);

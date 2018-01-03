@@ -1,10 +1,11 @@
-﻿using System;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System.Collections.ObjectModel;
 using Hotel.Model;
 using Hotel.Command;
-using Hotel.View;
 using Hotel.ViewModel;
+using Hotel.Repository;
+using Hotel.Dao;
+using System.Diagnostics;
 
 namespace TestHotel
 {
@@ -14,20 +15,18 @@ namespace TestHotel
         [TestMethod]
         public void AddRoomUsingCommandTest()
         {
-            HotelManager hotelManager = new HotelManager();
+            IRepository<Room> repository = new TestRepository<Room>();
             AddRoomViewModel addRoomViewModel = new AddRoomViewModel();
-            addRoomViewModel.HotelManager = hotelManager;
-            new AddRoomCommand(addRoomViewModel).Execute(null);
-            Assert.IsTrue(hotelManager.Rooms.Count > 0);
+            addRoomViewModel.HotelManager = AddBookingTests.CreateTestHotelManager();
+            new AddRoomCommand(addRoomViewModel).Execute(new Room());
+            Assert.IsTrue(addRoomViewModel.HotelManager.Rooms.Count > 0);
         }
 
         [TestMethod]
         public void InvalidRoomCommandFails()
         {
-            HotelManager hotelManager = new HotelManager();
             AddRoomViewModel addRoomViewModel = new AddRoomViewModel();
-            addRoomViewModel.HotelManager = hotelManager;
-            Assert.IsFalse(new AddRoomCommand(addRoomViewModel).CanExecute(null));
+            Assert.IsFalse(addRoomViewModel.ValidateInput());
         }
     }
 }
