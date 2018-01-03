@@ -11,13 +11,14 @@ using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
+using System.Windows.Controls;
 
 namespace Hotel.View
 {
     /// <summary>
     /// Interaction logic for ModifyBooking.xaml
     /// </summary>
-    public partial class ModifyBookingView : Window
+    public partial class ModifyBookingView : UserControl
     {
         public ModifyBookingView()
         {

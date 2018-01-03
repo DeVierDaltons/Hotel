@@ -1,15 +1,15 @@
-﻿<Window x:Class="Hotel.View.AddRoomView"
+﻿<UserControl x:Class="Hotel.View.AddRoomView"
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-        xmlns:local="clr-namespace:Hotel.ViewModel"
+        xmlns:local="clr-namespace:Hotel.View"
+        xmlns:local1="clr-namespace:Hotel.ViewModel"
         mc:Ignorable="d"
-        Title="AddRoomView" Height="187.2" Width="300"
         >
-    <Window.DataContext>
-        <local:AddRoomViewModel/>
-    </Window.DataContext>
+    <UserControl.DataContext>
+        <local1:AddRoomViewModel/>
+    </UserControl.DataContext>
     <Grid>
         <Grid.RowDefinitions>
             <RowDefinition Height="*"></RowDefinition>
@@ -38,4 +38,4 @@
         <CheckBox Grid.Row="4" Grid.Column="0" IsChecked="{Binding HasNiceView}" Content="Has a nice view"/>
         <Button Grid.Row="4" Grid.Column="1" Content="Save" Command="{Binding AddRoomCommand}" Click="Button_Click"/>
     </Grid>
-</Window>
+</UserControl>

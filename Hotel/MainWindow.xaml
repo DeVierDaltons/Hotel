@@ -4,6 +4,7 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:Hotel.ViewModel"
+        xmlns:views ="clr-namespace:Hotel.View"
         mc:Ignorable="d"
         Title="MainWindow" Height="250" Width="450">
 
@@ -11,20 +12,29 @@
         <local:MainWindowViewModel/>
     </Window.DataContext>
     <Grid>
-        <Grid.RowDefinitions>
-            <RowDefinition Height="*"></RowDefinition>
-            <RowDefinition Height="*"></RowDefinition>
-            <RowDefinition Height="*"></RowDefinition>
-        </Grid.RowDefinitions>
-        <Grid.ColumnDefinitions>
-            <ColumnDefinition Width="300" />
-            <ColumnDefinition Width="*" />
-        </Grid.ColumnDefinitions>        
-        <Button Grid.Row="0" Grid.Column="0" Command="{Binding ShowGuestsWindowCommand}" Content="Guests"/>
-        <Button Grid.Row="0" Grid.Column="1" Command="{Binding ShowAddGuestWindowCommand}" Content="Add Guest"/>
-        <Button Grid.Row="1" Grid.Column="0" Command="{Binding ShowAddModifyRoomWindow}" Content="Rooms"/>
-        <Button Grid.Row="1" Grid.Column="1" Command="{Binding ShowAddRoomWindowCommand}" Content="Add Room"/>
-        <Button Grid.Row="2" Grid.Column="0" Command="{Binding ShowBookingsWindowCommand}" Content="Bookings"/>
-        <Button Grid.Row="2" Grid.Column="1" Command="{Binding ShowAddBookingWindowCommand}" Content="Add Booking"/>
+        <TabControl x:Name="MainWindowTabCtrl" SelectionChanged="MainWindowTabCtrl_SelectionChanged">
+            <TabItem Header="Welcome">
+                <Label Content="Test..." />
+            </TabItem>
+            <TabItem Header="Add Guest" x:Name="AddGuest">
+                <views:GuestDetailView />
+            </TabItem>
+            <TabItem Header="Guest Explorer" x:Name="GuestExplorer">
+                <views:GuestsView />
+            </TabItem>
+            <TabItem Header="Add Room" x:Name="AddRoom">
+                <views:AddRoomView />
+            </TabItem>
+            <TabItem Header="Room Explorer" x:Name="RoomExplorer">
+                <views:ModifyRoomView />
+            </TabItem>
+            <TabItem Header="Add Booking" x:Name="AddBooking">
+                <views:AddBookingView />
+            </TabItem>
+            <TabItem Header="Booking Explorer" x:Name="BookingExplorer">
+                <views:ModifyBookingView />
+            </TabItem>
+            <TabItem Header="About" />
+        </TabControl>
     </Grid>
 </Window>

@@ -3,10 +3,11 @@ using Hotel.ViewModel;
 using System;
 using System.Linq;
 using System.Windows;
+using System.Windows.Controls;
 
 namespace Hotel.View
 {
-    public partial class AddRoomView : Window
+    public partial class AddRoomView : UserControl
     {
         public AddRoomView()
         {
@@ -21,7 +22,7 @@ namespace Hotel.View
 
         private void Button_Click(object sender, RoutedEventArgs e)
         {
-            this.Close();
+         //   this.Close();
         }
     }
 }

@@ -13,13 +13,14 @@ using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
+using System.Windows.Controls;
 
 namespace Hotel.View
 {
     /// <summary>
     /// Interaction logic for GuestsViewModel.xaml
     /// </summary>
-    public partial class GuestsView : Window
+    public partial class GuestsView : UserControl
     {
         public GuestsView()
         {
