@@ -72,7 +72,7 @@ namespace Hotel.Dao
         {
             var mapper = new ModelMapper();
             //Add the person mapping to the model mapper
-            mapper.AddMappings(new List<System.Type> { typeof(GuestMap), typeof(RoomMap), typeof(BookingMap), typeof(BookingPeriodMap) });
+            mapper.AddMappings(new List<System.Type> { typeof(GuestMap), typeof(RoomMap), typeof(BookingMap) });
             //Create and return a HbmMapping of the model mapping in code
             return mapper.CompileMappingForAllExplicitlyAddedEntities();
         }
