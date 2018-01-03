@@ -6,7 +6,7 @@ using System.Windows.Input;
 
 namespace Hotel.Model
 {
-    public class Room : INotifyPropertyChanged
+    public class Room : INotifyPropertyChanged, IHasGUID
     {
         public static readonly int MaxLengthForRoomNames = 100;
 

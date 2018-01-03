@@ -90,6 +90,7 @@
     <Compile Include="Dao\GuestMap.cs" />
     <Compile Include="Dao\NHibernateHelper.cs" />
     <Compile Include="Dao\RoomMap.cs" />
+    <Compile Include="Model\IHasGUID.cs" />
     <Compile Include="Model\Room.cs" />
     <Compile Include="Model\RoomQuality.cs" />
     <Compile Include="Repository\IRepository.cs" />

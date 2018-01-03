@@ -1,45 +1,46 @@
 ﻿using System;
 using System.Collections.Generic;
-using Hotel.Model;
 using Hotel.Repository;
+using Hotel.Model;
 using System.Diagnostics;
 
 namespace TestHotel
 {
-    internal class TestRepository<T> : IRepository<Guest>
+    public class TestRepository<T> : IRepository<T> where T : IHasGUID
     {
-        public List<Guest> guests = new List<Guest>();
+        public List<T> items = new List<T>();
 
-        public void Delete(Guest person)
+        public void Delete(T item)
         {
-            Debug.Assert(guests.Contains(person));
-            guests.Remove(person);
+            Debug.Assert(items.Contains(item));
+            items.Remove(item);
         }
 
-        public Guest Get(Guid guid)
+        public T Get(Guid guid)
         {
-            return guests.Find(g => g.Id == guid);
+
+            return items.Find(g => g.Id == guid);
         }
 
-        public List<Guest> GetAll()
+        public List<T> GetAll()
         {
-            return new List<Guest>(guests);
+            return new List<T>(items);
         }
 
         public long RowCount()
         {
-            return guests.Count;
+            return items.Count;
         }
 
-        public void Save(Guest person)
+        public void Save(T item)
         {
-            guests.Add(person);
+            items.Add(item);
         }
 
-        public void Update(Guest person)
+        public void Update(T item)
         {
-            Delete(person);
-            Save(person);
+            Delete(item);
+            Save(item);
         }
     }
 }
