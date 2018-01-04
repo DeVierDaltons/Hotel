@@ -13,9 +13,6 @@
     </Window.DataContext>
     <Grid>
         <TabControl x:Name="MainWindowTabCtrl" SelectionChanged="MainWindowTabCtrl_SelectionChanged">
-            <TabItem Header="Welcome">
-                <Label Content="Test..." />
-            </TabItem>
             <TabItem Header="Add Guest" x:Name="AddGuest">
                 <views:GuestDetailView />
             </TabItem>
@@ -34,7 +31,6 @@
             <TabItem Header="Booking Explorer" x:Name="BookingExplorer">
                 <views:ModifyBookingView />
             </TabItem>
-            <TabItem Header="About" />
         </TabControl>
     </Grid>
 </Window>
