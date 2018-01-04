@@ -49,6 +49,7 @@ namespace Hotel.ViewModel
 
         public AddRoomViewModel(HotelManager hotelManager)
         {
+            Beds = 1;
             HotelManager = hotelManager;
             AddRoomCommand = new AddRoomCommand(this);
         }
@@ -61,6 +62,17 @@ namespace Hotel.ViewModel
         public void AddRoom()
         {
             HotelManager.AddRoom(Room);
+            Room = new Room();
+            ClearAllFields();
+        }
+
+        private void ClearAllFields()
+        {
+            RoomNumber = string.Empty;
+            Beds = 1;
+            Quality = RoomQuality.Budget;
+            HasNiceView = false;
+            PricePerDay = 0;
         }
 
         private void OnNotifyPropertyChanged([CallerMemberName] string propertyName = "")
