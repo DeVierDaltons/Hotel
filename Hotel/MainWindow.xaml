@@ -12,7 +12,7 @@
         <local:MainWindowViewModel/>
     </Window.DataContext>
     <Grid>
-        <TabControl x:Name="MainWindowTabCtrl" SelectionChanged="MainWindowTabCtrl_SelectionChanged">
+        <TabControl x:Name="MainWindowTabCtrl">
             <TabItem Header="Add Guest" x:Name="AddGuest">
                 <views:GuestDetailView />
             </TabItem>
