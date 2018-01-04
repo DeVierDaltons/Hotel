@@ -6,7 +6,7 @@
         xmlns:vm="clr-namespace:Hotel.ViewModel"
         xmlns:view="clr-namespace:Hotel.View"
         mc:Ignorable="d"
-        Title="MainWindow" Height="250" Width="450">
+        Title="MainWindow" WindowState="Maximized">
 
     <Window.DataContext>
         <vm:MainWindowViewModel/>
