@@ -30,13 +30,13 @@ namespace Hotel.ViewModel
         public GuestsViewModel(RepositoryBackedObservableCollection<Guest> guests)
         {
             Guests = guests;
-            ShowAddGuestWindowCommand = new ShowGuestDetailWindowCommand(new AddGuestCommand(guests));
+            //ShowAddGuestWindowCommand = new ShowGuestDetailWindowCommand(new AddGuestCommand(guests));
         }
 
         public void ShowEditGuestWindow(object selectedGuest)
         {
             Guest currentGuest = (Guest)selectedGuest;
-            new ShowGuestDetailWindowCommand(new EditGuestCommand(currentGuest), currentGuest).Execute(null);
+            //new ShowGuestDetailWindowCommand(new EditGuestCommand(currentGuest), currentGuest).Execute(null);
         }
 
         public void OnPropertyChanged([CallerMemberName] string name = "")
