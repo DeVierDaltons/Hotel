@@ -1,13 +1,6 @@
-﻿using Hotel.Command;
-using Hotel.Dao;
+﻿using Hotel.Dao;
 using Hotel.Model;
 using NHibernate.Tool.hbm2ddl;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Windows.Input;
 
 namespace Hotel.ViewModel
 {
