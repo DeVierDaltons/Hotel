@@ -20,7 +20,7 @@ namespace Hotel
         {
             InitializeComponent();
             HotelManager = (DataContext as MainWindowViewModel).HotelManager;
-            AddGuestTab.DataContext = new GuestDetailViewModel(new AddGuestCommand(HotelManager.Guests), null, SwitchToGuestExplorer);
+            CreateAddGuestDataContext();
             GuestExplorerTab.DataContext = new GuestsViewModel(HotelManager.Guests, EditGuest, AddGuest);
             AddRoomTab.DataContext = new AddRoomViewModel(HotelManager);
             RoomExplorerTab.DataContext = new ModifyRoomViewModel(HotelManager.Rooms);
@@ -36,12 +36,18 @@ namespace Hotel
 
         private void AddGuest()
         {
-            AddGuestTab.DataContext = new GuestDetailViewModel(new AddGuestCommand(HotelManager.Guests), null, SwitchToGuestExplorer);
+            CreateAddGuestDataContext();
             AddGuestTab.IsSelected = true;
+        }
+
+        private void CreateAddGuestDataContext()
+        {
+            AddGuestTab.DataContext = new GuestDetailViewModel(new AddGuestCommand(HotelManager.Guests), null, SwitchToGuestExplorer);
         }
 
         private void SwitchToGuestExplorer()
         {
+            CreateAddGuestDataContext();
             GuestExplorerTab.IsSelected = true;
         }
     }
