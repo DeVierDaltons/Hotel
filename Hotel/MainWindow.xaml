@@ -3,33 +3,33 @@
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-        xmlns:local="clr-namespace:Hotel.ViewModel"
-        xmlns:views ="clr-namespace:Hotel.View"
+        xmlns:vm="clr-namespace:Hotel.ViewModel"
+        xmlns:view="clr-namespace:Hotel.View"
         mc:Ignorable="d"
         Title="MainWindow" Height="250" Width="450">
 
     <Window.DataContext>
-        <local:MainWindowViewModel/>
+        <vm:MainWindowViewModel/>
     </Window.DataContext>
     <Grid>
         <TabControl x:Name="MainWindowTabCtrl">
             <TabItem Header="Add Guest" x:Name="AddGuest">
-                <views:GuestDetailView />
+                <view:GuestDetailView />
             </TabItem>
             <TabItem Header="Guest Explorer" x:Name="GuestExplorer">
-                <views:GuestsView />
+                <view:GuestsView />
             </TabItem>
             <TabItem Header="Add Room" x:Name="AddRoom">
-                <views:AddRoomView />
+                <view:AddRoomView />
             </TabItem>
             <TabItem Header="Room Explorer" x:Name="RoomExplorer">
-                <views:ModifyRoomView />
+                <view:ModifyRoomView />
             </TabItem>
             <TabItem Header="Add Booking" x:Name="AddBooking">
-                <views:AddBookingView />
+                <view:AddBookingView />
             </TabItem>
             <TabItem Header="Booking Explorer" x:Name="BookingExplorer">
-                <views:ModifyBookingView />
+                <view:ModifyBookingView />
             </TabItem>
         </TabControl>
     </Grid>
