@@ -1,23 +1,16 @@
-﻿using Hotel.Command;
-using Hotel.Model;
+﻿using Hotel.Model;
 using Hotel.Repository;
-using System;
-using System.Collections.Generic;
-using System.Collections.ObjectModel;
 using System.ComponentModel;
-using System.Linq;
 using System.Runtime.CompilerServices;
-using System.Text;
-using System.Threading.Tasks;
-using System.Windows.Input;
+using System;
 
 namespace Hotel.ViewModel
 {
     public class GuestsViewModel : INotifyPropertyChanged
     {
-        public ICommand ShowAddGuestWindowCommand { get; }
-
         private RepositoryBackedObservableCollection<Guest> _guests;
+        private Action<Guest> EditGuestAction;
+        private Action AddGuestAction;
 
         public RepositoryBackedObservableCollection<Guest> Guests
         {
@@ -25,18 +18,23 @@ namespace Hotel.ViewModel
             set { _guests = value; OnPropertyChanged(); }
         }
 
-        public event PropertyChangedEventHandler PropertyChanged;
-
-        public GuestsViewModel(RepositoryBackedObservableCollection<Guest> guests)
+        public void EditGuest(object selectedItem)
         {
-            Guests = guests;
-            ShowAddGuestWindowCommand = new ShowGuestDetailWindowCommand(new AddGuestCommand(guests));
+            EditGuestAction(selectedItem as Guest);
         }
 
-        public void ShowEditGuestWindow(object selectedGuest)
+        public void AddGuest()
         {
-            Guest currentGuest = (Guest)selectedGuest;
-            new ShowGuestDetailWindowCommand(new EditGuestCommand(currentGuest), currentGuest).Execute(null);
+            AddGuestAction();
+        }
+
+        public event PropertyChangedEventHandler PropertyChanged;
+
+        public GuestsViewModel(RepositoryBackedObservableCollection<Guest> guests, Action<Guest> editGuestAction, Action addGuestAction)
+        {
+            EditGuestAction = editGuestAction;
+            AddGuestAction = addGuestAction;
+            Guests = guests;
         }
 
         public void OnPropertyChanged([CallerMemberName] string name = "")

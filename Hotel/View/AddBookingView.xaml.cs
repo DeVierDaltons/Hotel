@@ -1,25 +1,20 @@
 ﻿using Hotel.ViewModel;
 using System.Windows;
+using System.Windows.Controls;
 
 namespace Hotel.View
 {
-    public partial class AddBookingView : Window
+    public partial class AddBookingView : UserControl
     {
         public AddBookingView()
         {
             InitializeComponent();
         }
 
-        public void SetDropdownContents() {
-            AddBookingViewModel viewModel = DataContext as AddBookingViewModel;
-            GuestDropdown.ItemsSource = viewModel.HotelManager.Guests;
-            RoomDropdown.ItemsSource = viewModel.HotelManager.Rooms;
-            viewModel.SelectedDates = BookingRangeCalendar.SelectedDates;
-        }
-
-        private void Button_Click(object sender, RoutedEventArgs e)
+        private void Calendar_SelectedDatesChanged(object sender, SelectionChangedEventArgs e)
         {
-            this.Close();
+            AddBookingViewModel viewModel = (AddBookingViewModel)DataContext;
+            viewModel.SelectedDates = BookingRangeCalendar.SelectedDates;
         }
     }
 }

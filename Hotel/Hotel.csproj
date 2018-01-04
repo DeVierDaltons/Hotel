@@ -79,9 +79,6 @@
     </ApplicationDefinition>
     <Compile Include="Command\AddBookingCommand.cs" />
     <Compile Include="Command\AddRoomCommand.cs" />
-    <Compile Include="Command\OpenAddRoomWindowCommand.cs" />
-    <Compile Include="Command\OpenModifyBookingWindowCommand.cs" />
-    <Compile Include="Command\OpenModifyRoomWindowCommand.cs" />
     <Compile Include="Dao\BookingPeriodMap.cs" />
     <Compile Include="Dao\NHibernateRepository.cs" />
     <Compile Include="Model\Address.cs" />
@@ -97,7 +94,6 @@
     <Compile Include="Repository\RepositoryBackedObservableCollection.cs" />
     <Compile Include="ViewModel\AddBookingViewModel.cs" />
     <Compile Include="ViewModel\AddRoomViewModel.cs" />
-    <Compile Include="Command\OpenAddBookingWindowCommand.cs" />
     <Compile Include="ViewModel\ModifyBookingViewModel.cs" />
     <Compile Include="ViewModel\ModifyRoomViewModel.cs" />
     <Compile Include="View\AddBookingView.xaml.cs">
@@ -109,8 +105,6 @@
     <Compile Include="Model\HotelManager.cs" />
     <Compile Include="Command\EditGuestCommand.cs" />
     <Compile Include="Command\RelayCommand.cs" />
-    <Compile Include="Command\ShowGuestDetailWindowCommand.cs" />
-    <Compile Include="Command\ShowGuestsWindow.cs" />
     <Compile Include="ViewModel\GuestDetailViewModel.cs" />
     <Compile Include="ViewModel\MainWindowViewModel.cs" />
     <Compile Include="ViewModel\GuestsViewModel.cs" />

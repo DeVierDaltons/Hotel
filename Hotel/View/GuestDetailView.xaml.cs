@@ -1,11 +1,12 @@
 ﻿using System.Windows;
+using System.Windows.Controls;
 
 namespace Hotel.View
 {
     /// <summary>
     /// Interaction logic for AddGuestView.xaml
     /// </summary>
-    public partial class GuestDetailView : Window
+    public partial class GuestDetailView : UserControl
     {
         public GuestDetailView()
         {
@@ -14,7 +15,7 @@ namespace Hotel.View
 
         private void AddGuestButton_Click(object sender, RoutedEventArgs e)
         {
-            this.Close();
+            //this.Close();
         }
     }
 }

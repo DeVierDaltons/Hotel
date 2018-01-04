@@ -11,6 +11,8 @@ namespace Hotel.ViewModel
     {
         public event PropertyChangedEventHandler PropertyChanged;
 
+        private Action AfterSubmitAction;
+
         #region Properties
         public Guest Guest { get; set; } = new Guest();
 
@@ -38,7 +40,7 @@ namespace Hotel.ViewModel
             set { Guest.EmailAdress = value; OnPropertyChanged(); }
         }
 
-        public string Adress
+        public string StreetAddress
         {
             get { return Guest.Address.Street; }
             set { Guest.Address.Street = value; OnPropertyChanged(); }
@@ -80,7 +82,7 @@ namespace Hotel.ViewModel
 
         #endregion Properties
 
-        public GuestDetailViewModel(ICommand guestCommand, Guest currentGuestData)
+        public GuestDetailViewModel(ICommand guestCommand, Guest currentGuestData, Action afterSubmitAction)
         {
             if (currentGuestData != null)
             {
@@ -88,11 +90,28 @@ namespace Hotel.ViewModel
             }
             GuestCommand = guestCommand;
             SubmitCommand = new RelayCommand(OnSubmitClicked, (_) => ValidateInput());
+            AfterSubmitAction = afterSubmitAction;
         }
 
         private void OnSubmitClicked(object _)
         {
             GuestCommand.Execute(Guest);
+            Guest = new Guest();
+            ClearAllFields();
+            AfterSubmitAction();
+        }
+
+        private void ClearAllFields()
+        {
+            FirstName = string.Empty;
+            LastName = string.Empty;
+            PhoneNumber = string.Empty;
+            EmailAdress = string.Empty;
+            StreetAddress = string.Empty;
+            PostalCode = string.Empty;
+            City = string.Empty;
+            Country = string.Empty;
+            ICEPhoneNumber = string.Empty;
         }
 
         /// <summary>
