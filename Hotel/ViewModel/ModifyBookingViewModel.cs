@@ -12,8 +12,8 @@ namespace Hotel.ViewModel
 {
     public class ModifyBookingViewModel
     {
-        public List<Booking> Bookings { get; set; }
-        public ModifyBookingViewModel(List<Booking> bookings)
+        public ObservableCollection<Booking> Bookings { get; set; }
+        public ModifyBookingViewModel(ObservableCollection<Booking> bookings)
         {
             Bookings = bookings;
         }

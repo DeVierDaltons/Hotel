@@ -40,32 +40,32 @@ namespace Hotel.ViewModel
 
         public string Adress
         {
-            get { return Guest.Adress; }
-            set { Guest.Adress = value; OnPropertyChanged(); }
+            get { return Guest.Address.Street; }
+            set { Guest.Address.Street = value; OnPropertyChanged(); }
         }
 
         public string PostalCode
         {
-            get { return Guest.PostalCode; }
+            get { return Guest.Address.PostalCode; }
             set
             {
-                Guest.PostalCode = value; OnPropertyChanged();
+                Guest.Address.PostalCode = value; OnPropertyChanged();
             }
         }
 
         public string City
         {
-            get { return Guest.City; }
+            get { return Guest.Address.City; }
             set
             {
-                Guest.City = value; OnPropertyChanged();
+                Guest.Address.City = value; OnPropertyChanged();
             }
         }
 
         public string Country
         {
-            get { return Guest.Country; }
-            set { Guest.Country = value; OnPropertyChanged(); }
+            get { return Guest.Address.Country; }
+            set { Guest.Address.Country = value; OnPropertyChanged(); }
         }
 
         public string ICEPhoneNumber

@@ -1,10 +1,10 @@
-﻿using System;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System.Collections.ObjectModel;
 using Hotel.Model;
 using Hotel.Command;
-using Hotel.View;
 using Hotel.ViewModel;
+using Hotel.Repository;
+using Hotel.Dao;
 
 namespace TestHotel
 {
@@ -14,7 +14,8 @@ namespace TestHotel
         [TestMethod]
         public void AddGuestUsingCommandTest()
         {
-            ObservableCollection<Guest> guestList = new ObservableCollection<Guest>();
+            IRepository<Guest> repository = new TestRepository<Guest>();
+            RepositoryBackedObservableCollection<Guest> guestList = new RepositoryBackedObservableCollection<Guest>(repository);
             new AddGuestCommand(guestList).Execute(new Guest());
             Assert.IsTrue(guestList.Count > 0);
         }
@@ -22,7 +23,9 @@ namespace TestHotel
         [TestMethod]
         public void InvalidGuestCommandFails()
         {
-            var guestsVM = new GuestDetailViewModel(new AddGuestCommand(new ObservableCollection<Guest>()), new Guest());
+            IRepository<Guest> repository = new TestRepository<Guest>();
+            RepositoryBackedObservableCollection<Guest> guestList = new RepositoryBackedObservableCollection<Guest>(repository);
+            var guestsVM = new GuestDetailViewModel(new AddGuestCommand(guestList), new Guest());
             Assert.IsFalse(guestsVM.SubmitCommand.CanExecute(null));
         }
     }

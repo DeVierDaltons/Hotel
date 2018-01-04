@@ -1,132 +1,58 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Collections.ObjectModel;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using Hotel.Dao;
+using Hotel.Repository;
+using System.Diagnostics;
 
 namespace Hotel.Model
 {
     public class HotelManager
     {
-        public ObservableCollection<Guest> Guests { get; } = new ObservableCollection<Guest>();
-        public ObservableCollection<Room> Rooms { get; set; } = new ObservableCollection<Room>();
+        private IRepository<Guest> GuestRepository;
+        private IRepository<Room> RoomRepository;
+        private IRepository<Booking> BookingRepository;
 
-        public HotelManager()
+        public RepositoryBackedObservableCollection<Guest> Guests { get; }
+        public RepositoryBackedObservableCollection<Room> Rooms { get; }
+        public RepositoryBackedObservableCollection<Booking> Bookings { get; }
+
+        public HotelManager(IRepository<Guest> guestRepository, IRepository<Room> roomRepository, IRepository<Booking> bookingRepository)
         {
-            AddSomeRooms();
-            AddSomeGuests();
+            GuestRepository = guestRepository;
+            RoomRepository = roomRepository;
+            BookingRepository = bookingRepository;
+            Guests = new RepositoryBackedObservableCollection<Guest>(GuestRepository);
+            Rooms = new RepositoryBackedObservableCollection<Room>(RoomRepository);
+            Bookings = new RepositoryBackedObservableCollection<Booking>(BookingRepository);
+            AddAllBookingsToRoom();
         }
 
-        private void AddSomeRooms()
+        private void AddAllBookingsToRoom()
         {
-            Room r = new Room()
+            foreach(Booking booking in Bookings)
             {
-                RoomNumber = "0",
-                Beds = 2,
-                HasNiceView = true,
-                PricePerDay = 100,
-                Quality = RoomQuality.Budget
-            };
-            Room r2 = new Room()
-            {
-                RoomNumber = "1",
-                Beds = 2,
-                HasNiceView = true,
-                PricePerDay = 100,
-                Quality = RoomQuality.Budget
-            };
-            Room r3 = new Room()
-            {
-                RoomNumber = "2",
-                Beds = 2,
-                HasNiceView = false,
-                PricePerDay = 50,
-                Quality = RoomQuality.Comfort
-            };
-            Room r4 = new Room()
-            {
-                RoomNumber = "3",
-                Beds = 4,
-                HasNiceView = false,
-                PricePerDay = 200,
-                Quality = RoomQuality.Luxe
-            };
-            Rooms.Add(r);
-            Rooms.Add(r2);
-            Rooms.Add(r3);
-            Rooms.Add(r4);
-        }
-
-        public List<Booking> GetAllBookings()
-        {
-            List<Booking> bookingList = new List<Booking>();
-            foreach(Room room in Rooms)
-            {
-                bookingList.AddRange(room.Bookings);
+                AddBookingToRoom(booking);
             }
-            return bookingList;
+        }
+
+        private void AddBookingToRoom(Booking booking)
+        {
+            Debug.Assert(Rooms.Contains(booking.Room));
+            booking.Room.Bookings.Add(booking);
         }
 
         public void AddBooking(Booking booking)
         {
-            booking.Room.Bookings.Add(booking);
+            Bookings.AddItem(booking);
+            AddBookingToRoom(booking);
         }
 
-        private void AddSomeGuests()
+        public void AddRoom(Room room)
         {
-            Guest olaf = new Guest()
-            {
-                FirstName = "Olaf",
-                LastName = "van der Kruk",
-                PhoneNumber = "0612345678",
-                EmailAdress = "olaf@krukempire.nl",
-                Adress = "Nergensniet 12",
-                PostalCode = "1234 AB",
-                City = "Utrecht",
-                Country = "The Netherlands",
-                ICEPhoneNumber = "0612345678"
-            };
-            Guest michael = new Guest()
-            {
-                FirstName = "Michael",
-                LastName = "Paul Kleijn",
-                PhoneNumber = "0612345678",
-                EmailAdress = "michael@kleinmaarfijn.nl",
-                Adress = "Nergensniet 11",
-                PostalCode = "1234 AB",
-                City = "Verweggie",
-                Country = "The Netherlands",
-                ICEPhoneNumber = "0612345678"
-            };
-            Guest dirkjan = new Guest()
-            {
-                FirstName = "Dirk-Jan",
-                LastName = "Sleurink",
-                PhoneNumber = "0612345678",
-                EmailAdress = "dirkjan@exmilitarybadass.nl",
-                Adress = "Nergensniet 13",
-                PostalCode = "1234 AB",
-                City = "Verweggie",
-                Country = "The Netherlands",
-                ICEPhoneNumber = "0612345678"
-            };
-            Guest tama = new Guest()
-            {
-                FirstName = "Tama",
-                LastName = "McGlinn",
-                PhoneNumber = "0612345678",
-                EmailAdress = "tama@mcglinn.nl",
-                Adress = "Nergensniet 14",
-                PostalCode = "1234 AB",
-                City = "Verweggie",
-                Country = "The Netherlands",
-                ICEPhoneNumber = "0612345678"
-            };
-            Guests.Add(olaf);
-            Guests.Add(michael);
-            Guests.Add(dirkjan);
-            Guests.Add(tama);
+            Rooms.AddItem(room);
+        }
+
+        public void AddGuest(Guest guest)
+        {
+            Guests.AddItem(guest);
         }
     }
 }

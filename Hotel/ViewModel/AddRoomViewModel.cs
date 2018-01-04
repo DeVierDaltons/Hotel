@@ -59,7 +59,7 @@ namespace Hotel.ViewModel
 
         public void AddRoom()
         {
-            HotelManager.Rooms.Add(Room);
+            HotelManager.AddRoom(Room);
         }
 
         private void OnNotifyPropertyChanged([CallerMemberName] string propertyName = "")

@@ -1,5 +1,6 @@
 ﻿using Hotel.Command;
 using Hotel.Model;
+using Hotel.Repository;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
@@ -16,9 +17,9 @@ namespace Hotel.ViewModel
     {
         public ICommand ShowAddGuestWindowCommand { get; }
 
-        private ObservableCollection<Guest> _guests;
+        private RepositoryBackedObservableCollection<Guest> _guests;
 
-        public ObservableCollection<Guest> Guests
+        public RepositoryBackedObservableCollection<Guest> Guests
         {
             get { return _guests; }
             set { _guests = value; OnPropertyChanged(); }
@@ -26,7 +27,7 @@ namespace Hotel.ViewModel
 
         public event PropertyChangedEventHandler PropertyChanged;
 
-        public GuestsViewModel(ObservableCollection<Guest> guests)
+        public GuestsViewModel(RepositoryBackedObservableCollection<Guest> guests)
         {
             Guests = guests;
             ShowAddGuestWindowCommand = new ShowGuestDetailWindowCommand(new AddGuestCommand(guests));
