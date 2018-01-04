@@ -24,9 +24,8 @@ namespace TestHotel
         private static AddBookingViewModel CreateBookingViewModel()
         {
             var hotelManager = CreateTestHotelManager();
-            AddBookingViewModel addBookingViewModel = new AddBookingViewModel
+            AddBookingViewModel addBookingViewModel = new AddBookingViewModel(hotelManager)
             {
-                HotelManager = hotelManager,
                 Room = hotelManager.Rooms[0],
                 Guest = hotelManager.Guests[0],
                 SelectedDates = CreateSelectedDates()
@@ -46,7 +45,7 @@ namespace TestHotel
         [TestMethod]
         public void InvalidBookingCommandFails()
         {
-            Assert.IsFalse(new AddBookingCommand(new AddBookingViewModel()).CanExecute(null));
+            Assert.IsFalse(new AddBookingCommand(new AddBookingViewModel(null)).CanExecute(null));
         }
 
         [TestMethod]

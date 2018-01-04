@@ -14,7 +14,7 @@ namespace Hotel.ViewModel
         public event PropertyChangedEventHandler PropertyChanged;
 
         #region Properties
-        public HotelManager HotelManager { get; set; }
+        public HotelManager HotelManager { get; private set; }
         public ICommand AddBookingCommand { get; set; }
         public Booking Booking { get; set; } = new Booking();
 
@@ -45,8 +45,9 @@ namespace Hotel.ViewModel
         public SelectedDatesCollection SelectedDates { get; set; }
         #endregion
 
-        public AddBookingViewModel()
+        public AddBookingViewModel(HotelManager hotelManager)
         {
+            HotelManager = hotelManager;
             AddBookingCommand = new AddBookingCommand(this);
         }
 

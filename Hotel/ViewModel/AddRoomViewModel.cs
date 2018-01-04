@@ -12,7 +12,7 @@ namespace Hotel.ViewModel
         public event PropertyChangedEventHandler PropertyChanged;
 
         #region Properties
-        public HotelManager HotelManager { get; set; }
+        public HotelManager HotelManager { get; private set; }
         public ICommand AddRoomCommand { get; set; }
         public Room Room { get; set; } = new Room();
 
@@ -47,9 +47,10 @@ namespace Hotel.ViewModel
         }
         #endregion
 
-        public AddRoomViewModel()
+        public AddRoomViewModel(HotelManager hotelManager)
         {
-           AddRoomCommand = new AddRoomCommand(this);
+            HotelManager = hotelManager;
+            AddRoomCommand = new AddRoomCommand(this);
         }
 
         public bool ValidateInput()

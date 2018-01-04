@@ -16,8 +16,7 @@ namespace TestHotel
         public void AddRoomUsingCommandTest()
         {
             IRepository<Room> repository = new TestRepository<Room>();
-            AddRoomViewModel addRoomViewModel = new AddRoomViewModel();
-            addRoomViewModel.HotelManager = AddBookingTests.CreateTestHotelManager();
+            AddRoomViewModel addRoomViewModel = new AddRoomViewModel(AddBookingTests.CreateTestHotelManager());
             new AddRoomCommand(addRoomViewModel).Execute(new Room());
             Assert.IsTrue(addRoomViewModel.HotelManager.Rooms.Count > 0);
         }
@@ -25,7 +24,7 @@ namespace TestHotel
         [TestMethod]
         public void InvalidRoomCommandFails()
         {
-            AddRoomViewModel addRoomViewModel = new AddRoomViewModel();
+            AddRoomViewModel addRoomViewModel = new AddRoomViewModel(null);
             Assert.IsFalse(addRoomViewModel.ValidateInput());
         }
     }

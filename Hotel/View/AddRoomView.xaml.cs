@@ -14,15 +14,5 @@ namespace Hotel.View
             InitializeComponent();
             RoomQualityDropdown.ItemsSource = Enum.GetValues(typeof(RoomQuality)).Cast<RoomQuality>();
         }
-
-        private void SaveRoom(object sender, RoutedEventArgs e)
-        {
-            (DataContext as AddRoomViewModel).AddRoom();
-        }
-
-        private void Button_Click(object sender, RoutedEventArgs e)
-        {
-         //   this.Close();
-        }
     }
 }
