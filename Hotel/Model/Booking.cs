@@ -35,7 +35,7 @@ namespace Hotel.Model
         public virtual BookingPeriod BookingPeriod
         {
             get { return _bookingPeriod; }
-            set { _bookingPeriod = value; }
+            set { _bookingPeriod = value; OnPropertyChanged(); }
         }
 
         public virtual bool OverlapsWith(Booking booking)

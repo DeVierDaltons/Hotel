@@ -8,14 +8,14 @@
     <DockPanel>
         <WrapPanel DockPanel.Dock="Bottom">
             <Label Content="Guest:"/>
-            <ComboBox Name="GuestDropdown" Width="80" SelectedItem="{Binding Guest}"/>
+            <ComboBox Name="GuestDropdown" Width="80" SelectedItem="{Binding Guest}" ItemsSource="{Binding Guests}"/>
 
             <Label Content="Room:"/>
-            <ComboBox Name="RoomDropdown" Width="80" SelectedItem="{Binding Room}"/>
+            <ComboBox Name="RoomDropdown" Width="80" SelectedItem="{Binding Room}" ItemsSource="{Binding Rooms}"/>
 
             <Button Width="80" Command="{Binding AddBookingCommand}" Content="Save"></Button>
         </WrapPanel>
-        <Calendar Name="BookingRangeCalendar" SelectionMode="SingleRange">
+        <Calendar Name="BookingRangeCalendar" SelectionMode="SingleRange" SelectedDatesChanged="Calendar_SelectedDatesChanged">
 
         </Calendar>
     </DockPanel>
