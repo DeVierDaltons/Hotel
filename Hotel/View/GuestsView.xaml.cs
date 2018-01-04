@@ -16,7 +16,13 @@ namespace Hotel.View
 
         private void OnEditGuestClicked(object sender, RoutedEventArgs e)
         {
-            (DataContext as GuestsViewModel).ShowEditGuestWindow(GuestsList.SelectedItem);
+            (DataContext as GuestsViewModel).EditGuest(GuestsList.SelectedItem);
+        }
+
+        private void OnAddGuestClicked(object sender, RoutedEventArgs e)
+        {
+
+            (DataContext as GuestsViewModel).AddGuest();
         }
     }
 }

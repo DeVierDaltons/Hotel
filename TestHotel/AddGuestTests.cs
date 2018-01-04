@@ -25,7 +25,7 @@ namespace TestHotel
         {
             IRepository<Guest> repository = new TestRepository<Guest>();
             RepositoryBackedObservableCollection<Guest> guestList = new RepositoryBackedObservableCollection<Guest>(repository);
-            var guestsVM = new GuestDetailViewModel(new AddGuestCommand(guestList), new Guest());
+            var guestsVM = new GuestDetailViewModel(new AddGuestCommand(guestList), new Guest(), () => { });
             Assert.IsFalse(guestsVM.SubmitCommand.CanExecute(null));
         }
     }
