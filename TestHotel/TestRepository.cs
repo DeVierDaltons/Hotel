@@ -18,7 +18,6 @@ namespace TestHotel
 
         public T Get(Guid guid)
         {
-
             return items.Find(g => g.Id == guid);
         }
 

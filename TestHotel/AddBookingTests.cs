@@ -16,22 +16,22 @@ namespace TestHotel
         [TestMethod]
         public void AddBookingUsingCommandTest()
         {
-            var hotelManager = CreateTestHotelManager();
-
-            Room room = new Room();
-            hotelManager.AddRoom(room);
-
-            SelectedDatesCollection dates = CreateSelectedDates();
-            Booking booking = new Booking();
-            booking.SetDates(dates);
-            booking.Room = room;
-            booking.Guest = new Guest();
-
-            AddBookingViewModel addBookingViewModel = new AddBookingViewModel();
-            addBookingViewModel.HotelManager = hotelManager;
-            addBookingViewModel.SelectedDates = dates;
-            new AddBookingCommand(addBookingViewModel).Execute(booking);
+            AddBookingViewModel addBookingViewModel = CreateBookingViewModel();
+            addBookingViewModel.AddBooking();
             Assert.IsTrue(addBookingViewModel.HotelManager.Bookings.Count > 0);
+        }
+
+        private static AddBookingViewModel CreateBookingViewModel()
+        {
+            var hotelManager = CreateTestHotelManager();
+            AddBookingViewModel addBookingViewModel = new AddBookingViewModel
+            {
+                HotelManager = hotelManager,
+                Room = hotelManager.Rooms[0],
+                Guest = hotelManager.Guests[0],
+                SelectedDates = CreateSelectedDates()
+            };
+            return addBookingViewModel;
         }
 
         private static SelectedDatesCollection CreateSelectedDates()
@@ -49,12 +49,23 @@ namespace TestHotel
             Assert.IsFalse(new AddBookingCommand(new AddBookingViewModel()).CanExecute(null));
         }
 
+        [TestMethod]
+        public void CantDoubleBook()
+        {
+            AddBookingViewModel addBookingViewModel = CreateBookingViewModel();
+            addBookingViewModel.AddBooking();
+            Assert.IsFalse(addBookingViewModel.ValidateInput());
+        }
+
         public static HotelManager CreateTestHotelManager()
         {
             IRepository<Guest> guestsRepo = new TestRepository<Guest>();
             IRepository<Room> roomsRepo = new TestRepository<Room>();
             IRepository<Booking> bookingsRepo = new TestRepository<Booking>();
-            return new HotelManager(guestsRepo, roomsRepo, bookingsRepo);
+            var hotelManager = new HotelManager(guestsRepo, roomsRepo, bookingsRepo);
+            hotelManager.AddRoom(new Room());
+            hotelManager.AddGuest(new Guest());
+            return hotelManager;
         }
     }
 }
