@@ -68,7 +68,7 @@ namespace Hotel.ViewModel
             {
                 return false;
             }
-            return Booking.Room.TimePeriodAvailable(new BookingPeriod(SelectedDates.FirstOrDefault(), SelectedDates.LastOrDefault()));
+            return Booking.Room.TimePeriodAvailable(new BookingPeriod(SelectedDates));
         }
 
         public void AddBooking()

@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows.Controls;
 
 namespace Hotel.Model
 {
@@ -49,15 +50,8 @@ namespace Hotel.Model
             }
         }
 
-        /// <summary>
-        /// Creates a new BookingPeriod based on a start date and timespan
-        /// </summary>
-        /// <param name="startDays">Start date</param>
-        /// <param name="days">Timespan</param>
-        public BookingPeriod(DateTime startDate, int days)
+        public BookingPeriod(SelectedDatesCollection selectedDates) : this(selectedDates.FirstOrDefault(), selectedDates.LastOrDefault())
         {
-            StartDate = startDate;
-            EndDate = startDate.Add(TimeSpan.FromDays((double)days));
         }
 
         /// <summary>
