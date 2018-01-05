@@ -51,13 +51,11 @@ namespace Hotel.Model
         }
 
         private Address _address = new Address();
-
         public virtual Address Address
         {
             get { return _address; }
             set { _address = value; }
         }
-
 
         private string _ICEPhoneNumber;
         public virtual string ICEPhoneNumber

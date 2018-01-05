@@ -49,19 +49,13 @@ namespace Hotel.ViewModel
         public string PostalCode
         {
             get { return Guest.Address.PostalCode; }
-            set
-            {
-                Guest.Address.PostalCode = value; OnPropertyChanged();
-            }
+            set { Guest.Address.PostalCode = value; OnPropertyChanged(); }
         }
 
         public string City
         {
             get { return Guest.Address.City; }
-            set
-            {
-                Guest.Address.City = value; OnPropertyChanged();
-            }
+            set { Guest.Address.City = value; OnPropertyChanged(); }
         }
 
         public string Country
