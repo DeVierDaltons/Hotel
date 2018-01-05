@@ -46,11 +46,11 @@ namespace Hotel.Model
             set { _emailAdress = value; OnPropertyChanged(); }
         }
 
-        private string _adress;
-        public virtual string Adress
+        private string _address;
+        public virtual string Address
         {
-            get { return _adress; }
-            set { _adress = value; OnPropertyChanged(); }
+            get { return _address; }
+            set { _address = value; OnPropertyChanged(); }
         }
 
         private string _postalCode;
@@ -87,7 +87,7 @@ namespace Hotel.Model
             LastName = newGuest._lastName;
             PhoneNumber = newGuest._phoneNumber;
             EmailAdress = newGuest._emailAdress;
-            Adress = newGuest.Adress;
+            Address = newGuest.Address;
             PostalCode = newGuest.PostalCode;
             City = newGuest.City;
             Country = newGuest.Country;

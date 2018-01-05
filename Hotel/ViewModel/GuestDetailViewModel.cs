@@ -42,8 +42,8 @@ namespace Hotel.ViewModel
 
         public string StreetAddress
         {
-            get { return Guest.Adress; }
-            set { Guest.Adress = value; OnPropertyChanged(); }
+            get { return Guest.Address; }
+            set { Guest.Address = value; OnPropertyChanged(); }
         }
 
         public string PostalCode
