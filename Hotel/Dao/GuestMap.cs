@@ -14,6 +14,10 @@ namespace Hotel.Dao
             Property(x => x.PhoneNumber);
             Property(x => x.EmailAdress);
             Property(x => x.ICEPhoneNumber);
+            Property(x => x.Address);
+            Property(x => x.PostalCode);
+            Property(x => x.City);
+            Property(x => x.Country);
         }
     }
 }
