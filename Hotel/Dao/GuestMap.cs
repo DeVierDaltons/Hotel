@@ -14,12 +14,6 @@ namespace Hotel.Dao
             Property(x => x.PhoneNumber, m => m.Length(Guest.MaxLengthForPhoneNumbers));
             Property(x => x.EmailAdress, m => m.Length(Guest.MaxLengthForEmailAddresses));
             Property(x => x.ICEPhoneNumber, m => m.Length(Guest.MaxLengthForPhoneNumbers));
-            Component<Address>(x => x.Address, c => {
-                c.Property(x => x.Street);
-                c.Property(x => x.City);
-                c.Property(x => x.PostalCode);
-                c.Property(x => x.Country);
-            });
         }
     }
 }

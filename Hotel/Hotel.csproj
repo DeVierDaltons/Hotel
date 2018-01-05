@@ -81,7 +81,6 @@
     <Compile Include="Command\AddRoomCommand.cs" />
     <Compile Include="Dao\BookingPeriodMap.cs" />
     <Compile Include="Dao\NHibernateRepository.cs" />
-    <Compile Include="Model\Address.cs" />
     <Compile Include="Model\BookingPeriod.cs" />
     <Compile Include="Dao\BookingMap.cs" />
     <Compile Include="Dao\GuestMap.cs" />

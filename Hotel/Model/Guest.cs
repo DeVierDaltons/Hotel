@@ -50,11 +50,32 @@ namespace Hotel.Model
             set { _emailAdress = value; OnPropertyChanged(); }
         }
 
-        private Address _address = new Address();
-        public virtual Address Address
+        private string _adress;
+        public virtual string Adress
         {
-            get { return _address; }
-            set { _address = value; }
+            get { return _adress; }
+            set { _adress = value; OnPropertyChanged(); }
+        }
+
+        private string _postalCode;
+        public virtual string PostalCode
+        {
+            get { return _postalCode; }
+            set { _postalCode = value; OnPropertyChanged(); }
+        }
+
+        private string _city;
+        public virtual string City
+        {
+            get { return _city; }
+            set { _city = value; OnPropertyChanged(); }
+        }
+
+        private string _country;
+        public virtual string Country
+        {
+            get { return _country; }
+            set { _country = value; OnPropertyChanged(); }
         }
 
         private string _ICEPhoneNumber;
@@ -70,7 +91,10 @@ namespace Hotel.Model
             LastName = newGuest._lastName;
             PhoneNumber = newGuest._phoneNumber;
             EmailAdress = newGuest._emailAdress;
-            Address = newGuest.Address;
+            Adress = newGuest.Adress;
+            PostalCode = newGuest.PostalCode;
+            City = newGuest.City;
+            Country = newGuest.Country;
             ICEPhoneNumber = newGuest._ICEPhoneNumber;
         }
 

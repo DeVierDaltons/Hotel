@@ -42,26 +42,26 @@ namespace Hotel.ViewModel
 
         public string StreetAddress
         {
-            get { return Guest.Address.Street; }
-            set { Guest.Address.Street = value; OnPropertyChanged(); }
+            get { return Guest.Adress; }
+            set { Guest.Adress = value; OnPropertyChanged(); }
         }
 
         public string PostalCode
         {
-            get { return Guest.Address.PostalCode; }
-            set { Guest.Address.PostalCode = value; OnPropertyChanged(); }
+            get { return Guest.PostalCode; }
+            set { Guest.PostalCode = value; OnPropertyChanged(); }
         }
 
         public string City
         {
-            get { return Guest.Address.City; }
-            set { Guest.Address.City = value; OnPropertyChanged(); }
+            get { return Guest.City; }
+            set { Guest.City = value; OnPropertyChanged(); }
         }
 
         public string Country
         {
-            get { return Guest.Address.Country; }
-            set { Guest.Address.Country = value; OnPropertyChanged(); }
+            get { return Guest.Country; }
+            set { Guest.Country = value; OnPropertyChanged(); }
         }
 
         public string ICEPhoneNumber
