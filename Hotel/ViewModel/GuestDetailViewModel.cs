@@ -11,6 +11,8 @@ namespace Hotel.ViewModel
     {
         public event PropertyChangedEventHandler PropertyChanged;
 
+        private Action AfterSubmitAction;
+
         #region Properties
         public Guest Guest { get; set; } = new Guest();
 
@@ -38,28 +40,22 @@ namespace Hotel.ViewModel
             set { Guest.EmailAdress = value; OnPropertyChanged(); }
         }
 
-        public string Adress
+        public string StreetAddress
         {
-            get { return Guest.Adress; }
-            set { Guest.Adress = value; OnPropertyChanged(); }
+            get { return Guest.Address; }
+            set { Guest.Address = value; OnPropertyChanged(); }
         }
 
         public string PostalCode
         {
             get { return Guest.PostalCode; }
-            set
-            {
-                Guest.PostalCode = value; OnPropertyChanged();
-            }
+            set { Guest.PostalCode = value; OnPropertyChanged(); }
         }
 
         public string City
         {
             get { return Guest.City; }
-            set
-            {
-                Guest.City = value; OnPropertyChanged();
-            }
+            set { Guest.City = value; OnPropertyChanged(); }
         }
 
         public string Country
@@ -80,7 +76,7 @@ namespace Hotel.ViewModel
 
         #endregion Properties
 
-        public GuestDetailViewModel(ICommand guestCommand, Guest currentGuestData)
+        public GuestDetailViewModel(ICommand guestCommand, Guest currentGuestData, Action afterSubmitAction)
         {
             if (currentGuestData != null)
             {
@@ -88,11 +84,28 @@ namespace Hotel.ViewModel
             }
             GuestCommand = guestCommand;
             SubmitCommand = new RelayCommand(OnSubmitClicked, (_) => ValidateInput());
+            AfterSubmitAction = afterSubmitAction;
         }
 
         private void OnSubmitClicked(object _)
         {
             GuestCommand.Execute(Guest);
+            Guest = new Guest();
+            ClearAllFields();
+            AfterSubmitAction();
+        }
+
+        private void ClearAllFields()
+        {
+            FirstName = string.Empty;
+            LastName = string.Empty;
+            PhoneNumber = string.Empty;
+            EmailAdress = string.Empty;
+            StreetAddress = string.Empty;
+            PostalCode = string.Empty;
+            City = string.Empty;
+            Country = string.Empty;
+            ICEPhoneNumber = string.Empty;
         }
 
         /// <summary>

@@ -1,4 +1,5 @@
 ﻿using Hotel.Model;
+using Hotel.Repository;
 using Hotel.ViewModel;
 using System;
 using System.Collections.Generic;
@@ -18,9 +19,9 @@ namespace Hotel.Command
             remove { CommandManager.RequerySuggested -= value; }
         }
 
-        private ObservableCollection<Guest> Guests;
+        private RepositoryBackedObservableCollection<Guest> Guests;
 
-        public AddGuestCommand(ObservableCollection<Guest> guests)
+        public AddGuestCommand(RepositoryBackedObservableCollection<Guest> guests)
         {
             Guests = guests;
         }
@@ -32,7 +33,7 @@ namespace Hotel.Command
 
         public void Execute(object parameter)
         {
-            Guests.Add(parameter as Guest);
+            Guests.AddItem(parameter as Guest);
         }
     }
 }

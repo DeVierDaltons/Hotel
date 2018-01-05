@@ -1,40 +1,82 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+using System.ComponentModel;
+using System.Runtime.CompilerServices;
 using System.Windows.Controls;
+using System.Windows.Input;
 
 namespace Hotel.Model
 {
-    public class Booking
+    public class Booking : INotifyPropertyChanged, IHasGUID
     {
-        public Guest Guest;
-        public Room Room;
-        public DateTime StartDay;
-        public DateTime EndDay;
+        public virtual Guid Id { get; set; }
 
-        public string StartDayString
+        public virtual event PropertyChangedEventHandler PropertyChanged;
+
+        private Guest _guest;
+        public virtual Guest Guest
         {
-            get { return StartDay.ToShortDateString(); }
+            get { return _guest; }
+            set { _guest = value; OnPropertyChanged(); }
         }
 
-        public string EndDayString
+        private Room _room;
+        public virtual Room Room
         {
-            get { return EndDay.ToShortDateString(); }
+            get { return _room; }
+            set { _room = value; OnPropertyChanged(); }
         }
 
-        public string GuestName
+        private BookingPeriod _bookingPeriod;
+
+        public virtual BookingPeriod BookingPeriod
+        {
+            get { return _bookingPeriod; }
+            set { _bookingPeriod = value; OnPropertyChanged(); }
+        }
+
+        public virtual bool OverlapsWith(Booking booking)
+        {
+            return BookingPeriod.OverlapsWith(booking.BookingPeriod);
+        }
+
+        public virtual bool DoesNotOverlapWith(Booking booking)
+        {
+            return BookingPeriod.DoesNotoverlapWith(booking.BookingPeriod);
+        }
+
+        public virtual string StartDayString
+        {
+            get { return BookingPeriod.StartDate.ToShortDateString(); }
+        }
+
+        public virtual string EndDayString
+        {
+            get { return BookingPeriod.EndDate.ToShortDateString(); }
+        }
+
+        public virtual string GuestName
         {
             get { return Guest.FirstName ?? "null"; }
         }
 
-        public string RoomNumber
+        public virtual string RoomNumber
         {
             get { return Room.RoomNumber ?? "null"; }
         }
 
-        public void SetDates(SelectedDatesCollection selectedDates)
+        public virtual void SetDates(SelectedDatesCollection selectedDates)
         {
-            StartDay = selectedDates.FirstOrDefault();
-            EndDay = selectedDates.LastOrDefault();
+            BookingPeriod = new BookingPeriod(selectedDates.FirstOrDefault(), selectedDates.LastOrDefault());
+        }
+
+        public virtual void OnPropertyChanged([CallerMemberName] string name = "")
+        {
+            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(name));
+            CommandManager.InvalidateRequerySuggested();
         }
     }
 }
