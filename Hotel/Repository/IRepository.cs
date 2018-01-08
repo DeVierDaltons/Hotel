@@ -40,6 +40,6 @@ namespace Hotel.Repository
         /// Row count person in db
         /// </summary>
         /// <returns>number of rows</returns>
-        long RowCount();
+        long Count();
     }
 }

@@ -48,7 +48,7 @@ namespace Hotel.DataAccessObjects
             }
         }
 
-        public long RowCount()
+        public long Count()
         {
             return session.QueryOver<T>().RowCountInt64();
         }
