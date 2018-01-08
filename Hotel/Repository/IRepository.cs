@@ -6,29 +6,29 @@ namespace Hotel.Repository
     public interface IRepository<T>
     {
         /// <summary>
-        /// Get person entity by id
+        /// Get item entity by id
         /// </summary>
         /// <param name="id">id</param>
-        /// <returns>person</returns>
+        /// <returns>item</returns>
         T Get(Guid guid);
 
         /// <summary>
-        /// Save person entity
+        /// Save item entity
         /// </summary>
-        /// <param name="person">person</param>
-        void Save(T person);
+        /// <param name="item">item</param>
+        void Save(T item);
 
         /// <summary>
-        /// Update person entity
+        /// Update item entity
         /// </summary>
-        /// <param name="person">person</param>
-        void Update(T person);
+        /// <param name="item">item</param>
+        void Update(T item);
 
         /// <summary>
-        /// Delete person entity
+        /// Delete item entity
         /// </summary>
-        /// <param name="person">person</param>
-        void Delete(T person);
+        /// <param name="item">item</param>
+        void Delete(T item);
 
         /// <summary>
         /// Retrieve all guests
@@ -37,9 +37,9 @@ namespace Hotel.Repository
         List<T> GetAll();
 
         /// <summary>
-        /// Row count person in db
+        /// Row count item in db
         /// </summary>
         /// <returns>number of rows</returns>
-        long RowCount();
+        long Count();
     }
 }

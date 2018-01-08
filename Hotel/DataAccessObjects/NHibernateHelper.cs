@@ -4,7 +4,7 @@ using NHibernate.Cfg.MappingSchema;
 using NHibernate.Mapping.ByCode;
 using NHibernate;
 
-namespace Hotel.Dao
+namespace Hotel.DataAccessObjects
 {
     public static class NHibernateHelper
     {

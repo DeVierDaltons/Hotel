@@ -4,7 +4,7 @@ using Hotel.Model;
 using Hotel.Command;
 using Hotel.ViewModel;
 using Hotel.Repository;
-using Hotel.Dao;
+using Hotel.DataAccessObjects;
 using System.Diagnostics;
 
 namespace TestHotel

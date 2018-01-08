@@ -26,7 +26,7 @@ namespace TestHotel
             return new List<T>(items);
         }
 
-        public long RowCount()
+        public long Count()
         {
             return items.Count;
         }

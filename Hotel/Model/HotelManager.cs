@@ -1,4 +1,4 @@
-﻿using Hotel.Dao;
+﻿using Hotel.DataAccessObjects;
 using Hotel.Repository;
 using System.Diagnostics;
 
