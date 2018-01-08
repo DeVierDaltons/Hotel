@@ -35,11 +35,5 @@ namespace Hotel.Repository
         /// </summary>
         /// <returns>All the guests</returns>
         List<T> GetAll();
-
-        /// <summary>
-        /// Row count item in db
-        /// </summary>
-        /// <returns>number of rows</returns>
-        long Count();
     }
 }

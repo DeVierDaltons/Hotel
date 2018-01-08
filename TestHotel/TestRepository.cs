@@ -26,11 +26,6 @@ namespace TestHotel
             return new List<T>(items);
         }
 
-        public long Count()
-        {
-            return items.Count;
-        }
-
         public void Save(T item)
         {
             items.Add(item);

@@ -47,10 +47,5 @@ namespace Hotel.DataAccessObjects
                 transaction.Commit();
             }
         }
-
-        public long Count()
-        {
-            return session.QueryOver<T>().RowCountInt64();
-        }
     }
 }
