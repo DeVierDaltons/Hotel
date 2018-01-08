@@ -8,7 +8,7 @@ namespace TestHotel
 {
     public class TestRepository<T> : IRepository<T> where T : IHasGUID
     {
-        public List<T> items = new List<T>();
+        private List<T> items = new List<T>();
 
         public void Delete(T item)
         {
