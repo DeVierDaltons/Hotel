@@ -5,7 +5,7 @@ using System.Collections.Generic;
 using Hotel.Repository;
 using Hotel.Model;
 
-namespace Hotel.Dao
+namespace Hotel.DataAccessObjects
 {
     public class NHibernateRepository<T> : IRepository<T> where T : class
     {
