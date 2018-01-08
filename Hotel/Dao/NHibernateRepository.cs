@@ -9,7 +9,7 @@ namespace Hotel.Dao
 {
     public class NHibernateRepository<T> : IRepository<T> where T : class
     {
-        ISession session = NHibernateHelper.GetSession();
+        ISession session = NHibernateHelper.Session;
 
         public void Save(T item)
         {
