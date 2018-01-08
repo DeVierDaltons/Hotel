@@ -14,7 +14,7 @@ namespace Hotel.View
         private void Calendar_SelectedDatesChanged(object sender, SelectionChangedEventArgs e)
         {
             AddBookingViewModel viewModel = (AddBookingViewModel)DataContext;
-            viewModel.SelectedDates = BookingRangeCalendar.SelectedDates;
+            //viewModel.SelectedDates = BookingRangeCalendar.SelectedDates;
         }
     }
 }

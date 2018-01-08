@@ -7,6 +7,7 @@ using System.Windows.Input;
 using System.Windows.Controls;
 using System.Linq;
 using System.Collections.ObjectModel;
+using System.Collections.Generic;
 
 namespace Hotel.ViewModel
 {
@@ -18,6 +19,8 @@ namespace Hotel.ViewModel
         public HotelManager HotelManager { get; private set; }
         public ICommand AddBookingCommand { get; private set; }
         public Booking Booking { get; set; } = new Booking();
+
+        public List<RoomAvailability> CurrentRoomAvailabilities { get; private set; }
 
         public ObservableCollection<Guest> Guests
         {
@@ -48,6 +51,11 @@ namespace Hotel.ViewModel
         {
             HotelManager = hotelManager;
             AddBookingCommand = new AddBookingCommand(this);
+            CurrentRoomAvailabilities = new List<RoomAvailability>();
+            foreach(Room room in HotelManager.Rooms)
+            {
+                CurrentRoomAvailabilities.Add(new RoomAvailability(room, DateTime.Today));
+            }
         }
 
         public bool ValidateInput()

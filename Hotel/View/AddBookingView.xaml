@@ -15,8 +15,6 @@
 
             <Button Width="80" Command="{Binding AddBookingCommand}" Content="Save"></Button>
         </WrapPanel>
-        <Calendar Name="BookingRangeCalendar" SelectionMode="SingleRange" SelectedDatesChanged="Calendar_SelectedDatesChanged">
-
-        </Calendar>
+        <DataGrid ItemsSource="{Binding CurrentRoomAvailabilities}" SelectionMode="Extended" SelectionUnit="Cell" />
     </DockPanel>
 </UserControl>
