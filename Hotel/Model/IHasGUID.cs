@@ -2,7 +2,7 @@
 
 namespace Hotel.Model
 {
-    public interface IHasGUID
+    public interface IIdentifiable
     {
         Guid Id
         { get; set; }

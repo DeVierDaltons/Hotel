@@ -6,7 +6,7 @@ using System.Diagnostics;
 
 namespace TestHotel
 {
-    public class TestRepository<T> : IRepository<T> where T : IHasGUID
+    public class TestRepository<T> : IRepository<T> where T : IIdentifiable
     {
         private List<T> items = new List<T>();
 

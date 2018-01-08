@@ -9,7 +9,7 @@ using System.Windows.Input;
 
 namespace Hotel.Model
 {
-    public class Guest : INotifyPropertyChanged, IHasGUID
+    public class Guest : INotifyPropertyChanged, IIdentifiable
     {
         public virtual event PropertyChangedEventHandler PropertyChanged;
 
