@@ -82,11 +82,12 @@ namespace Hotel.ViewModel
         private void ClearAllFields()
         {
             Guest = null;
+            Room = null;
             Booking.BookingPeriod = new BookingPeriod() {
                 StartDate = DateTime.Today,
                 EndDate = DateTime.Today
             };
-            Room = null;
+            SelectedDates.Clear();
         }
 
         public void OnPropertyChanged([CallerMemberName] string name = "")
