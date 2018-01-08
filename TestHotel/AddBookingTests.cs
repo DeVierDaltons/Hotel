@@ -14,7 +14,7 @@ namespace TestHotel
     public class AddBookingTests
     {
         [TestMethod]
-        public void AddBookingUsingCommandTest()
+        public void AddBookingUsingCommand()
         {
             AddBookingViewModel addBookingViewModel = CreateBookingViewModel();
             addBookingViewModel.AddBooking();
