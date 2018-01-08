@@ -2,6 +2,8 @@
 using System.Collections.ObjectModel;
 using System.ComponentModel;
 using System.Collections.Generic;
+using System.Collections.Specialized;
+using System.Windows;
 
 namespace Hotel.Repository
 {
@@ -19,21 +21,19 @@ namespace Hotel.Repository
             CollectionChanged += RepositoryBackedObservableCollection_CollectionChanged;
         }
 
-        private void RepositoryBackedObservableCollection_CollectionChanged(object sender, System.Collections.Specialized.NotifyCollectionChangedEventArgs e)
+        private void RepositoryBackedObservableCollection_CollectionChanged(object sender, NotifyCollectionChangedEventArgs e)
         {
-            IEnumerable<T> oldItems = e.OldItems != null ? e.OldItems.Cast<T>() : new List<T>();
-            IEnumerable<T> newItems = e.NewItems != null ? e.NewItems.Cast<T>() : new List<T>();
-            var toAdd = newItems.Where(item => !oldItems.Contains(item));
-            foreach(T item in toAdd)
+            if (e.OldItems != null)
             {
-                repository.Save(item);
-                item.PropertyChanged += OnItemChanged;
+                T oldItem = (T) e.OldItems[0];
+                repository.Delete(oldItem);
+                oldItem.PropertyChanged -= OnItemChanged;
             }
-            var toRemove = oldItems.Where(item => !newItems.Contains(item));
-            foreach(T item in toRemove)
+            else
             {
-                repository.Delete(item);
-                item.PropertyChanged -= OnItemChanged;
+                T newItem = (T)e.NewItems[0];
+                repository.Save(newItem);
+                newItem.PropertyChanged += OnItemChanged;
             }
         }
 
