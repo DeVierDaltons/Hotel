@@ -45,7 +45,13 @@ namespace TestHotel
         [TestMethod]
         public void InvalidBookingCommandFails()
         {
-            Assert.IsFalse(new AddBookingCommand(new AddBookingViewModel(null)).CanExecute(null));
+            AddBookingViewModel vm = new AddBookingViewModel(null)
+            {
+                Booking = null,
+                Guest = null,
+                SelectedDates = null
+            };
+            Assert.IsFalse(new AddBookingCommand(vm).CanExecute(null));
         }
 
         [TestMethod]
