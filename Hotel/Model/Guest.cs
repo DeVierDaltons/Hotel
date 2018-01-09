@@ -19,7 +19,7 @@ namespace Hotel.Model
         public virtual string FirstName
         {
             get { return _firstName; }
-            set { _firstName = value; OnPropertyChanged();  }
+            set { _firstName = value; OnPropertyChanged(); }
         }
 
         private string _lastName;

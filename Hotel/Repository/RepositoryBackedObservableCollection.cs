@@ -1,5 +1,6 @@
 ﻿using System.Collections.ObjectModel;
 using System.ComponentModel;
+using Hotel.Model;
 
 namespace Hotel.Repository
 {
@@ -27,6 +28,7 @@ namespace Hotel.Repository
             Add(item);
             repository.Save(item);
             item.PropertyChanged += OnItemChanged;
+            Logger.LogAction<T>(item, ActionType.Add);
         }
 
         public void RemoveItem(T item)
