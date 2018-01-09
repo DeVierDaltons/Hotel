@@ -29,6 +29,11 @@ namespace Hotel.Model
             set { _lastName = value; OnPropertyChanged(); }
         }
 
+        public virtual string FullName
+        {
+            get { return String.Format("{0} {1}", FirstName, LastName); }
+        }
+
         private string _phoneNumber;
         /// <summary>
         /// Storing phone number as string to perserve preceding zeros

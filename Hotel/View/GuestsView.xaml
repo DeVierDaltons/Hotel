@@ -3,7 +3,7 @@
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-        mc:Ignorable="d" d:DesignWidth="326.841" d:DesignHeight="280.631"
+        mc:Ignorable="d" d:DesignWidth="700" d:DataContext="{d:DesignData /SampleData/GuestsViewModelSampleData.xaml}"
         >
     <Grid>
         <Grid.RowDefinitions>
@@ -16,26 +16,17 @@
                 <TextBox  Text="{Binding FilterGuestString, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" VerticalAlignment="Center" Width="80" MinWidth="80" />
         </StackPanel>
     
-        <StackPanel Grid.Row="2" Grid.ColumnSpan="3">
+        <StackPanel Grid.Row="2">
             <Button Content="Add Guest" Click="OnAddGuestClicked"/>
             <Button Content="Edit Selected Guest" Click="OnEditGuestClicked"/>
         </StackPanel>
-        <ListBox Grid.Row="1" Grid.ColumnSpan="3" ItemsSource="{Binding DisplayedGuests, Mode=TwoWay}" Name="GuestsList" Margin="0,20,0,0">
-            <ListBox.ItemTemplate>
-                <DataTemplate>
-                    <StackPanel HorizontalAlignment="Left" Orientation="Horizontal">
-                        <TextBlock TextWrapping="Wrap" Text="Name:" FontWeight="Bold" Margin="2"/>
-                        <TextBlock TextWrapping="Wrap" Text="{Binding FirstName}" Margin="2,2,0,2"/>
-                        <TextBlock TextWrapping="Wrap" Text="{Binding LastName}" Margin="2"/>
-                        <TextBlock TextWrapping="Wrap" Text="@: " FontWeight="Bold" Margin="2"/>
-                        <TextBlock TextWrapping="Wrap" Text="{Binding EmailAdress}" Margin="2"/>
-                        <TextBlock TextWrapping="Wrap" Text="Phone:" Margin="2" FontWeight="Bold"  />
-                        <TextBlock TextWrapping="Wrap" Text="{Binding PhoneNumber}" Margin="2" />
-                        <TextBlock TextWrapping="Wrap" Text="Country:" Margin="2" FontWeight="Bold"  />
-                        <TextBlock TextWrapping="Wrap" Text="{Binding Country}" Margin="2" />
-                    </StackPanel>
-                </DataTemplate>
-            </ListBox.ItemTemplate>
-        </ListBox>
+        <DataGrid ItemsSource="{Binding DisplayedGuests, Mode=TwoWay}" Name="GuestsList" Grid.Row="1" AutoGenerateColumns="False" IsReadOnly="True" >
+            <DataGrid.Columns>
+                <DataGridTextColumn Binding="{Binding FullName}" Header="Name"/>
+                <DataGridTextColumn Binding="{Binding EmailAdress}" Header="Email"/>
+                <DataGridTextColumn Binding="{Binding PhoneNumber}" Header="Phone"/>
+                <DataGridTextColumn Binding="{Binding Country}" Header="Country"/>
+            </DataGrid.Columns>
+        </DataGrid>
     </Grid>
 </UserControl>
