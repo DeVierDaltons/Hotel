@@ -25,8 +25,8 @@
                 <DataGridTextColumn Binding="{Binding FullName}" Header="Name"/>
                 <DataGridTextColumn Binding="{Binding EmailAdress}" Header="Email" MinWidth="40"/>
                 <DataGridTextColumn Binding="{Binding PhoneNumber}" Header="Phone"/>
-                <DataGridTextColumn Binding="{Binding PostalCode}" Header="Postal Code" />
                 <DataGridTextColumn Binding="{Binding Address}" Header="Address" />
+                <DataGridTextColumn Binding="{Binding PostalCode}" Header="Postal Code" />
                 <DataGridTextColumn Binding="{Binding Country}" Header="Country"/>
             </DataGrid.Columns>
         </DataGrid>
