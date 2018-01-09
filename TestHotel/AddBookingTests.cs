@@ -33,13 +33,9 @@ namespace TestHotel
             return addBookingViewModel;
         }
 
-        private static SelectedDatesCollection CreateSelectedDates()
+        private static BookingPeriod CreateSelectedDates()
         {
-            Calendar calendar = new Calendar();
-            calendar.SelectionMode = CalendarSelectionMode.SingleRange;
-            var dates = new SelectedDatesCollection(calendar);
-            dates.AddRange(DateTime.Now, DateTime.Now.AddDays(2d));
-            return dates;
+            return new BookingPeriod(DateTime.Now, DateTime.Now.AddDays(2d));
         }
 
         [TestMethod]

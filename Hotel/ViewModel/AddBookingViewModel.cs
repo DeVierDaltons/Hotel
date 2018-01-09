@@ -44,7 +44,7 @@ namespace Hotel.ViewModel
             set { Booking.Room = value; OnPropertyChanged(); }
         }
 
-        public SelectedDatesCollection SelectedDates { get; set; }
+        public BookingPeriod SelectedDates { get; set; }
         #endregion
 
         public AddBookingViewModel(HotelManager hotelManager)
@@ -60,11 +60,11 @@ namespace Hotel.ViewModel
 
         public bool ValidateInput()
         {
-            if( Booking.Guest == null || Booking.Room == null || SelectedDates == null)
+            if( Booking.Guest == null || Booking.Room == null || SelectedDates == null || SelectedDates.StartDate == null || SelectedDates.EndDate == null)
             {
                 return false;
             }
-            return Booking.Room.TimePeriodAvailable(new BookingPeriod(SelectedDates));
+            return Booking.Room.TimePeriodAvailable(SelectedDates);
         }
 
         public void AddBooking()
@@ -83,7 +83,7 @@ namespace Hotel.ViewModel
                 StartDate = DateTime.Today,
                 EndDate = DateTime.Today
             };
-            SelectedDates.Clear();
+            SelectedDates = null;
         }
 
         public void OnPropertyChanged([CallerMemberName] string name = "")

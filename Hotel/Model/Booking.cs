@@ -68,9 +68,9 @@ namespace Hotel.Model
             get { return Room.RoomNumber ?? "null"; }
         }
 
-        public virtual void SetDates(SelectedDatesCollection selectedDates)
+        public virtual void SetDates(BookingPeriod selectedDates)
         {
-            BookingPeriod = new BookingPeriod(selectedDates.FirstOrDefault(), selectedDates.LastOrDefault());
+            BookingPeriod = new BookingPeriod(selectedDates.StartDate, selectedDates.EndDate);
         }
 
         public virtual void OnPropertyChanged([CallerMemberName] string name = "")
