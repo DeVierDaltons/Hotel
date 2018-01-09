@@ -14,6 +14,7 @@ namespace Hotel.View
     public partial class AddBookingView : UserControl
     {
         private const int DateBlockSize = 40;
+        private const int DatesToDisplay = 35;
         private DateTime startDate = DateTime.Today;
 
         public AddBookingView()
@@ -49,17 +50,16 @@ namespace Hotel.View
             RoomDateGrid.ColumnDefinitions.Add(new ColumnDefinition() { Width = GridLength.Auto }); // room quality
             RoomDateGrid.ColumnDefinitions.Add(new ColumnDefinition() { Width = GridLength.Auto }); // room price
             RoomDateGrid.ColumnDefinitions.Add(new ColumnDefinition() { Width = GridLength.Auto }); // room has nice view
-            int DatesToDisplay = 25;
             for(int i = 0; i < DatesToDisplay; ++i)
             {
                 RoomDateGrid.ColumnDefinitions.Add(new ColumnDefinition() { Width = GridLength.Auto }); // room has nice view
             }
-            int row = AddHeader(DatesToDisplay);
+            int row = AddHeader();
             foreach(Room room in rooms)
             {
                 RoomDateGrid.RowDefinitions.Add(new RowDefinition() { Height = GridLength.Auto });
                 int descriptionColumns = AddRoomDescription(row, room);
-                AddRoomAvailability(row, room, DatesToDisplay, descriptionColumns);
+                AddRoomAvailability(row, room, descriptionColumns);
                 ++row;
             }
         }
@@ -69,7 +69,7 @@ namespace Hotel.View
         /// </summary>
         /// <param name="datesToDisplay">number of dates in the grid</param>
         /// <returns>the number of rows added for the header</returns>
-        private int AddHeader(int datesToDisplay)
+        private int AddHeader()
         {
             int headerRows = 2;
             for (int i = 0; i < headerRows; ++i)
@@ -85,8 +85,8 @@ namespace Hotel.View
             CreateTextBlock("View", true, column++, labelRow).Margin = new Thickness(2d);
             DateTime date = startDate;
             TextBlock monthHeader = CreateTextBlock(date.ToString("MMMM", CultureInfo.InvariantCulture), false, column, monthRow);
-            Grid.SetColumnSpan(monthHeader, datesToDisplay);
-            for(int i = 0; i < datesToDisplay; ++i)
+            Grid.SetColumnSpan(monthHeader, DatesToDisplay);
+            for(int i = 0; i < DatesToDisplay; ++i)
             {
                 bool boldDay = date.Month == startDate.Month;
                 CreateTextBlock(date.Day.ToString(), boldDay, column, labelRow);
@@ -112,10 +112,10 @@ namespace Hotel.View
             return column;
         }
 
-        private void AddRoomAvailability(int row, Room room, int datesToDisplay, int column)
+        private void AddRoomAvailability(int row, Room room, int column)
         {
             DateTime date = startDate;
-            for(int i = 0; i < datesToDisplay; ++i)
+            for(int i = 0; i < DatesToDisplay; ++i)
             {
                 CreateColouredField(room.DayAvailable(date), column, row);
                 date = date.AddDays(1d);
