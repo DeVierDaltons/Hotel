@@ -27,7 +27,9 @@ namespace Hotel.View
 
         private ObservableCollection<Room> Rooms;
         private const int HeaderRows = 3; // january, 1, Tue
-        private const int HeaderColumns = 4; // RoomNumber, Price, Quality, HasNiceView
+        private const int HeaderColumns = 5; // RoomNumber, Price, Quality, HasNiceView
+
+        private Dictionary<Room, CheckBox> IncludedCheckBoxes = new Dictionary<Room, CheckBox>();
 
         public AddBookingView()
         {
@@ -139,6 +141,7 @@ namespace Hotel.View
             const int monthRow = 0;
             const int dayNumberRow = 1;
             const int dayNameRow = 2;
+            CreateTextBlock("Selected", true, column++, dayNumberRow).Margin = new Thickness(10d);
             CreateTextBlock("Room", true, column++, dayNumberRow).Margin = new Thickness(10d);
             CreateTextBlock("Quality", true, column++, dayNumberRow).Margin = new Thickness(10d);
             CreateTextBlock("Price", true, column++, dayNumberRow).Margin = new Thickness(5d);
@@ -183,10 +186,29 @@ namespace Hotel.View
         private void AddRoomDescription(int row, Room room)
         {
             int column = 0;
+            var includedCheckbox = CreateCheckBox(SelectedRooms.Contains(room), column++, row);
+            includedCheckbox.Checked += (object sender, RoutedEventArgs e) =>
+            {
+                CheckBox box = (CheckBox)sender;
+                Checkbox_Checked(box.IsChecked.Value, room);
+            };
+            IncludedCheckBoxes.Add(room, includedCheckbox);
             CreateTextBlock(room.RoomNumber, false, column++, row);
             CreateTextBlock(room.Quality.ToString(), false, column++, row);
             CreateTextBlock(room.PricePerDay.ToString(), false, column++, row);
-            MakeReadonlyCheckbox(room.HasNiceView, column++, row);
+            var checkbox = CreateCheckBox(room.HasNiceView, column++, row);
+            checkbox.IsHitTestVisible = false;
+        }
+
+        private void Checkbox_Checked(bool IsChecked, Room room)
+        {
+            if (IsChecked)
+            {
+                SelectedRooms.Add(room);
+            } else
+            {
+                SelectedRooms.Remove(room);
+            }
         }
 
         private void AddRoomAvailability(int row, Room room)
@@ -243,8 +265,13 @@ namespace Hotel.View
             {
                 SelectedRange.EndDate = date;
             }
+            foreach(Room previouslySelectedRoom in SelectedRooms)
+            {
+                IncludedCheckBoxes[previouslySelectedRoom].IsChecked = false;
+            }
             SelectedRooms.Clear();
             SelectedRooms.Add(room);
+            IncludedCheckBoxes[room].IsChecked = true;
             SetDates();
             SetSelectionElements();
         }
@@ -268,10 +295,9 @@ namespace Hotel.View
             viewModel.Room = SelectedRooms.FirstOrDefault();
         }
 
-        private CheckBox MakeReadonlyCheckbox(bool enabled, int column, int row)
+        private CheckBox CreateCheckBox(bool enabled, int column, int row)
         {
             CheckBox checkbox = new CheckBox();
-            checkbox.IsHitTestVisible = false;
             checkbox.IsChecked = enabled;
             checkbox.VerticalAlignment = VerticalAlignment.Center;
             checkbox.HorizontalAlignment = HorizontalAlignment.Center;
