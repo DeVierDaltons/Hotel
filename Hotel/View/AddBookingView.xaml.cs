@@ -18,7 +18,7 @@ namespace Hotel.View
         public AddBookingView()
         {
             InitializeComponent();
-            UseDataContextLater();
+            UseDataContextLater(); // TODO: this is fucked up, change this! the problem is that the DataContext is set later, because it is dependent on the parent's datacontext
         }
 
         private void Calendar_SelectedDatesChanged(object sender, SelectionChangedEventArgs e)
