@@ -106,6 +106,7 @@ namespace Hotel.View
                 RoomDateGrid.Children.Add(SelectionElement);
                 SelectionElements.Add(SelectionElement);
             }
+            ResetDateSelectionElement();
         }
 
         private void ResetDateSelectionElement()
@@ -187,11 +188,13 @@ namespace Hotel.View
         {
             int column = 0;
             var includedCheckbox = CreateCheckBox(SelectedRooms.Contains(room), column++, row);
-            includedCheckbox.Checked += (object sender, RoutedEventArgs e) =>
+            RoutedEventHandler checkChangeClosure = (object sender, RoutedEventArgs e) =>
             {
                 CheckBox box = (CheckBox)sender;
-                Checkbox_Checked(box.IsChecked.Value, room);
+                CheckBoxChanged(box.IsChecked.Value, room);
             };
+            includedCheckbox.Checked += checkChangeClosure;
+            includedCheckbox.Unchecked += checkChangeClosure;
             IncludedCheckBoxes.Add(room, includedCheckbox);
             CreateTextBlock(room.RoomNumber, false, column++, row);
             CreateTextBlock(room.Quality.ToString(), false, column++, row);
@@ -215,11 +218,11 @@ namespace Hotel.View
             return timeSelection != null && timeSelection.Year > 1;
         }
 
-        private void SetDates()
+        private void CopyDatesToViewModel()
         {
             AddBookingViewModel viewModel = (AddBookingViewModel)DataContext;
             viewModel.SelectedDates = new BookingPeriod(SelectedRange.StartDate, SelectedRange.EndDate);
-            viewModel.Room = SelectedRooms.FirstOrDefault();
+            viewModel.Room = SelectedRooms.FirstOrDefault(); // TODO: Modify bookings to actually use all the rooms
         }
 
         private void SetGridStyle()
@@ -230,7 +233,7 @@ namespace Hotel.View
         }
 
         #region Click Handlers
-        private void Checkbox_Checked(bool IsChecked, Room room)
+        private void CheckBoxChanged(bool IsChecked, Room room)
         {
             if (IsChecked)
             {
@@ -239,6 +242,7 @@ namespace Hotel.View
             {
                 SelectedRooms.Remove(room);
             }
+            SetSelectionElements();
         }
 
         private void MouseDownOnField(Room room, DateTime date)
@@ -257,14 +261,14 @@ namespace Hotel.View
             {
                 SelectedRange.EndDate = date;
             }
-            foreach(Room previouslySelectedRoom in SelectedRooms)
+            foreach(Room previouslySelectedRoom in new List<Room>(SelectedRooms))
             {
                 IncludedCheckBoxes[previouslySelectedRoom].IsChecked = false;
             }
             SelectedRooms.Clear();
             SelectedRooms.Add(room);
             IncludedCheckBoxes[room].IsChecked = true;
-            SetDates();
+            CopyDatesToViewModel();
             SetSelectionElements();
         }
 
@@ -277,6 +281,8 @@ namespace Hotel.View
         {
             SelectedRange.EndDate = date;
             ResetDateSelectionElement();
+            SetSelectionElements();
+            CopyDatesToViewModel();
         }
         #endregion
 
