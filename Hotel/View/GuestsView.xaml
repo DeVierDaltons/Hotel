@@ -22,7 +22,8 @@
         </StackPanel>
         <DataGrid ItemsSource="{Binding DisplayedGuests, Mode=TwoWay}" Name="GuestsList" Grid.Row="1" AutoGenerateColumns="False" IsReadOnly="True" Margin="4,0" >
             <DataGrid.Columns>
-                <DataGridTextColumn Binding="{Binding FullName}" Header="Name"/>
+                <DataGridTextColumn Binding="{Binding FirstName}" Header="First name"/>
+                <DataGridTextColumn Binding="{Binding LastName}" Header="Last name"/>
                 <DataGridTextColumn Binding="{Binding EmailAdress}" Header="Email" MinWidth="40"/>
                 <DataGridTextColumn Binding="{Binding PhoneNumber}" Header="Phone"/>
                 <DataGridTextColumn Binding="{Binding Address}" Header="Address" />
