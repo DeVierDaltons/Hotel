@@ -200,6 +200,36 @@ namespace Hotel.View
             checkbox.IsHitTestVisible = false;
         }
 
+        private void AddRoomAvailability(int row, Room room)
+        {
+            DateTime date = StartDate;
+            for(int column = HeaderColumns; column < HeaderColumns + DatesToDisplay; ++column)
+            {
+                CreateColouredField(room.DayAvailable(date), column, row, room, date);
+                date = date.AddDays(1d);
+            }
+        }
+
+        private bool IsValid(DateTime timeSelection)
+        {
+            return timeSelection != null && timeSelection.Year > 1;
+        }
+
+        private void SetDates()
+        {
+            AddBookingViewModel viewModel = (AddBookingViewModel)DataContext;
+            viewModel.SelectedDates = new BookingPeriod(SelectedRange.StartDate, SelectedRange.EndDate);
+            viewModel.Room = SelectedRooms.FirstOrDefault();
+        }
+
+        private void SetGridStyle()
+        {
+            RoomDateGrid.ShowGridLines = false;
+            RoomDateGrid.HorizontalAlignment = HorizontalAlignment.Left;
+            RoomDateGrid.VerticalAlignment = VerticalAlignment.Top;
+        }
+
+        #region Click Handlers
         private void Checkbox_Checked(bool IsChecked, Room room)
         {
             if (IsChecked)
@@ -211,44 +241,6 @@ namespace Hotel.View
             }
         }
 
-        private void AddRoomAvailability(int row, Room room)
-        {
-            DateTime date = StartDate;
-            for(int column = HeaderColumns; column < HeaderColumns + DatesToDisplay; ++column)
-            {
-                CreateColouredField(room.DayAvailable(date), column, row, room, date);
-                date = date.AddDays(1d);
-            }
-        }
-
-        private void CreateColouredField(bool available, int column, int row, Room room, DateTime date)
-        {
-            Canvas canvas = new Canvas();
-            canvas.MouseLeftButtonDown += (object sender, MouseButtonEventArgs e) =>
-            {
-                MouseDownOnField(room, date);
-            };
-            canvas.MouseLeftButtonUp += (object sender, MouseButtonEventArgs e) =>
-            {
-                MouseUpOnField(room, date);
-            };
-            canvas.Background = available ? Brushes.Green : Brushes.Red;
-            canvas.Width = DateBlockSize;
-            canvas.Height = DateBlockSize;
-            canvas.Margin = new Thickness(0d);
-            canvas.VerticalAlignment = VerticalAlignment.Center;
-            canvas.HorizontalAlignment = HorizontalAlignment.Center;
-            Grid.SetColumn(canvas, column);
-            Grid.SetRow(canvas, row);
-            RoomDateGrid.Children.Add(canvas);
-        }
-
-        private bool IsValid(DateTime timeSelection)
-        {
-            return timeSelection != null && timeSelection.Year > 1;
-        }
-
-        #region Click Handlers
         private void MouseDownOnField(Room room, DateTime date)
         {
             SelectedRange.StartDate = date;
@@ -288,11 +280,27 @@ namespace Hotel.View
         }
         #endregion
 
-        private void SetDates()
+        #region Creating grid elements
+        private void CreateColouredField(bool available, int column, int row, Room room, DateTime date)
         {
-            AddBookingViewModel viewModel = (AddBookingViewModel)DataContext;
-            viewModel.SelectedDates = new BookingPeriod(SelectedRange.StartDate, SelectedRange.EndDate);
-            viewModel.Room = SelectedRooms.FirstOrDefault();
+            Canvas canvas = new Canvas();
+            canvas.MouseLeftButtonDown += (object sender, MouseButtonEventArgs e) =>
+            {
+                MouseDownOnField(room, date);
+            };
+            canvas.MouseLeftButtonUp += (object sender, MouseButtonEventArgs e) =>
+            {
+                MouseUpOnField(room, date);
+            };
+            canvas.Background = available ? Brushes.Green : Brushes.Red;
+            canvas.Width = DateBlockSize;
+            canvas.Height = DateBlockSize;
+            canvas.Margin = new Thickness(0d);
+            canvas.VerticalAlignment = VerticalAlignment.Center;
+            canvas.HorizontalAlignment = HorizontalAlignment.Center;
+            Grid.SetColumn(canvas, column);
+            Grid.SetRow(canvas, row);
+            RoomDateGrid.Children.Add(canvas);
         }
 
         private CheckBox CreateCheckBox(bool enabled, int column, int row)
@@ -321,12 +329,6 @@ namespace Hotel.View
             RoomDateGrid.Children.Add(newBlock);
             return newBlock;
         }
-
-        private void SetGridStyle()
-        {
-            RoomDateGrid.ShowGridLines = false;
-            RoomDateGrid.HorizontalAlignment = HorizontalAlignment.Left;
-            RoomDateGrid.VerticalAlignment = VerticalAlignment.Top;
-        }
+        #endregion
     }
 }
