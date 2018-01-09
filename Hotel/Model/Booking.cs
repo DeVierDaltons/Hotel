@@ -10,7 +10,7 @@ using System.Windows.Input;
 
 namespace Hotel.Model
 {
-    public class Booking : INotifyPropertyChanged, IHasGUID
+    public class Booking : INotifyPropertyChanged, IIdentifiable
     {
         public virtual Guid Id { get; set; }
 

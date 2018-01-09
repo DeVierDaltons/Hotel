@@ -2,7 +2,7 @@
 using NHibernate.Mapping.ByCode;
 using NHibernate.Mapping.ByCode.Conformist;
 
-namespace Hotel.Dao
+namespace Hotel.DataAccessObjects
 {
     public class BookingMap : ClassMapping<Booking>
     {

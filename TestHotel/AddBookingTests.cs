@@ -4,7 +4,7 @@ using Hotel.Model;
 using Hotel.Command;
 using Hotel.ViewModel;
 using Hotel.Repository;
-using Hotel.Dao;
+using Hotel.DataAccessObjects;
 using System.Windows.Controls;
 using System;
 
@@ -14,7 +14,7 @@ namespace TestHotel
     public class AddBookingTests
     {
         [TestMethod]
-        public void AddBookingUsingCommandTest()
+        public void AddBookingUsingCommand()
         {
             AddBookingViewModel addBookingViewModel = CreateBookingViewModel();
             addBookingViewModel.AddBooking();
@@ -45,7 +45,13 @@ namespace TestHotel
         [TestMethod]
         public void InvalidBookingCommandFails()
         {
-            Assert.IsFalse(new AddBookingCommand(new AddBookingViewModel(null)).CanExecute(null));
+            AddBookingViewModel vm = new AddBookingViewModel(null)
+            {
+                Booking = null,
+                Guest = null,
+                SelectedDates = null
+            };
+            Assert.IsFalse(new AddBookingCommand(vm).CanExecute(null));
         }
 
         [TestMethod]

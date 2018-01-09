@@ -9,7 +9,7 @@ using System.Windows.Input;
 
 namespace Hotel.Model
 {
-    public class Guest : INotifyPropertyChanged, IHasGUID
+    public class Guest : INotifyPropertyChanged, IIdentifiable
     {
         public virtual event PropertyChangedEventHandler PropertyChanged;
 
@@ -28,7 +28,7 @@ namespace Hotel.Model
             get { return _lastName; }
             set { _lastName = value; OnPropertyChanged(); }
         }
-
+        
         private string _phoneNumber;
         /// <summary>
         /// Storing phone number as string to perserve preceding zeros

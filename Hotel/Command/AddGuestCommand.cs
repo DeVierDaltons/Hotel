@@ -33,7 +33,7 @@ namespace Hotel.Command
 
         public void Execute(object parameter)
         {
-            Guests.AddItem(parameter as Guest);
+            Guests.Add(parameter as Guest);
         }
     }
 }

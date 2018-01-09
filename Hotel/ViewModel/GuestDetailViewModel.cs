@@ -40,7 +40,7 @@ namespace Hotel.ViewModel
             set { Guest.EmailAdress = value; OnPropertyChanged(); }
         }
 
-        public string StreetAddress
+        public string Address
         {
             get { return Guest.Address; }
             set { Guest.Address = value; OnPropertyChanged(); }
@@ -101,7 +101,7 @@ namespace Hotel.ViewModel
             LastName = string.Empty;
             PhoneNumber = string.Empty;
             EmailAdress = string.Empty;
-            StreetAddress = string.Empty;
+            Address = string.Empty;
             PostalCode = string.Empty;
             City = string.Empty;
             Country = string.Empty;

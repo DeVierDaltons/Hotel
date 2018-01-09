@@ -41,18 +41,6 @@ namespace Hotel.ViewModel
             set { Booking.Room = value; OnPropertyChanged(); }
         }
 
-        public DateTime StartDay
-        {
-            get { return Booking.BookingPeriod.StartDate; }
-            set { Booking.BookingPeriod.StartDate = value; OnPropertyChanged(); }
-        }
-
-        public DateTime EndDay
-        {
-            get { return Booking.BookingPeriod.EndDate; }
-            set { Booking.BookingPeriod.EndDate = value; OnPropertyChanged(); }
-        }
-
         public SelectedDatesCollection SelectedDates { get; set; }
         #endregion
 
@@ -82,10 +70,12 @@ namespace Hotel.ViewModel
         private void ClearAllFields()
         {
             Guest = null;
-            Booking.BookingPeriod = new BookingPeriod();
             Room = null;
-            StartDay = DateTime.Today;
-            EndDay = DateTime.Today;
+            Booking.BookingPeriod = new BookingPeriod() {
+                StartDate = DateTime.Today,
+                EndDate = DateTime.Today
+            };
+            SelectedDates.Clear();
         }
 
         public void OnPropertyChanged([CallerMemberName] string name = "")

@@ -1,4 +1,4 @@
-﻿using Hotel.Dao;
+﻿using Hotel.DataAccessObjects;
 using Hotel.Repository;
 using System.Diagnostics;
 
@@ -41,18 +41,18 @@ namespace Hotel.Model
 
         public void AddBooking(Booking booking)
         {
-            Bookings.AddItem(booking);
+            Bookings.Add(booking);
             AddBookingToRoom(booking);
         }
 
         public void AddRoom(Room room)
         {
-            Rooms.AddItem(room);
+            Rooms.Add(room);
         }
 
         public void AddGuest(Guest guest)
         {
-            Guests.AddItem(guest);
+            Guests.Add(guest);
         }
     }
 }
