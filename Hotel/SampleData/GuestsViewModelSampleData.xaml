@@ -1,0 +1,54 @@
+﻿<ViewModel:GuestsViewModel xmlns:ViewModel="clr-namespace:Hotel.ViewModel" xmlns:Model="clr-namespace:Hotel.Model" xmlns:System="clr-namespace:System;assembly=mscorlib">
+    <ViewModel:GuestsViewModel.Guests>
+        <Model:Guest Address="4567 Main St., Buffalo, NY 98052" City="A. Datum Corporation" Country="4567 Main St., Buffalo, NY 98052" EmailAdress="someone@example.com" FullName="Aaberg, Jesper" FirstName="Aaberg, Jesper" ICEPhoneNumber="Nunc dis elementum lorem" LastName="Integer quisque cras maecenas" PostalCode="Convallis nullam accumsan dignissim" PhoneNumber="(111) 555-0100">
+            <Model:Guest.Id>
+                <System:Guid/>
+            </Model:Guest.Id>
+        </Model:Guest>
+        <Model:Guest Address="1234 Main St., Buffalo, NY 98052" City="Adventure Works" Country="1234 Main St., Buffalo, NY 98052" EmailAdress="user@adventure-works.com" FullName="Adams, Ellen" FirstName="Adams, Ellen" ICEPhoneNumber="Ipsum justo inceptos interdum lacus" LastName="Nulla amet dictumst aptent eleifend" PostalCode="Conubia cubilia" PhoneNumber="(222) 555-0101">
+            <Model:Guest.Id>
+                <System:Guid/>
+            </Model:Guest.Id>
+        </Model:Guest>
+        <Model:Guest Address="2345 Main St., Buffalo, NY 98052" City="Adventure Works" Country="2345 Main St., Buffalo, NY 98052" EmailAdress="someone@adventure-works.com" FullName="Adams, Terry" FirstName="Adams, Terry" ICEPhoneNumber="Per erat euismod vestibulum adipiscing" LastName="Congue mus" PostalCode="Placerat dapibus parturient" PhoneNumber="(333) 555-0102">
+            <Model:Guest.Id>
+                <System:Guid/>
+            </Model:Guest.Id>
+        </Model:Guest>
+        <Model:Guest Address="789 Main St., Buffalo, NY 98052" City="Alpine Ski House" Country="789 Main St., Buffalo, NY 98052" EmailAdress="user@example.com" FullName="Adams, Terry" FirstName="Adams, Terry" ICEPhoneNumber="Nunc velit odio vitae luctus" LastName="Libero porta feugiat imperdiet" PostalCode="Tristique sit risus" PhoneNumber="(444) 555-0103">
+            <Model:Guest.Id>
+                <System:Guid/>
+            </Model:Guest.Id>
+        </Model:Guest>
+        <Model:Guest Address="1234 Front St., Seattle, WA 12345" City="Contoso, Ltd" Country="1234 Front St., Seattle, WA 12345" EmailAdress="user-3@fabrikam.com" FullName="Pfeiffer, Michael" FirstName="Pfeiffer, Michael" ICEPhoneNumber="Fusce est hac accumsan natoque" LastName="Magnis convallis" PostalCode="Sed urna volutpat" PhoneNumber="(222) 555-0105">
+            <Model:Guest.Id>
+                <System:Guid/>
+            </Model:Guest.Id>
+        </Model:Guest>
+        <Model:Guest Address="2345 Front St., Seattle, WA 12345" City="Contoso Pharmaceuticals" Country="2345 Front St., Seattle, WA 12345" EmailAdress="user-4@fabrikam.com" FullName="Philips, Carol" FirstName="Philips, Carol" ICEPhoneNumber="Eget rhoncus per" LastName="Montes duis" PostalCode="Non adipiscing primis parturient" PhoneNumber="(333) 555-0106">
+            <Model:Guest.Id>
+                <System:Guid/>
+            </Model:Guest.Id>
+        </Model:Guest>
+        <Model:Guest Address="789 Front St., Seattle, WA 12345" City="Fabrikam, Inc." Country="789 Front St., Seattle, WA 12345" EmailAdress="user-5@fabrikam.com" FullName="Poe, Toni" FirstName="Poe, Toni" ICEPhoneNumber="Augue facilisi dolor porttitor fames" LastName="Bibendum semper elit parturient" PostalCode="Adipiscing tempus" PhoneNumber="(444) 555-0107">
+            <Model:Guest.Id>
+                <System:Guid/>
+            </Model:Guest.Id>
+        </Model:Guest>
+        <Model:Guest Address="4567 Main St., Seattle, WA 12345" City="Fourth Coffee" Country="4567 Main St., Seattle, WA 12345" EmailAdress="user-6@fabrikam.com" FullName="Hicks, Cassie" FirstName="Hicks, Cassie" ICEPhoneNumber="Dis aptent lacus lorem" LastName="Tincidunt nisi tortor" PostalCode="Commodo sit justo conubia vel" PhoneNumber="(555) 555-0108">
+            <Model:Guest.Id>
+                <System:Guid/>
+            </Model:Guest.Id>
+        </Model:Guest>
+        <Model:Guest Address="1234 1st Ave, San Francisco, CA 99999" City="Graphic Design Institute" Country="1234 1st Ave, San Francisco, CA 99999" EmailAdress="user-7@fabrikam.com" FullName="Argentiero, Luca" FirstName="Argentiero, Luca" ICEPhoneNumber="Urna cras neque duis gravida" LastName="Dapibus vestibulum egestas" PostalCode="Curabitur metus" PhoneNumber="(111) 555-0109">
+            <Model:Guest.Id>
+                <System:Guid/>
+            </Model:Guest.Id>
+        </Model:Guest>
+        <Model:Guest Address="2345 1st Ave, San Francisco, CA 99999" City="Humongous Insurance" Country="2345 1st Ave, San Francisco, CA 99999" EmailAdress="user-8@fabrikam.com" FullName="Perry, Brian" FirstName="Perry, Brian" ICEPhoneNumber="Elementum praesent accumsan" LastName="Sociosqu convallis per" PostalCode="Volutpat sem sit purus" PhoneNumber="(222) 555-0110">
+            <Model:Guest.Id>
+                <System:Guid/>
+            </Model:Guest.Id>
+        </Model:Guest>
+    </ViewModel:GuestsViewModel.Guests>
+</ViewModel:GuestsViewModel>

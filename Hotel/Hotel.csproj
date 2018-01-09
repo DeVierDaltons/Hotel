@@ -131,6 +131,10 @@
       <DependentUpon>MainWindow.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
+    <DesignData Include="SampleData\GuestsViewModelSampleData.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </DesignData>
     <Page Include="View\AddBookingView.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
