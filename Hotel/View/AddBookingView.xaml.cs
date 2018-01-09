@@ -13,6 +13,7 @@ namespace Hotel.View
 {
     public partial class AddBookingView : UserControl
     {
+        private const int DateBlockSize = 40;
         private DateTime startDate = DateTime.Today;
 
         public AddBookingView()
@@ -126,8 +127,8 @@ namespace Hotel.View
         {
             Canvas canvas = new Canvas();
             canvas.Background = available ? Brushes.Green : Brushes.Red;
-            canvas.Width = 50;
-            canvas.Height = 50;
+            canvas.Width = DateBlockSize;
+            canvas.Height = DateBlockSize;
             canvas.Margin = new Thickness(1d);
             canvas.VerticalAlignment = VerticalAlignment.Center;
             canvas.HorizontalAlignment = HorizontalAlignment.Center;
