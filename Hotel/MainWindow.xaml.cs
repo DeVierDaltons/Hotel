@@ -21,20 +21,20 @@ namespace Hotel
             InitializeComponent();
             HotelManager = (DataContext as MainWindowViewModel).HotelManager;
             CreateAddGuestDataContext();
-            GuestExplorerTab.DataContext = new GuestsViewModel(HotelManager.Guests, EditGuest, AddGuest);
+            GuestExplorerTab.DataContext = new GuestsViewModel(HotelManager.Guests, SwitchToEditGuest, SwitchToAddGuest);
             AddRoomTab.DataContext = new AddRoomViewModel(HotelManager);
             RoomExplorerTab.DataContext = new ModifyRoomViewModel(HotelManager.Rooms);
             AddBookingTab.DataContext = new AddBookingViewModel(HotelManager);
             BookingExplorerTab.DataContext = new ModifyBookingViewModel(HotelManager.Bookings);
         }
 
-        public void EditGuest(Guest guest)
+        public void SwitchToEditGuest(Guest guest)
         {
             AddGuestTab.DataContext = new GuestDetailViewModel(new EditGuestCommand(guest), guest, SwitchToGuestExplorer);
             AddGuestTab.IsSelected = true;
         }
 
-        private void AddGuest()
+        private void SwitchToAddGuest()
         {
             CreateAddGuestDataContext();
             AddGuestTab.IsSelected = true;

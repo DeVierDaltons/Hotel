@@ -1,5 +1,9 @@
-﻿using System.Collections.ObjectModel;
+﻿using System.Linq;
+using System.Collections.ObjectModel;
 using System.ComponentModel;
+using System.Collections.Generic;
+using System.Collections.Specialized;
+using System.Windows;
 using Hotel.Model;
 
 namespace Hotel.Repository
@@ -15,27 +19,29 @@ namespace Hotel.Repository
             {
                 item.PropertyChanged += OnItemChanged;
             }
+            CollectionChanged += RepositoryBackedObservableCollection_CollectionChanged;
+        }
+
+        private void RepositoryBackedObservableCollection_CollectionChanged(object sender, NotifyCollectionChangedEventArgs e)
+        {
+            if (e.OldItems != null)
+            {
+                T oldItem = (T) e.OldItems[0];
+                repository.Delete(oldItem);
+                oldItem.PropertyChanged -= OnItemChanged;
+            }
+            else
+            {
+                T newItem = (T)e.NewItems[0];
+                repository.Save(newItem);
+                newItem.PropertyChanged += OnItemChanged;
+            }
         }
 
         private void OnItemChanged(object sender, PropertyChangedEventArgs e)
         {
             T changedItem = (T)sender;
             repository.Update(changedItem);
-        }
-
-        public void AddItem(T item)
-        {
-            Add(item);
-            repository.Save(item);
-            item.PropertyChanged += OnItemChanged;
-            Logger.LogAction<T>(item, ActionType.Add);
-        }
-
-        public void RemoveItem(T item)
-        {
-            item.PropertyChanged -= OnItemChanged;
-            Remove(item);
-            repository.Delete(item);
         }
     }
 }

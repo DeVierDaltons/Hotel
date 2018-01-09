@@ -9,7 +9,7 @@ using System.Windows.Input;
 
 namespace Hotel.Model
 {
-    public class Guest : INotifyPropertyChanged, IHasGUID
+    public class Guest : INotifyPropertyChanged, IIdentifiable
     {
         public virtual event PropertyChangedEventHandler PropertyChanged;
 
@@ -27,6 +27,11 @@ namespace Hotel.Model
         {
             get { return _lastName; }
             set { _lastName = value; OnPropertyChanged(); }
+        }
+
+        public virtual string FullName
+        {
+            get { return String.Format("{0} {1}", FirstName, LastName); }
         }
 
         private string _phoneNumber;

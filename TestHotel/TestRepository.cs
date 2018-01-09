@@ -6,9 +6,9 @@ using System.Diagnostics;
 
 namespace TestHotel
 {
-    public class TestRepository<T> : IRepository<T> where T : IHasGUID
+    public class TestRepository<T> : IRepository<T> where T : IIdentifiable
     {
-        public List<T> items = new List<T>();
+        private List<T> items = new List<T>();
 
         public void Delete(T item)
         {
@@ -24,11 +24,6 @@ namespace TestHotel
         public List<T> GetAll()
         {
             return new List<T>(items);
-        }
-
-        public long RowCount()
-        {
-            return items.Count;
         }
 
         public void Save(T item)

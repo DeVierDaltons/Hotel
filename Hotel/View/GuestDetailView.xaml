@@ -35,8 +35,8 @@
         <Label Grid.Row="3" Grid.Column="0" Content="Email:"></Label>
         <TextBox Grid.Row="3" Grid.Column="1" Text="{Binding EmailAdress, Mode=TwoWay}"></TextBox>
 
-        <Label Grid.Row="4" Grid.Column="0" Content="Adress:"></Label>
-        <TextBox Grid.Row="4" Grid.Column="1" Text="{Binding Adress, Mode=TwoWay}"></TextBox>
+        <Label Grid.Row="4" Grid.Column="0" Content="Address:"></Label>
+        <TextBox Grid.Row="4" Grid.Column="1" Text="{Binding Address, Mode=TwoWay}"></TextBox>
         
         <Label Grid.Row="5" Grid.Column="0" Content="Postal Code:"></Label>
         <TextBox Grid.Row="5" Grid.Column="1" Text="{Binding PostalCode, Mode=TwoWay}"></TextBox>

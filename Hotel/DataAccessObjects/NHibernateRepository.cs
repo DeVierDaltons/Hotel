@@ -5,11 +5,11 @@ using System.Collections.Generic;
 using Hotel.Repository;
 using Hotel.Model;
 
-namespace Hotel.Dao
+namespace Hotel.DataAccessObjects
 {
     public class NHibernateRepository<T> : IRepository<T> where T : class
     {
-        ISession session = NHibernateHelper.GetSession();
+        ISession session = NHibernateHelper.Session;
 
         public void Save(T item)
         {
@@ -46,11 +46,6 @@ namespace Hotel.Dao
                 session.Delete(person);
                 transaction.Commit();
             }
-        }
-
-        public long RowCount()
-        {
-            return session.QueryOver<T>().RowCountInt64();
         }
     }
 }

@@ -4,35 +4,24 @@ using NHibernate.Cfg.MappingSchema;
 using NHibernate.Mapping.ByCode;
 using NHibernate;
 
-namespace Hotel.Dao
+namespace Hotel.DataAccessObjects
 {
     public static class NHibernateHelper
     {
-        private static ISessionFactory _sessionFactory;
         private static Configuration _configuration;
-        private static HbmMapping _mapping;
         private static ISession _session;
 
-        public static ISession GetSession()
-        {
-            if (_session == null)
-            {
-                //Open and return the nhibernate session
-                _session = SessionFactory.OpenSession();
-            }
-            return _session;
-        }
-
-        public static ISessionFactory SessionFactory
+        public static ISession Session
         {
             get
             {
-                if (_sessionFactory == null)
+                if (_session == null)
                 {
-                    //Create the session factory
-                    _sessionFactory = Configuration.BuildSessionFactory();
+                    //Open and return the nhibernate session
+                    ISessionFactory sessionFactory = Configuration.BuildSessionFactory();
+                    _session = sessionFactory.OpenSession();
                 }
-                return _sessionFactory;
+                return _session;
             }
         }
 
@@ -49,26 +38,13 @@ namespace Hotel.Dao
             }
         }
 
-        public static HbmMapping Mapping
-        {
-            get
-            {
-                if (_mapping == null)
-                {
-                    //Create the mapping
-                    _mapping = CreateMapping();
-                }
-                return _mapping;
-            }
-        }
-
         private static Configuration CreateConfiguration()
         {
             var configuration = new Configuration();
             //Loads properties from hibernate.cfg.xml
             configuration.Configure();
             //Loads nhibernate mappings 
-            configuration.AddDeserializedMapping(Mapping, null);
+            configuration.AddDeserializedMapping(CreateMapping(), null);
 
             return configuration;
         }

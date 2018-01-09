@@ -1,4 +1,4 @@
-﻿using Hotel.Dao;
+﻿using Hotel.DataAccessObjects;
 using Hotel.Model;
 using NHibernate.Tool.hbm2ddl;
 
