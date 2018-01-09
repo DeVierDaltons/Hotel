@@ -71,25 +71,27 @@ namespace Hotel.View
         /// <returns>the number of rows added for the header</returns>
         private int AddHeader()
         {
-            int headerRows = 2;
+            int headerRows = 3;
             for (int i = 0; i < headerRows; ++i)
             {
                 RoomDateGrid.RowDefinitions.Add(new RowDefinition() { Height = GridLength.Auto });
             }
             int column = 0;
             const int monthRow = 0;
-            const int labelRow = 1;
-            CreateTextBlock("Room", true, column++, labelRow).Margin = new Thickness(10d);
-            CreateTextBlock("Quality", true, column++, labelRow).Margin = new Thickness(10d);
-            CreateTextBlock("Price", true, column++, labelRow).Margin = new Thickness(5d);
-            CreateTextBlock("View", true, column++, labelRow).Margin = new Thickness(2d);
+            const int dayNumberRow = 1;
+            const int dayNameRow = 2;
+            CreateTextBlock("Room", true, column++, dayNumberRow).Margin = new Thickness(10d);
+            CreateTextBlock("Quality", true, column++, dayNumberRow).Margin = new Thickness(10d);
+            CreateTextBlock("Price", true, column++, dayNumberRow).Margin = new Thickness(5d);
+            CreateTextBlock("View", true, column++, dayNumberRow).Margin = new Thickness(2d);
             DateTime date = startDate;
             TextBlock monthHeader = CreateTextBlock(date.ToString("MMMM", CultureInfo.InvariantCulture), false, column, monthRow);
             Grid.SetColumnSpan(monthHeader, DatesToDisplay);
             for(int i = 0; i < DatesToDisplay; ++i)
             {
                 bool boldDay = date.Month == startDate.Month;
-                CreateTextBlock(date.Day.ToString(), boldDay, column, labelRow);
+                CreateTextBlock(date.Day.ToString(), boldDay, column, dayNumberRow);
+                CreateTextBlock(date.ToString("ddd", CultureInfo.InvariantCulture), boldDay, column, dayNameRow).VerticalAlignment = VerticalAlignment.Top;
                 date = date.AddDays(1d);
                 ++column;
             }
