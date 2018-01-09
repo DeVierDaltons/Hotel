@@ -20,11 +20,13 @@
             <Button Content="Add Guest" Click="OnAddGuestClicked"/>
             <Button Content="Edit Selected Guest" Click="OnEditGuestClicked"/>
         </StackPanel>
-        <DataGrid ItemsSource="{Binding DisplayedGuests, Mode=TwoWay}" Name="GuestsList" Grid.Row="1" AutoGenerateColumns="False" IsReadOnly="True" >
+        <DataGrid ItemsSource="{Binding DisplayedGuests, Mode=TwoWay}" Name="GuestsList" Grid.Row="1" AutoGenerateColumns="False" IsReadOnly="True" Margin="4,0" >
             <DataGrid.Columns>
                 <DataGridTextColumn Binding="{Binding FullName}" Header="Name"/>
-                <DataGridTextColumn Binding="{Binding EmailAdress}" Header="Email"/>
+                <DataGridTextColumn Binding="{Binding EmailAdress}" Header="Email" MinWidth="40"/>
                 <DataGridTextColumn Binding="{Binding PhoneNumber}" Header="Phone"/>
+                <DataGridTextColumn Binding="{Binding PostalCode}" Header="Postal Code" />
+                <DataGridTextColumn Binding="{Binding Address}" Header="Address" />
                 <DataGridTextColumn Binding="{Binding Country}" Header="Country"/>
             </DataGrid.Columns>
         </DataGrid>
