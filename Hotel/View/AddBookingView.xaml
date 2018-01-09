@@ -4,7 +4,7 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         mc:Ignorable="d"
-        >
+        >  
     <DockPanel>
         <WrapPanel DockPanel.Dock="Bottom">
             <Label Content="Guest:"/>
@@ -15,6 +15,26 @@
 
             <Button Width="80" Command="{Binding AddBookingCommand}" Content="Save"></Button>
         </WrapPanel>
-        <DataGrid ItemsSource="{Binding CurrentRoomAvailabilities}" SelectionMode="Extended" SelectionUnit="Cell" />
+        <DataGrid ItemsSource="{Binding CurrentRoomAvailabilities}" SelectionMode="Extended" SelectionUnit="Cell" AutoGenerateColumns="False">
+            <DataGrid.Columns>
+                <DataGridTemplateColumn Header="Room" Width="SizeToCells" IsReadOnly="True">
+
+                </DataGridTemplateColumn>
+                <DataGridTemplateColumn Header="Day1" Width="SizeToCells" IsReadOnly="True">
+                    <DataGridTemplateColumn.CellTemplate>
+                        <DataTemplate>
+                            <Canvas Background="{Binding Color1}"></Canvas>
+                        </DataTemplate>
+                    </DataGridTemplateColumn.CellTemplate>
+                </DataGridTemplateColumn>
+                <DataGridTemplateColumn Header="Day2" Width="SizeToCells" IsReadOnly="True">
+                    <DataGridTemplateColumn.CellTemplate>
+                        <DataTemplate>
+                            <Canvas Background="{Binding Color2}"></Canvas>
+                        </DataTemplate>
+                    </DataGridTemplateColumn.CellTemplate>
+                </DataGridTemplateColumn>
+            </DataGrid.Columns>
+        </DataGrid>
     </DockPanel>
 </UserControl>
