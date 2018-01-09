@@ -7,14 +7,20 @@
         >
     <Grid>
         <Grid.RowDefinitions>
-            <RowDefinition Height="10*"/>
+            <RowDefinition Height="1*"/>
+            <RowDefinition Height="8*"/>
             <RowDefinition Height="1*"/>
         </Grid.RowDefinitions>
-        <StackPanel Grid.Row="1">
+        <StackPanel Grid.Row="0" Orientation="Horizontal">
+                <TextBlock Grid.Row="0" Text="Filter:" VerticalAlignment="Center"/>
+                <TextBox  Text="{Binding FilterGuestString, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" VerticalAlignment="Center" Width="80" MinWidth="80" />
+        </StackPanel>
+    
+        <StackPanel Grid.Row="2" Grid.ColumnSpan="3">
             <Button Content="Add Guest" Click="OnAddGuestClicked"/>
             <Button Content="Edit Selected Guest" Click="OnEditGuestClicked"/>
         </StackPanel>
-        <DataGrid ItemsSource="{Binding Guests, Mode=TwoWay}" Name="GuestsList" Grid.Column="0" AutoGenerateColumns="False" IsReadOnly="True" >
+        <DataGrid ItemsSource="{Binding Guests, Mode=TwoWay}" Name="GuestsList" Grid.Column="1" AutoGenerateColumns="False" IsReadOnly="True" >
             <DataGrid.Columns>
                 <DataGridTextColumn Binding="{Binding FullName}" Header="Name"/>
                 <DataGridTextColumn Binding="{Binding EmailAdress}" Header="Email"/>
