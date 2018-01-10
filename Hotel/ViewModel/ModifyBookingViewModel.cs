@@ -82,7 +82,7 @@ namespace Hotel.ViewModel
                     DisplayedBookings.Add(newBooking);
                 }
             }
-            else
+            else if (e.OldItems.Count > 0)
             {
                 var oldBooking = (e.OldItems[0] as Booking);
                 if (DisplayedBookings.Contains(oldBooking))
