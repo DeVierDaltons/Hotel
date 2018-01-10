@@ -20,8 +20,6 @@ namespace Hotel.ViewModel
         public ICommand AddBookingCommand { get; private set; }
         public Booking Booking { get; set; } = new Booking();
 
-        public List<RoomAvailability> CurrentRoomAvailabilities { get; private set; }
-
         public ObservableCollection<Guest> Guests
         {
             get { return HotelManager.Guests; }
@@ -51,11 +49,6 @@ namespace Hotel.ViewModel
         {
             HotelManager = hotelManager;
             AddBookingCommand = new AddBookingCommand(this);
-            CurrentRoomAvailabilities = new List<RoomAvailability>();
-            foreach(Room room in HotelManager.Rooms)
-            {
-                CurrentRoomAvailabilities.Add(new RoomAvailability(room, DateTime.Today));
-            }
         }
 
         public bool ValidateInput()
