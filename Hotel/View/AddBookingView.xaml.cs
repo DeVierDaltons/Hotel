@@ -30,6 +30,7 @@ namespace Hotel.View
         private const int HeaderColumns = 5; // RoomNumber, Price, Quality, HasNiceView
 
         private Dictionary<Room, CheckBox> IncludedCheckBoxes = new Dictionary<Room, CheckBox>();
+        private Room lastDownRoom;
 
         public AddBookingView()
         {
@@ -247,6 +248,7 @@ namespace Hotel.View
 
         private void MouseDownOnField(Room room, DateTime date)
         {
+            lastDownRoom = room;
             SelectedRange.StartDate = date;
         }
 
@@ -262,9 +264,22 @@ namespace Hotel.View
                 SelectedRange.EndDate = date;
             }
             DeselectAllRooms();
-            IncludedCheckBoxes[room].IsChecked = true;
-            CopyDatesToViewModel();
+            SelectBetween(lastDownRoom, room);
+            CopyDatesAndRoomsToViewModel();
             SetSelectionElements();
+        }
+
+        private void SelectBetween(Room beginRoom, Room endRoom)
+        {
+            int room1Index = Rooms.IndexOf(beginRoom);
+            int room2Index = Rooms.IndexOf(endRoom);
+            int beginIndex = Math.Min(room1Index, room2Index);
+            int endIndex = Math.Max(room1Index, room2Index);
+            for(int i = beginIndex; i <= endIndex; ++i)
+            {
+                Room roomToSelect = Rooms[i];
+                IncludedCheckBoxes[roomToSelect].IsChecked = true;
+            }
         }
 
         private void DeselectAllRooms()
@@ -273,7 +288,6 @@ namespace Hotel.View
             {
                 IncludedCheckBoxes[previouslySelectedRoom].IsChecked = false;
             }
-            SelectedRooms.Clear();
         }
 
         private void MouseDownOnDate(DateTime date)
