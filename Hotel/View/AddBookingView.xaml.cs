@@ -19,6 +19,7 @@ namespace Hotel.View
     {
         private const int DateBlockSize = 40;
         private const int DatesToDisplay = 35;
+        private const int DateShiftButtonSize = 3;
 
         private const int HeaderRows = 3; // january, 1, Tue
         private const int HeaderColumns = 5; // RoomNumber, Price, Quality, HasNiceView
@@ -235,9 +236,13 @@ namespace Hotel.View
             CreateTextBlock("Quality", true, column++, dayNumberRow).Margin = new Thickness(10d);
             CreateTextBlock("Price", true, column++, dayNumberRow).Margin = new Thickness(5d);
             CreateTextBlock("View", true, column++, dayNumberRow).Margin = new Thickness(2d);
+            int dateStartColumn = column;
             DateTime date = StartDate;
-            TextBlock monthHeader = CreateTextBlock(date.ToString("MMMM", CultureInfo.InvariantCulture), false, column, monthRow);
-            Grid.SetColumnSpan(monthHeader, DatesToDisplay);
+            Button earlierButton = CreateButton("Earlier", dateStartColumn, monthRow, DateShiftButtonSize);
+            TextBlock monthHeader = CreateTextBlock(date.ToString("MMMM", CultureInfo.InvariantCulture), false, dateStartColumn + DateShiftButtonSize, monthRow);
+            int monthHeaderSize = DatesToDisplay - 2 * DateShiftButtonSize;
+            Grid.SetColumnSpan(monthHeader, monthHeaderSize);
+            Button laterButton = CreateButton("Later", dateStartColumn + DateShiftButtonSize + monthHeaderSize, monthRow, DateShiftButtonSize);
             for(int i = 0; i < DatesToDisplay; ++i)
             {
                 bool boldDay = date.Month == StartDate.Month;
@@ -473,6 +478,22 @@ namespace Hotel.View
             Grid.SetRow(checkbox, row);
             RoomDateGrid.Children.Add(checkbox);
             return checkbox;
+        }
+
+        private Button CreateButton(string text, int column, int row, int columnSpan)
+        {
+            Button newButton = new Button();
+            newButton.Width = DateBlockSize * columnSpan;
+            newButton.Height = DateBlockSize;
+            newButton.Content = text;
+            newButton.FontSize = 14;
+            newButton.VerticalAlignment = VerticalAlignment.Center;
+            newButton.HorizontalAlignment = HorizontalAlignment.Center;
+            Grid.SetColumn(newButton, column);
+            Grid.SetRow(newButton, row);
+            Grid.SetColumnSpan(newButton, columnSpan);
+            RoomDateGrid.Children.Add(newButton);
+            return newButton;
         }
 
         private TextBlock CreateTextBlock(string text, bool bold, int column, int row)
