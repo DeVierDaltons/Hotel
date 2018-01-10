@@ -11,6 +11,7 @@ using System.Globalization;
 using System.Windows.Input;
 using System.Collections.Generic;
 using System.Linq;
+using System.Collections.Specialized;
 
 namespace Hotel.View
 {
@@ -101,10 +102,54 @@ namespace Hotel.View
             int row = HeaderRows;
             foreach (Room room in rooms)
             {
-                RoomDateGrid.RowDefinitions.Add(new RowDefinition() { Height = GridLength.Auto });
-                AddRoomDescription(row, room);
-                AddRoomAvailability(row, room);
+                AddGridRowForRoom(row, room);
                 ++row;
+            }
+            Rooms.CollectionChanged += OnRoomsChanged;
+        }
+
+        private class RoomRowElements
+        {
+            public RowDefinition rowDefinition;
+            public List<UIElement> uiElements = new List<UIElement>();
+        }
+
+        private Dictionary<Room, RoomRowElements> RowElementsForRoom = new Dictionary<Room, RoomRowElements>();
+
+        private void AddGridRowForRoom(int row, Room room)
+        {
+            RoomRowElements elements = new RoomRowElements()
+            {
+                rowDefinition = new RowDefinition() { Height = GridLength.Auto }
+            };
+            RoomDateGrid.RowDefinitions.Add(elements.rowDefinition);
+            RowElementsForRoom.Add(room, elements);
+            AddRoomDescription(row, room);
+            AddRoomAvailability(row, room);
+        }
+
+        private void OnRoomsChanged(object sender, NotifyCollectionChangedEventArgs e)
+        {
+            if( e.OldItems != null)
+            {
+                Room removedRoom = (Room)e.OldItems[0];
+                RemoveGridRowForRoom(removedRoom);
+            }
+            if( e.NewItems != null)
+            {
+                Room addedRoom = (Room)e.NewItems[0];
+                int row = HeaderRows + Rooms.Count - 1;
+                AddGridRowForRoom(row, addedRoom);
+            }
+        }
+
+        private void RemoveGridRowForRoom(Room removedRoom)
+        {
+            var elements = RowElementsForRoom[removedRoom];
+            RoomDateGrid.RowDefinitions.Remove(elements.rowDefinition);
+            foreach (UIElement roomElement in elements.uiElements)
+            {
+                RoomDateGrid.Children.Remove(roomElement);
             }
         }
 
@@ -120,19 +165,22 @@ namespace Hotel.View
         private void SetSelectionElements()
         {
             ClearRoomDateSelectionElements();
-            foreach(Room room in SelectedRooms)
+            if (SelectedRange.IsValid())
             {
-                int row = HeaderRows + Rooms.IndexOf(room);
-                int startColumn = HeaderColumns + (SelectedRange.StartDate - StartDate).Days;
-                int columnSpan = (SelectedRange.EndDate - SelectedRange.StartDate).Days;
-                Canvas SelectionElement = new Canvas();
-                SelectionElement.Background = Brushes.Orange;
-                SelectionElement.Margin = new Thickness(10, 20, 10, 10);
-                Grid.SetRow(SelectionElement, row);
-                Grid.SetColumn(SelectionElement, startColumn);
-                Grid.SetColumnSpan(SelectionElement, columnSpan + 1);
-                RoomDateGrid.Children.Add(SelectionElement);
-                SelectionElements.Add(SelectionElement);
+                foreach (Room room in SelectedRooms)
+                {
+                    int row = HeaderRows + Rooms.IndexOf(room);
+                    int startColumn = HeaderColumns + (SelectedRange.StartDate - StartDate).Days;
+                    int columnSpan = (SelectedRange.EndDate - SelectedRange.StartDate).Days;
+                    Canvas SelectionElement = new Canvas();
+                    SelectionElement.Background = Brushes.Orange;
+                    SelectionElement.Margin = new Thickness(10, 20, 10, 10);
+                    Grid.SetRow(SelectionElement, row);
+                    Grid.SetColumn(SelectionElement, startColumn);
+                    Grid.SetColumnSpan(SelectionElement, columnSpan + 1);
+                    RoomDateGrid.Children.Add(SelectionElement);
+                    SelectionElements.Add(SelectionElement);
+                }
             }
             ResetDateSelectionElement();
         }
@@ -223,6 +271,7 @@ namespace Hotel.View
         {
             int column = 0;
             var includedCheckbox = CreateCheckBox(SelectedRooms.Contains(room), column++, row);
+            RowElementsForRoom[room].uiElements.Add(includedCheckbox);
             RoutedEventHandler checkChangeClosure = (object sender, RoutedEventArgs e) =>
             {
                 CheckBox box = (CheckBox)sender;
@@ -231,10 +280,14 @@ namespace Hotel.View
             includedCheckbox.Checked += checkChangeClosure;
             includedCheckbox.Unchecked += checkChangeClosure;
             IncludedCheckBoxes.Add(room, includedCheckbox);
-            CreateTextBlock(room.RoomNumber, false, column++, row);
-            CreateTextBlock(room.Quality.ToString(), false, column++, row);
-            CreateTextBlock(room.PricePerDay.ToString(), false, column++, row);
+            var numberText = CreateTextBlock(room.RoomNumber, false, column++, row);
+            RowElementsForRoom[room].uiElements.Add(numberText);
+            var qualityText = CreateTextBlock(room.Quality.ToString(), false, column++, row);
+            RowElementsForRoom[room].uiElements.Add(qualityText);
+            var priceText = CreateTextBlock(room.PricePerDay.ToString(), false, column++, row);
+            RowElementsForRoom[room].uiElements.Add(priceText);
             var checkbox = CreateCheckBox(room.HasNiceView, column++, row);
+            RowElementsForRoom[room].uiElements.Add(checkbox);
             checkbox.IsHitTestVisible = false;
         }
 
@@ -369,8 +422,10 @@ namespace Hotel.View
         private void CreateColouredField(bool available, int column, int row, Room room, DateTime date)
         {
             Canvas canvas = CreateRoomDateField(column, row);
+            RowElementsForRoom[room].uiElements.Add(canvas);
             canvas.Background = available ? Brushes.Green : Brushes.Red;
             Canvas clickHandler = CreateRoomDateField(column, row);
+            RowElementsForRoom[room].uiElements.Add(clickHandler);
             clickHandler.Background = Brushes.Transparent;
             clickHandler.MouseLeftButtonDown += (object sender, MouseButtonEventArgs e) =>
             {
