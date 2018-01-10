@@ -38,6 +38,12 @@ namespace Hotel.Model
             set { _bookingPeriod = value; OnPropertyChanged(); }
         }
 
+        private BookingStatus _Status = BookingStatus.Available;
+        public virtual BookingStatus BookingStatus
+        {
+            get { return _Status; }
+            set { _Status = value; OnPropertyChanged(); }
+        }
         public virtual bool OverlapsWith(Booking booking)
         {
             return BookingPeriod.OverlapsWith(booking.BookingPeriod);
@@ -67,6 +73,7 @@ namespace Hotel.Model
         {
             get { return Room.RoomNumber ?? "null"; }
         }
+
 
         public virtual void SetDates(SelectedDatesCollection selectedDates)
         {
