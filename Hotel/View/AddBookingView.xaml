@@ -11,7 +11,9 @@
             <ComboBox Name="GuestDropdown" Width="80" SelectedItem="{Binding Guest}" ItemsSource="{Binding Guests}"/>
             <Button Width="200" Height="50" Command="{Binding AddBookingCommand}" Content="Save"></Button>
         </WrapPanel>
-        <Grid Name="RoomDateGrid">
-        </Grid>
+        <Viewbox VerticalAlignment="Top">
+            <Grid Name="RoomDateGrid">
+            </Grid>
+        </Viewbox>
     </DockPanel>
 </UserControl>
