@@ -56,7 +56,14 @@ namespace Hotel.View
         /// Dictionary linking each room to a checkbox; toggling this checkbox includes/removes the room from the booking selection.
         /// </summary>
         private Dictionary<Room, CheckBox> IncludedCheckBoxes = new Dictionary<Room, CheckBox>();
+        /// <summary>
+        /// The last room the mouse went down on
+        /// </summary>
         private Room lastDownRoom;
+        /// <summary>
+        /// The last date the mouse went down on
+        /// </summary>
+        private DateTime lastDownDate;
 
         public AddBookingView()
         {
@@ -276,10 +283,41 @@ namespace Hotel.View
         private void MouseDownOnField(Room room, DateTime date)
         {
             lastDownRoom = room;
+            lastDownDate = date;
             SelectedRange.StartDate = date;
         }
 
         private void MouseUpOnField(Room room, DateTime date)
+        {
+            if (date == lastDownDate)
+            {
+                if (ExpectingEndOfRangeSelection)
+                {
+                    SelectedRange.StartDate = SelectedRange.EndDate;
+                    ExpectingEndOfRangeSelection = false;
+                }
+                else
+                {
+                    ExpectingEndOfRangeSelection = true;
+                }
+            }
+            else
+            {
+                ExpectingEndOfRangeSelection = false;
+            }
+            SetOtherDate(date);
+            DeselectAllRooms();
+            SelectBetween(lastDownRoom, room);
+            CopyDatesAndRoomsToViewModel();
+            SetSelectionElements();
+        }
+
+        /// <summary>
+        /// Assuming SelectedRange.StartDate is already set, make SelectedRange a range from that date to the given one,
+        /// flipping the dates as necessary to make sure the end is not before the start date.
+        /// </summary>
+        /// <param name="date"></param>
+        private void SetOtherDate(DateTime date)
         {
             if (date < SelectedRange.StartDate)
             {
@@ -290,10 +328,6 @@ namespace Hotel.View
             {
                 SelectedRange.EndDate = date;
             }
-            DeselectAllRooms();
-            SelectBetween(lastDownRoom, room);
-            CopyDatesAndRoomsToViewModel();
-            SetSelectionElements();
         }
 
         private void SelectBetween(Room beginRoom, Room endRoom)
