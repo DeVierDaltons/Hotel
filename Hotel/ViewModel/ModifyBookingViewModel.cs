@@ -36,9 +36,15 @@ namespace Hotel.ViewModel
         public ModifyBookingViewModel(ObservableCollection<Booking> bookings)
         {
             InitializeStatusFilterList();
+            
             Bookings = bookings;
             DisplayedBookings = new ObservableCollection<Booking>(bookings);
+            foreach(Booking booking in Bookings)
+            {
+                booking.PropertyChanged += InvalidateOnBookingStatusChanged;
+            }
             bookings.CollectionChanged += Bookings_CollectionChanged;
+           
         }
 
         private void InitializeStatusFilterList()
@@ -61,8 +67,8 @@ namespace Hotel.ViewModel
         {
             
             if (e.NewItems.Count > 0) {
-                
                 var newBooking = (e.NewItems[0] as Booking);
+                newBooking.PropertyChanged += InvalidateOnBookingStatusChanged;
                 foreach (KeyValuePair<BookingStatus, Func<bool>> kvp in StatusFiltersList)
                 {
                     //check if the item should be displayed or not, if not return otherwise add it to the displayed items.
@@ -165,6 +171,14 @@ namespace Hotel.ViewModel
         {
             PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(name));
             if (name.Contains("Filter"))
+            {
+                FilterDisplayedBookings();
+            }
+        }
+        
+        public void InvalidateOnBookingStatusChanged(object sender, PropertyChangedEventArgs e)
+        {
+            if(e.PropertyName == nameof(Booking.BookingStatus))
             {
                 FilterDisplayedBookings();
             }
