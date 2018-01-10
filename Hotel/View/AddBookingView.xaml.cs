@@ -423,7 +423,6 @@ namespace Hotel.View
         private void MouseDownOnDate(DateTime date)
         {
             SelectedRange.StartDate = date;
-            SetSelectionElements();
         }
 
         private void MouseUpOnDate(DateTime date)
