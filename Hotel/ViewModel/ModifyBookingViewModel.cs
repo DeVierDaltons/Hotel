@@ -53,6 +53,7 @@ namespace Hotel.ViewModel
 
         /// <summary>
         /// If an item gets added to the original list of bookings also add it to the displayed list of bookings.
+        /// Or remove it if the booking is removed from the original list of bookings
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
