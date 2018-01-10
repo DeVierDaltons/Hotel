@@ -53,7 +53,7 @@ namespace Hotel.ViewModel
 
         public bool ValidateInput()
         {
-            if( Booking.Guest == null || Booking.Room == null || SelectedDates == null || SelectedDates.StartDate == null || SelectedDates.EndDate == null)
+            if( Booking.Guest == null || Booking.Room == null || SelectedDates == null || !SelectedDates.IsValid())
             {
                 return false;
             }
