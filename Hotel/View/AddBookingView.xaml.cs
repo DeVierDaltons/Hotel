@@ -266,7 +266,6 @@ namespace Hotel.View
                 IncludedCheckBoxes[previouslySelectedRoom].IsChecked = false;
             }
             SelectedRooms.Clear();
-            SelectedRooms.Add(room);
             IncludedCheckBoxes[room].IsChecked = true;
             CopyDatesToViewModel();
             SetSelectionElements();
