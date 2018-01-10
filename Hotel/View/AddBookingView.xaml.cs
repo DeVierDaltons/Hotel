@@ -187,6 +187,10 @@ namespace Hotel.View
 
         private void ResetDateSelectionElement()
         {
+            if( !SelectedRange.IsValid())
+            {
+                return;
+            }
             if( DateRangeElement == null)
             {
                 DateRangeElement = new Canvas();
