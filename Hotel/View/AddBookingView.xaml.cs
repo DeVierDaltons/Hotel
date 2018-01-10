@@ -17,6 +17,12 @@ namespace Hotel.View
 {
     public partial class AddBookingView : UserControl
     {
+        private class RoomRowElements
+        {
+            public RowDefinition rowDefinition;
+            public List<UIElement> uiElements = new List<UIElement>();
+        }
+
         private const int DateBlockSize = 40;
         private const int DatesToDisplay = 35;
         private const int DateShiftButtonSize = 3;
@@ -49,6 +55,30 @@ namespace Hotel.View
         /// This is toggled so that it is possible to select a startdate and then an enddate.
         /// </summary>
         private bool ExpectingEndOfRangeSelection = false;
+        /// <summary>
+        /// For each room, a RoomRowElements defining which elements should be removed if that room is removed
+        /// </summary>
+        private Dictionary<Room, RoomRowElements> RowElementsForRoom = new Dictionary<Room, RoomRowElements>();
+        /// <summary>
+        /// The column in the grid at which the dates begin
+        /// </summary>
+        private int dateStartColumn;
+        /// <summary>
+        /// The row for the months' names
+        /// </summary>
+        private int monthRow = 0;
+        /// <summary>
+        /// The row containing the number of each day (in the month)
+        /// </summary>
+        private int dayNumberRow = 1;
+        /// <summary>
+        /// The row containing the day of the week name
+        /// </summary>
+        private int dayNameRow = 2;
+        /// <summary>
+        /// All the UIElements that are dependent on the date range currently being shown
+        /// </summary>
+        private List<UIElement> DateDependentElements = new List<UIElement>();
 
         /// <summary>
         /// All the rooms
@@ -100,6 +130,7 @@ namespace Hotel.View
                 RoomDateGrid.ColumnDefinitions.Add(new ColumnDefinition() { Width = GridLength.Auto }); // room has nice view
             }
             AddHeader();
+            CreateDateGrid(dateStartColumn, dayNumberRow, dayNameRow, StartDate);
             int row = HeaderRows;
             foreach (Room room in rooms)
             {
@@ -108,14 +139,6 @@ namespace Hotel.View
             }
             Rooms.CollectionChanged += OnRoomsChanged;
         }
-
-        private class RoomRowElements
-        {
-            public RowDefinition rowDefinition;
-            public List<UIElement> uiElements = new List<UIElement>();
-        }
-
-        private Dictionary<Room, RoomRowElements> RowElementsForRoom = new Dictionary<Room, RoomRowElements>();
 
         private void AddGridRowForRoom(int row, Room room)
         {
@@ -228,30 +251,57 @@ namespace Hotel.View
                 RoomDateGrid.RowDefinitions.Add(new RowDefinition() { Height = GridLength.Auto });
             }
             int column = 0;
-            const int monthRow = 0;
-            const int dayNumberRow = 1;
-            const int dayNameRow = 2;
             CreateTextBlock("Selected", true, column++, dayNumberRow).Margin = new Thickness(10d);
             CreateTextBlock("Room", true, column++, dayNumberRow).Margin = new Thickness(10d);
             CreateTextBlock("Quality", true, column++, dayNumberRow).Margin = new Thickness(10d);
             CreateTextBlock("Price", true, column++, dayNumberRow).Margin = new Thickness(5d);
             CreateTextBlock("View", true, column++, dayNumberRow).Margin = new Thickness(2d);
-            int dateStartColumn = column;
-            DateTime date = StartDate;
-            Button earlierButton = CreateButton("Earlier", dateStartColumn, monthRow, DateShiftButtonSize);
-            TextBlock monthHeader = CreateTextBlock(date.ToString("MMMM", CultureInfo.InvariantCulture), false, dateStartColumn + DateShiftButtonSize, monthRow);
+            dateStartColumn = column;
+            Button earlierButton = CreateButton("Earlier", dateStartColumn, monthRow, DateShiftButtonSize, ShiftDatesBack);
+            TextBlock monthHeader = CreateTextBlock(StartDate.ToString("MMMM", CultureInfo.InvariantCulture), false, dateStartColumn + DateShiftButtonSize, monthRow);
             int monthHeaderSize = DatesToDisplay - 2 * DateShiftButtonSize;
             Grid.SetColumnSpan(monthHeader, monthHeaderSize);
-            Button laterButton = CreateButton("Later", dateStartColumn + DateShiftButtonSize + monthHeaderSize, monthRow, DateShiftButtonSize);
-            for(int i = 0; i < DatesToDisplay; ++i)
+            Button laterButton = CreateButton("Later", dateStartColumn + DateShiftButtonSize + monthHeaderSize, monthRow, DateShiftButtonSize, ShiftDatesForward);
+        }
+
+        private void CreateDateGrid(int column, int dayNumberRow, int dayNameRow, DateTime date)
+        {
+            for (int i = 0; i < DatesToDisplay; ++i)
             {
                 bool boldDay = date.Month == StartDate.Month;
-                CreateTextBlock(date.Day.ToString(), boldDay, column, dayNumberRow);
-                CreateTextBlock(date.ToString("ddd", CultureInfo.InvariantCulture), boldDay, column, dayNameRow).VerticalAlignment = VerticalAlignment.Top;
-                AddBackgroundClicker(column, dayNumberRow, dayNameRow, date);
+                var dayNumberText = CreateTextBlock(date.Day.ToString(), boldDay, column, dayNumberRow);
+                DateDependentElements.Add(dayNumberText);
+                var dayNameText = CreateTextBlock(date.ToString("ddd", CultureInfo.InvariantCulture), boldDay, column, dayNameRow);
+                dayNumberText.VerticalAlignment = VerticalAlignment.Top;
+                DateDependentElements.Add(dayNameText);
+                var clickHandler = AddBackgroundClicker(column, dayNumberRow, dayNameRow, date);
+                DateDependentElements.Add(clickHandler);
                 date = date.AddDays(1d);
                 ++column;
             }
+        }
+
+        private void ShiftDatesBack()
+        {
+            RemoveAllDateDependentElements();
+            StartDate = StartDate.AddDays(-20d);
+            CreateDateGrid(dateStartColumn, dayNumberRow, dayNameRow, StartDate);
+        }
+
+        private void ShiftDatesForward()
+        {
+            RemoveAllDateDependentElements();
+            StartDate = StartDate.AddDays(20d);
+            CreateDateGrid(dateStartColumn, dayNumberRow, dayNameRow, StartDate);
+        }
+
+        private void RemoveAllDateDependentElements()
+        {
+            foreach(UIElement element in DateDependentElements)
+            {
+                RoomDateGrid.Children.Remove(element);
+            }
+            DateDependentElements.Clear();
         }
 
         /// <summary>
@@ -261,7 +311,7 @@ namespace Hotel.View
         /// <param name="startRow">the row to start the element at</param>
         /// <param name="endRow">the last row the element should span across</param>
         /// <param name="date">the date for this element</param>
-        private void AddBackgroundClicker(int column, int startRow, int endRow, DateTime date)
+        private Canvas AddBackgroundClicker(int column, int startRow, int endRow, DateTime date)
         {
             Canvas backgroundClicker = new Canvas();
             backgroundClicker.Background = Brushes.Transparent;
@@ -277,6 +327,7 @@ namespace Hotel.View
             {
                 MouseUpOnDate(date);
             };
+            return backgroundClicker;
         }
 
         /// <summary>
@@ -479,11 +530,16 @@ namespace Hotel.View
             return checkbox;
         }
 
-        private Button CreateButton(string text, int column, int row, int columnSpan)
+        private Button CreateButton(string text, int column, int row, int columnSpan, Action onClickAction)
         {
             Button newButton = new Button();
-            newButton.Width = DateBlockSize * columnSpan;
-            newButton.Height = DateBlockSize;
+            newButton.Click += (object sender, RoutedEventArgs e) =>
+            {
+                onClickAction();
+            };
+            newButton.Width = DateBlockSize * columnSpan - 20d;
+            newButton.Height = DateBlockSize * 0.8;
+            newButton.Margin = new Thickness(10d);
             newButton.Content = text;
             newButton.FontSize = 14;
             newButton.VerticalAlignment = VerticalAlignment.Center;
