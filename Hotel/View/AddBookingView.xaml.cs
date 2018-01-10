@@ -261,14 +261,19 @@ namespace Hotel.View
             {
                 SelectedRange.EndDate = date;
             }
-            foreach(Room previouslySelectedRoom in new List<Room>(SelectedRooms))
+            DeselectAllRooms();
+            IncludedCheckBoxes[room].IsChecked = true;
+            CopyDatesToViewModel();
+            SetSelectionElements();
+        }
+
+        private void DeselectAllRooms()
+        {
+            foreach (Room previouslySelectedRoom in new List<Room>(SelectedRooms))
             {
                 IncludedCheckBoxes[previouslySelectedRoom].IsChecked = false;
             }
             SelectedRooms.Clear();
-            IncludedCheckBoxes[room].IsChecked = true;
-            CopyDatesToViewModel();
-            SetSelectionElements();
         }
 
         private void MouseDownOnDate(DateTime date)
