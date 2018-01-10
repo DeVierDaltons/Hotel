@@ -28,7 +28,6 @@ namespace Hotel.ViewModel
             set { _DisplayedBookings = value; OnPropertyChanged(); }
         }
 
-
         public event PropertyChangedEventHandler PropertyChanged;
 
         public List<BookingStatus> BookingStatusFilters { get;} = new List<BookingStatus>();
@@ -36,13 +35,13 @@ namespace Hotel.ViewModel
         public List<KeyValuePair<BookingStatus, Func<bool>>> StatusFiltersList { get; set; } = new List<KeyValuePair<BookingStatus, Func<bool>>>();
         public ModifyBookingViewModel(ObservableCollection<Booking> bookings)
         {
-            NewMethod();
+            InitializeStatusFilterList();
             Bookings = bookings;
             DisplayedBookings = new ObservableCollection<Booking>(bookings);
             bookings.CollectionChanged += Bookings_CollectionChanged;
         }
 
-        private void NewMethod()
+        private void InitializeStatusFilterList()
         {
             StatusFiltersList.Add(new KeyValuePair<BookingStatus, Func<bool>>(BookingStatus.Available, () => { return ShowAvailableFilter; }));
             StatusFiltersList.Add(new KeyValuePair<BookingStatus, Func<bool>>(BookingStatus.Cancelled, () => { return ShowCancelledFilter; }));
