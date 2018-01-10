@@ -327,16 +327,24 @@ namespace Hotel.View
         #region Creating grid elements
         private void CreateColouredField(bool available, int column, int row, Room room, DateTime date)
         {
-            Canvas canvas = new Canvas();
-            canvas.MouseLeftButtonDown += (object sender, MouseButtonEventArgs e) =>
+            Canvas canvas = CreateRoomDateField(column, row);
+            canvas.Background = available ? Brushes.Green : Brushes.Red;
+            Canvas clickHandler = CreateRoomDateField(column, row);
+            clickHandler.Background = Brushes.Transparent;
+            clickHandler.MouseLeftButtonDown += (object sender, MouseButtonEventArgs e) =>
             {
                 MouseDownOnField(room, date);
             };
-            canvas.MouseLeftButtonUp += (object sender, MouseButtonEventArgs e) =>
+            clickHandler.MouseLeftButtonUp += (object sender, MouseButtonEventArgs e) =>
             {
                 MouseUpOnField(room, date);
             };
-            canvas.Background = available ? Brushes.Green : Brushes.Red;
+            Panel.SetZIndex(clickHandler, int.MaxValue);
+        }
+
+        private Canvas CreateRoomDateField(int column, int row)
+        {
+            Canvas canvas = new Canvas();
             canvas.Width = DateBlockSize;
             canvas.Height = DateBlockSize;
             canvas.Margin = new Thickness(0d);
@@ -345,6 +353,7 @@ namespace Hotel.View
             Grid.SetColumn(canvas, column);
             Grid.SetRow(canvas, row);
             RoomDateGrid.Children.Add(canvas);
+            return canvas;
         }
 
         private CheckBox CreateCheckBox(bool enabled, int column, int row)
