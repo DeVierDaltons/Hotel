@@ -145,6 +145,13 @@ namespace Hotel.View
 
         private void RemoveGridRowForRoom(Room removedRoom)
         {
+            {
+                var checkbox = IncludedCheckBoxes[removedRoom];
+                if (checkbox.IsChecked.Value)
+                {
+                    checkbox.IsChecked = false;
+                }
+            }
             var elements = RowElementsForRoom[removedRoom];
             RoomDateGrid.RowDefinitions.Remove(elements.rowDefinition);
             foreach (UIElement roomElement in elements.uiElements)
@@ -183,6 +190,7 @@ namespace Hotel.View
                 }
             }
             ResetDateSelectionElement();
+            CopyDatesAndRoomsToViewModel();
         }
 
         private void ResetDateSelectionElement()
@@ -365,7 +373,6 @@ namespace Hotel.View
             SetOtherDate(date);
             DeselectAllRooms();
             SelectBetween(lastDownRoom, room);
-            CopyDatesAndRoomsToViewModel();
             SetSelectionElements();
         }
 
@@ -411,6 +418,7 @@ namespace Hotel.View
         private void MouseDownOnDate(DateTime date)
         {
             SelectedRange.StartDate = date;
+            SetSelectionElements();
         }
 
         private void MouseUpOnDate(DateTime date)
@@ -418,7 +426,6 @@ namespace Hotel.View
             SelectedRange.EndDate = date;
             ResetDateSelectionElement();
             SetSelectionElements();
-            CopyDatesAndRoomsToViewModel();
         }
         #endregion
 
