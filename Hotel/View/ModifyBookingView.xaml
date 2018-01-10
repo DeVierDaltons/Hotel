@@ -17,39 +17,42 @@
     </UserControl.Resources>
     <Grid>
         <Grid.ColumnDefinitions>
-            <ColumnDefinition Width="4*"></ColumnDefinition>
-            <ColumnDefinition Width="6*"></ColumnDefinition>
+            <ColumnDefinition Width="3*"></ColumnDefinition>
+            <ColumnDefinition Width="7*"></ColumnDefinition>
         </Grid.ColumnDefinitions>
         <Grid.RowDefinitions>
             <RowDefinition Height="1*"></RowDefinition>
             <RowDefinition Height="10*"></RowDefinition>
         </Grid.RowDefinitions>
-        <Grid Grid.Row="0">
+
+        <GroupBox Header="Status filter">
+            <Grid Grid.Row="0">
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="1*"></ColumnDefinition>
                 <ColumnDefinition Width="1*"></ColumnDefinition>
                 <ColumnDefinition Width="1*"></ColumnDefinition>
-                <ColumnDefinition Width="5*"></ColumnDefinition>
-            </Grid.ColumnDefinitions>
+                </Grid.ColumnDefinitions>
             <Grid.RowDefinitions>
-                <RowDefinition Height="*"></RowDefinition>
-                <RowDefinition Height="*"></RowDefinition>
+                <RowDefinition Height="2*"></RowDefinition>
+                <RowDefinition Height="4*"></RowDefinition>
+                <RowDefinition Height="4*"></RowDefinition>
             </Grid.RowDefinitions>
-            <CheckBox Grid.Row="0" Grid.Column="0" Content="Available" IsChecked="{Binding ShowAvailableFilter, Mode=TwoWay}"></CheckBox>
-            <CheckBox Grid.Row="0" Grid.Column="1" Content="Reserved" IsChecked="{Binding ShowReservedFilter, Mode=TwoWay}"></CheckBox>
-            <CheckBox Grid.Row="0" Grid.Column="2" Content="Cacelled" IsChecked="{Binding ShowCancelledFilter, Mode=TwoWay}"></CheckBox>
+                <CheckBox Grid.Row="1" Grid.Column="0" Content="Available" IsChecked="{Binding ShowAvailableFilter, Mode=TwoWay}"></CheckBox>
+                <CheckBox Grid.Row="1" Grid.Column="1" Content="Reserved" IsChecked="{Binding ShowReservedFilter, Mode=TwoWay}"></CheckBox>
+                <CheckBox Grid.Row="1" Grid.Column="2" Content="Cacelled" IsChecked="{Binding ShowCancelledFilter, Mode=TwoWay}"></CheckBox>
 
-            <CheckBox Grid.Row="1" Grid.Column="0" Content="Checked in"  IsChecked="{Binding ShowCheckedInFilter, Mode=TwoWay}"></CheckBox>
-            <CheckBox Grid.Row="1" Grid.Column="1" Content="Checked out" IsChecked="{Binding ShowCheckedOutFilter, Mode=TwoWay}"></CheckBox>
-            <CheckBox Grid.Row="1" Grid.Column="2" Content="No show" IsChecked="{Binding ShowNoShowFilter, Mode=TwoWay}"></CheckBox>
-        </Grid>
+                <CheckBox Grid.Row="2" Grid.Column="0" Content="Checked in"  IsChecked="{Binding ShowCheckedInFilter, Mode=TwoWay}"></CheckBox>
+                <CheckBox Grid.Row="2" Grid.Column="1" Content="Checked out" IsChecked="{Binding ShowCheckedOutFilter, Mode=TwoWay}"></CheckBox>
+                <CheckBox Grid.Row="2" Grid.Column="2" Content="No show" IsChecked="{Binding ShowNoShowFilter, Mode=TwoWay}"></CheckBox>
+            </Grid>
+        </GroupBox>
         <DataGrid Grid.Row="1" Grid.ColumnSpan="2" CanUserAddRows="False"  Grid.Column="0" Unloaded="DataGrid_Unloaded" ItemsSource="{Binding DisplayedBookings}" Margin="0,0,0,20" AutoGenerateColumns="False">
             <DataGrid.Columns>
                 <DataGridTextColumn Binding="{Binding StartDayString}" Header="Start day" IsReadOnly="True" ></DataGridTextColumn>
                 <DataGridTextColumn Binding="{Binding EndDayString}" Header="End day" IsReadOnly="True" ></DataGridTextColumn>
                 <DataGridTextColumn Binding="{Binding GuestName}" Header="Guest name" IsReadOnly="True" ></DataGridTextColumn>
                 <DataGridTextColumn Binding="{Binding RoomNumber}" Header="Room number" IsReadOnly="True" ></DataGridTextColumn>
-                <DataGridTextColumn Binding="{Binding BookingStatus}" Header="Status" IsReadOnly="True" ></DataGridTextColumn>
+                <DataGridComboBoxColumn ItemsSource="{Binding Source={StaticResource BookingStatusEnum}}" SelectedItemBinding="{Binding BookingStatus}" Header="Status" IsReadOnly="False" ></DataGridComboBoxColumn>
             </DataGrid.Columns>
         </DataGrid>
     </Grid>
