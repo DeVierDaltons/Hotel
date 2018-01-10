@@ -19,16 +19,42 @@ namespace Hotel.View
         private const int DateBlockSize = 40;
         private const int DatesToDisplay = 35;
 
-        private DateTime StartDate = DateTime.Today;
-        private BookingPeriod SelectedRange = new BookingPeriod();
-        private List<Room> SelectedRooms = new List<Room>();
-        private List<Canvas> SelectionElements = new List<Canvas>();
-        private Canvas DateRangeElement = null;
-
-        private ObservableCollection<Room> Rooms;
         private const int HeaderRows = 3; // january, 1, Tue
         private const int HeaderColumns = 5; // RoomNumber, Price, Quality, HasNiceView
 
+        /// <summary>
+        /// The date of the first element in the view
+        /// </summary>
+        private DateTime StartDate = DateTime.Today;
+        /// <summary>
+        /// The currently selected range of dates to be booked
+        /// </summary>
+        private BookingPeriod SelectedRange = new BookingPeriod();
+        /// <summary>
+        /// The currently selected rooms to book
+        /// </summary>
+        private List<Room> SelectedRooms = new List<Room>();
+        /// <summary>
+        /// The orange blocks on top of the green and red ones, showing the intersection of rooms with dates currently selected
+        /// </summary>
+        private List<Canvas> SelectionElements = new List<Canvas>();
+        /// <summary>
+        /// The indicator above the dates in the header, showing which dates are currently selected
+        /// </summary>
+        private Canvas DateRangeElement = null;
+        /// <summary>
+        /// Whether the view will interpret a mousedown & up on the same date to mean the enddate for the booking.
+        /// This is toggled so that it is possible to select a startdate and then an enddate.
+        /// </summary>
+        private bool ExpectingEndOfRangeSelection = false;
+
+        /// <summary>
+        /// All the rooms
+        /// </summary>
+        private ObservableCollection<Room> Rooms;
+        /// <summary>
+        /// Dictionary linking each room to a checkbox; toggling this checkbox includes/removes the room from the booking selection.
+        /// </summary>
         private Dictionary<Room, CheckBox> IncludedCheckBoxes = new Dictionary<Room, CheckBox>();
         private Room lastDownRoom;
 
@@ -36,12 +62,6 @@ namespace Hotel.View
         {
             InitializeComponent();
             UseDataContextLater(); // TODO: this is fucked up, change this! the problem is that the DataContext is set later, because it is dependent on the parent's datacontext
-        }
-
-        private void Calendar_SelectedDatesChanged(object sender, SelectionChangedEventArgs e)
-        {
-            AddBookingViewModel viewModel = (AddBookingViewModel)DataContext;
-            //viewModel.SelectedDates = BookingRangeCalendar.SelectedDates;
         }
 
         private async void UseDataContextLater()
@@ -219,7 +239,7 @@ namespace Hotel.View
             return timeSelection != null && timeSelection.Year > 1;
         }
 
-        private void CopyDatesToViewModel()
+        private void CopyDatesAndRoomsToViewModel()
         {
             AddBookingViewModel viewModel = (AddBookingViewModel)DataContext;
             viewModel.SelectedDates = new BookingPeriod(SelectedRange.StartDate, SelectedRange.EndDate);
@@ -300,7 +320,7 @@ namespace Hotel.View
             SelectedRange.EndDate = date;
             ResetDateSelectionElement();
             SetSelectionElements();
-            CopyDatesToViewModel();
+            CopyDatesAndRoomsToViewModel();
         }
         #endregion
 
