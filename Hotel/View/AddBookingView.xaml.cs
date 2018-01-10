@@ -176,19 +176,26 @@ namespace Hotel.View
                 bool boldDay = date.Month == StartDate.Month;
                 CreateTextBlock(date.Day.ToString(), boldDay, column, dayNumberRow);
                 CreateTextBlock(date.ToString("ddd", CultureInfo.InvariantCulture), boldDay, column, dayNameRow).VerticalAlignment = VerticalAlignment.Top;
-                AddBackgroundClicker(column, monthRow, dayNameRow, date);
+                AddBackgroundClicker(column, dayNumberRow, dayNameRow, date);
                 date = date.AddDays(1d);
                 ++column;
             }
         }
 
-        private void AddBackgroundClicker(int column, int monthRow, int dayNameRow, DateTime date)
+        /// <summary>
+        /// Adds a transparent clickable Canvas which triggers MouseDown/UpOnDate for the given date
+        /// </summary>
+        /// <param name="column">the column of the grid to add it to</param>
+        /// <param name="startRow">the row to start the element at</param>
+        /// <param name="endRow">the last row the element should span across</param>
+        /// <param name="date">the date for this element</param>
+        private void AddBackgroundClicker(int column, int startRow, int endRow, DateTime date)
         {
             Canvas backgroundClicker = new Canvas();
             backgroundClicker.Background = Brushes.Transparent;
             Grid.SetColumn(backgroundClicker, column);
-            Grid.SetRow(backgroundClicker, monthRow);
-            Grid.SetRowSpan(backgroundClicker, dayNameRow - monthRow + 1);
+            Grid.SetRow(backgroundClicker, startRow);
+            Grid.SetRowSpan(backgroundClicker, endRow - startRow + 1);
             RoomDateGrid.Children.Add(backgroundClicker);
             backgroundClicker.MouseLeftButtonDown += (object sender, MouseButtonEventArgs e) =>
             {
