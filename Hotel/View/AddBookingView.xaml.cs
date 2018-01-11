@@ -280,10 +280,48 @@ namespace Hotel.View
             CreateTextBlock("View", true, column++, dayNumberRow).Margin = new Thickness(2d);
             dateStartColumn = column;
             Button earlierButton = CreateButton("Earlier", dateStartColumn, monthRow, DateShiftButtonSize, ShiftDatesBack);
-            TextBlock monthHeader = CreateTextBlock(StartDate.ToString("MMMM", CultureInfo.InvariantCulture), false, dateStartColumn + DateShiftButtonSize, monthRow);
-            int monthHeaderSize = DatesToDisplay - 2 * DateShiftButtonSize;
-            Grid.SetColumnSpan(monthHeader, monthHeaderSize);
-            Button laterButton = CreateButton("Later", dateStartColumn + DateShiftButtonSize + monthHeaderSize, monthRow, DateShiftButtonSize, ShiftDatesForward);
+            CreateMonthLabels();
+            int columnForLaterButton = dateStartColumn + GetMonthLabelsSize();
+            Button laterButton = CreateButton("Later", columnForLaterButton, monthRow, DateShiftButtonSize, ShiftDatesForward);
+        }
+
+        private int GetMonthLabelsSize()
+        {
+            return DateShiftButtonSize + (DatesToDisplay - 2 * DateShiftButtonSize);
+        }
+
+        private int NextMonth(int month)
+        {
+            if( month == 12)
+            {
+                return 1;
+            }
+            return month + 1;
+        }
+
+        private void CreateMonthLabels()
+        {
+            StackPanel monthsPanel = new StackPanel();
+            monthsPanel.Orientation = Orientation.Horizontal;
+            DateTime lastDayToDisplay = StartDate.AddDays(DatesToDisplay - 1);
+            for(int i = StartDate.Month; i != NextMonth(lastDayToDisplay.Month); i = NextMonth(i))
+            {
+                TextBlock monthBlock = new TextBlock();
+                DateTimeFormatInfo dateInfo = new DateTimeFormatInfo();
+                monthBlock.Text = dateInfo.GetMonthName(i);
+                monthBlock.FontSize = 14;
+                monthBlock.Margin = new Thickness(20d);
+                monthBlock.FontWeight = StartDate.Month == i ? FontWeights.Bold : FontWeights.Normal;
+                monthBlock.Foreground = new SolidColorBrush(Colors.Black);
+                monthBlock.VerticalAlignment = VerticalAlignment.Center;
+                monthBlock.HorizontalAlignment = HorizontalAlignment.Center;
+                monthsPanel.Children.Add(monthBlock);
+            }
+            Grid.SetColumn(monthsPanel, dateStartColumn + DateShiftButtonSize);
+            Grid.SetRow(monthsPanel, monthRow);
+            Grid.SetColumnSpan(monthsPanel, GetMonthLabelsSize());
+            RoomDateGrid.Children.Add(monthsPanel);
+            DateDependentElements.Add(monthsPanel);
         }
 
         /// <summary>
@@ -314,6 +352,7 @@ namespace Hotel.View
         {
             RemoveAllDateDependentElements();
             StartDate = StartDate.AddDays(-20d);
+            CreateMonthLabels();
             CreateDayLabels(dateStartColumn, dayNumberRow, dayNameRow, StartDate);
             AddAvailabilityForRooms();
         }
@@ -322,6 +361,7 @@ namespace Hotel.View
         {
             RemoveAllDateDependentElements();
             StartDate = StartDate.AddDays(20d);
+            CreateMonthLabels();
             CreateDayLabels(dateStartColumn, dayNumberRow, dayNameRow, StartDate);
             AddAvailabilityForRooms();
         }
@@ -358,6 +398,7 @@ namespace Hotel.View
             {
                 MouseUpOnDate(date);
             };
+            Panel.SetZIndex(backgroundClicker, int.MaxValue);
             return backgroundClicker;
         }
 
