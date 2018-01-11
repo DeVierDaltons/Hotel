@@ -36,6 +36,6 @@
                 </DataGrid.Columns>
             </DataGrid>
         </Grid>
-        <Frame Grid.Column="1" Content="{Binding AddRoomView}"></Frame>
+        <Frame Grid.Column="1" Content="{Binding AddRoomView}" VerticalAlignment="Top"/>
     </Grid>
 </UserControl>

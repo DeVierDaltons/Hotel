@@ -5,8 +5,8 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         mc:Ignorable="d"
         >
-    <GroupBox Header="Room" HorizontalAlignment="Center" VerticalAlignment="Center">
-        <Grid HorizontalAlignment="Center" VerticalAlignment="Center">
+    <GroupBox Header="Room" VerticalAlignment="Center">
+        <Grid VerticalAlignment="Center">
             <Grid.RowDefinitions>
                 <RowDefinition Height="*"></RowDefinition>
                 <RowDefinition Height="*"></RowDefinition>
@@ -34,7 +34,7 @@
             <TextBox Grid.Row="3" Grid.Column="2" Text="{Binding PricePerDay}" VerticalAlignment="Center" Margin="0,2"></TextBox>
 
             <CheckBox Grid.Row="4" Grid.Column="2" IsChecked="{Binding HasNiceView}" Content="Has a nice view" VerticalAlignment="Center" HorizontalAlignment="Center" Margin="0,0,0,1"/>
-            <Button Grid.Row="5" Grid.Column="2" Content="Save" Command="{Binding AddRoomCommand}" VerticalAlignment="Center" HorizontalAlignment="Center" Margin="33,0"/>
+            <Button Grid.Row="5" Grid.ColumnSpan="3" Content="Save" Command="{Binding AddRoomCommand}" VerticalAlignment="Center" Margin="33,0"/>
         </Grid>
     </GroupBox>
 </UserControl>
