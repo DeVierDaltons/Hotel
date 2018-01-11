@@ -53,9 +53,8 @@ namespace Hotel.ViewModel
         public void AddGuest(System.Windows.Controls.StackPanel f)
         {
             var newGuest = new Guest();
-            Guests.Add(newGuest);
             var GuestDetailView = new View.GuestDetailView();
-            GuestDetailView.DataContext = new GuestDetailViewModel(new EditGuestCommand(newGuest), newGuest, null);
+            GuestDetailView.DataContext = new GuestDetailViewModel(new EditGuestCommand(newGuest), newGuest, () => Guests.Add(newGuest));
             f.Children.Clear();
             f.Children.Add(GuestDetailView);
         }
