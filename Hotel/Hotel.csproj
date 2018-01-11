@@ -93,7 +93,7 @@
     <Compile Include="Repository\RepositoryBackedObservableCollection.cs" />
     <Compile Include="ViewModel\AddBookingViewModel.cs" />
     <Compile Include="ViewModel\AddRoomViewModel.cs" />
-    <Compile Include="ViewModel\ModifyBookingViewModel.cs" />
+    <Compile Include="ViewModel\BookingViewModel.cs" />
     <Compile Include="ViewModel\ModifyRoomViewModel.cs" />
     <Compile Include="View\AddBookingView.xaml.cs">
       <DependentUpon>AddBookingView.xaml</DependentUpon>
@@ -113,8 +113,8 @@
     <Compile Include="View\GuestsView.xaml.cs">
       <DependentUpon>GuestsView.xaml</DependentUpon>
     </Compile>
-    <Compile Include="View\ModifyBookingView.xaml.cs">
-      <DependentUpon>ModifyBookingView.xaml</DependentUpon>
+    <Compile Include="View\BookingView.xaml.cs">
+      <DependentUpon>BookingView.xaml</DependentUpon>
     </Compile>
     <Compile Include="View\ModifyRoomView.xaml.cs">
       <DependentUpon>ModifyRoomView.xaml</DependentUpon>
@@ -154,7 +154,7 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="View\ModifyBookingView.xaml">
+    <Page Include="View\BookingView.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>

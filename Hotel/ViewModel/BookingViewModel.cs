@@ -15,9 +15,17 @@ using System.Windows.Input;
 
 namespace Hotel.ViewModel
 {
-    public class ModifyBookingViewModel : INotifyPropertyChanged
-
+    public class BookingViewModel : INotifyPropertyChanged
     {
+
+
+        private AddBookingView _addBookingView;
+
+        public AddBookingView AddBookingView
+        {
+            get { return _addBookingView; }
+            set { _addBookingView = value; }
+        }
         private ObservableCollection<Booking> Bookings;
 
         private ObservableCollection<Booking> _DisplayedBookings;
@@ -33,7 +41,7 @@ namespace Hotel.ViewModel
         public List<BookingStatus> BookingStatusFilters { get;} = new List<BookingStatus>();
 
         public List<KeyValuePair<BookingStatus, Func<bool>>> StatusFiltersList { get; set; } = new List<KeyValuePair<BookingStatus, Func<bool>>>();
-        public ModifyBookingViewModel(ObservableCollection<Booking> bookings)
+        public BookingViewModel(ObservableCollection<Booking> bookings)
         {
             InitializeStatusFilterList();
             

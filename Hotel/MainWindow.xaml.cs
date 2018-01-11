@@ -6,6 +6,7 @@ using System.Windows.Controls;
 using System.Collections.Generic;
 using System.Linq;
 using System;
+using Hotel.View;
 
 namespace Hotel
 {
@@ -24,8 +25,13 @@ namespace Hotel
             GuestExplorerTab.DataContext = new GuestsViewModel(HotelManager.Guests, SwitchToEditGuest, SwitchToAddGuest);
             AddRoomTab.DataContext = new AddRoomViewModel(HotelManager);
             RoomExplorerTab.DataContext = new ModifyRoomViewModel(HotelManager.Rooms);
-            AddBookingTab.DataContext = new AddBookingViewModel(HotelManager);
-            BookingExplorerTab.DataContext = new ModifyBookingViewModel(HotelManager.Bookings);
+
+            //Creating the tab for bookings with addbooking and modify booking views.
+            AddBookingView addBookingView = new AddBookingView();
+            addBookingView.DataContext = new AddBookingViewModel(HotelManager);
+            BookingViewModel modifyBookingViewModel = new BookingViewModel(HotelManager.Bookings);
+            modifyBookingViewModel.AddBookingView = addBookingView;
+            BookingExplorerTab.DataContext = modifyBookingViewModel;
         }
 
         public void SwitchToEditGuest(Guest guest)
