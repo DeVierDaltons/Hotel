@@ -12,10 +12,10 @@
         <vm:MainWindowViewModel/>
     </Window.DataContext>
     <Grid>
-        <TabControl x:Name="TabControl">
+        <TabControl x:Name="TabControl"><!--
             <TabItem Header="Add Guest" x:Name="AddGuestTab">
                 <view:GuestDetailView />
-            </TabItem>
+            </TabItem>-->
             <TabItem Header="Guest Explorer" x:Name="GuestExplorerTab">
                 <view:GuestsView />
             </TabItem>

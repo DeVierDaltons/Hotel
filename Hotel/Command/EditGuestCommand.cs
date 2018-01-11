@@ -24,8 +24,7 @@ namespace Hotel.ViewModel
 
         public void Execute(object newGuestData)
         {
-            Guest newGuest = (Guest)newGuestData;
-            selectedGuest.CopyFrom(newGuest);
+            selectedGuest = newGuestData as Guest;
         }
     }
 }

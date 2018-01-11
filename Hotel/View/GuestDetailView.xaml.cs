@@ -12,7 +12,6 @@ namespace Hotel.View
         {
             InitializeComponent();
         }
-
         private void AddGuestButton_Click(object sender, RoutedEventArgs e)
         {
             //this.Close();

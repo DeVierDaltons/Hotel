@@ -14,7 +14,7 @@ namespace Hotel.ViewModel
         private Action AfterSubmitAction;
 
         #region Properties
-        public Guest Guest { get; set; } = new Guest();
+        public Guest Guest { get; set; }
 
         public string FirstName
         {
@@ -78,10 +78,7 @@ namespace Hotel.ViewModel
 
         public GuestDetailViewModel(ICommand guestCommand, Guest currentGuestData, Action afterSubmitAction)
         {
-            if (currentGuestData != null)
-            {
-                Guest.CopyFrom(currentGuestData);
-            }
+            Guest = currentGuestData ?? new Guest();
             GuestCommand = guestCommand;
             SubmitCommand = new RelayCommand(OnSubmitClicked, (_) => ValidateInput());
             AfterSubmitAction = afterSubmitAction;
@@ -92,7 +89,7 @@ namespace Hotel.ViewModel
             GuestCommand.Execute(Guest);
             Guest = new Guest();
             ClearAllFields();
-            AfterSubmitAction();
+            AfterSubmitAction?.Invoke();
         }
 
         private void ClearAllFields()

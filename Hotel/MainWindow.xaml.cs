@@ -20,14 +20,14 @@ namespace Hotel
         {
             InitializeComponent();
             HotelManager = (DataContext as MainWindowViewModel).HotelManager;
-            CreateAddGuestDataContext();
-            GuestExplorerTab.DataContext = new GuestsViewModel(HotelManager.Guests, SwitchToEditGuest, SwitchToAddGuest);
+            //CreateAddGuestDataContext();
+            GuestExplorerTab.DataContext = new GuestsViewModel(HotelManager.Guests);
             AddRoomTab.DataContext = new AddRoomViewModel(HotelManager);
             RoomExplorerTab.DataContext = new ModifyRoomViewModel(HotelManager.Rooms);
             AddBookingTab.DataContext = new AddBookingViewModel(HotelManager);
             BookingExplorerTab.DataContext = new ModifyBookingViewModel(HotelManager.Bookings);
         }
-
+        /*
         public void SwitchToEditGuest(Guest guest)
         {
             AddGuestTab.DataContext = new GuestDetailViewModel(new EditGuestCommand(guest), guest, SwitchToGuestExplorer);
@@ -49,6 +49,6 @@ namespace Hotel
         {
             CreateAddGuestDataContext();
             GuestExplorerTab.IsSelected = true;
-        }
+        }*/
     }
 }

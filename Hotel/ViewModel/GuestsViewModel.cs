@@ -12,8 +12,6 @@ namespace Hotel.ViewModel
     public class GuestsViewModel : INotifyPropertyChanged
     {
         private RepositoryBackedObservableCollection<Guest> _guests;
-        private Action<Guest> EditGuestAction;
-        private Action AddGuestAction;
         private string _FilterGuestString;
 
         private ObservableCollection<Guest> _DisplayedGuests;
@@ -38,16 +36,12 @@ namespace Hotel.ViewModel
             set { _guests = value; OnPropertyChanged(); }
         }
 
-        public void EditGuest(object selectedItem)
+        public void EditGuest(object selectedItem, System.Windows.Controls.Frame f)
         {
-            EditGuestAction(selectedItem as Guest);
+            f.DataContext = new GuestDetailViewModel(new EditGuestCommand(selectedItem as Guest), selectedItem as Guest, null);
+            f.Navigate(new System.Uri("pack://application:,,,/View/GuestDetailView.xaml"));
+            //EditGuestAction(selectedItem as Guest);
         }
-
-        public void AddGuest()
-        {
-            AddGuestAction();
-        }
-
         public void FilterGuests()
         {
             DisplayedGuests = new ObservableCollection<Guest>(Guests.Where(g =>
@@ -62,10 +56,8 @@ namespace Hotel.ViewModel
 
         public event PropertyChangedEventHandler PropertyChanged;
 
-        public GuestsViewModel(RepositoryBackedObservableCollection<Guest> guests, Action<Guest> editGuestAction, Action addGuestAction)
+        public GuestsViewModel(RepositoryBackedObservableCollection<Guest> guests)
         {
-            EditGuestAction = editGuestAction;
-            AddGuestAction = addGuestAction;
             Guests = guests;
             DisplayedGuests = guests;
         }
