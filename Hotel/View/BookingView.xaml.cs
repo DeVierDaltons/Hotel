@@ -1,14 +1,16 @@
-﻿using System.Windows;
+﻿using System.ComponentModel;
+using System.Windows;
 using System.Windows.Controls;
 
 namespace Hotel.View
 {
     /// <summary>
-    /// Interaction logic for ModifyRoom.xaml
+    /// Interaction logic for ModifyBooking.xaml
     /// </summary>
-    public partial class ModifyRoomView : UserControl
+    public partial class BookingView : UserControl
     {
-        public ModifyRoomView()
+
+        public BookingView()
         {
             InitializeComponent();
         }
