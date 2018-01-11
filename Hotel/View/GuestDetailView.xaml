@@ -23,33 +23,33 @@
             <ColumnDefinition Width="*" />
         </Grid.ColumnDefinitions>
 
-        <Label Grid.Row="0" Grid.Column="0" Content="Firstname:"></Label>
+        <Label Grid.Row="0" Grid.Column="0" Content="Firstname:" Margin="4,0,0,0"/>
         <TextBox Grid.Row="0" Grid.Column="1" Text="{Binding FirstName, Mode=TwoWay}"></TextBox>
 
-        <Label Grid.Row="1" Grid.Column="0" Content="Lastname:"></Label>
+        <Label Grid.Row="1" Grid.Column="0" Content="Lastname:" Margin="4,0,0,0"/>
         <TextBox Grid.Row="1" Grid.Column="1" Text="{Binding LastName,  Mode=TwoWay}"></TextBox>
 
-        <Label Grid.Row="2" Grid.Column="0" Content="Phone:"></Label>
+        <Label Grid.Row="2" Grid.Column="0" Content="Phone:" Margin="4,0,0,0"/>
         <TextBox Grid.Row="2" Grid.Column="1" Text="{Binding PhoneNumber, Mode=TwoWay}"></TextBox>
 
-        <Label Grid.Row="3" Grid.Column="0" Content="Email:"></Label>
+        <Label Grid.Row="3" Grid.Column="0" Content="Email:" Margin="4,0,0,0"/>
         <TextBox Grid.Row="3" Grid.Column="1" Text="{Binding EmailAdress, Mode=TwoWay}"></TextBox>
 
-        <Label Grid.Row="4" Grid.Column="0" Content="Address:"></Label>
+        <Label Grid.Row="4" Grid.Column="0" Content="Address:" Margin="4,0,0,0"/>
         <TextBox Grid.Row="4" Grid.Column="1" Text="{Binding Address, Mode=TwoWay}"></TextBox>
-        
-        <Label Grid.Row="5" Grid.Column="0" Content="Postal Code:"></Label>
+
+        <Label Grid.Row="5" Grid.Column="0" Content="Postal Code:" Margin="4,0,0,0"/>
         <TextBox Grid.Row="5" Grid.Column="1" Text="{Binding PostalCode, Mode=TwoWay}"></TextBox>
-        
-        <Label Grid.Row="6" Grid.Column="0" Content="City:"></Label>
+
+        <Label Grid.Row="6" Grid.Column="0" Content="City:" Margin="4,0,0,0"/>
         <TextBox Grid.Row="6" Grid.Column="1" Text="{Binding City, Mode=TwoWay}"></TextBox>
 
-        <Label Grid.Row="7" Grid.Column="0" Content="Country:"></Label>
+        <Label Grid.Row="7" Grid.Column="0" Content="Country:" Margin="4,0,0,0"/>
         <TextBox Grid.Row="7" Grid.Column="1" Text="{Binding Country, Mode=TwoWay}"></TextBox>
 
-        <Label Grid.Row="8" Grid.Column="0" Content="ICE Phone:"></Label>
+        <Label Grid.Row="8" Grid.Column="0" Content="ICE Phone:" Margin="4,0,0,0"/>
         <TextBox Grid.Row="8" Grid.Column="1" Text="{Binding ICEPhoneNumber, Mode=TwoWay}"></TextBox>
 
-        <Button Grid.Row ="9" Grid.Column="0" Grid.ColumnSpan="2" Command="{Binding SubmitCommand}" Content="Submit" Name="AddGuestButton"></Button>
+        <Button Grid.Row ="9" Grid.Column="0" Grid.ColumnSpan="2" Command="{Binding SubmitCommand}" Content="Save" Name="AddGuestButton"></Button>
     </Grid>
 </UserControl>
