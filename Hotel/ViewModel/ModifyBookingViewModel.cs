@@ -187,21 +187,25 @@ namespace Hotel.ViewModel
         public void FilterDisplayedBookings()
         {
             DisplayedBookings = new ObservableCollection<Booking>();
-            foreach(KeyValuePair<BookingStatus, Func<bool>> kvp in StatusFiltersList)
+           
+            List<Booking> filteredBookings = Bookings.Where(x =>
             {
-                //the filter is set to true so filter for this bookingstatus
-                if (kvp.Value())
+                foreach (KeyValuePair<BookingStatus, Func<bool>> kvp in StatusFiltersList)
                 {
-                    List<Booking> filteredBookings = Bookings.Where(x => x.BookingStatus == kvp.Key).ToList();
-                    filteredBookings.ForEach(x => {
-                        if (!DisplayedBookings.Contains(x))
-                        {
-                            DisplayedBookings.Add(x);
-                        }
-                    });
+                    //the filter is set to true so filter for this bookingstatus
+                    if (x.BookingStatus == kvp.Key)
+                    {
+                        return kvp.Value();
+                    }
                 }
-            }
+                return false;
+            }).ToList();
+            filteredBookings.ForEach(x => {
+                if (!DisplayedBookings.Contains(x))
+                {
+                    DisplayedBookings.Add(x);
+                }
+            });
         }
-
     }
 }
