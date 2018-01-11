@@ -22,8 +22,8 @@
             <TabItem Header="Add Room" x:Name="AddRoomTab">
                 <view:AddRoomView />
             </TabItem>
-            <TabItem Header="Room Explorer" x:Name="RoomExplorerTab">
-                <view:ModifyRoomView />
+            <TabItem Header="Rooms" x:Name="RoomExplorerTab">
+                <view:RoomView />
             </TabItem>
             <TabItem Header="Bookings" x:Name="BookingExplorerTab">
                 <view:BookingView />

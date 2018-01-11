@@ -94,7 +94,7 @@
     <Compile Include="ViewModel\AddBookingViewModel.cs" />
     <Compile Include="ViewModel\AddRoomViewModel.cs" />
     <Compile Include="ViewModel\BookingViewModel.cs" />
-    <Compile Include="ViewModel\ModifyRoomViewModel.cs" />
+    <Compile Include="ViewModel\RoomViewModel.cs" />
     <Compile Include="View\AddBookingView.xaml.cs">
       <DependentUpon>AddBookingView.xaml</DependentUpon>
     </Compile>
@@ -116,8 +116,8 @@
     <Compile Include="View\BookingView.xaml.cs">
       <DependentUpon>BookingView.xaml</DependentUpon>
     </Compile>
-    <Compile Include="View\ModifyRoomView.xaml.cs">
-      <DependentUpon>ModifyRoomView.xaml</DependentUpon>
+    <Compile Include="View\RoomView.xaml.cs">
+      <DependentUpon>RoomView.xaml</DependentUpon>
     </Compile>
     <Page Include="MainWindow.xaml">
       <Generator>MSBuild:Compile</Generator>
@@ -158,7 +158,7 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
-    <Page Include="View\ModifyRoomView.xaml">
+    <Page Include="View\RoomView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
