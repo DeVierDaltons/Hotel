@@ -19,9 +19,6 @@
             <TabItem Header="Guest Explorer" x:Name="GuestExplorerTab">
                 <view:GuestsView />
             </TabItem>
-            <TabItem Header="Add Room" x:Name="AddRoomTab">
-                <view:AddRoomView />
-            </TabItem>
             <TabItem Header="Rooms" x:Name="RoomExplorerTab">
                 <view:RoomView />
             </TabItem>

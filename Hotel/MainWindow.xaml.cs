@@ -23,7 +23,8 @@ namespace Hotel
             HotelManager = (DataContext as MainWindowViewModel).HotelManager;
             CreateAddGuestDataContext();
             GuestExplorerTab.DataContext = new GuestsViewModel(HotelManager.Guests, SwitchToEditGuest, SwitchToAddGuest);
-
+            
+            //creating the rooms tab
             AddRoomView addRoomView = new AddRoomView();
             addRoomView.DataContext = new AddRoomViewModel(HotelManager);
             RoomViewModel roomViewModel = new RoomViewModel(HotelManager.Rooms);
