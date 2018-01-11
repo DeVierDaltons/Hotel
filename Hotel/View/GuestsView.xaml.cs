@@ -14,12 +14,19 @@ namespace Hotel.View
             InitializeComponent();
         }
 
+        
+
         private void OnEditGuestClicked(object sender, RoutedEventArgs e)
         {
             (DataContext as GuestsViewModel).EditGuest(GuestsList.SelectedItem, GuestDetail);
         }
 
         private void OnAddGuestClicked(object sender, RoutedEventArgs e)
+        {
+            (DataContext as GuestsViewModel).AddGuest(GuestDetail);
+        }
+
+        private void UserControl_Loaded(object sender, RoutedEventArgs e)
         {
             (DataContext as GuestsViewModel).AddGuest(GuestDetail);
         }
