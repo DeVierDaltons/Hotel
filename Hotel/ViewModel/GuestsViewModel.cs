@@ -36,22 +36,39 @@ namespace Hotel.ViewModel
             set { _guests = value; OnPropertyChanged(); }
         }
 
-        public void EditGuest(object selectedItem, System.Windows.Controls.Frame f)
+        public void EditGuest(object selectedItem, System.Windows.Controls.StackPanel f)
         {
-            f.DataContext = new GuestDetailViewModel(new EditGuestCommand(selectedItem as Guest), selectedItem as Guest, null);
-            f.Navigate(new System.Uri("pack://application:,,,/View/GuestDetailView.xaml"));
-            //EditGuestAction(selectedItem as Guest);
+            var item = selectedItem as Guest;
+            if (item == null)
+            {
+                var newGuest = new Guest();
+                Guests.Add(newGuest);
+                item = newGuest;
+            }
+            var GuestDetailView = new View.GuestDetailView();
+            GuestDetailView.DataContext = new GuestDetailViewModel(new EditGuestCommand(item), item, null);
+            f.Children.Clear();
+            f.Children.Add(GuestDetailView);
+        }
+        public void AddGuest(System.Windows.Controls.StackPanel f)
+        {
+            var newGuest = new Guest();
+            Guests.Add(newGuest);
+            var GuestDetailView = new View.GuestDetailView();
+            GuestDetailView.DataContext = new GuestDetailViewModel(new EditGuestCommand(newGuest), newGuest, null);
+            f.Children.Clear();
+            f.Children.Add(GuestDetailView);
         }
         public void FilterGuests()
         {
             DisplayedGuests = new ObservableCollection<Guest>(Guests.Where(g =>
-               (g.FirstName != null && g.FirstName.ToLower().Contains(FilterGuestString)) || 
+               (g.FirstName != null && g.FirstName.ToLower().Contains(FilterGuestString)) ||
                (g.LastName != null && g.LastName.ToLower().Contains(FilterGuestString)) ||
-               (g.PhoneNumber != null && g.PhoneNumber.ToLower().Contains(FilterGuestString)) || 
+               (g.PhoneNumber != null && g.PhoneNumber.ToLower().Contains(FilterGuestString)) ||
                (g.PostalCode != null && g.PostalCode.ToLower().Contains(FilterGuestString)) ||
                (g.EmailAdress != null && g.EmailAdress.ToLower().Contains(FilterGuestString)) ||
                (g.City != null && g.City.ToLower().Contains(FilterGuestString)) ||
-               (g.Country !=null && g.Country.ToLower().Contains(FilterGuestString))));
+               (g.Country != null && g.Country.ToLower().Contains(FilterGuestString))));
         }
 
         public event PropertyChangedEventHandler PropertyChanged;

@@ -36,7 +36,7 @@
             </DataGrid.Columns>
         </DataGrid>
         <GroupBox Grid.RowSpan="3" Grid.Column="1" Margin="4,4,0,0"  Header="Guest" Height="Auto">
-            <Frame Name="GuestDetail" NavigationUIVisibility="Hidden"/>
+            <StackPanel Name="GuestDetail"/>
         </GroupBox>
     </Grid>
 </UserControl>

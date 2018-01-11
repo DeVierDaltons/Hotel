@@ -3,7 +3,7 @@ using System.Windows.Input;
 using Hotel.Model;
 using Hotel.View;
 using Hotel.Command;
-
+using Hotel.Extensions;
 namespace Hotel.ViewModel
 {
     public class EditGuestCommand : ICommand
@@ -24,7 +24,7 @@ namespace Hotel.ViewModel
 
         public void Execute(object newGuestData)
         {
-            selectedGuest = newGuestData as Guest;
+            selectedGuest.CopyDelta(newGuestData as Guest);
         }
     }
 }

@@ -21,8 +21,7 @@ namespace Hotel.View
 
         private void OnAddGuestClicked(object sender, RoutedEventArgs e)
         {
-
-            //(DataContext as GuestsViewModel).AddGuest();
+            (DataContext as GuestsViewModel).AddGuest(GuestDetail);
         }
     }
 }

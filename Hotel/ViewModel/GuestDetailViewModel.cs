@@ -1,4 +1,5 @@
 ﻿using Hotel.Command;
+using Hotel.Extensions;
 using Hotel.Model;
 using System;
 using System.ComponentModel;
@@ -78,7 +79,8 @@ namespace Hotel.ViewModel
 
         public GuestDetailViewModel(ICommand guestCommand, Guest currentGuestData, Action afterSubmitAction)
         {
-            Guest = currentGuestData ?? new Guest();
+            Guest = new Guest();
+            Guest.CopyDelta(currentGuestData);
             GuestCommand = guestCommand;
             SubmitCommand = new RelayCommand(OnSubmitClicked, (_) => ValidateInput());
             AfterSubmitAction = afterSubmitAction;
@@ -87,8 +89,6 @@ namespace Hotel.ViewModel
         private void OnSubmitClicked(object _)
         {
             GuestCommand.Execute(Guest);
-            Guest = new Guest();
-            ClearAllFields();
             AfterSubmitAction?.Invoke();
         }
 
