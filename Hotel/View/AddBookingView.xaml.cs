@@ -130,24 +130,42 @@ namespace Hotel.View
                 RoomDateGrid.ColumnDefinitions.Add(new ColumnDefinition() { Width = GridLength.Auto }); // room has nice view
             }
             AddHeader();
-            CreateDateGrid(dateStartColumn, dayNumberRow, dayNameRow, StartDate);
+            CreateDayLabels(dateStartColumn, dayNumberRow, dayNameRow, StartDate);
+            AddGridRows();
+            Rooms.CollectionChanged += OnRoomsChanged;
+        }
+
+        private void AddGridRows()
+        {
             int row = HeaderRows;
-            foreach (Room room in rooms)
+            foreach (Room room in Rooms)
             {
                 AddGridRowForRoom(row, room);
                 ++row;
             }
-            Rooms.CollectionChanged += OnRoomsChanged;
+        }
+
+        private void AddAvailabilityForRooms()
+        {
+            int row = HeaderRows;
+            foreach (Room room in Rooms)
+            {
+                AddRoomAvailability(row, room);
+                ++row;
+            }
         }
 
         private void AddGridRowForRoom(int row, Room room)
         {
-            RoomRowElements elements = new RoomRowElements()
+            if (!RowElementsForRoom.ContainsKey(room))
             {
-                rowDefinition = new RowDefinition() { Height = GridLength.Auto }
-            };
-            RoomDateGrid.RowDefinitions.Add(elements.rowDefinition);
-            RowElementsForRoom.Add(room, elements);
+                RoomRowElements elements = new RoomRowElements()
+                {
+                    rowDefinition = new RowDefinition() { Height = GridLength.Auto }
+                };
+                RoomDateGrid.RowDefinitions.Add(elements.rowDefinition);
+                RowElementsForRoom.Add(room, elements);
+            }
             AddRoomDescription(row, room);
             AddRoomAvailability(row, room);
         }
@@ -169,18 +187,22 @@ namespace Hotel.View
 
         private void RemoveGridRowForRoom(Room removedRoom)
         {
-            {
-                var checkbox = IncludedCheckBoxes[removedRoom];
-                if (checkbox.IsChecked.Value)
-                {
-                    checkbox.IsChecked = false;
-                }
-            }
+            DeselectIfSelected(removedRoom);
             var elements = RowElementsForRoom[removedRoom];
             RoomDateGrid.RowDefinitions.Remove(elements.rowDefinition);
             foreach (UIElement roomElement in elements.uiElements)
             {
                 RoomDateGrid.Children.Remove(roomElement);
+            }
+            RowElementsForRoom.Remove(removedRoom);
+        }
+
+        private void DeselectIfSelected(Room removedRoom)
+        {
+            var checkbox = IncludedCheckBoxes[removedRoom];
+            if (checkbox.IsChecked.Value)
+            {
+                checkbox.IsChecked = false;
             }
         }
 
@@ -264,7 +286,14 @@ namespace Hotel.View
             Button laterButton = CreateButton("Later", dateStartColumn + DateShiftButtonSize + monthHeaderSize, monthRow, DateShiftButtonSize, ShiftDatesForward);
         }
 
-        private void CreateDateGrid(int column, int dayNumberRow, int dayNameRow, DateTime date)
+        /// <summary>
+        /// Create the labels above the availability grid with the number and name of each day
+        /// </summary>
+        /// <param name="column">which column to start at in the grid</param>
+        /// <param name="dayNumberRow">which row the day's numbers should be displayed in</param>
+        /// <param name="dayNameRow">which row the day's name should be displayed in</param>
+        /// <param name="date">which date to start at</param>
+        private void CreateDayLabels(int column, int dayNumberRow, int dayNameRow, DateTime date)
         {
             for (int i = 0; i < DatesToDisplay; ++i)
             {
@@ -285,14 +314,16 @@ namespace Hotel.View
         {
             RemoveAllDateDependentElements();
             StartDate = StartDate.AddDays(-20d);
-            CreateDateGrid(dateStartColumn, dayNumberRow, dayNameRow, StartDate);
+            CreateDayLabels(dateStartColumn, dayNumberRow, dayNameRow, StartDate);
+            AddAvailabilityForRooms();
         }
 
         private void ShiftDatesForward()
         {
             RemoveAllDateDependentElements();
             StartDate = StartDate.AddDays(20d);
-            CreateDateGrid(dateStartColumn, dayNumberRow, dayNameRow, StartDate);
+            CreateDayLabels(dateStartColumn, dayNumberRow, dayNameRow, StartDate);
+            AddAvailabilityForRooms();
         }
 
         private void RemoveAllDateDependentElements()
@@ -489,9 +520,11 @@ namespace Hotel.View
         {
             Canvas canvas = CreateRoomDateField(column, row);
             RowElementsForRoom[room].uiElements.Add(canvas);
+            DateDependentElements.Add(canvas);
             canvas.Background = available ? Brushes.Green : Brushes.Red;
             Canvas clickHandler = CreateRoomDateField(column, row);
             RowElementsForRoom[room].uiElements.Add(clickHandler);
+            DateDependentElements.Add(clickHandler);
             clickHandler.Background = Brushes.Transparent;
             clickHandler.MouseLeftButtonDown += (object sender, MouseButtonEventArgs e) =>
             {
