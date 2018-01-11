@@ -11,8 +11,16 @@ namespace Hotel.ViewModel
 {
     public class GuestsViewModel : INotifyPropertyChanged
     {
+        #region Properties
+        public event PropertyChangedEventHandler PropertyChanged;
+
         private RepositoryBackedObservableCollection<Guest> _guests;
-        private string _FilterGuestString;
+
+        public RepositoryBackedObservableCollection<Guest> Guests
+        {
+            get { return _guests; }
+            set { _guests = value; OnPropertyChanged(); }
+        }
 
         private ObservableCollection<Guest> _DisplayedGuests;
 
@@ -22,41 +30,37 @@ namespace Hotel.ViewModel
             set { _DisplayedGuests = value; OnPropertyChanged(); }
         }
 
+        private string _FilterGuestString;
 
         public string FilterGuestString
         {
             get { return _FilterGuestString; }
             set { _FilterGuestString = value.ToLower(); OnPropertyChanged(); FilterGuests(); }
         }
+        #endregion
 
-
-        public RepositoryBackedObservableCollection<Guest> Guests
+        public void EditGuest(object selectedGuest, System.Windows.Controls.StackPanel stackpanel)
         {
-            get { return _guests; }
-            set { _guests = value; OnPropertyChanged(); }
-        }
-
-        public void EditGuest(object selectedItem, System.Windows.Controls.StackPanel f)
-        {
-            var item = selectedItem as Guest;
-            if (item == null)
-            {
-                var newGuest = new Guest();
-                Guests.Add(newGuest);
-                item = newGuest;
-            }
+            var guest = selectedGuest as Guest ?? new Guest();
             var GuestDetailView = new View.GuestDetailView();
-            GuestDetailView.DataContext = new GuestDetailViewModel(new EditGuestCommand(item), item, null);
-            f.Children.Clear();
-            f.Children.Add(GuestDetailView);
+            if (selectedGuest as Guest != null)
+            {
+                GuestDetailView.DataContext = new GuestDetailViewModel(new EditGuestCommand(guest), guest, null);
+            }
+            else
+            {
+                GuestDetailView.DataContext = new GuestDetailViewModel(new EditGuestCommand(guest), guest, () => Guests.Add(guest));
+            }
+            stackpanel.Children.Clear();
+            stackpanel.Children.Add(GuestDetailView);
         }
-        public void AddGuest(System.Windows.Controls.StackPanel f)
+        public void AddGuest(System.Windows.Controls.StackPanel stackpanel)
         {
             var newGuest = new Guest();
             var GuestDetailView = new View.GuestDetailView();
             GuestDetailView.DataContext = new GuestDetailViewModel(new EditGuestCommand(newGuest), newGuest, () => Guests.Add(newGuest));
-            f.Children.Clear();
-            f.Children.Add(GuestDetailView);
+            stackpanel.Children.Clear();
+            stackpanel.Children.Add(GuestDetailView);
         }
         public void FilterGuests()
         {
@@ -70,7 +74,6 @@ namespace Hotel.ViewModel
                (g.Country != null && g.Country.ToLower().Contains(FilterGuestString))));
         }
 
-        public event PropertyChangedEventHandler PropertyChanged;
 
         public GuestsViewModel(RepositoryBackedObservableCollection<Guest> guests)
         {
