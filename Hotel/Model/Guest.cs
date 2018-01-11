@@ -89,7 +89,7 @@ namespace Hotel.Model
 
         public override string ToString()
         {
-            return FirstName;
+            return FirstName + " " + LastName;
         }
     }
 }
