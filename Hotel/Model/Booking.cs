@@ -66,7 +66,7 @@ namespace Hotel.Model
 
         public virtual string GuestName
         {
-            get { return Guest.FirstName ?? "null"; }
+            get { return Guest.ToString(); }
         }
 
         public virtual string RoomNumber
