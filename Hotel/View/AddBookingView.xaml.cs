@@ -299,27 +299,59 @@ namespace Hotel.View
             return month + 1;
         }
 
+        private bool AreSameDay(DateTime one, DateTime two)
+        {
+            return one.Day == two.Day && one.Month == two.Month && one.Year == two.Year;
+        }
+
+        private int NumberOfDaysInPeriodWithinMonth(DateTime startDay, DateTime endDay, int month)
+        {
+            int numberOfDays = 0;
+            DateTime beyondEndRange = endDay.AddDays(1d);
+            while(!AreSameDay(startDay, beyondEndRange))
+            {
+                if( startDay.Month == month)
+                {
+                    ++numberOfDays;
+                }
+                startDay = startDay.AddDays(1d);
+            }
+            return numberOfDays;
+        }
+
         private void CreateMonthLabels()
         {
-            StackPanel monthsPanel = new StackPanel();
-            monthsPanel.Orientation = Orientation.Horizontal;
+            Grid monthsPanel = new Grid();
+            monthsPanel.RowDefinitions.Add(new RowDefinition() { Height = GridLength.Auto });
+            monthsPanel.Width = double.NaN; // this represents "Auto"
             DateTime lastDayToDisplay = StartDate.AddDays(DatesToDisplay - 1);
+            int year = StartDate.Year;
+            int column = 0;
             for(int i = StartDate.Month; i != NextMonth(lastDayToDisplay.Month); i = NextMonth(i))
             {
+                int sizeOfMonthLabel = NumberOfDaysInPeriodWithinMonth(StartDate, lastDayToDisplay, i);
+                sizeOfMonthLabel = sizeOfMonthLabel * sizeOfMonthLabel; // make the differences more extreme by raising power
+                monthsPanel.ColumnDefinitions.Add(new ColumnDefinition() { Width = new GridLength(sizeOfMonthLabel, GridUnitType.Star) });
                 TextBlock monthBlock = new TextBlock();
                 DateTimeFormatInfo dateInfo = new DateTimeFormatInfo();
-                monthBlock.Text = dateInfo.GetMonthName(i);
+                monthBlock.Text = string.Format("{0} {1}", dateInfo.GetMonthName(i), year);
                 monthBlock.FontSize = 14;
-                monthBlock.Margin = new Thickness(20d);
+                monthBlock.Margin = new Thickness(15d);
                 monthBlock.FontWeight = StartDate.Month == i ? FontWeights.Bold : FontWeights.Normal;
                 monthBlock.Foreground = new SolidColorBrush(Colors.Black);
                 monthBlock.VerticalAlignment = VerticalAlignment.Center;
                 monthBlock.HorizontalAlignment = HorizontalAlignment.Center;
+                Grid.SetColumn(monthBlock, column++);
+                Grid.SetRow(monthBlock, 0);
                 monthsPanel.Children.Add(monthBlock);
+                if( i == 12)
+                {
+                    ++year;
+                }
             }
             Grid.SetColumn(monthsPanel, dateStartColumn + DateShiftButtonSize);
             Grid.SetRow(monthsPanel, monthRow);
-            Grid.SetColumnSpan(monthsPanel, GetMonthLabelsSize());
+            Grid.SetColumnSpan(monthsPanel, GetMonthLabelsSize() - DateShiftButtonSize);
             RoomDateGrid.Children.Add(monthsPanel);
             DateDependentElements.Add(monthsPanel);
         }
