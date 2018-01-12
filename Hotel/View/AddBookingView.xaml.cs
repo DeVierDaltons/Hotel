@@ -31,7 +31,7 @@ namespace Hotel.View
 
         private const int HeaderRows = 3; // january, 1, Tue
         private const int HeaderColumns = 6; // Selected, RoomNumber, Price, Quality, HasNiceView, Beds
-
+        private const int MarginForDateSelectionElement = 15;
         private Dictionary<Room, Dictionary<DateTime, Canvas>> FieldForRoomDate = new Dictionary<Room, Dictionary<DateTime, Canvas>>();
 
         /// <summary>
@@ -291,22 +291,53 @@ namespace Hotel.View
 
         private void ResetDateSelectionElement()
         {
-            if( !SelectedRange.IsValid())
+            BookingPeriod viewPeriod = new BookingPeriod(StartDate, StartDate.AddDays(DatesToDisplay - 1));
+            if (!SelectedRange.IsValid() || SelectedRange.DoesNotoverlapWith(viewPeriod))
             {
+                RemoveDateRangeElement();
                 return;
             }
-            if( DateRangeElement == null)
+            CreateDateRangeElement();
+            DateTime firstDate = DateMax(StartDate, SelectedRange.StartDate);
+            DateTime lastDate = DateMin(viewPeriod.EndDate, SelectedRange.EndDate);
+            int startColumn = HeaderColumns + (firstDate - StartDate).Days;
+            int columnSpan = (lastDate - firstDate).Days + 1;
+            Grid.SetRow(DateRangeElement, dayNumberRow);
+            Grid.SetColumn(DateRangeElement, startColumn);
+            Grid.SetColumnSpan(DateRangeElement, columnSpan);
+            int rightMargin = SelectedRange.EndDate <= viewPeriod.EndDate ? MarginForDateSelectionElement : 0;
+            int leftMargin = SelectedRange.StartDate >= viewPeriod.StartDate ? MarginForDateSelectionElement : 0;
+            DateRangeElement.Margin = new Thickness(leftMargin, DateRangeElement.Margin.Top, rightMargin, DateRangeElement.Margin.Bottom);
+        }
+
+        private DateTime DateMin(DateTime first, DateTime second)
+        {
+            return first < second ? first : second;
+        }
+
+        private DateTime DateMax(DateTime first, DateTime second)
+        {
+            return first > second ? first : second;
+        }
+
+        private void CreateDateRangeElement()
+        {
+            if (DateRangeElement == null)
             {
                 DateRangeElement = new Canvas();
                 DateRangeElement.Background = Brushes.Orange;
-                DateRangeElement.Margin = new Thickness(10, 30, 10, 5);
+                DateRangeElement.Margin = new Thickness(MarginForDateSelectionElement, 30, MarginForDateSelectionElement, 5);
                 RoomDateGrid.Children.Add(DateRangeElement);
             }
-            int startColumn = HeaderColumns + (SelectedRange.StartDate - StartDate).Days;
-            int columnSpan = (SelectedRange.EndDate - SelectedRange.StartDate).Days;
-            Grid.SetRow(DateRangeElement, dayNumberRow);
-            Grid.SetColumn(DateRangeElement, startColumn);
-            Grid.SetColumnSpan(DateRangeElement, columnSpan + 1);
+        }
+
+        private void RemoveDateRangeElement()
+        {
+            if (DateRangeElement != null)
+            {
+                RoomDateGrid.Children.Remove(DateRangeElement);
+                DateRangeElement = null;
+            }
         }
 
         /// <summary>
@@ -445,6 +476,7 @@ namespace Hotel.View
             CreateMonthLabels();
             CreateDayLabels(dateStartColumn, dayNumberRow, dayNameRow, StartDate);
             AddAvailabilityForRooms();
+            ResetDateSelectionElement();
         }
 
         private void RemoveAllDateDependentElements()
