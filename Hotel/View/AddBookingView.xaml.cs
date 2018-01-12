@@ -32,6 +32,7 @@ namespace Hotel.View
         private const int HeaderRows = 3; // january, 1, Tue
         private const int HeaderColumns = 6; // Selected, RoomNumber, Price, Quality, HasNiceView, Beds
         private const int MarginForDateSelectionElement = 15;
+        private const int MarginForRoomDateSelectionElement = 10;
         private Dictionary<Room, Dictionary<DateTime, Canvas>> FieldForRoomDate = new Dictionary<Room, Dictionary<DateTime, Canvas>>();
 
         /// <summary>
@@ -267,26 +268,43 @@ namespace Hotel.View
         /// </summary>
         private void SetSelectionElements()
         {
+            ResetRoomDateSelectionElements();
+            ResetDateSelectionElement();
+            CopyDatesAndRoomsToViewModel();
+        }
+
+        private void ResetRoomDateSelectionElements()
+        {
             ClearRoomDateSelectionElements();
-            if (SelectedRange.IsValid())
+            BookingPeriod viewPeriod = new BookingPeriod(StartDate, StartDate.AddDays(DatesToDisplay - 1));
+            if (SelectedRange.IsValid() && SelectedRange.OverlapsWith(viewPeriod))
             {
+                int startColumn, columnSpan;
+                GetColumnAndSpanOfSelectedPeriod(out startColumn, out columnSpan);
+                int rightMargin = SelectedRange.EndDate <= viewPeriod.EndDate ? MarginForRoomDateSelectionElement : 0;
+                int leftMargin = SelectedRange.StartDate >= viewPeriod.StartDate ? MarginForRoomDateSelectionElement : 0;
                 foreach (Room room in SelectedRooms)
                 {
                     int row = HeaderRows + Rooms.IndexOf(room);
-                    int startColumn = HeaderColumns + (SelectedRange.StartDate - StartDate).Days;
-                    int columnSpan = (SelectedRange.EndDate - SelectedRange.StartDate).Days;
                     Canvas SelectionElement = new Canvas();
                     SelectionElement.Background = Brushes.Orange;
-                    SelectionElement.Margin = new Thickness(10, 20, 10, 10);
+                    SelectionElement.Margin = new Thickness(leftMargin, 20, rightMargin, 10);
                     Grid.SetRow(SelectionElement, row);
                     Grid.SetColumn(SelectionElement, startColumn);
-                    Grid.SetColumnSpan(SelectionElement, columnSpan + 1);
+                    Grid.SetColumnSpan(SelectionElement, columnSpan);
                     RoomDateGrid.Children.Add(SelectionElement);
                     SelectionElements.Add(SelectionElement);
                 }
             }
-            ResetDateSelectionElement();
-            CopyDatesAndRoomsToViewModel();
+        }
+
+        private void GetColumnAndSpanOfSelectedPeriod(out int startColumn, out int columnSpan)
+        {
+            BookingPeriod viewPeriod = new BookingPeriod(StartDate, StartDate.AddDays(DatesToDisplay - 1));
+            DateTime firstDate = DateMax(StartDate, SelectedRange.StartDate);
+            DateTime lastDate = DateMin(viewPeriod.EndDate, SelectedRange.EndDate);
+            startColumn = HeaderColumns + (firstDate - StartDate).Days;
+            columnSpan = (lastDate - firstDate).Days + 1;
         }
 
         private void ResetDateSelectionElement()
@@ -298,10 +316,9 @@ namespace Hotel.View
                 return;
             }
             CreateDateRangeElement();
-            DateTime firstDate = DateMax(StartDate, SelectedRange.StartDate);
-            DateTime lastDate = DateMin(viewPeriod.EndDate, SelectedRange.EndDate);
-            int startColumn = HeaderColumns + (firstDate - StartDate).Days;
-            int columnSpan = (lastDate - firstDate).Days + 1;
+            int startColumn;
+            int columnSpan;
+            GetColumnAndSpanOfSelectedPeriod(out startColumn, out columnSpan);
             Grid.SetRow(DateRangeElement, dayNumberRow);
             Grid.SetColumn(DateRangeElement, startColumn);
             Grid.SetColumnSpan(DateRangeElement, columnSpan);
@@ -476,6 +493,7 @@ namespace Hotel.View
             CreateMonthLabels();
             CreateDayLabels(dateStartColumn, dayNumberRow, dayNameRow, StartDate);
             AddAvailabilityForRooms();
+            ResetRoomDateSelectionElements();
             ResetDateSelectionElement();
         }
 
