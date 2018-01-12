@@ -32,6 +32,8 @@ namespace Hotel.View
         private const int HeaderRows = 3; // january, 1, Tue
         private const int HeaderColumns = 6; // Selected, RoomNumber, Price, Quality, HasNiceView, Beds
 
+        private Dictionary<Room, Dictionary<DateTime, Canvas>> FieldForRoomDate = new Dictionary<Room, Dictionary<DateTime, Canvas>>();
+
         /// <summary>
         /// The date of the first element in the view
         /// </summary>
@@ -115,8 +117,31 @@ namespace Hotel.View
                     AddBookingViewModel viewModel = (AddBookingViewModel)DataContext;
                     SetGridStyle();
                     FillDateGrid(viewModel.Rooms);
+                    ListenForBookingChanges(viewModel.Bookings);
                 });
             });
+        }
+
+        private void ListenForBookingChanges(ObservableCollection<Booking> bookings)
+        {
+            bookings.CollectionChanged += BookingsChanged;
+        }
+
+        private void BookingsChanged(object sender, NotifyCollectionChangedEventArgs e)
+        {
+            if( e.OldItems != null)
+            {
+                RedrawAvailabilityForBooking((Booking)e.OldItems[0]);
+            }
+            if( e.NewItems != null)
+            {
+                RedrawAvailabilityForBooking((Booking)e.NewItems[0]);
+            }
+        }
+
+        private void RedrawAvailabilityForBooking(Booking booking)
+        {
+            RedrawAvailabilityForRoom(booking.Room); // TODO; foreach Room, when Bookings have multiple rooms
         }
 
         private void FillDateGrid(ObservableCollection<Room> rooms)
@@ -172,11 +197,22 @@ namespace Hotel.View
             AddRoomAvailability(row, room);
         }
 
+        private void RedrawAvailabilityForRoom(Room room)
+        {
+            DateTime date = StartDate;
+            for (int i = 0; i < DatesToDisplay; ++i)
+            {
+                SetFieldColour(room, date);
+                date = date.AddDays(1d);
+            }
+        }
+
         private void OnRoomsChanged(object sender, NotifyCollectionChangedEventArgs e)
         {
             if( e.OldItems != null)
             {
                 Room removedRoom = (Room)e.OldItems[0];
+                DeselectIfSelected(removedRoom);
                 RemoveGridRowForRoom(removedRoom);
             }
             if( e.NewItems != null)
@@ -189,7 +225,6 @@ namespace Hotel.View
 
         private void RemoveGridRowForRoom(Room removedRoom)
         {
-            DeselectIfSelected(removedRoom);
             var elements = RowElementsForRoom[removedRoom];
             RoomDateGrid.RowDefinitions.Remove(elements.rowDefinition);
             foreach (UIElement roomElement in elements.uiElements)
@@ -197,6 +232,8 @@ namespace Hotel.View
                 RoomDateGrid.Children.Remove(roomElement);
             }
             RowElementsForRoom.Remove(removedRoom);
+            IncludedCheckBoxes.Remove(removedRoom);
+            FieldForRoomDate.Remove(removedRoom);
         }
 
         private void DeselectIfSelected(Room removedRoom)
@@ -215,6 +252,13 @@ namespace Hotel.View
                 RoomDateGrid.Children.Remove(element);
             }
             SelectionElements.Clear();
+        }
+
+        private void ResetSelectionToNull()
+        {
+            DeselectAllRooms();
+            SelectedRange.StartDate = SelectedRange.EndDate = new DateTime(1, 1, 1);
+            SetSelectionElements();
         }
 
         /// <summary>
@@ -386,17 +430,18 @@ namespace Hotel.View
 
         private void ShiftDatesBack()
         {
-            RemoveAllDateDependentElements();
-            StartDate = StartDate.AddDays(-20d);
-            CreateMonthLabels();
-            CreateDayLabels(dateStartColumn, dayNumberRow, dayNameRow, StartDate);
-            AddAvailabilityForRooms();
+            ShiftDates(-20d);
         }
 
         private void ShiftDatesForward()
         {
+            ShiftDates(20d);
+        }
+
+        private void ShiftDates(double difference)
+        {
             RemoveAllDateDependentElements();
-            StartDate = StartDate.AddDays(20d);
+            StartDate = StartDate.AddDays(difference);
             CreateMonthLabels();
             CreateDayLabels(dateStartColumn, dayNumberRow, dayNameRow, StartDate);
             AddAvailabilityForRooms();
@@ -409,6 +454,10 @@ namespace Hotel.View
                 RoomDateGrid.Children.Remove(element);
             }
             DateDependentElements.Clear();
+            foreach(var dateCanvasDict in FieldForRoomDate.Values)
+            {
+                dateCanvasDict.Clear();
+            }
         }
 
         /// <summary>
@@ -492,7 +541,7 @@ namespace Hotel.View
             DateTime date = StartDate;
             for(int column = HeaderColumns; column < HeaderColumns + DatesToDisplay; ++column)
             {
-                CreateColouredField(room.DayAvailable(date), column, row, room, date);
+                CreateColouredField(column, row, room, date);
                 date = date.AddDays(1d);
             }
         }
@@ -613,12 +662,13 @@ namespace Hotel.View
         #endregion
 
         #region Creating grid elements
-        private void CreateColouredField(bool available, int column, int row, Room room, DateTime date)
+        private void CreateColouredField(int column, int row, Room room, DateTime date)
         {
             Canvas canvas = CreateRoomDateField(column, row);
+            RegisterField(room, date, canvas);
+            SetFieldColour(room, date);
             RowElementsForRoom[room].uiElements.Add(canvas);
             DateDependentElements.Add(canvas);
-            canvas.Background = available ? Brushes.Green : Brushes.Red;
             Canvas clickHandler = CreateRoomDateField(column, row);
             RowElementsForRoom[room].uiElements.Add(clickHandler);
             DateDependentElements.Add(clickHandler);
@@ -632,6 +682,22 @@ namespace Hotel.View
                 MouseUpOnField(room, date);
             };
             Panel.SetZIndex(clickHandler, int.MaxValue);
+        }
+
+        private void RegisterField(Room room, DateTime date, Canvas canvas)
+        {
+            if (!FieldForRoomDate.ContainsKey(room))
+            {
+                FieldForRoomDate.Add(room, new Dictionary<DateTime, Canvas>());
+            }
+            FieldForRoomDate[room].Add(date, canvas);
+        }
+
+        private void SetFieldColour(Room room, DateTime date)
+        {
+            Canvas canvas = FieldForRoomDate[room][date];
+            canvas.Background = room.DayAvailable(date) ? Brushes.Green : Brushes.Red;
+            canvas.InvalidateVisual();
         }
 
         private Canvas CreateRoomDateField(int column, int row)

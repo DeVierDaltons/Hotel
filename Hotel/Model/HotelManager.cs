@@ -41,8 +41,8 @@ namespace Hotel.Model
 
         public void AddBooking(Booking booking)
         {
-            Bookings.Add(booking);
             AddBookingToRoom(booking);
+            Bookings.Add(booking);
         }
 
         public void AddRoom(Room room)

@@ -30,6 +30,11 @@ namespace Hotel.ViewModel
             get { return HotelManager.Rooms; }
         }
 
+        public ObservableCollection<Booking> Bookings
+        {
+            get { return HotelManager.Bookings; }
+        }
+
         public Guest Guest
         {
             get { return Booking.Guest; }
