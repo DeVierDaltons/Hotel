@@ -54,7 +54,7 @@ namespace Hotel
         public void SwitchToBookingTab()
         {
             BookingExplorerTab.IsSelected = true;
-            (BookingExplorerTab.DataContext as BookingViewModel).FilterBookingsByGuest((GuestExplorerTab.DataContext as GuestsViewModel).SelectedGuest);
+            (BookingExplorerTab.DataContext as BookingViewModel).FilterDisplayedBookingsByGuest((GuestExplorerTab.DataContext as GuestsViewModel).SelectedGuest);
         }
     }
 }

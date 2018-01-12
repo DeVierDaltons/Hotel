@@ -58,7 +58,6 @@ namespace Hotel.ViewModel
 
         private void InitializeStatusFilterList()
         {
-            StatusFiltersList.Add(new KeyValuePair<BookingStatus, Func<bool>>(BookingStatus.Available, () => { return ShowAvailableFilter; }));
             StatusFiltersList.Add(new KeyValuePair<BookingStatus, Func<bool>>(BookingStatus.Cancelled, () => { return ShowCancelledFilter; }));
             StatusFiltersList.Add(new KeyValuePair<BookingStatus, Func<bool>>(BookingStatus.CheckedIn, () => { return ShowCheckedInFilter; }));
             StatusFiltersList.Add(new KeyValuePair<BookingStatus, Func<bool>>(BookingStatus.CheckedOut, () => { return ShowCheckedOutFilter; }));
@@ -120,6 +119,7 @@ namespace Hotel.ViewModel
                 if(value == "")
                 {
                     IsRemoveFilterButtonVisible = Visibility.Hidden;
+                    filterGuest = null;
                 }
                 else
                 {
@@ -129,20 +129,6 @@ namespace Hotel.ViewModel
             }
         }
 
-
-        private bool _ShowAvailable = true;
-        public bool ShowAvailableFilter {
-            get
-            {
-                return _ShowAvailable;
-            } 
-            set
-            {
-                _ShowAvailable = value;
-                OnPropertyChanged();
-            }
-
-        }
         private bool _ShowReserved = true;
 
         public bool ShowReservedFilter
@@ -155,7 +141,7 @@ namespace Hotel.ViewModel
             }
         }
 
-        private bool _ShowCancelled = true;
+        private bool _ShowCancelled = false;
 
         public bool ShowCancelledFilter
         {
@@ -179,7 +165,7 @@ namespace Hotel.ViewModel
             }
         }
 
-        private bool _ShowCheckedOut = true;
+        private bool _ShowCheckedOut = false;
 
         public bool ShowCheckedOutFilter
         {
@@ -192,7 +178,7 @@ namespace Hotel.ViewModel
         }
 
 
-        private bool _ShowNoShow = true;
+        private bool _ShowNoShow = false;
         public bool ShowNoShowFilter
         {
             get { return _ShowNoShow; }
@@ -221,10 +207,12 @@ namespace Hotel.ViewModel
             }
         }
 
+        private Guest filterGuest;
+
         public void FilterDisplayedBookings()
         {
-            DisplayedBookings = new ObservableCollection<Booking>();
            
+                DisplayedBookings = new ObservableCollection<Booking>();
             List<Booking> filteredBookings = Bookings.Where(x =>
             {
                 foreach (KeyValuePair<BookingStatus, Func<bool>> kvp in StatusFiltersList)
@@ -243,14 +231,19 @@ namespace Hotel.ViewModel
                     DisplayedBookings.Add(x);
                 }
             });
+            if (filterGuest != null)
+            {
+               
+                DisplayedBookings = new ObservableCollection<Booking>(DisplayedBookings.Where(x =>
+                   x.Guest == filterGuest
+                ));
+            }
         }
 
-        public void FilterBookingsByGuest(Guest g)
+        public void FilterDisplayedBookingsByGuest(Guest g)
         {
-            FilteredGuestString = g.FirstName + " " + g.LastName;
-            DisplayedBookings = new ObservableCollection<Booking>(Bookings.Where(x =>
-               x.Guest == g
-            ));
+            filterGuest = g;
+            FilteredGuestString = filterGuest.FirstName + " " + filterGuest.LastName;
         }
     }
 }

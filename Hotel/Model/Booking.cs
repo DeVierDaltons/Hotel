@@ -38,7 +38,7 @@ namespace Hotel.Model
             set { _bookingPeriod = value; OnPropertyChanged(); }
         }
 
-        private BookingStatus _Status = BookingStatus.Available;
+        private BookingStatus _Status = BookingStatus.Reserved;
         public virtual BookingStatus BookingStatus
         {
             get { return _Status; }
