@@ -12,6 +12,8 @@ using System.Windows.Input;
 using System.Collections.Generic;
 using System.Linq;
 using System.Collections.Specialized;
+using System.Windows.Data;
+using System.Windows.Controls.Primitives;
 
 namespace Hotel.View
 {
@@ -28,7 +30,7 @@ namespace Hotel.View
         private const int DateShiftButtonSize = 3;
 
         private const int HeaderRows = 3; // january, 1, Tue
-        private const int HeaderColumns = 5; // RoomNumber, Price, Quality, HasNiceView
+        private const int HeaderColumns = 6; // Selected, RoomNumber, Price, Quality, HasNiceView, Beds
 
         /// <summary>
         /// The date of the first element in the view
@@ -276,6 +278,7 @@ namespace Hotel.View
             CreateTextBlock("Selected", true, column++, dayNumberRow).Margin = new Thickness(10d);
             CreateTextBlock("Room", true, column++, dayNumberRow).Margin = new Thickness(10d);
             CreateTextBlock("Quality", true, column++, dayNumberRow).Margin = new Thickness(10d);
+            CreateTextBlock("Beds", true, column++, dayNumberRow).Margin = new Thickness(10d);
             CreateTextBlock("Price", true, column++, dayNumberRow).Margin = new Thickness(5d);
             CreateTextBlock("View", true, column++, dayNumberRow).Margin = new Thickness(2d);
             dateStartColumn = column;
@@ -453,14 +456,34 @@ namespace Hotel.View
             includedCheckbox.Unchecked += checkChangeClosure;
             IncludedCheckBoxes.Add(room, includedCheckbox);
             var numberText = CreateTextBlock(room.RoomNumber, false, column++, row);
+            var numberBinding = MakeOneWayBinding(room, nameof(room.RoomNumber));
+            numberText.SetBinding(TextBlock.TextProperty, numberBinding);
             RowElementsForRoom[room].uiElements.Add(numberText);
             var qualityText = CreateTextBlock(room.Quality.ToString(), false, column++, row);
+            var qualityBinding = MakeOneWayBinding(room, nameof(room.Quality));
+            qualityText.SetBinding(TextBlock.TextProperty, qualityBinding);
             RowElementsForRoom[room].uiElements.Add(qualityText);
+            var bedsText = CreateTextBlock("", false, column++, row);
+            var bedsBinding = MakeOneWayBinding(room, nameof(room.Beds));
+            bedsText.SetBinding(TextBlock.TextProperty, bedsBinding);
+            RowElementsForRoom[room].uiElements.Add(bedsText);
             var priceText = CreateTextBlock(room.PricePerDay.ToString(), false, column++, row);
+            var priceBinding = MakeOneWayBinding(room, nameof(room.PricePerDay));
+            priceText.SetBinding(TextBlock.TextProperty, priceBinding);
             RowElementsForRoom[room].uiElements.Add(priceText);
             var checkbox = CreateCheckBox(room.HasNiceView, column++, row);
+            var viewBinding = MakeOneWayBinding(room, nameof(room.HasNiceView));
+            checkbox.SetBinding(ToggleButton.IsCheckedProperty, viewBinding);
             RowElementsForRoom[room].uiElements.Add(checkbox);
             checkbox.IsHitTestVisible = false;
+        }
+
+        private static Binding MakeOneWayBinding(object source, string propertyName)
+        {
+            Binding newBinding = new Binding(propertyName);
+            newBinding.Source = source;
+            newBinding.Mode = BindingMode.OneWay;
+            return newBinding;
         }
 
         private void AddRoomAvailability(int row, Room room)
