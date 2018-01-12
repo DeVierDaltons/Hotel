@@ -631,6 +631,10 @@ namespace Hotel.View
         {
             int room1Index = Rooms.IndexOf(beginRoom);
             int room2Index = Rooms.IndexOf(endRoom);
+            if( room1Index == -1 || room2Index == -1 )
+            {
+                return;
+            }
             int beginIndex = Math.Min(room1Index, room2Index);
             int endIndex = Math.Max(room1Index, room2Index);
             for(int i = beginIndex; i <= endIndex; ++i)
