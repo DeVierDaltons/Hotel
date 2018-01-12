@@ -71,16 +71,26 @@ namespace Hotel.ViewModel
         public void EditGuest(object selectedItem, System.Windows.Controls.StackPanel stackpanel)
         {
             var guest = selectedItem as Guest;
-            if(guest == null)
+            var GuestDetailView = new View.GuestDetailView();
+
+            if (guest == null)
             {
                 guest = new Guest();
-                Guests.Add(guest);
+                GuestDetailView.DataContext = new GuestDetailViewModel(new EditGuestCommand(guest), guest, () =>
+                {
+                    Guests.Add(guest);
+                    AddGuest(stackpanel);
+                });
             }
-            var GuestDetailView = new View.GuestDetailView();
-            GuestDetailView.DataContext = new GuestDetailViewModel(new EditGuestCommand(guest), guest, null);            
+            else
+            {
+                GuestDetailView.DataContext = new GuestDetailViewModel(new EditGuestCommand(guest), guest, null);
+            }
+           
             stackpanel.Children.Clear();
             stackpanel.Children.Add(GuestDetailView);
         }
+
         public void AddGuest(System.Windows.Controls.StackPanel stackpanel)
         {
             EditGuest(null,stackpanel);
