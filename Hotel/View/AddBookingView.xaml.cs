@@ -217,6 +217,10 @@ namespace Hotel.View
             SelectionElements.Clear();
         }
 
+        /// <summary>
+        /// Sets the orange markers in the availability grid, and the date selection marker above the dates,
+        /// and copies the data into the viewmodel
+        /// </summary>
         private void SetSelectionElements()
         {
             ClearRoomDateSelectionElements();
@@ -251,17 +255,14 @@ namespace Hotel.View
             {
                 DateRangeElement = new Canvas();
                 DateRangeElement.Background = Brushes.Orange;
-                DateRangeElement.Margin = new Thickness(10, 5, 10, 30);
-                DateRangeElement.Visibility = Visibility.Hidden;
+                DateRangeElement.Margin = new Thickness(10, 30, 10, 5);
                 RoomDateGrid.Children.Add(DateRangeElement);
             }
-            int row = 1;
             int startColumn = HeaderColumns + (SelectedRange.StartDate - StartDate).Days;
             int columnSpan = (SelectedRange.EndDate - SelectedRange.StartDate).Days;
-            Grid.SetRow(DateRangeElement, row);
+            Grid.SetRow(DateRangeElement, dayNumberRow);
             Grid.SetColumn(DateRangeElement, startColumn);
             Grid.SetColumnSpan(DateRangeElement, columnSpan + 1);
-            DateRangeElement.Visibility = Visibility.Visible;
         }
 
         /// <summary>
