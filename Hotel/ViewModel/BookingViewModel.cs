@@ -12,6 +12,7 @@ using System.Windows.Media;
 using System.ComponentModel;
 using System.Runtime.CompilerServices;
 using System.Windows.Input;
+using Hotel.Extensions;
 
 namespace Hotel.ViewModel
 {
@@ -101,6 +102,34 @@ namespace Hotel.ViewModel
         }
 
         #region FilterProperties
+        private Visibility _IsRemoveFilterButtonVisible;
+
+        public Visibility IsRemoveFilterButtonVisible
+        {
+            get { return _IsRemoveFilterButtonVisible; }
+            set { _IsRemoveFilterButtonVisible = value; OnPropertyChanged(); }
+        }
+
+        private string _FilterString;
+
+        public string FilteredGuestString
+        {
+            get { return _FilterString; }
+            set {
+                _FilterString = value;
+                if(value == "")
+                {
+                    IsRemoveFilterButtonVisible = Visibility.Hidden;
+                }
+                else
+                {
+                    IsRemoveFilterButtonVisible = Visibility.Visible;
+                }
+                OnPropertyChanged();
+            }
+        }
+
+
         private bool _ShowAvailable = true;
         public bool ShowAvailableFilter {
             get
@@ -214,6 +243,14 @@ namespace Hotel.ViewModel
                     DisplayedBookings.Add(x);
                 }
             });
+        }
+
+        public void FilterBookingsByGuest(Guest g)
+        {
+            FilteredGuestString = g.FirstName + " " + g.LastName;
+            DisplayedBookings = new ObservableCollection<Booking>(Bookings.Where(x =>
+               x.Guest == g
+            ));
         }
     }
 }

@@ -51,6 +51,12 @@
                     <CheckBox Grid.Row="2" Grid.Column="2" Content="No show" IsChecked="{Binding ShowNoShowFilter, Mode=TwoWay}"></CheckBox>
                 </Grid>
             </GroupBox>
+            <StackPanel Grid.Row="0" Grid.Column="2" Orientation="Horizontal" HorizontalAlignment="Left" VerticalAlignment="Bottom">
+
+                <Label  Content="Filtered by:" Visibility="{Binding IsRemoveFilterButtonVisible}" VerticalAlignment="Center" HorizontalAlignment="Left"></Label>
+                <Label  Content="{Binding FilteredGuestString}" VerticalAlignment="Center" HorizontalAlignment="Left"></Label>
+                <Button Content="Remove filter" VerticalAlignment="Center" HorizontalAlignment="Center" Click="Button_Click" Visibility="{Binding IsRemoveFilterButtonVisible}"></Button>
+            </StackPanel>
             <DataGrid Grid.Row="1" Grid.ColumnSpan="2" CanUserAddRows="False"  Grid.Column="0" Unloaded="DataGrid_Unloaded" ItemsSource="{Binding DisplayedBookings}" SelectedItem="{Binding SelectedBooking}" Margin="0,0,0,20" AutoGenerateColumns="False">
                 <DataGrid.Columns>
                     <DataGridTextColumn Binding="{Binding StartDayString}" Header="Start day" IsReadOnly="True" ></DataGridTextColumn>
