@@ -11,10 +11,16 @@ namespace Hotel.ViewModel
 {
     public class GuestsViewModel : INotifyPropertyChanged
     {
+        #region Properties
+        public event PropertyChangedEventHandler PropertyChanged;
+
         private RepositoryBackedObservableCollection<Guest> _guests;
-        private Action<Guest> EditGuestAction;
-        private Action AddGuestAction;
-        private string _FilterGuestString;
+
+        public RepositoryBackedObservableCollection<Guest> Guests
+        {
+            get { return _guests; }
+            set { _guests = value; OnPropertyChanged(); }
+        }
 
         private ObservableCollection<Guest> _DisplayedGuests;
 
@@ -24,48 +30,76 @@ namespace Hotel.ViewModel
             set { _DisplayedGuests = value; OnPropertyChanged(); }
         }
 
+        private string _FilterGuestString;
 
         public string FilterGuestString
         {
             get { return _FilterGuestString; }
             set { _FilterGuestString = value.ToLower(); OnPropertyChanged(); FilterGuests(); }
         }
+        #endregion
+      
 
+        private Guest _SelectedGuest;
 
-        public RepositoryBackedObservableCollection<Guest> Guests
+        public Guest SelectedGuest
         {
-            get { return _guests; }
-            set { _guests = value; OnPropertyChanged(); }
+            get { return _SelectedGuest; }
+            set { _SelectedGuest = value; OnPropertyChanged(); HasSelectedGuest = true; }
         }
 
-        public void EditGuest(object selectedItem)
+        private bool _HasSelectedGuest;
+        public bool HasSelectedGuest
         {
-            EditGuestAction(selectedItem as Guest);
+            get { return _HasSelectedGuest; }
+            set { _HasSelectedGuest = value; OnPropertyChanged(); }
         }
 
-        public void AddGuest()
+        private Action _SwitchToBookingTab;
+        public Action SwitchToBookingTab
         {
-            AddGuestAction();
+            get { return _SwitchToBookingTab; }
+            set { _SwitchToBookingTab = value; }
         }
 
+
+        public void ViewBookingsForGuest()
+        {
+
+        }
+
+        public void EditGuest(object selectedItem, System.Windows.Controls.StackPanel stackpanel)
+        {
+            var guest = selectedItem as Guest;
+            if(guest == null)
+            {
+                guest = new Guest();
+                Guests.Add(guest);
+            }
+            var GuestDetailView = new View.GuestDetailView();
+            GuestDetailView.DataContext = new GuestDetailViewModel(new EditGuestCommand(guest), guest, null);            
+            stackpanel.Children.Clear();
+            stackpanel.Children.Add(GuestDetailView);
+        }
+        public void AddGuest(System.Windows.Controls.StackPanel stackpanel)
+        {
+            EditGuest(null,stackpanel);
+        }
         public void FilterGuests()
         {
             DisplayedGuests = new ObservableCollection<Guest>(Guests.Where(g =>
-               (g.FirstName != null && g.FirstName.ToLower().Contains(FilterGuestString)) || 
+               (g.FirstName != null && g.FirstName.ToLower().Contains(FilterGuestString)) ||
                (g.LastName != null && g.LastName.ToLower().Contains(FilterGuestString)) ||
-               (g.PhoneNumber != null && g.PhoneNumber.ToLower().Contains(FilterGuestString)) || 
+               (g.PhoneNumber != null && g.PhoneNumber.ToLower().Contains(FilterGuestString)) ||
                (g.PostalCode != null && g.PostalCode.ToLower().Contains(FilterGuestString)) ||
                (g.EmailAdress != null && g.EmailAdress.ToLower().Contains(FilterGuestString)) ||
                (g.City != null && g.City.ToLower().Contains(FilterGuestString)) ||
-               (g.Country !=null && g.Country.ToLower().Contains(FilterGuestString))));
+               (g.Country != null && g.Country.ToLower().Contains(FilterGuestString))));
         }
 
-        public event PropertyChangedEventHandler PropertyChanged;
 
-        public GuestsViewModel(RepositoryBackedObservableCollection<Guest> guests, Action<Guest> editGuestAction, Action addGuestAction)
+        public GuestsViewModel(RepositoryBackedObservableCollection<Guest> guests)
         {
-            EditGuestAction = editGuestAction;
-            AddGuestAction = addGuestAction;
             Guests = guests;
             DisplayedGuests = guests;
         }
