@@ -37,20 +37,24 @@
                     <ColumnDefinition Width="1*"></ColumnDefinition>
                     <ColumnDefinition Width="1*"></ColumnDefinition>
                     </Grid.ColumnDefinitions>
-                <Grid.RowDefinitions>
-                    <RowDefinition Height="2*"></RowDefinition>
-                    <RowDefinition Height="4*"></RowDefinition>
-                    <RowDefinition Height="4*"></RowDefinition>
-                </Grid.RowDefinitions>
-                    <CheckBox Grid.Row="1" Grid.Column="0" Content="Available" IsChecked="{Binding ShowAvailableFilter, Mode=TwoWay}"></CheckBox>
-                    <CheckBox Grid.Row="1" Grid.Column="1" Content="Reserved" IsChecked="{Binding ShowReservedFilter, Mode=TwoWay}"></CheckBox>
-                    <CheckBox Grid.Row="1" Grid.Column="2" Content="Cacelled" IsChecked="{Binding ShowCancelledFilter, Mode=TwoWay}"></CheckBox>
-
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="2*"></RowDefinition>
+                        <RowDefinition Height="4*"></RowDefinition>
+                        <RowDefinition Height="4*"></RowDefinition>
+                    </Grid.RowDefinitions>
+                    <CheckBox Grid.Row="1" Grid.Column="0" Content="Reserved" IsChecked="{Binding ShowReservedFilter, Mode=TwoWay}"></CheckBox>
+                    <CheckBox Grid.Row="1" Grid.Column="1" Content="Cacelled" IsChecked="{Binding ShowCancelledFilter, Mode=TwoWay}"></CheckBox>
+                    <CheckBox Grid.Row="1" Grid.Column="2" Content="No show" IsChecked="{Binding ShowNoShowFilter, Mode=TwoWay}"></CheckBox>
                     <CheckBox Grid.Row="2" Grid.Column="0" Content="Checked in"  IsChecked="{Binding ShowCheckedInFilter, Mode=TwoWay}"></CheckBox>
                     <CheckBox Grid.Row="2" Grid.Column="1" Content="Checked out" IsChecked="{Binding ShowCheckedOutFilter, Mode=TwoWay}"></CheckBox>
-                    <CheckBox Grid.Row="2" Grid.Column="2" Content="No show" IsChecked="{Binding ShowNoShowFilter, Mode=TwoWay}"></CheckBox>
                 </Grid>
             </GroupBox>
+            <StackPanel Grid.Row="0" Grid.Column="2" Orientation="Horizontal" HorizontalAlignment="Left" VerticalAlignment="Bottom">
+
+                <Label  Content="Filtered by:" Visibility="{Binding IsRemoveFilterButtonVisible}" VerticalAlignment="Center" HorizontalAlignment="Left"></Label>
+                <Label  Content="{Binding FilteredGuestString}" VerticalAlignment="Center" HorizontalAlignment="Left"></Label>
+                <Button Content="Remove filter" VerticalAlignment="Center" HorizontalAlignment="Center" Click="Button_Click" Visibility="{Binding IsRemoveFilterButtonVisible}"></Button>
+            </StackPanel>
             <DataGrid Grid.Row="1" Grid.ColumnSpan="2" CanUserAddRows="False"  Grid.Column="0" Unloaded="DataGrid_Unloaded" ItemsSource="{Binding DisplayedBookings}" SelectedItem="{Binding SelectedBooking}" Margin="0,0,0,20" AutoGenerateColumns="False">
                 <DataGrid.Columns>
                     <DataGridTextColumn Binding="{Binding StartDayString}" Header="Start day" IsReadOnly="True" ></DataGridTextColumn>

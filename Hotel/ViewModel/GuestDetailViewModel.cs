@@ -15,6 +15,14 @@ namespace Hotel.ViewModel
         private Action AfterSubmitAction;
 
         #region Properties
+        private bool _IsSaveButtonEnabled = true;
+
+        public bool IsSaveButtonEnabled
+        {
+            get { return _IsSaveButtonEnabled; }
+            set { _IsSaveButtonEnabled = value; OnPropertyChanged(); }
+        }
+
         public Guest Guest { get; set; }
 
         public string FirstName
@@ -90,6 +98,11 @@ namespace Hotel.ViewModel
         {
             GuestCommand.Execute(Guest);
             AfterSubmitAction?.Invoke();
+            if (AfterSubmitAction != null)
+            {
+                IsSaveButtonEnabled = false;
+            }
+            AfterSubmitAction = null;
         }
 
         private void ClearAllFields()

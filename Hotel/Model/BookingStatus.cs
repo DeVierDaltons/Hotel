@@ -8,7 +8,6 @@ namespace Hotel.Model
 {
     public enum BookingStatus
     {
-        Available,
         Reserved,
         Cancelled,
         CheckedIn,
