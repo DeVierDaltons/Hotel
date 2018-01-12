@@ -70,18 +70,6 @@ namespace Hotel.ViewModel
             Booking.SetDates(SelectedDates);
             HotelManager.AddBooking(Booking);
             Booking = new Booking();
-            ClearAllFields();
-        }
-
-        private void ClearAllFields()
-        {
-            Guest = null;
-            Room = null;
-            Booking.BookingPeriod = new BookingPeriod() {
-                StartDate = DateTime.Today,
-                EndDate = DateTime.Today
-            };
-            SelectedDates = null;
         }
 
         public void OnPropertyChanged([CallerMemberName] string name = "")
