@@ -1,6 +1,7 @@
 ﻿using Hotel.ViewModel;
 using System.Windows;
 using System.Windows.Controls;
+using System.Windows.Input;
 
 namespace Hotel.View
 {
@@ -15,6 +16,7 @@ namespace Hotel.View
         {
             AddBookingViewModel viewModel = (AddBookingViewModel)DataContext;
             viewModel.SelectedDates = BookingRangeCalendar.SelectedDates;
+            Mouse.Capture(null);
         }
     }
 }

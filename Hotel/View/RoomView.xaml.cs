@@ -4,11 +4,11 @@ using System.Windows.Controls;
 namespace Hotel.View
 {
     /// <summary>
-    /// Interaction logic for ModifyBooking.xaml
+    /// Interaction logic for ModifyRoom.xaml
     /// </summary>
-    public partial class ModifyBookingView : UserControl
+    public partial class RoomView : UserControl
     {
-        public ModifyBookingView()
+        public RoomView()
         {
             InitializeComponent();
         }

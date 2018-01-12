@@ -12,24 +12,18 @@
         <vm:MainWindowViewModel/>
     </Window.DataContext>
     <Grid>
-        <TabControl x:Name="TabControl">
+        <TabControl x:Name="TabControl"><!--
             <TabItem Header="Add Guest" x:Name="AddGuestTab">
                 <view:GuestDetailView />
-            </TabItem>
+            </TabItem>-->
             <TabItem Header="Guest Explorer" x:Name="GuestExplorerTab">
                 <view:GuestsView />
             </TabItem>
-            <TabItem Header="Add Room" x:Name="AddRoomTab">
-                <view:AddRoomView />
+            <TabItem Header="Rooms" x:Name="RoomExplorerTab">
+                <view:RoomView />
             </TabItem>
-            <TabItem Header="Room Explorer" x:Name="RoomExplorerTab">
-                <view:ModifyRoomView />
-            </TabItem>
-            <TabItem Header="Add Booking" x:Name="AddBookingTab">
-                <view:AddBookingView />
-            </TabItem>
-            <TabItem Header="Booking Explorer" x:Name="BookingExplorerTab">
-                <view:ModifyBookingView />
+            <TabItem Header="Bookings" x:Name="BookingExplorerTab">
+                <view:BookingView />
             </TabItem>
         </TabControl>
     </Grid>
