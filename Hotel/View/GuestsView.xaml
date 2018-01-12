@@ -22,9 +22,10 @@
 
         <StackPanel Grid.Row="2" Margin="4" Orientation="Horizontal" HorizontalAlignment="Right">
             <Button Content="Add Guest" Click="OnAddGuestClicked" Margin="4,0"/>
-            <Button Content="Edit Selected Guest" Click="OnEditGuestClicked"  Margin="4,0"/>
+            <Button Content="Edit Selected Guest" IsEnabled="{Binding HasSelectedGuest, NotifyOnSourceUpdated=True}" Click="OnEditGuestClicked"  Margin="4,0"/>
+            <Button Content="View bookings" IsEnabled="{Binding HasSelectedGuest, NotifyOnSourceUpdated=True}" Click="Button_Click"  Margin="4,0"/>
         </StackPanel>
-        <DataGrid ItemsSource="{Binding DisplayedGuests, Mode=TwoWay}" Name="GuestsList" Grid.Row="1" AutoGenerateColumns="False" IsReadOnly="True" Margin="4" >
+        <DataGrid ItemsSource="{Binding DisplayedGuests, Mode=TwoWay}" SelectedItem="{Binding SelectedGuest, Mode=TwoWay}" Name="GuestsList" Grid.Row="1" AutoGenerateColumns="False" IsReadOnly="True" Margin="4" >
             <DataGrid.Columns>
                 <DataGridTextColumn Binding="{Binding FirstName}" Header="First name"/>
                 <DataGridTextColumn Binding="{Binding LastName}" Header="Last name"/>

@@ -30,5 +30,10 @@ namespace Hotel.View
         {
             (DataContext as GuestsViewModel).AddGuest(GuestDetail);
         }
+
+        private void Button_Click(object sender, RoutedEventArgs e)
+        {
+            (DataContext as GuestsViewModel).SwitchToBookingTab.Invoke();
+        }
     }
 }

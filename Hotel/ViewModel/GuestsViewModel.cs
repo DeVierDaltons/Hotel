@@ -36,6 +36,34 @@ namespace Hotel.ViewModel
             set { _guests = value; OnPropertyChanged(); }
         }
 
+        private Guest _SelectedGuest;
+
+        public Guest SelectedGuest
+        {
+            get { return _SelectedGuest; }
+            set { _SelectedGuest = value; OnPropertyChanged(); HasSelectedGuest = true; }
+        }
+
+        private bool _HasSelectedGuest;
+        public bool HasSelectedGuest
+        {
+            get { return _HasSelectedGuest; }
+            set { _HasSelectedGuest = value; OnPropertyChanged(); }
+        }
+
+        private Action _SwitchToBookingTab;
+        public Action SwitchToBookingTab
+        {
+            get { return _SwitchToBookingTab; }
+            set { _SwitchToBookingTab = value; }
+        }
+
+
+        public void ViewBookingsForGuest()
+        {
+
+        }
+
         public void EditGuest(object selectedItem, System.Windows.Controls.StackPanel f)
         {
             var item = selectedItem as Guest;
