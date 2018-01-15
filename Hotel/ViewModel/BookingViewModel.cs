@@ -45,7 +45,6 @@ namespace Hotel.ViewModel
         public BookingViewModel(ObservableCollection<Booking> bookings)
         {
             InitializeStatusFilterList();
-            
             Bookings = bookings;
             DisplayedBookings = new ObservableCollection<Booking>(bookings);
             foreach(Booking booking in Bookings)
@@ -73,7 +72,6 @@ namespace Hotel.ViewModel
         /// <param name="e"></param>
         private void Bookings_CollectionChanged(object sender, System.Collections.Specialized.NotifyCollectionChangedEventArgs e)
         {
-            
             if (e.NewItems.Count > 0) {
                 var newBooking = (e.NewItems[0] as Booking);
                 newBooking.PropertyChanged += InvalidateOnBookingStatusChanged;
@@ -102,7 +100,6 @@ namespace Hotel.ViewModel
 
         #region FilterProperties
         private Visibility _IsRemoveFilterButtonVisible;
-
         public Visibility IsRemoveFilterButtonVisible
         {
             get { return _IsRemoveFilterButtonVisible; }
@@ -110,7 +107,6 @@ namespace Hotel.ViewModel
         }
 
         private string _FilterString;
-
         public string FilteredGuestString
         {
             get { return _FilterString; }
@@ -130,7 +126,6 @@ namespace Hotel.ViewModel
         }
 
         private bool _ShowReserved = true;
-
         public bool ShowReservedFilter
         {
             get { return _ShowReserved; }
@@ -142,7 +137,6 @@ namespace Hotel.ViewModel
         }
 
         private bool _ShowCancelled = false;
-
         public bool ShowCancelledFilter
         {
             get { return _ShowCancelled; }
@@ -154,7 +148,6 @@ namespace Hotel.ViewModel
         }
 
         private bool _ShowCheckedIn = true;
-
         public bool ShowCheckedInFilter
         {
             get { return _ShowCheckedIn; }
@@ -166,7 +159,6 @@ namespace Hotel.ViewModel
         }
 
         private bool _ShowCheckedOut = false;
-
         public bool ShowCheckedOutFilter
         {
             get { return _ShowCheckedOut; }
@@ -211,8 +203,7 @@ namespace Hotel.ViewModel
 
         public void FilterDisplayedBookings()
         {
-           
-                DisplayedBookings = new ObservableCollection<Booking>();
+            DisplayedBookings = new ObservableCollection<Booking>();
             List<Booking> filteredBookings = Bookings.Where(x =>
             {
                 foreach (KeyValuePair<BookingStatus, Func<bool>> kvp in StatusFiltersList)
