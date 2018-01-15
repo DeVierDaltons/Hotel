@@ -36,10 +36,10 @@ namespace Hotel.ViewModel
             get { return HotelManager.Bookings; }
         }
 
-        public Guest Guest
+        public ICollection<Guest> Guests
         {
-            get { return Booking.Guest; }
-            set { Booking.Guest = value; OnPropertyChanged(); }
+            get { return Booking.Guests; }
+            set { Booking.Guests = value; OnPropertyChanged(); }
         }
 
         public ICollection<Room> Rooms
@@ -57,9 +57,24 @@ namespace Hotel.ViewModel
             AddBookingCommand = new AddBookingCommand(this);
         }
 
+        private bool GuestsValid()
+        {
+            return Booking.Guests != null && Booking.Guests.Count > 0;
+        }
+
+        private bool RoomsValid()
+        {
+            return Booking.Rooms != null && Booking.Rooms.Count > 0;
+        }
+
+        private bool DatesValid()
+        {
+            return SelectedDates != null && SelectedDates.IsValid();
+        }
+
         public bool ValidateInput()
         {
-            if( Booking.Guest == null || Booking.Rooms == null || Booking.Rooms.Count == 0 || SelectedDates == null || !SelectedDates.IsValid())
+            if( !GuestsValid() || !RoomsValid() || !DatesValid() )
             {
                 return false;
             }

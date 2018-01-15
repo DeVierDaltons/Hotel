@@ -28,7 +28,7 @@ namespace TestHotel
             AddBookingViewModel addBookingViewModel = new AddBookingViewModel(hotelManager)
             {
                 Rooms = hotelManager.Rooms.ToList(),
-                Guest = hotelManager.Guests[0],
+                Guests = hotelManager.Guests.ToList(),
                 SelectedDates = CreateSelectedDates()
             };
             return addBookingViewModel;
@@ -45,7 +45,7 @@ namespace TestHotel
             AddBookingViewModel vm = new AddBookingViewModel(null)
             {
                 Booking = null,
-                Guest = null,
+                Guests = null,
                 SelectedDates = null
             };
             Assert.IsFalse(new AddBookingCommand(vm).CanExecute(null));

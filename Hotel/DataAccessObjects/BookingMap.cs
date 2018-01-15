@@ -26,11 +26,14 @@ namespace Hotel.DataAccessObjects
 
             Property(x => x.BookingStatus);
 
-            ManyToOne(x => x.Guest, m => m.Column(c =>
+            Set(x => x.Guests, collectionMapping =>
             {
-                c.Name("guest_id");
-                c.NotNullable(true);
-            }));
+                collectionMapping.Table("GuestBookings");
+                collectionMapping.Cascade(Cascade.None);
+                collectionMapping.Key(k => k.Column("BookingID"));
+            },
+                map => map.ManyToMany(p => p.Column("GuestID"))
+            );
 
             Set(x => x.Rooms, collectionMapping =>
             {

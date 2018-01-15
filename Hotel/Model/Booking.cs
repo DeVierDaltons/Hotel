@@ -16,11 +16,11 @@ namespace Hotel.Model
 
         public virtual event PropertyChangedEventHandler PropertyChanged;
 
-        private Guest _guest;
-        public virtual Guest Guest
+        private ICollection<Guest> _guests;
+        public virtual ICollection<Guest> Guests
         {
-            get { return _guest; }
-            set { _guest = value; OnPropertyChanged(); }
+            get { return _guests; }
+            set { _guests = value; OnPropertyChanged(); }
         }
 
         private ICollection<Room> _rooms = new List<Room>();
@@ -67,7 +67,7 @@ namespace Hotel.Model
 
         public virtual string GuestName
         {
-            get { return Guest.ToString(); }
+            get { return Guests.ToString(); }
         }
 
         public virtual string RoomsDescription

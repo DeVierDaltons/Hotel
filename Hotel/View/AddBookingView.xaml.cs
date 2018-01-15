@@ -609,6 +609,20 @@ namespace Hotel.View
             viewModel.Rooms = SelectedRooms;
         }
 
+        private void SelectedGuests_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            AddBookingViewModel viewModel = (AddBookingViewModel)DataContext;
+            if( viewModel.Guests == null)
+            {
+                viewModel.Guests = new List<Guest>();
+            }
+            viewModel.Guests.Clear();
+            foreach(object guest in ((ListBox)sender).SelectedItems)
+            {
+                viewModel.Guests.Add((Guest)guest);
+            }
+        }
+
         private void SetGridStyle()
         {
             RoomDateGrid.ShowGridLines = false;
