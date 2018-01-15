@@ -7,6 +7,7 @@ using Hotel.Repository;
 using Hotel.DataAccessObjects;
 using System.Windows.Controls;
 using System;
+using System.Linq;
 
 namespace TestHotel
 {
@@ -26,7 +27,7 @@ namespace TestHotel
             var hotelManager = CreateTestHotelManager();
             AddBookingViewModel addBookingViewModel = new AddBookingViewModel(hotelManager)
             {
-                Room = hotelManager.Rooms[0],
+                Rooms = hotelManager.Rooms.ToList(),
                 Guest = hotelManager.Guests[0],
                 SelectedDates = CreateSelectedDates()
             };

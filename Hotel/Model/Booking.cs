@@ -23,11 +23,11 @@ namespace Hotel.Model
             set { _guest = value; OnPropertyChanged(); }
         }
 
-        private Room _room;
-        public virtual Room Room
+        private ICollection<Room> _rooms = new List<Room>();
+        public virtual ICollection<Room> Rooms
         {
-            get { return _room; }
-            set { _room = value; OnPropertyChanged(); }
+            get { return _rooms; }
+            set { _rooms = value; OnPropertyChanged(); }
         }
 
         private BookingPeriod _bookingPeriod;
@@ -70,9 +70,9 @@ namespace Hotel.Model
             get { return Guest.ToString(); }
         }
 
-        public virtual string RoomNumber
+        public virtual string RoomsDescription
         {
-            get { return Room.RoomNumber ?? "null"; }
+            get { return String.Join(", ", Rooms.ToList().ConvertAll(room => room.RoomNumber)); }
         }
 
         public virtual void SetDates(BookingPeriod selectedDates)

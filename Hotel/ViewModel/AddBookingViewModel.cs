@@ -8,6 +8,7 @@ using System.Windows.Controls;
 using System.Linq;
 using System.Collections.ObjectModel;
 using System.Collections.Generic;
+using System.Collections.Specialized;
 
 namespace Hotel.ViewModel
 {
@@ -20,17 +21,17 @@ namespace Hotel.ViewModel
         public ICommand AddBookingCommand { get; private set; }
         public Booking Booking { get; set; } = new Booking();
 
-        public ObservableCollection<Guest> Guests
+        public ObservableCollection<Guest> AllGuests
         {
             get { return HotelManager.Guests; }
         }
 
-        public ObservableCollection<Room> Rooms
+        public ObservableCollection<Room> AllRooms
         {
             get { return HotelManager.Rooms; }
         }
 
-        public ObservableCollection<Booking> Bookings
+        public ObservableCollection<Booking> AllBookings
         {
             get { return HotelManager.Bookings; }
         }
@@ -41,10 +42,10 @@ namespace Hotel.ViewModel
             set { Booking.Guest = value; OnPropertyChanged(); }
         }
 
-        public Room Room
+        public ICollection<Room> Rooms
         {
-            get { return Booking.Room; }
-            set { Booking.Room = value; OnPropertyChanged(); }
+            get { return Booking.Rooms; }
+            set { Booking.Rooms = value; OnPropertyChanged(); }
         }
 
         public BookingPeriod SelectedDates { get; set; }
@@ -58,11 +59,11 @@ namespace Hotel.ViewModel
 
         public bool ValidateInput()
         {
-            if( Booking.Guest == null || Booking.Room == null || SelectedDates == null || !SelectedDates.IsValid())
+            if( Booking.Guest == null || Booking.Rooms == null || Booking.Rooms.Count == 0 || SelectedDates == null || !SelectedDates.IsValid())
             {
                 return false;
             }
-            return Booking.Room.TimePeriodAvailable(SelectedDates);
+            return Booking.Rooms.All(room => room.TimePeriodAvailable(SelectedDates));
         }
 
         public void AddBooking()

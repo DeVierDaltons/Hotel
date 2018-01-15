@@ -31,11 +31,15 @@ namespace Hotel.DataAccessObjects
                 c.Name("guest_id");
                 c.NotNullable(true);
             }));
-            ManyToOne(x => x.Room, m => m.Column(c =>
+
+            Set(x => x.Rooms, collectionMapping =>
             {
-                c.Name("room_id");
-                c.NotNullable(true);
-            }));
+                collectionMapping.Table("RoomBookings");
+                collectionMapping.Cascade(Cascade.None);
+                collectionMapping.Key(k => k.Column("BookingID"));
+            },
+                map => map.ManyToMany(p => p.Column("RoomID"))
+            );
         }
     }
 }

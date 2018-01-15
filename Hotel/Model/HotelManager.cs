@@ -1,5 +1,6 @@
 ﻿using Hotel.DataAccessObjects;
 using Hotel.Repository;
+using NHibernate.Util;
 using System.Diagnostics;
 
 namespace Hotel.Model
@@ -35,8 +36,7 @@ namespace Hotel.Model
 
         private void AddBookingToRoom(Booking booking)
         {
-            Debug.Assert(Rooms.Contains(booking.Room));
-            booking.Room.Bookings.Add(booking);
+            booking.Rooms.ForEach(room => room.Bookings.Add(booking));
         }
 
         public void AddBooking(Booking booking)

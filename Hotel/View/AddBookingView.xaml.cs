@@ -14,6 +14,7 @@ using System.Linq;
 using System.Collections.Specialized;
 using System.Windows.Data;
 using System.Windows.Controls.Primitives;
+using NHibernate.Util;
 
 namespace Hotel.View
 {
@@ -110,17 +111,17 @@ namespace Hotel.View
 
         private async void UseDataContextLater()
         {
-            await Task.Run(() =>
+            await Task.Run((Action)(() =>
             {
                 Thread.Sleep(1000);
-                App.Current.Dispatcher.Invoke(() =>
+                App.Current.Dispatcher.Invoke((Action)(() =>
                 {
                     AddBookingViewModel viewModel = (AddBookingViewModel)DataContext;
                     SetGridStyle();
-                    FillDateGrid(viewModel.Rooms);
-                    ListenForBookingChanges(viewModel.Bookings);
-                });
-            });
+                    FillDateGrid((ObservableCollection<Room>)viewModel.AllRooms);
+                    ListenForBookingChanges(viewModel.AllBookings);
+                }));
+            }));
         }
 
         private void ListenForBookingChanges(ObservableCollection<Booking> bookings)
@@ -142,7 +143,7 @@ namespace Hotel.View
 
         private void RedrawAvailabilityForBooking(Booking booking)
         {
-            RedrawAvailabilityForRoom(booking.Room); // TODO; foreach Room, when Bookings have multiple rooms
+            booking.Rooms.ForEach(RedrawAvailabilityForRoom);
         }
 
         private void FillDateGrid(ObservableCollection<Room> rooms)
@@ -605,7 +606,7 @@ namespace Hotel.View
         {
             AddBookingViewModel viewModel = (AddBookingViewModel)DataContext;
             viewModel.SelectedDates = new BookingPeriod(SelectedRange.StartDate, SelectedRange.EndDate);
-            viewModel.Room = SelectedRooms.FirstOrDefault(); // TODO: Modify bookings to actually use all the rooms
+            viewModel.Rooms = SelectedRooms;
         }
 
         private void SetGridStyle()

@@ -8,7 +8,7 @@
     <DockPanel>
         <WrapPanel DockPanel.Dock="Bottom">
             <Label Content="Guest:"/>
-            <ComboBox Name="GuestDropdown" Width="80" SelectedItem="{Binding Guest}" ItemsSource="{Binding Guests}"/>
+            <ComboBox Name="GuestDropdown" Width="80" SelectedItem="{Binding Guest}" ItemsSource="{Binding AllGuests}"/>
             <Button Width="200" Height="50" Command="{Binding AddBookingCommand}" Content="Save"></Button>
         </WrapPanel>
         <Grid Name="RoomDateGrid">
