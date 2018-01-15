@@ -26,7 +26,7 @@ namespace Hotel.View
         }
 
         private const int DateBlockSize = 40;
-        private const int DatesToDisplay = 35;
+        private const int DatesToDisplay = 29;
         private const int DateShiftButtonSize = 3;
 
         private const int HeaderRows = 3; // january, 1, Tue
