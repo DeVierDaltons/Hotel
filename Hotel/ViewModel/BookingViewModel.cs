@@ -29,12 +29,12 @@ namespace Hotel.ViewModel
         }
         private ObservableCollection<Booking> Bookings;
 
-        private ObservableCollection<Booking> _DisplayedBookings;
+        private ObservableCollection<Booking> _displayedBookings = new ObservableCollection<Booking>();
 
         public ObservableCollection<Booking> DisplayedBookings
         {
-            get { return _DisplayedBookings; }
-            set { _DisplayedBookings = value; OnPropertyChanged(); }
+            get { return _displayedBookings; }
+            set { _displayedBookings = value; OnPropertyChanged(); }
         }
 
         public event PropertyChangedEventHandler PropertyChanged;
@@ -46,7 +46,6 @@ namespace Hotel.ViewModel
         {
             InitializeStatusFilterList();
             Bookings = bookings;
-            DisplayedBookings = new ObservableCollection<Booking>(bookings);
             foreach(Booking booking in Bookings)
             {
                 booking.PropertyChanged += InvalidateOnBookingStatusChanged;
