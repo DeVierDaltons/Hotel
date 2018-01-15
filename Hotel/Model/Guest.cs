@@ -28,7 +28,7 @@ namespace Hotel.Model
             get { return _lastName; }
             set { _lastName = value; OnPropertyChanged(); }
         }
-
+        
         private string _phoneNumber;
         /// <summary>
         /// Storing phone number as string to perserve preceding zeros
@@ -80,20 +80,7 @@ namespace Hotel.Model
             get { return _ICEPhoneNumber; }
             set { _ICEPhoneNumber = value; OnPropertyChanged(); }
         }
-
-        public virtual void CopyFrom(Guest newGuest)
-        {
-            FirstName = newGuest._firstName;
-            LastName = newGuest._lastName;
-            PhoneNumber = newGuest._phoneNumber;
-            EmailAdress = newGuest._emailAdress;
-            Address = newGuest.Address;
-            PostalCode = newGuest.PostalCode;
-            City = newGuest.City;
-            Country = newGuest.Country;
-            ICEPhoneNumber = newGuest._ICEPhoneNumber;
-        }
-
+        
         public virtual void OnPropertyChanged([CallerMemberName] string name = "")
         {
             PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(name));
@@ -102,7 +89,7 @@ namespace Hotel.Model
 
         public override string ToString()
         {
-            return FirstName;
+            return FirstName + " " + LastName;
         }
     }
 }

@@ -1,4 +1,5 @@
 ﻿using Hotel.Command;
+using Hotel.Extensions;
 using Hotel.Model;
 using System;
 using System.ComponentModel;
@@ -14,7 +15,15 @@ namespace Hotel.ViewModel
         private Action AfterSubmitAction;
 
         #region Properties
-        public Guest Guest { get; set; } = new Guest();
+        private bool _IsSaveButtonEnabled = true;
+
+        public bool IsSaveButtonEnabled
+        {
+            get { return _IsSaveButtonEnabled; }
+            set { _IsSaveButtonEnabled = value; OnPropertyChanged(); }
+        }
+
+        public Guest Guest { get; set; }
 
         public string FirstName
         {
@@ -40,7 +49,7 @@ namespace Hotel.ViewModel
             set { Guest.EmailAdress = value; OnPropertyChanged(); }
         }
 
-        public string StreetAddress
+        public string Address
         {
             get { return Guest.Address; }
             set { Guest.Address = value; OnPropertyChanged(); }
@@ -78,10 +87,8 @@ namespace Hotel.ViewModel
 
         public GuestDetailViewModel(ICommand guestCommand, Guest currentGuestData, Action afterSubmitAction)
         {
-            if (currentGuestData != null)
-            {
-                Guest.CopyFrom(currentGuestData);
-            }
+            Guest = new Guest();
+            Guest.CopyDelta(currentGuestData);
             GuestCommand = guestCommand;
             SubmitCommand = new RelayCommand(OnSubmitClicked, (_) => ValidateInput());
             AfterSubmitAction = afterSubmitAction;
@@ -90,9 +97,12 @@ namespace Hotel.ViewModel
         private void OnSubmitClicked(object _)
         {
             GuestCommand.Execute(Guest);
-            Guest = new Guest();
-            ClearAllFields();
-            AfterSubmitAction();
+            AfterSubmitAction?.Invoke();
+            if (AfterSubmitAction != null)
+            {
+                IsSaveButtonEnabled = false;
+            }
+            AfterSubmitAction = null;
         }
 
         private void ClearAllFields()
@@ -101,7 +111,7 @@ namespace Hotel.ViewModel
             LastName = string.Empty;
             PhoneNumber = string.Empty;
             EmailAdress = string.Empty;
-            StreetAddress = string.Empty;
+            Address = string.Empty;
             PostalCode = string.Empty;
             City = string.Empty;
             Country = string.Empty;

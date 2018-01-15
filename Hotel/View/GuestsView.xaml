@@ -3,33 +3,43 @@
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-        mc:Ignorable="d" d:DesignWidth="326.841" d:DesignHeight="280.631"
-        >
+        mc:Ignorable="d" d:DesignWidth="700" 
+        Loaded="UserControl_Loaded">
     <Grid>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="4*"/>
+            <ColumnDefinition Width="1*"/>
+        </Grid.ColumnDefinitions>
         <Grid.RowDefinitions>
-            <RowDefinition Height="6*"/>
+            <RowDefinition Height="1*"/>
+            <RowDefinition Height="8*"/>
             <RowDefinition Height="1*"/>
         </Grid.RowDefinitions>
-        <StackPanel Grid.Row="1">
-            <Button Content="Add Guest" Click="OnAddGuestClicked"/>
-            <Button Content="Edit Selected Guest" Click="OnEditGuestClicked"/>
+        <StackPanel Grid.Row="0" Orientation="Horizontal" Margin="4" >
+            <TextBlock Grid.Row="0" Text="Filter:" VerticalAlignment="Center"/>
+            <TextBox  Text="{Binding FilterGuestString, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" VerticalAlignment="Center" Width="80" MinWidth="80" />
         </StackPanel>
-        <ListBox ItemsSource="{Binding Guests, Mode=TwoWay}" Name="GuestsList">
-            <ListBox.ItemTemplate>
-                <DataTemplate>
-                    <StackPanel HorizontalAlignment="Left" Orientation="Horizontal">
-                        <TextBlock TextWrapping="Wrap" Text="Name:" FontWeight="Bold" Margin="2"/>
-                        <TextBlock TextWrapping="Wrap" Text="{Binding FirstName}" Margin="2,2,0,2"/>
-                        <TextBlock TextWrapping="Wrap" Text="{Binding LastName}" Margin="2"/>
-                        <TextBlock TextWrapping="Wrap" Text="@: " FontWeight="Bold" Margin="2"/>
-                        <TextBlock TextWrapping="Wrap" Text="{Binding EmailAdress}" Margin="2"/>
-                        <TextBlock TextWrapping="Wrap" Text="Phone:" Margin="2" FontWeight="Bold"  />
-                        <TextBlock TextWrapping="Wrap" Text="{Binding PhoneNumber}" Margin="2" />
-                        <TextBlock TextWrapping="Wrap" Text="Country:" Margin="2" FontWeight="Bold"  />
-                        <TextBlock TextWrapping="Wrap" Text="{Binding Country}" Margin="2" />
-                    </StackPanel>
-                </DataTemplate>
-            </ListBox.ItemTemplate>
-        </ListBox>
+
+        <StackPanel Grid.Row="2" Margin="4" Orientation="Horizontal" HorizontalAlignment="Right">
+            <Button Content="Add Guest" Click="OnAddGuestClicked" Margin="4,0"/>
+            <Button Content="Edit Selected Guest" IsEnabled="{Binding HasSelectedGuest, NotifyOnSourceUpdated=True}" Click="OnEditGuestClicked"  Margin="4,0"/>
+            <Button Content="View bookings" IsEnabled="{Binding HasSelectedGuest, NotifyOnSourceUpdated=True}" Click="Button_Click"  Margin="4,0"/>
+        </StackPanel>
+        <DataGrid ItemsSource="{Binding DisplayedGuests, Mode=TwoWay}" SelectedItem="{Binding SelectedGuest, Mode=TwoWay}" Name="GuestsList" Grid.Row="1" AutoGenerateColumns="False" IsReadOnly="True" Margin="4" >
+            <DataGrid.Columns>
+                <DataGridTextColumn Binding="{Binding FirstName}" Header="First name"/>
+                <DataGridTextColumn Binding="{Binding LastName}" Header="Last name"/>
+                <DataGridTextColumn Binding="{Binding EmailAdress}" Header="Email" MinWidth="40"/>
+                <DataGridTextColumn Binding="{Binding PhoneNumber}" Header="Phone"/>
+                <DataGridTextColumn Binding="{Binding City}" Header="City" />
+                <DataGridTextColumn Binding="{Binding Address}" Header="Address" />
+                <DataGridTextColumn Binding="{Binding PostalCode}" Header="Postal Code" />
+                <DataGridTextColumn Binding="{Binding Country}" Header="Country"/>
+                <DataGridTextColumn Binding="{Binding ICEPhoneNumber}" Header="ICE Phone number"/>
+            </DataGrid.Columns>
+        </DataGrid>
+        <GroupBox Grid.RowSpan="3" Grid.Column="1" Margin="4,4,0,0"  Header="Guest" Height="Auto" VerticalAlignment="Top">
+            <StackPanel Name="GuestDetail"/>
+        </GroupBox>
     </Grid>
 </UserControl>
