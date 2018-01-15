@@ -82,18 +82,12 @@ namespace Hotel.ViewModel
                         return;
                     }
                 }
-                if (!DisplayedBookings.Contains(newBooking))
-                {
-                    DisplayedBookings.Add(newBooking);
-                }
+                AddBookingToDisplayedIfNew(newBooking);
             }
             else if (e.OldItems.Count > 0)
             {
                 var oldBooking = (e.OldItems[0] as Booking);
-                if (DisplayedBookings.Contains(oldBooking))
-                {
-                    DisplayedBookings.Remove(oldBooking);
-                }
+                RemoveBookingFromDisplayedIfPossible(oldBooking);
             }
         }
 
@@ -215,19 +209,29 @@ namespace Hotel.ViewModel
                 }
                 return false;
             }).ToList();
-            filteredBookings.ForEach(x => {
-                if (!DisplayedBookings.Contains(x))
-                {
-                    DisplayedBookings.Add(x);
-                }
+            filteredBookings.ForEach(x =>
+            {
+                AddBookingToDisplayedIfNew(x);
             });
             if (filterGuest != null)
             {
-               
                 DisplayedBookings = new ObservableCollection<Booking>(DisplayedBookings.Where(x =>
                    x.Guest == filterGuest
                 ));
             }
+        }
+
+        private void AddBookingToDisplayedIfNew(Booking x)
+        {
+            if (!DisplayedBookings.Contains(x))
+            {
+                DisplayedBookings.Add(x);
+            }
+        }
+
+        private void RemoveBookingFromDisplayedIfPossible(Booking x)
+        {
+            DisplayedBookings.Remove(x); // ignore result that says whether item was removed
         }
 
         public void FilterDisplayedBookingsByGuest(Guest g)
