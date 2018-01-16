@@ -88,7 +88,7 @@ namespace Hotel.ViewModel
         public GuestDetailViewModel(ICommand guestCommand, Guest currentGuestData, Action afterSubmitAction)
         {
             Guest = new Guest();
-            Guest.CopyDelta(currentGuestData);
+            Guest.CopyDeltaProperties(currentGuestData);
             GuestCommand = guestCommand;
             SubmitCommand = new RelayCommand(OnSubmitClicked, (_) => ValidateInput());
             AfterSubmitAction = afterSubmitAction;
