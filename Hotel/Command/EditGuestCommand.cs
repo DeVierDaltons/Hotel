@@ -24,7 +24,7 @@ namespace Hotel.ViewModel
 
         public void Execute(object newGuestData)
         {
-            selectedGuest.CopyDelta(newGuestData as Guest);
+            selectedGuest.CopyDeltaProperties(newGuestData as Guest);
         }
     }
 }
