@@ -3,6 +3,7 @@
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:view="clr-namespace:Hotel.View"
         mc:Ignorable="d" d:DesignWidth="700" 
         Loaded="UserControl_Loaded">
     <Grid>
@@ -39,7 +40,9 @@
             </DataGrid.Columns>
         </DataGrid>
         <GroupBox Grid.RowSpan="3" Grid.Column="1" Margin="4,4,0,0"  Header="Guest" Height="Auto" VerticalAlignment="Top">
-            <StackPanel Name="GuestDetail"/>
+            <StackPanel>
+                <view:GuestDetailView DataContext="{Binding CurrentGuest}"/>
+            </StackPanel>
         </GroupBox>
     </Grid>
 </UserControl>
