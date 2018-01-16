@@ -16,17 +16,17 @@ namespace Hotel.View
 
         private void OnEditGuestClicked(object sender, RoutedEventArgs e)
         {
-            (DataContext as GuestsViewModel).EditGuest(GuestsList.SelectedItem);
+            (DataContext as GuestsViewModel).StartEditingGuest(GuestsList.SelectedItem);
         }
 
         private void OnAddGuestClicked(object sender, RoutedEventArgs e)
         {
-            (DataContext as GuestsViewModel).AddGuest();
+            (DataContext as GuestsViewModel).StartAddingGuest();
         }
 
         private void UserControl_Loaded(object sender, RoutedEventArgs e)
         {
-            (DataContext as GuestsViewModel).AddGuest();
+            (DataContext as GuestsViewModel).StartAddingGuest();
         }
 
         private void Button_Click(object sender, RoutedEventArgs e)

@@ -73,27 +73,20 @@ namespace Hotel.ViewModel
         {
         }
 
-        public void EditGuest(object selectedItem)
+        public void StartEditingGuest(object selectedItem)
         {
             var guest = selectedItem as Guest;
-            if (guest == null)
-            {
-                guest = new Guest();
-                CurrentGuest = new GuestDetailViewModel(new EditGuestCommand(guest), guest, () =>
-                {
-                    Guests.Add(guest);
-                    AddGuest();
-                });
-            }
-            else
-            {
-                CurrentGuest = new GuestDetailViewModel(new EditGuestCommand(guest), guest, null);
-            }
+            CurrentGuest = new GuestDetailViewModel(new EditGuestCommand(guest), guest, null);
         }
 
-        public void AddGuest()
+        public void StartAddingGuest()
         {
-            EditGuest(null);
+            var guest = new Guest();
+            CurrentGuest = new GuestDetailViewModel(new EditGuestCommand(guest), guest, () =>
+            {
+                Guests.Add(guest);
+                StartAddingGuest();
+            });
         }
 
         public void FilterGuests()
