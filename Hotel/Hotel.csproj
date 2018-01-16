@@ -80,7 +80,7 @@
     <Compile Include="Command\AddBookingCommand.cs" />
     <Compile Include="Command\AddRoomCommand.cs" />
     <Compile Include="DataAccessObjects\NHibernateRepository.cs" />
-    <Compile Include="DpiDecorator.cs" />
+    <Compile Include="View\DpiDecorator.cs" />
     <Compile Include="Extensions\ObjectExtension.cs" />
     <Compile Include="Model\BookingPeriod.cs" />
     <Compile Include="DataAccessObjects\BookingMap.cs" />
