@@ -37,22 +37,22 @@
                 <RowDefinition Height="10*"></RowDefinition>
             </Grid.RowDefinitions>
             <GroupBox Header="Status filter">
-                <Grid Grid.Row="0">
-                <Grid.ColumnDefinitions>
-                    <ColumnDefinition Width="1*"></ColumnDefinition>
-                    <ColumnDefinition Width="1*"></ColumnDefinition>
-                    <ColumnDefinition Width="1*"></ColumnDefinition>
-                    </Grid.ColumnDefinitions>
+                <Grid>
                     <Grid.RowDefinitions>
-                        <RowDefinition Height="2*"></RowDefinition>
-                        <RowDefinition Height="4*"></RowDefinition>
-                        <RowDefinition Height="4*"></RowDefinition>
+                        <RowDefinition Height="*"></RowDefinition>
+                        <RowDefinition Height="*"></RowDefinition>
+                        <RowDefinition Height="*"></RowDefinition>
+                        <RowDefinition Height="*"></RowDefinition>
+                        <RowDefinition Height="*"></RowDefinition>
                     </Grid.RowDefinitions>
-                    <CheckBox Grid.Row="1" Grid.Column="0" Content="Reserved" IsChecked="{Binding ShowReservedFilter, Mode=TwoWay}"></CheckBox>
-                    <CheckBox Grid.Row="1" Grid.Column="1" Content="Cancelled" IsChecked="{Binding ShowCancelledFilter, Mode=TwoWay}"></CheckBox>
-                    <CheckBox Grid.Row="1" Grid.Column="2" Content="No show" IsChecked="{Binding ShowNoShowFilter, Mode=TwoWay}"></CheckBox>
-                    <CheckBox Grid.Row="2" Grid.Column="0" Content="Checked in"  IsChecked="{Binding ShowCheckedInFilter, Mode=TwoWay}"></CheckBox>
-                    <CheckBox Grid.Row="2" Grid.Column="1" Content="Checked out" IsChecked="{Binding ShowCheckedOutFilter, Mode=TwoWay}"></CheckBox>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="*"></ColumnDefinition>
+                    </Grid.ColumnDefinitions>
+                    <CheckBox Grid.Column="0" Grid.Row="0" Content="Reserved" IsChecked="{Binding ShowReservedFilter, Mode=TwoWay}"></CheckBox>
+                    <CheckBox Grid.Column="0" Grid.Row="1" Content="Cancelled" IsChecked="{Binding ShowCancelledFilter, Mode=TwoWay}"></CheckBox>
+                    <CheckBox Grid.Column="0" Grid.Row="2" Content="No show" IsChecked="{Binding ShowNoShowFilter, Mode=TwoWay}"></CheckBox>
+                    <CheckBox Grid.Column="0" Grid.Row="3" Content="Checked in"  IsChecked="{Binding ShowCheckedInFilter, Mode=TwoWay}"></CheckBox>
+                    <CheckBox Grid.Column="0" Grid.Row="4" Content="Checked out" IsChecked="{Binding ShowCheckedOutFilter, Mode=TwoWay}"></CheckBox>
                 </Grid>
             </GroupBox>
             <StackPanel Grid.Row="0" Grid.Column="2" Orientation="Horizontal" HorizontalAlignment="Left" VerticalAlignment="Bottom">
