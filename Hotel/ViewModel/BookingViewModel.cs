@@ -52,6 +52,7 @@ namespace Hotel.ViewModel
                 booking.PropertyChanged += InvalidateOnBookingStatusChanged;
             }
             bookings.CollectionChanged += Bookings_CollectionChanged;
+            FilterDisplayedBookings();
         }
 
         private void InitializeStatusFilterList()
