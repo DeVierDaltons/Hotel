@@ -280,10 +280,8 @@ namespace Hotel.View
                     Canvas SelectionElement = new Canvas();
                     SelectionElement.Background = Brushes.Orange;
                     SelectionElement.Margin = new Thickness(leftMargin, 20, rightMargin, 10);
-                    Grid.SetRow(SelectionElement, row);
-                    Grid.SetColumn(SelectionElement, startColumn);
                     Grid.SetColumnSpan(SelectionElement, columnSpan);
-                    RoomDateGrid.Children.Add(SelectionElement);
+                    AddToGrid(startColumn, row, SelectionElement);
                     SelectionElements.Add(SelectionElement);
                 }
             }
@@ -436,10 +434,8 @@ namespace Hotel.View
                     ++year;
                 }
             }
-            Grid.SetColumn(monthsPanel, dateStartColumn + DateShiftButtonSize);
-            Grid.SetRow(monthsPanel, monthRow);
             Grid.SetColumnSpan(monthsPanel, GetMonthLabelsSize() - DateShiftButtonSize);
-            RoomDateGrid.Children.Add(monthsPanel);
+            AddToGrid(dateStartColumn + DateShiftButtonSize, monthRow, monthsPanel);
             DateDependentElements.Add(monthsPanel);
         }
 
@@ -512,10 +508,8 @@ namespace Hotel.View
         {
             Canvas backgroundClicker = new Canvas();
             backgroundClicker.Background = Brushes.Transparent;
-            Grid.SetColumn(backgroundClicker, column);
-            Grid.SetRow(backgroundClicker, startRow);
             Grid.SetRowSpan(backgroundClicker, endRow - startRow + 1);
-            RoomDateGrid.Children.Add(backgroundClicker);
+            AddToGrid(column, startRow, backgroundClicker);
             backgroundClicker.MouseLeftButtonDown += (object sender, MouseButtonEventArgs e) =>
             {
                 MouseDownOnDate(date);
@@ -767,9 +761,7 @@ namespace Hotel.View
             canvas.Margin = new Thickness(0d);
             canvas.VerticalAlignment = VerticalAlignment.Center;
             canvas.HorizontalAlignment = HorizontalAlignment.Center;
-            Grid.SetColumn(canvas, column);
-            Grid.SetRow(canvas, row);
-            RoomDateGrid.Children.Add(canvas);
+            AddToGrid(column, row, canvas);
             return canvas;
         }
 
@@ -779,10 +771,15 @@ namespace Hotel.View
             checkbox.IsChecked = enabled;
             checkbox.VerticalAlignment = VerticalAlignment.Center;
             checkbox.HorizontalAlignment = HorizontalAlignment.Center;
-            Grid.SetColumn(checkbox, column);
-            Grid.SetRow(checkbox, row);
-            RoomDateGrid.Children.Add(checkbox);
+            AddToGrid(column, row, checkbox);
             return checkbox;
+        }
+
+        private void AddToGrid(int column, int row, UIElement element)
+        {
+            Grid.SetColumn(element, column);
+            Grid.SetRow(element, row);
+            RoomDateGrid.Children.Add(element);
         }
 
         private Button CreateButton(string text, int column, int row, int columnSpan, Action onClickAction)
@@ -799,10 +796,8 @@ namespace Hotel.View
             newButton.FontSize = 14;
             newButton.VerticalAlignment = VerticalAlignment.Center;
             newButton.HorizontalAlignment = HorizontalAlignment.Center;
-            Grid.SetColumn(newButton, column);
-            Grid.SetRow(newButton, row);
             Grid.SetColumnSpan(newButton, columnSpan);
-            RoomDateGrid.Children.Add(newButton);
+            AddToGrid(column, row, newButton);
             return newButton;
         }
 
@@ -815,9 +810,7 @@ namespace Hotel.View
             newBlock.Foreground = new SolidColorBrush(Colors.Black);
             newBlock.VerticalAlignment = VerticalAlignment.Center;
             newBlock.HorizontalAlignment = HorizontalAlignment.Center;
-            Grid.SetColumn(newBlock, column);
-            Grid.SetRow(newBlock, row);
-            RoomDateGrid.Children.Add(newBlock);
+            AddToGrid(column, row, newBlock);
             return newBlock;
         }
         #endregion
