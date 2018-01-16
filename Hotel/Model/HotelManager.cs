@@ -49,10 +49,5 @@ namespace Hotel.Model
         {
             Rooms.Add(room);
         }
-
-        public void AddGuest(Guest guest)
-        {
-            Guests.Add(guest);
-        }
     }
 }

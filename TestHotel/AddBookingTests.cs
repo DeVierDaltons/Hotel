@@ -66,7 +66,7 @@ namespace TestHotel
             IRepository<Booking> bookingsRepo = new TestRepository<Booking>();
             var hotelManager = new HotelManager(guestsRepo, roomsRepo, bookingsRepo);
             hotelManager.AddRoom(new Room());
-            hotelManager.AddGuest(new Guest());
+            hotelManager.Guests.Add(new Guest());
             return hotelManager;
         }
     }
