@@ -93,12 +93,12 @@ namespace Hotel.ViewModel
             set { _IsRemoveFilterButtonVisible = value; OnPropertyChanged(); }
         }
 
-        private string _FilterString;
+        private string _filterString;
         public string FilteredGuestString
         {
-            get { return _FilterString; }
+            get { return _filterString; }
             set {
-                _FilterString = value;
+                _filterString = value;
                 if(value == "")
                 {
                     IsRemoveFilterButtonVisible = Visibility.Hidden;
