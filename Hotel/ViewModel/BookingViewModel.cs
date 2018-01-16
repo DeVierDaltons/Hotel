@@ -3,16 +3,10 @@ using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Windows.Controls;
 using Hotel.View;
 using System.Windows;
-using System.Windows.Media;
 using System.ComponentModel;
 using System.Runtime.CompilerServices;
-using System.Windows.Input;
-using Hotel.Extensions;
 using NHibernate.Util;
 
 namespace Hotel.ViewModel
