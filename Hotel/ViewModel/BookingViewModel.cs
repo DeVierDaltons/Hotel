@@ -46,6 +46,7 @@ namespace Hotel.ViewModel
             }
             bookings.CollectionChanged += Bookings_CollectionChanged;
             FilterDisplayedBookings();
+            IsRemoveFilterButtonVisible = Visibility.Hidden;
         }
 
         private void InitializeStatusFilterList()
