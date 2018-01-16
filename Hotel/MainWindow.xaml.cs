@@ -24,9 +24,6 @@ namespace Hotel
             GuestsViewModel guestsViewModel = new GuestsViewModel(HotelManager.Guests);
             guestsViewModel.SwitchToBookingTab = SwitchToBookingTab;
             GuestExplorerTab.DataContext = guestsViewModel;
-            
-
-
             SetupRoomTab();
             SetupBookingTab();
         }

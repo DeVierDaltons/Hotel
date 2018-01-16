@@ -49,7 +49,7 @@
                         <RowDefinition Height="4*"></RowDefinition>
                     </Grid.RowDefinitions>
                     <CheckBox Grid.Row="1" Grid.Column="0" Content="Reserved" IsChecked="{Binding ShowReservedFilter, Mode=TwoWay}"></CheckBox>
-                    <CheckBox Grid.Row="1" Grid.Column="1" Content="Cacelled" IsChecked="{Binding ShowCancelledFilter, Mode=TwoWay}"></CheckBox>
+                    <CheckBox Grid.Row="1" Grid.Column="1" Content="Cancelled" IsChecked="{Binding ShowCancelledFilter, Mode=TwoWay}"></CheckBox>
                     <CheckBox Grid.Row="1" Grid.Column="2" Content="No show" IsChecked="{Binding ShowNoShowFilter, Mode=TwoWay}"></CheckBox>
                     <CheckBox Grid.Row="2" Grid.Column="0" Content="Checked in"  IsChecked="{Binding ShowCheckedInFilter, Mode=TwoWay}"></CheckBox>
                     <CheckBox Grid.Row="2" Grid.Column="1" Content="Checked out" IsChecked="{Binding ShowCheckedOutFilter, Mode=TwoWay}"></CheckBox>
