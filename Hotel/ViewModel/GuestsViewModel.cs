@@ -7,6 +7,7 @@ using System.Linq;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Windows.Controls;
+using Hotel.View;
 
 namespace Hotel.ViewModel
 {
@@ -72,12 +73,12 @@ namespace Hotel.ViewModel
         public void EditGuest(object selectedItem, StackPanel stackpanel)
         {
             var guest = selectedItem as Guest;
-            var GuestDetailView = new View.GuestDetailView();
+            var guestEditPanel = new GuestDetailView();
 
             if (guest == null)
             {
                 guest = new Guest();
-                GuestDetailView.DataContext = new GuestDetailViewModel(new EditGuestCommand(guest), guest, () =>
+                guestEditPanel.DataContext = new GuestDetailViewModel(new EditGuestCommand(guest), guest, () =>
                 {
                     Guests.Add(guest);
                     AddGuest(stackpanel);
@@ -85,11 +86,11 @@ namespace Hotel.ViewModel
             }
             else
             {
-                GuestDetailView.DataContext = new GuestDetailViewModel(new EditGuestCommand(guest), guest, null);
+                guestEditPanel.DataContext = new GuestDetailViewModel(new EditGuestCommand(guest), guest, null);
             }
            
             stackpanel.Children.Clear();
-            stackpanel.Children.Add(GuestDetailView);
+            stackpanel.Children.Add(guestEditPanel);
         }
 
         public void AddGuest(StackPanel stackpanel)
