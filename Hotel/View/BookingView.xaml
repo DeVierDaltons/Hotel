@@ -3,7 +3,6 @@
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-        xmlns:local="clr-namespace:Hotel.ViewModel"
         xmlns:core="clr-namespace:System;assembly=mscorlib"
         xmlns:models="clr-namespace:Hotel.Model"
         mc:Ignorable="d"
@@ -17,9 +16,17 @@
     </UserControl.Resources>
     <Grid>
         <Grid.ColumnDefinitions>
-            <ColumnDefinition Width="8*"></ColumnDefinition>
-            <ColumnDefinition Width="2*"></ColumnDefinition>
+            <ColumnDefinition Width="390"></ColumnDefinition>
+            <ColumnDefinition Width="auto"></ColumnDefinition>
         </Grid.ColumnDefinitions>
+        <GridSplitter Grid.Column="1" 
+                      Grid.Row="0"
+                      Grid.RowSpan="1" 
+                      HorizontalAlignment="Left" 
+                      VerticalAlignment="Stretch"
+                      Background="Black" 
+                      ShowsPreview="true"
+                      Width="5"/>
         <Grid Grid.Column="0">
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="3*"></ColumnDefinition>
@@ -29,7 +36,6 @@
                 <RowDefinition Height="1*"></RowDefinition>
                 <RowDefinition Height="10*"></RowDefinition>
             </Grid.RowDefinitions>
-
             <GroupBox Header="Status filter">
                 <Grid Grid.Row="0">
                 <Grid.ColumnDefinitions>
@@ -50,7 +56,6 @@
                 </Grid>
             </GroupBox>
             <StackPanel Grid.Row="0" Grid.Column="2" Orientation="Horizontal" HorizontalAlignment="Left" VerticalAlignment="Bottom">
-
                 <Label  Content="Filtered by:" Visibility="{Binding IsRemoveFilterButtonVisible}" VerticalAlignment="Center" HorizontalAlignment="Left"></Label>
                 <Label  Content="{Binding FilteredGuestString}" VerticalAlignment="Center" HorizontalAlignment="Left"></Label>
                 <Button Content="Remove filter" VerticalAlignment="Center" HorizontalAlignment="Center" Click="Button_Click" Visibility="{Binding IsRemoveFilterButtonVisible}"></Button>
@@ -60,7 +65,7 @@
                     <DataGridTextColumn Binding="{Binding StartDayString}" Header="Start day" IsReadOnly="True" ></DataGridTextColumn>
                     <DataGridTextColumn Binding="{Binding EndDayString}" Header="End day" IsReadOnly="True" ></DataGridTextColumn>
                     <DataGridTextColumn Binding="{Binding GuestName}" Header="Guest name" IsReadOnly="True" ></DataGridTextColumn>
-                    <DataGridTextColumn Binding="{Binding RoomNumber}" Header="Room number" IsReadOnly="True" ></DataGridTextColumn>
+                    <DataGridTextColumn Binding="{Binding RoomsDescription}" Header="Room number" IsReadOnly="True" ></DataGridTextColumn>
                     <DataGridTemplateColumn Header="Status">
                         <DataGridTemplateColumn.CellTemplate>
                             <DataTemplate>

@@ -56,7 +56,7 @@ namespace Hotel.ViewModel
 
         public bool ValidateInput()
         {
-            return !string.IsNullOrEmpty(Room.RoomNumber);
+            return !string.IsNullOrEmpty(Room.RoomNumber) && Beds >= 0;
         }
 
         public void AddRoom()

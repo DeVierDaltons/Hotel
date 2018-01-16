@@ -235,7 +235,7 @@ namespace Hotel.ViewModel
             {
                
                 DisplayedBookings = new ObservableCollection<Booking>(DisplayedBookings.Where(x =>
-                   x.Guest == filterGuest
+                   x.Guests.Contains(filterGuest)
                 ));
             }
         }

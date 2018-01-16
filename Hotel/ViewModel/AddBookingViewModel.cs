@@ -7,6 +7,8 @@ using System.Windows.Input;
 using System.Windows.Controls;
 using System.Linq;
 using System.Collections.ObjectModel;
+using System.Collections.Generic;
+using System.Collections.Specialized;
 
 namespace Hotel.ViewModel
 {
@@ -19,29 +21,34 @@ namespace Hotel.ViewModel
         public ICommand AddBookingCommand { get; private set; }
         public Booking Booking { get; set; } = new Booking();
 
-        public ObservableCollection<Guest> Guests
+        public ObservableCollection<Guest> AllGuests
         {
             get { return HotelManager.Guests; }
         }
 
-        public ObservableCollection<Room> Rooms
+        public ObservableCollection<Room> AllRooms
         {
             get { return HotelManager.Rooms; }
         }
 
-        public Guest Guest
+        public ObservableCollection<Booking> AllBookings
         {
-            get { return Booking.Guest; }
-            set { Booking.Guest = value; OnPropertyChanged(); }
+            get { return HotelManager.Bookings; }
         }
 
-        public Room Room
+        public ICollection<Guest> Guests
         {
-            get { return Booking.Room; }
-            set { Booking.Room = value; OnPropertyChanged(); }
+            get { return Booking.Guests; }
+            set { Booking.Guests = value; OnPropertyChanged(); }
         }
 
-        public SelectedDatesCollection SelectedDates { get; set; }
+        public ICollection<Room> Rooms
+        {
+            get { return Booking.Rooms; }
+            set { Booking.Rooms = value; OnPropertyChanged(); }
+        }
+
+        public BookingPeriod SelectedDates { get; set; }
         #endregion
 
         public AddBookingViewModel(HotelManager hotelManager)
@@ -50,13 +57,28 @@ namespace Hotel.ViewModel
             AddBookingCommand = new AddBookingCommand(this);
         }
 
+        private bool GuestsValid()
+        {
+            return Booking.Guests != null && Booking.Guests.Count > 0;
+        }
+
+        private bool RoomsValid()
+        {
+            return Booking.Rooms != null && Booking.Rooms.Count > 0;
+        }
+
+        private bool DatesValid()
+        {
+            return SelectedDates != null && SelectedDates.IsValid();
+        }
+
         public bool ValidateInput()
         {
-            if( Booking.Guest == null || Booking.Room == null || SelectedDates == null)
+            if( !GuestsValid() || !RoomsValid() || !DatesValid() )
             {
                 return false;
             }
-            return Booking.Room.TimePeriodAvailable(new BookingPeriod(SelectedDates));
+            return Booking.Rooms.All(room => room.TimePeriodAvailable(SelectedDates));
         }
 
         public void AddBooking()
@@ -64,18 +86,6 @@ namespace Hotel.ViewModel
             Booking.SetDates(SelectedDates);
             HotelManager.AddBooking(Booking);
             Booking = new Booking();
-            ClearAllFields();
-        }
-
-        private void ClearAllFields()
-        {
-            Guest = null;
-            Room = null;
-            Booking.BookingPeriod = new BookingPeriod() {
-                StartDate = DateTime.Today,
-                EndDate = DateTime.Today
-            };
-            SelectedDates.Clear();
         }
 
         public void OnPropertyChanged([CallerMemberName] string name = "")

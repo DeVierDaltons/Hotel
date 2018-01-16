@@ -26,6 +26,11 @@ namespace Hotel.Model
             set { _roomNumber = value; OnPropertyChanged(); }
         }
 
+        public virtual bool DayAvailable(DateTime startDate)
+        {
+            return TimePeriodAvailable(new BookingPeriod() { StartDate = startDate, EndDate = startDate });
+        }
+
         private int _beds;
         public virtual int Beds
         {

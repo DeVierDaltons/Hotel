@@ -7,6 +7,7 @@ using Hotel.Repository;
 using Hotel.DataAccessObjects;
 using System.Windows.Controls;
 using System;
+using System.Linq;
 
 namespace TestHotel
 {
@@ -26,20 +27,16 @@ namespace TestHotel
             var hotelManager = CreateTestHotelManager();
             AddBookingViewModel addBookingViewModel = new AddBookingViewModel(hotelManager)
             {
-                Room = hotelManager.Rooms[0],
-                Guest = hotelManager.Guests[0],
+                Rooms = hotelManager.Rooms.ToList(),
+                Guests = hotelManager.Guests.ToList(),
                 SelectedDates = CreateSelectedDates()
             };
             return addBookingViewModel;
         }
 
-        private static SelectedDatesCollection CreateSelectedDates()
+        private static BookingPeriod CreateSelectedDates()
         {
-            Calendar calendar = new Calendar();
-            calendar.SelectionMode = CalendarSelectionMode.SingleRange;
-            var dates = new SelectedDatesCollection(calendar);
-            dates.AddRange(DateTime.Now, DateTime.Now.AddDays(2d));
-            return dates;
+            return new BookingPeriod(DateTime.Now, DateTime.Now.AddDays(2d));
         }
 
         [TestMethod]
@@ -48,7 +45,7 @@ namespace TestHotel
             AddBookingViewModel vm = new AddBookingViewModel(null)
             {
                 Booking = null,
-                Guest = null,
+                Guests = null,
                 SelectedDates = null
             };
             Assert.IsFalse(new AddBookingCommand(vm).CanExecute(null));
