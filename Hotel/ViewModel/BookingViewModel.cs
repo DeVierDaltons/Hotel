@@ -112,6 +112,7 @@ namespace Hotel.ViewModel
             {
                 _ShowReserved = value;
                 OnPropertyChanged();
+                FilterDisplayedBookings();
             }
         }
 
@@ -123,6 +124,7 @@ namespace Hotel.ViewModel
             {
                 _ShowCancelled = value;
                 OnPropertyChanged();
+                FilterDisplayedBookings();
             }
         }
 
@@ -134,6 +136,7 @@ namespace Hotel.ViewModel
             {
                 _ShowCheckedIn = value;
                 OnPropertyChanged();
+                FilterDisplayedBookings();
             }
         }
 
@@ -145,6 +148,7 @@ namespace Hotel.ViewModel
             {
                 _ShowCheckedOut = value;
                 OnPropertyChanged();
+                FilterDisplayedBookings();
             }
         }
 
@@ -157,6 +161,7 @@ namespace Hotel.ViewModel
             {
                 _ShowNoShow = value;
                 OnPropertyChanged();
+                FilterDisplayedBookings();
             }
         }
         #endregion FilterProperties
@@ -164,10 +169,6 @@ namespace Hotel.ViewModel
         public void OnPropertyChanged([CallerMemberName] string name = "")
         {
             PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(name));
-            if (name.Contains("Filter"))
-            {
-                FilterDisplayedBookings();
-            }
         }
         
         public void InvalidateOnBookingStatusChanged(object sender, PropertyChangedEventArgs e)
