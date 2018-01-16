@@ -24,7 +24,7 @@ namespace Hotel.View
 
         private void Button_Click(object sender, RoutedEventArgs e)
         {
-            (DataContext as BookingViewModel).FilteredGuestString = "";
+            (DataContext as BookingViewModel).RemoveGuestFilter();
         }
     }
 }

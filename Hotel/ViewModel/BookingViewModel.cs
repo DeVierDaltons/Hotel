@@ -28,6 +28,7 @@ namespace Hotel.ViewModel
             get { return _addBookingView; }
             set { _addBookingView = value; }
         }
+
         private ObservableCollection<Booking> Bookings;
 
         private ObservableCollection<Booking> _displayedBookings = new ObservableCollection<Booking>();
@@ -99,15 +100,6 @@ namespace Hotel.ViewModel
             get { return _filterString; }
             set {
                 _filterString = value;
-                if(value == "")
-                {
-                    IsRemoveFilterButtonVisible = Visibility.Hidden;
-                    filterGuest = null;
-                }
-                else
-                {
-                    IsRemoveFilterButtonVisible = Visibility.Visible;
-                }
                 OnPropertyChanged();
             }
         }
@@ -226,6 +218,14 @@ namespace Hotel.ViewModel
         {
             filterGuest = g;
             FilteredGuestString = filterGuest.FirstName + " " + filterGuest.LastName;
+            IsRemoveFilterButtonVisible = Visibility.Visible;
+        }
+
+        public void RemoveGuestFilter()
+        {
+            filterGuest = null;
+            FilteredGuestString = "";
+            IsRemoveFilterButtonVisible = Visibility.Hidden;
         }
     }
 }
