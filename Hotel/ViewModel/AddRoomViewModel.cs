@@ -9,7 +9,7 @@ using Unity.Attributes;
 
 namespace Hotel.ViewModel
 {
-    public class AddRoomViewModel : INotifyPropertyChanged
+    public class AddRoomViewModel : INotifyPropertyChanged, IViewModel
     {
         public event PropertyChangedEventHandler PropertyChanged;
 

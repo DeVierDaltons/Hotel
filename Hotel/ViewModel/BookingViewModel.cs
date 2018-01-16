@@ -13,10 +13,11 @@ using System.ComponentModel;
 using System.Runtime.CompilerServices;
 using System.Windows.Input;
 using Hotel.Extensions;
+using Hotel.Repository;
 
 namespace Hotel.ViewModel
 {
-    public class BookingViewModel : INotifyPropertyChanged
+    public class BookingViewModel : INotifyPropertyChanged, IViewModel
     {
 
 
@@ -42,7 +43,7 @@ namespace Hotel.ViewModel
         public List<BookingStatus> BookingStatusFilters { get;} = new List<BookingStatus>();
 
         public List<KeyValuePair<BookingStatus, Func<bool>>> StatusFiltersList { get; set; } = new List<KeyValuePair<BookingStatus, Func<bool>>>();
-        public BookingViewModel(ObservableCollection<Booking> bookings)
+        public BookingViewModel([Unity.Attributes.Dependency("BookingRepository")]RepositoryBackedObservableCollection<Booking> bookings)
         {
             InitializeStatusFilterList();
             

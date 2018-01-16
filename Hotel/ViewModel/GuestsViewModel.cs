@@ -6,10 +6,11 @@ using System;
 using System.Linq;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using Unity.Attributes;
 
 namespace Hotel.ViewModel
 {
-    public class GuestsViewModel : INotifyPropertyChanged
+    public class GuestsViewModel : INotifyPropertyChanged, IViewModel
     {
         #region Properties
         public event PropertyChangedEventHandler PropertyChanged;
@@ -76,7 +77,7 @@ namespace Hotel.ViewModel
             if (guest == null)
             {
                 guest = new Guest();
-                GuestDetailView.DataContext = new GuestDetailViewModel(new EditGuestCommand(guest), guest, () =>
+                GuestDetailView.DataContext = new AddGuestViewModel(new EditGuestCommand(guest), guest, () =>
                 {
                     Guests.Add(guest);
                     AddGuest(stackpanel);
@@ -84,7 +85,7 @@ namespace Hotel.ViewModel
             }
             else
             {
-                GuestDetailView.DataContext = new GuestDetailViewModel(new EditGuestCommand(guest), guest, null);
+                GuestDetailView.DataContext = new AddGuestViewModel(new EditGuestCommand(guest), guest, null);
             }
            
             stackpanel.Children.Clear();
@@ -108,10 +109,10 @@ namespace Hotel.ViewModel
         }
 
 
-        public GuestsViewModel(RepositoryBackedObservableCollection<Guest> guests)
+        public GuestsViewModel([Unity.Attributes.Dependency("GuestRepository")]IRepositoryBackedObservableCollection guestsRepositoryObservableCollection)
         {
-            Guests = guests;
-            DisplayedGuests = guests;
+            Guests = guestsRepositoryObservableCollection as RepositoryBackedObservableCollection<Guest>;
+            DisplayedGuests = Guests;
         }
 
         public void OnPropertyChanged([CallerMemberName] string name = "")

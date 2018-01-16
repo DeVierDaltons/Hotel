@@ -8,7 +8,7 @@ using System.Windows.Input;
 
 namespace Hotel.ViewModel
 {
-    public class GuestDetailViewModel : INotifyPropertyChanged
+    public class AddGuestViewModel : INotifyPropertyChanged, IViewModel
     {
         public event PropertyChangedEventHandler PropertyChanged;
 
@@ -85,7 +85,7 @@ namespace Hotel.ViewModel
 
         #endregion Properties
 
-        public GuestDetailViewModel(ICommand guestCommand, Guest currentGuestData, Action afterSubmitAction)
+        public AddGuestViewModel(ICommand guestCommand, Guest currentGuestData, Action afterSubmitAction)
         {
             Guest = new Guest();
             Guest.CopyDelta(currentGuestData);

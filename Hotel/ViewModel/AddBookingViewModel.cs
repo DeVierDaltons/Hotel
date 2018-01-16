@@ -12,7 +12,7 @@ using System.Diagnostics;
 
 namespace Hotel.ViewModel
 {
-    public class AddBookingViewModel : INotifyPropertyChanged
+    public class AddBookingViewModel : INotifyPropertyChanged, IViewModel
     {
         public event PropertyChangedEventHandler PropertyChanged;
 
@@ -47,9 +47,9 @@ namespace Hotel.ViewModel
         public SelectedDatesCollection SelectedDates { get; set; }
         #endregion
 
-        public AddBookingViewModel(RepositoryBackedObservableCollection<Booking> bookings)
+        public AddBookingViewModel([Unity.Attributes.Dependency("BookingRepository")]IRepositoryBackedObservableCollection bookingRepositoryObservableCollection)
         {
-            Bookings = bookings;
+            Bookings = bookingRepositoryObservableCollection as RepositoryBackedObservableCollection<Booking>;
             AddBookingCommand = new AddBookingCommand(this);
         }
 

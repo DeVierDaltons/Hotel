@@ -1,10 +1,12 @@
 ﻿using Hotel.Model;
+using Hotel.Repository;
 using Hotel.View;
 using System.Collections.ObjectModel;
+using Unity.Attributes;
 
 namespace Hotel.ViewModel
 {
-    public class RoomViewModel
+    public class RoomViewModel : IViewModel
     {
         private AddRoomView _AddRoomView;
 
@@ -15,7 +17,7 @@ namespace Hotel.ViewModel
         }
 
         public ObservableCollection<Room> Rooms { get; set; }
-        public RoomViewModel(ObservableCollection<Room> rooms)
+        public RoomViewModel([Dependency("RoomRepository")] RepositoryBackedObservableCollection<Room> rooms)
         {
             Rooms = rooms;
         }

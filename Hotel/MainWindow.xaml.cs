@@ -17,39 +17,58 @@ namespace Hotel
     /// </summary>
     public partial class MainWindow : Window
     {
+        [Dependency("GuestsViewModel")]
+        public IViewModel guestsViewModel {
+            get;
+            set; }
 
-        public MainWindow([Dependency("GuestRepository")]IRepositoryBackedObservableCollection guestsRepositoryObservableCollection, [Dependency("RoomRepository")]IRepositoryBackedObservableCollection roomRepositoryObservableCollection, [Dependency("BookingRepository")]IRepositoryBackedObservableCollection bookingRepositoryObservableCollection)
+        [Dependency("RoomViewModel")]
+        public IViewModel RoomViewModel { get; set; }
+
+        [Dependency("BookingViewModel")]
+        public IViewModel BookingViewModel { get; set; }
+
+        [Dependency("AddBookingViewModel")]
+        public IViewModel AddBookingViewModel { get; set;}
+
+        [Dependency("AddRoomView")]
+        public AddRoomView AddRoomView { get; set; }
+
+        [Dependency("AddRoomViewModel")]
+        public IViewModel AddRoomViewModel { get; set; }
+        public MainWindow()
         {
-
             InitializeComponent();
-            SetupGuestTab(guestsRepositoryObservableCollection);
-            SetupRoomTab(roomRepositoryObservableCollection);
-            SetupBookingTab(bookingRepositoryObservableCollection);
         }
 
-        private void SetupGuestTab(IRepositoryBackedObservableCollection guestsRepositoryObservableCollection)
+        public void Initialize()
         {
-            GuestsViewModel guestsViewModel = new GuestsViewModel(guestsRepositoryObservableCollection as RepositoryBackedObservableCollection<Guest>);
-            guestsViewModel.SwitchToBookingTab = SwitchToBookingTab;
+            SetupGuestTab();
+            SetupRoomTab();
+            SetupBookingTab();
+        }
+
+        private void SetupGuestTab()
+        {
+            (guestsViewModel as GuestsViewModel).SwitchToBookingTab = SwitchToBookingTab;
             GuestExplorerTab.DataContext = guestsViewModel;
         }
 
-        public void SetupRoomTab(IRepositoryBackedObservableCollection roomRepositoryObservableCollection)
+        public void SetupRoomTab()
         {
             //creating the rooms tab
             AddRoomView addRoomView = new AddRoomView();
-            addRoomView.DataContext = new AddRoomViewModel(roomRepositoryObservableCollection as RepositoryBackedObservableCollection<Room>);
-            RoomViewModel roomViewModel = new RoomViewModel(roomRepositoryObservableCollection as RepositoryBackedObservableCollection<Room>);
-            roomViewModel.AddRoomView = addRoomView;
-            RoomExplorerTab.DataContext = roomViewModel;
+            addRoomView.DataContext = AddRoomViewModel;
+            (RoomViewModel as RoomViewModel).AddRoomView = AddRoomView as AddRoomView;
+            RoomExplorerTab.DataContext = RoomViewModel;
         }
 
-        public void SetupBookingTab(IRepositoryBackedObservableCollection bookingRepositoryObservableCollection )
+        public void SetupBookingTab( )
         {
             //Creating the tab for bookings with addbooking and modify booking views.
             AddBookingView addBookingView = new AddBookingView();
-            addBookingView.DataContext = new AddBookingViewModel(bookingRepositoryObservableCollection as RepositoryBackedObservableCollection<Booking>);
-            BookingViewModel modifyBookingViewModel = new BookingViewModel(bookingRepositoryObservableCollection as RepositoryBackedObservableCollection<Booking>);
+            addBookingView.DataContext = AddBookingViewModel;
+            BookingViewModel modifyBookingViewModel = BookingViewModel as BookingViewModel;
             modifyBookingViewModel.AddBookingView = addBookingView;
             BookingExplorerTab.DataContext = modifyBookingViewModel;
         }
