@@ -106,22 +106,12 @@ namespace Hotel.View
         public AddBookingView()
         {
             InitializeComponent();
-            UseDataContextLater(); // TODO: this is fucked up, change this! the problem is that the DataContext is set later, because it is dependent on the parent's datacontext
         }
 
-        private async void UseDataContextLater()
+        public void Initialize(AddBookingViewModel viewModel)
         {
-            await Task.Run((Action)(() =>
-            {
-                Thread.Sleep(1000);
-                App.Current.Dispatcher.Invoke((Action)(() =>
-                {
-                    AddBookingViewModel viewModel = (AddBookingViewModel)DataContext;
-                    SetGridStyle();
-                    FillDateGrid((ObservableCollection<Room>)viewModel.AllRooms);
-                    ListenForBookingChanges(viewModel.AllBookings);
-                }));
-            }));
+            FillDateGrid(viewModel.AllRooms);
+            ListenForBookingChanges(viewModel.AllBookings);
         }
 
         private void ListenForBookingChanges(ObservableCollection<Booking> bookings)
