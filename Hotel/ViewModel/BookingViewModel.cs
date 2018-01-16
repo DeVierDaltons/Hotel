@@ -220,6 +220,7 @@ namespace Hotel.ViewModel
             filterGuest = g;
             FilteredGuestString = filterGuest.FirstName + " " + filterGuest.LastName;
             IsRemoveFilterButtonVisible = Visibility.Visible;
+            FilterDisplayedBookings();
         }
 
         public void RemoveGuestFilter()
@@ -227,6 +228,7 @@ namespace Hotel.ViewModel
             filterGuest = null;
             FilteredGuestString = "";
             IsRemoveFilterButtonVisible = Visibility.Hidden;
+            FilterDisplayedBookings();
         }
     }
 }
