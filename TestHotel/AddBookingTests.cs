@@ -44,7 +44,7 @@ namespace TestHotel
         {
             AddBookingViewModel vm = new AddBookingViewModel(null)
             {
-                Booking = null,
+                Booking = new Booking(),
                 Guests = null,
                 SelectedDates = null
             };

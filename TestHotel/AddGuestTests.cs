@@ -5,6 +5,7 @@ using Hotel.Command;
 using Hotel.ViewModel;
 using Hotel.Repository;
 using Hotel.DataAccessObjects;
+using System.Windows.Controls;
 
 namespace TestHotel
 {
@@ -16,7 +17,9 @@ namespace TestHotel
         {
             IRepository<Guest> repository = new TestRepository<Guest>();
             RepositoryBackedObservableCollection<Guest> guestList = new RepositoryBackedObservableCollection<Guest>(repository);
-           // new AddGuestCommand(guestList).Execute(new Guest());
+            GuestsViewModel viewModel = new GuestsViewModel(guestList);
+            viewModel.StartAddingGuest();
+            viewModel.CurrentGuest.SubmitCommand.Execute(null);
             Assert.IsTrue(guestList.Count > 0);
         }
 
