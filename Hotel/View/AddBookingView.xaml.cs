@@ -110,7 +110,8 @@ namespace Hotel.View
 
         public void Initialize(AddBookingViewModel viewModel)
         {
-            FillDateGrid(viewModel.AllRooms);
+            Rooms = viewModel.AllRooms;
+            FillDateGrid();
             ListenForBookingChanges(viewModel.AllBookings);
         }
 
@@ -136,9 +137,8 @@ namespace Hotel.View
             booking.Rooms.ForEach(RedrawAvailabilityForRoom);
         }
 
-        private void FillDateGrid(ObservableCollection<Room> rooms)
+        private void FillDateGrid()
         {
-            Rooms = rooms;
             RoomDateGrid.ColumnDefinitions.Clear();
             for(int i = 0; i < HeaderColumns; ++i)
             {
