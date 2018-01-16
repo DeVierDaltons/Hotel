@@ -1,9 +1,11 @@
 ﻿using Hotel.Command;
 using Hotel.Model;
+using Hotel.Repository;
 using System;
 using System.ComponentModel;
 using System.Runtime.CompilerServices;
 using System.Windows.Input;
+using Unity.Attributes;
 
 namespace Hotel.ViewModel
 {
@@ -12,7 +14,7 @@ namespace Hotel.ViewModel
         public event PropertyChangedEventHandler PropertyChanged;
 
         #region Properties
-        public HotelManager HotelManager { get; private set; }
+        public RepositoryBackedObservableCollection<Room> Rooms { get; set; }
         public ICommand AddRoomCommand { get; set; }
         public Room Room { get; set; } = new Room();
 
@@ -47,10 +49,10 @@ namespace Hotel.ViewModel
         }
         #endregion
 
-        public AddRoomViewModel(HotelManager hotelManager)
+        public AddRoomViewModel([Unity.Attributes.Dependency("RoomRepository")] RepositoryBackedObservableCollection<Room> rooms)
         {
+            Rooms = rooms;
             Beds = 1;
-            HotelManager = hotelManager;
             AddRoomCommand = new AddRoomCommand(this);
         }
 
@@ -61,7 +63,7 @@ namespace Hotel.ViewModel
 
         public void AddRoom()
         {
-            HotelManager.AddRoom(Room);
+            Rooms.Add(Room);
             Room = new Room();
             ClearAllFields();
         }

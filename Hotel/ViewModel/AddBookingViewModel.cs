@@ -44,9 +44,8 @@ namespace Hotel.ViewModel
         public SelectedDatesCollection SelectedDates { get; set; }
         #endregion
 
-        public AddBookingViewModel(HotelManager hotelManager)
+        public AddBookingViewModel()
         {
-            HotelManager = hotelManager;
             AddBookingCommand = new AddBookingCommand(this);
         }
 

@@ -1,6 +1,7 @@
 ﻿using Hotel.DataAccessObjects;
 using Hotel.Repository;
 using System.Diagnostics;
+using Unity.Attributes;
 
 namespace Hotel.Model
 {
@@ -14,7 +15,7 @@ namespace Hotel.Model
         public RepositoryBackedObservableCollection<Room> Rooms { get; }
         public RepositoryBackedObservableCollection<Booking> Bookings { get; }
 
-        public HotelManager(IRepository<Guest> guestRepository, IRepository<Room> roomRepository, IRepository<Booking> bookingRepository)
+        public HotelManager([Dependency]IRepository<Guest> guestRepository, [Dependency]IRepository<Room> roomRepository, [Dependency]IRepository<Booking> bookingRepository)
         {
             GuestRepository = guestRepository;
             RoomRepository = roomRepository;
