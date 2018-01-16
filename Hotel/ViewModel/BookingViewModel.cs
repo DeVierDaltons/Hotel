@@ -13,6 +13,7 @@ using System.ComponentModel;
 using System.Runtime.CompilerServices;
 using System.Windows.Input;
 using Hotel.Extensions;
+using NHibernate.Util;
 
 namespace Hotel.ViewModel
 {
@@ -41,7 +42,7 @@ namespace Hotel.ViewModel
 
         public List<BookingStatus> BookingStatusFilters { get;} = new List<BookingStatus>();
 
-        public List<KeyValuePair<BookingStatus, Func<bool>>> StatusFiltersList { get; set; } = new List<KeyValuePair<BookingStatus, Func<bool>>>();
+        public Dictionary<BookingStatus, Func<bool>> StatusFiltersList { get; set; } = new Dictionary<BookingStatus, Func<bool>>();
         public BookingViewModel(ObservableCollection<Booking> bookings)
         {
             InitializeStatusFilterList();
@@ -51,16 +52,15 @@ namespace Hotel.ViewModel
                 booking.PropertyChanged += InvalidateOnBookingStatusChanged;
             }
             bookings.CollectionChanged += Bookings_CollectionChanged;
-           
         }
 
         private void InitializeStatusFilterList()
         {
-            StatusFiltersList.Add(new KeyValuePair<BookingStatus, Func<bool>>(BookingStatus.Cancelled, () => { return ShowCancelledFilter; }));
-            StatusFiltersList.Add(new KeyValuePair<BookingStatus, Func<bool>>(BookingStatus.CheckedIn, () => { return ShowCheckedInFilter; }));
-            StatusFiltersList.Add(new KeyValuePair<BookingStatus, Func<bool>>(BookingStatus.CheckedOut, () => { return ShowCheckedOutFilter; }));
-            StatusFiltersList.Add(new KeyValuePair<BookingStatus, Func<bool>>(BookingStatus.NoShow, () => { return ShowNoShowFilter; }));
-            StatusFiltersList.Add(new KeyValuePair<BookingStatus, Func<bool>>(BookingStatus.Reserved, () => { return ShowReservedFilter; }));
+            StatusFiltersList.Add(BookingStatus.Cancelled, () => { return ShowCancelledFilter; });
+            StatusFiltersList.Add(BookingStatus.CheckedIn, () => { return ShowCheckedInFilter; });
+            StatusFiltersList.Add(BookingStatus.CheckedOut, () => { return ShowCheckedOutFilter; });
+            StatusFiltersList.Add(BookingStatus.NoShow, () => { return ShowNoShowFilter; });
+            StatusFiltersList.Add(BookingStatus.Reserved, () => { return ShowReservedFilter; });
         }
 
         /// <summary>
@@ -74,15 +74,10 @@ namespace Hotel.ViewModel
             if (e.NewItems.Count > 0) {
                 var newBooking = (e.NewItems[0] as Booking);
                 newBooking.PropertyChanged += InvalidateOnBookingStatusChanged;
-                foreach (KeyValuePair<BookingStatus, Func<bool>> kvp in StatusFiltersList)
+                if( ShouldShowBooking(newBooking))
                 {
-                    //check if the item should be displayed or not, if not return otherwise add it to the displayed items.
-                    if (newBooking.BookingStatus == kvp.Key && !kvp.Value())
-                    {
-                        return;
-                    }
+                    AddBookingToDisplayedIfNew(newBooking);
                 }
-                AddBookingToDisplayedIfNew(newBooking);
             }
             else if (e.OldItems.Count > 0)
             {
@@ -197,18 +192,7 @@ namespace Hotel.ViewModel
         public void FilterDisplayedBookings()
         {
             DisplayedBookings = new ObservableCollection<Booking>();
-            List<Booking> filteredBookings = Bookings.Where(x =>
-            {
-                foreach (KeyValuePair<BookingStatus, Func<bool>> kvp in StatusFiltersList)
-                {
-                    //the filter is set to true so filter for this bookingstatus
-                    if (x.BookingStatus == kvp.Key)
-                    {
-                        return kvp.Value();
-                    }
-                }
-                return false;
-            }).ToList();
+            IEnumerable<Booking> filteredBookings = Bookings.Where(ShouldShowBooking);
             filteredBookings.ForEach(x =>
             {
                 AddBookingToDisplayedIfNew(x);
@@ -219,6 +203,11 @@ namespace Hotel.ViewModel
                    x.Guest == filterGuest
                 ));
             }
+        }
+
+        private bool ShouldShowBooking(Booking booking)
+        {
+            return StatusFiltersList[booking.BookingStatus]();
         }
 
         private void AddBookingToDisplayedIfNew(Booking x)
