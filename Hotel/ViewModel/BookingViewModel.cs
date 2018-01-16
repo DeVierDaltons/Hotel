@@ -40,9 +40,7 @@ namespace Hotel.ViewModel
 
         public event PropertyChangedEventHandler PropertyChanged;
 
-        public List<BookingStatus> BookingStatusFilters { get;} = new List<BookingStatus>();
-
-        public Dictionary<BookingStatus, Func<bool>> StatusFiltersList { get; set; } = new Dictionary<BookingStatus, Func<bool>>();
+        public Dictionary<BookingStatus, Func<bool>> StatusFiltersList = new Dictionary<BookingStatus, Func<bool>>();
         public BookingViewModel(ObservableCollection<Booking> bookings)
         {
             InitializeStatusFilterList();
