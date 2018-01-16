@@ -97,9 +97,9 @@ namespace Hotel.ViewModel
         private void OnSubmitClicked(object _)
         {
             GuestCommand.Execute(Guest);
-            AfterSubmitAction?.Invoke();
             if (AfterSubmitAction != null)
             {
+                AfterSubmitAction();
                 IsSaveButtonEnabled = false;
             }
             AfterSubmitAction = null;
