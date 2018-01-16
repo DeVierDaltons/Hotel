@@ -19,8 +19,6 @@ namespace Hotel.ViewModel
 {
     public class BookingViewModel : INotifyPropertyChanged
     {
-
-
         private AddBookingView _addBookingView;
 
         public AddBookingView AddBookingView
@@ -28,6 +26,8 @@ namespace Hotel.ViewModel
             get { return _addBookingView; }
             set { _addBookingView = value; }
         }
+
+        private Guest filterGuest;
 
         private ObservableCollection<Booking> Bookings;
 
@@ -178,8 +178,6 @@ namespace Hotel.ViewModel
                 FilterDisplayedBookings();
             }
         }
-
-        private Guest filterGuest;
 
         public void FilterDisplayedBookings()
         {
