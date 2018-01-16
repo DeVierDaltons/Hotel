@@ -7,6 +7,8 @@ using System.Windows.Input;
 using System.Windows.Controls;
 using System.Linq;
 using System.Collections.ObjectModel;
+using Hotel.Repository;
+using System.Diagnostics;
 
 namespace Hotel.ViewModel
 {
@@ -16,6 +18,7 @@ namespace Hotel.ViewModel
 
         #region Properties
         public HotelManager HotelManager { get; private set; }
+        public RepositoryBackedObservableCollection<Booking> Bookings { get; set; }
         public ICommand AddBookingCommand { get; private set; }
         public Booking Booking { get; set; } = new Booking();
 
@@ -44,8 +47,9 @@ namespace Hotel.ViewModel
         public SelectedDatesCollection SelectedDates { get; set; }
         #endregion
 
-        public AddBookingViewModel()
+        public AddBookingViewModel(RepositoryBackedObservableCollection<Booking> bookings)
         {
+            Bookings = bookings;
             AddBookingCommand = new AddBookingCommand(this);
         }
 
@@ -58,10 +62,22 @@ namespace Hotel.ViewModel
             return Booking.Room.TimePeriodAvailable(new BookingPeriod(SelectedDates));
         }
 
+        //TODO use this function....
+        private void AddAllBookingsToRoom()
+        {
+            foreach (Booking booking in Bookings)
+            {
+                Debug.Assert(Rooms.Contains(booking.Room));
+                booking.Room.Bookings.Add(booking);
+            }
+        }
+
         public void AddBooking()
         {
             Booking.SetDates(SelectedDates);
-            HotelManager.AddBooking(Booking);
+            Bookings.Add(Booking);
+            Debug.Assert(Rooms.Contains(Booking.Room));
+            Booking.Room.Bookings.Add(Booking);
             Booking = new Booking();
             ClearAllFields();
         }

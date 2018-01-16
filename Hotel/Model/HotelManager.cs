@@ -23,28 +23,9 @@ namespace Hotel.Model
             Guests = new RepositoryBackedObservableCollection<Guest>(GuestRepository);
             Rooms = new RepositoryBackedObservableCollection<Room>(RoomRepository);
             Bookings = new RepositoryBackedObservableCollection<Booking>(BookingRepository);
-            AddAllBookingsToRoom();
+         
         }
 
-        private void AddAllBookingsToRoom()
-        {
-            foreach(Booking booking in Bookings)
-            {
-                AddBookingToRoom(booking);
-            }
-        }
-
-        private void AddBookingToRoom(Booking booking)
-        {
-            Debug.Assert(Rooms.Contains(booking.Room));
-            booking.Room.Bookings.Add(booking);
-        }
-
-        public void AddBooking(Booking booking)
-        {
-            Bookings.Add(booking);
-            AddBookingToRoom(booking);
-        }
 
         public void AddRoom(Room room)
         {

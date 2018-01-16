@@ -20,6 +20,7 @@ namespace Hotel
 
         public MainWindow([Dependency("GuestRepository")]IRepositoryBackedObservableCollection guestsRepositoryObservableCollection, [Dependency("RoomRepository")]IRepositoryBackedObservableCollection roomRepositoryObservableCollection, [Dependency("BookingRepository")]IRepositoryBackedObservableCollection bookingRepositoryObservableCollection)
         {
+
             InitializeComponent();
             SetupGuestTab(guestsRepositoryObservableCollection);
             SetupRoomTab(roomRepositoryObservableCollection);
@@ -47,7 +48,7 @@ namespace Hotel
         {
             //Creating the tab for bookings with addbooking and modify booking views.
             AddBookingView addBookingView = new AddBookingView();
-            addBookingView.DataContext = new AddBookingViewModel();
+            addBookingView.DataContext = new AddBookingViewModel(bookingRepositoryObservableCollection as RepositoryBackedObservableCollection<Booking>);
             BookingViewModel modifyBookingViewModel = new BookingViewModel(bookingRepositoryObservableCollection as RepositoryBackedObservableCollection<Booking>);
             modifyBookingViewModel.AddBookingView = addBookingView;
             BookingExplorerTab.DataContext = modifyBookingViewModel;
