@@ -44,6 +44,7 @@ namespace Hotel.Model
             get { return _Status; }
             set { _Status = value; OnPropertyChanged(); }
         }
+
         public virtual bool OverlapsWith(Booking booking)
         {
             return BookingPeriod.OverlapsWith(booking.BookingPeriod);
