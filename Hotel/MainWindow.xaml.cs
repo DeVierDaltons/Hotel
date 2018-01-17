@@ -44,7 +44,7 @@ namespace Hotel
             AddBookingView addBookingView = new AddBookingView();
             var addBookingViewModel = new AddBookingViewModel(HotelManager);
             addBookingView.DataContext = addBookingViewModel;
-            addBookingView.Initialize(addBookingViewModel);
+            addBookingView.Initialize();
             BookingViewModel modifyBookingViewModel = new BookingViewModel(HotelManager.Bookings);
             modifyBookingViewModel.AddBookingView = addBookingView;
             BookingExplorerTab.DataContext = modifyBookingViewModel;

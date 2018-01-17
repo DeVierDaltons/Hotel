@@ -108,16 +108,18 @@ namespace Hotel.View
             InitializeComponent();
         }
 
-        public void Initialize(AddBookingViewModel viewModel)
+        public void Initialize()
         {
+            var viewModel = (AddBookingViewModel)DataContext;
             Rooms = viewModel.AllRooms;
             FillDateGrid();
-            ListenForBookingChanges(viewModel.AllBookings);
+            ListenForChanges(viewModel.AllBookings);
         }
 
-        private void ListenForBookingChanges(ObservableCollection<Booking> bookings)
+        private void ListenForChanges(ObservableCollection<Booking> bookings)
         {
             bookings.CollectionChanged += BookingsChanged;
+            Rooms.CollectionChanged += OnRoomsChanged;
         }
 
         private void BookingsChanged(object sender, NotifyCollectionChangedEventArgs e)
@@ -141,9 +143,7 @@ namespace Hotel.View
         {
             AddColumns();
             AddHeader();
-            CreateDayLabels(dateStartColumn, dayNumberRow, dayNameRow, StartDate);
             AddGridRows();
-            Rooms.CollectionChanged += OnRoomsChanged;
         }
 
         private void AddColumns()
@@ -378,6 +378,7 @@ namespace Hotel.View
             CreateMonthLabels();
             int columnForLaterButton = dateStartColumn + GetMonthLabelsSize();
             Button laterButton = CreateHeaderButton("Later", columnForLaterButton, monthRow, DateShiftButtonSize, ShiftDatesForward);
+            CreateDayLabels(dateStartColumn, dayNumberRow, dayNameRow, StartDate);
         }
 
         private int GetMonthLabelsSize()
