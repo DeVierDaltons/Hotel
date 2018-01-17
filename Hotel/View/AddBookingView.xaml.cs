@@ -66,10 +66,6 @@ namespace Hotel.View
         /// </summary>
         private Dictionary<Room, RoomRowElements> RowElementsForRoom = new Dictionary<Room, RoomRowElements>();
         /// <summary>
-        /// The column in the grid at which the dates begin
-        /// </summary>
-        private int dateStartColumn;
-        /// <summary>
         /// The row for the months' names
         /// </summary>
         private const int monthRow = 0;
@@ -373,12 +369,18 @@ namespace Hotel.View
             CreateTextBlock("Beds", true, column++, dayNumberRow, HeaderGrid).Margin = new Thickness(10d);
             CreateTextBlock("Price", true, column++, dayNumberRow, HeaderGrid).Margin = new Thickness(5d);
             CreateTextBlock("View", true, column++, dayNumberRow, HeaderGrid).Margin = new Thickness(2d);
-            dateStartColumn = column;
-            Button earlierButton = CreateHeaderButton("Earlier", dateStartColumn, monthRow, DateShiftButtonSize, ShiftDatesBack);
             CreateMonthLabels();
-            int columnForLaterButton = dateStartColumn + GetMonthLabelsSize();
+            CreateDateShiftButtons();
+            CreateDayLabels(HeaderColumns, dayNumberRow, dayNameRow, StartDate);
+        }
+
+        private void CreateDateShiftButtons()
+        {
+            Button earlierButton = CreateHeaderButton("Earlier", HeaderColumns, monthRow, DateShiftButtonSize, ShiftDatesBack);
+            DateDependentElements.Add(earlierButton);
+            int columnForLaterButton = HeaderColumns + GetMonthLabelsSize();
             Button laterButton = CreateHeaderButton("Later", columnForLaterButton, monthRow, DateShiftButtonSize, ShiftDatesForward);
-            CreateDayLabels(dateStartColumn, dayNumberRow, dayNameRow, StartDate);
+            DateDependentElements.Add(laterButton);
         }
 
         private int GetMonthLabelsSize()
@@ -446,7 +448,7 @@ namespace Hotel.View
                 }
             }
             Grid.SetColumnSpan(monthsPanel, GetMonthLabelsSize() - DateShiftButtonSize);
-            AddToHeaderGrid(dateStartColumn + DateShiftButtonSize, monthRow, monthsPanel);
+            AddToHeaderGrid(HeaderColumns + DateShiftButtonSize, monthRow, monthsPanel);
             DateDependentElements.Add(monthsPanel);
         }
 
@@ -489,7 +491,8 @@ namespace Hotel.View
             RemoveAllDateDependentElements();
             StartDate = StartDate.AddDays(difference);
             CreateMonthLabels();
-            CreateDayLabels(dateStartColumn, dayNumberRow, dayNameRow, StartDate);
+            CreateDateShiftButtons();
+            CreateDayLabels(HeaderColumns, dayNumberRow, dayNameRow, StartDate);
             AddAvailabilityForRooms();
             ResetRoomDateSelectionElements();
             ResetDateSelectionElement();
