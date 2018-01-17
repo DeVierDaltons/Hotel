@@ -369,9 +369,7 @@ namespace Hotel.View
             CreateTextBlock("Beds", true, column++, dayNumberRow, HeaderGrid).Margin = new Thickness(10d);
             CreateTextBlock("Price", true, column++, dayNumberRow, HeaderGrid).Margin = new Thickness(5d);
             CreateTextBlock("View", true, column++, dayNumberRow, HeaderGrid).Margin = new Thickness(2d);
-            CreateMonthLabels();
-            CreateDateShiftButtons();
-            CreateDayLabels(HeaderColumns, dayNumberRow, dayNameRow, StartDate);
+            CreateDateHeader();
         }
 
         private void CreateDateShiftButtons()
@@ -490,14 +488,18 @@ namespace Hotel.View
         {
             RemoveAllDateDependentElements();
             StartDate = StartDate.AddDays(difference);
-            CreateMonthLabels();
-            CreateDateShiftButtons();
-            CreateDayLabels(HeaderColumns, dayNumberRow, dayNameRow, StartDate);
+            CreateDateHeader();
             AddAvailabilityForRooms();
             ResetRoomDateSelectionElements();
             ResetDateSelectionElement();
         }
 
+        private void CreateDateHeader()
+        {
+            CreateMonthLabels();
+            CreateDateShiftButtons();
+            CreateDayLabels(HeaderColumns, dayNumberRow, dayNameRow, StartDate);
+        }
         private void RemoveAllDateDependentElements()
         {
             foreach(UIElement element in DateDependentElements)
