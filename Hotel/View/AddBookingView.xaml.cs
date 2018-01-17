@@ -27,7 +27,7 @@ namespace Hotel.View
         }
 
         private const int DateBlockSize = 40;
-        private const int DatesToDisplay = 29;
+        private int DatesToDisplay = 29;
         private const int DateShiftButtonSize = 3;
 
         private const int HeaderRows = 3; // january, 1, Tue
@@ -102,6 +102,14 @@ namespace Hotel.View
         public AddBookingView()
         {
             InitializeComponent();
+            Application.Current.MainWindow.SizeChanged += AddBookingView_SizeChanged;
+        }
+
+        private void AddBookingView_SizeChanged(object sender, SizeChangedEventArgs e)
+        {
+            if( e.NewSize.Width == 0d ) { return; }
+            DatesToDisplay = Math.Max(12, (((int)e.NewSize.Width) - 780) / DateBlockSize);
+            RedrawAfterDisplayDatesChanged();
         }
 
         public void Initialize()
@@ -486,8 +494,13 @@ namespace Hotel.View
 
         private void ShiftDates(double difference)
         {
-            RemoveAllDateDependentElements();
             StartDate = StartDate.AddDays(difference);
+            RedrawAfterDisplayDatesChanged();
+        }
+
+        private void RedrawAfterDisplayDatesChanged()
+        {
+            RemoveAllDateDependentElements();
             CreateDateHeader();
             AddAvailabilityForRooms();
             ResetRoomDateSelectionElements();
@@ -500,6 +513,7 @@ namespace Hotel.View
             CreateDateShiftButtons();
             CreateDayLabels(HeaderColumns, dayNumberRow, dayNameRow, StartDate);
         }
+
         private void RemoveAllDateDependentElements()
         {
             foreach(UIElement element in DateDependentElements)
