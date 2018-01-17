@@ -72,15 +72,15 @@ namespace Hotel.View
         /// <summary>
         /// The row for the months' names
         /// </summary>
-        private int monthRow = 0;
+        private const int monthRow = 0;
         /// <summary>
         /// The row containing the number of each day (in the month)
         /// </summary>
-        private int dayNumberRow = 1;
+        private const int dayNumberRow = 1;
         /// <summary>
         /// The row containing the day of the week name
         /// </summary>
-        private int dayNameRow = 2;
+        private const int dayNameRow = 2;
         /// <summary>
         /// All the UIElements that are dependent on the date range currently being shown
         /// </summary>
@@ -139,24 +139,33 @@ namespace Hotel.View
 
         private void FillDateGrid()
         {
-            RoomDateGrid.ColumnDefinitions.Clear();
-            for(int i = 0; i < HeaderColumns; ++i)
-            {
-                RoomDateGrid.ColumnDefinitions.Add(new ColumnDefinition() { Width = GridLength.Auto }); // room name
-            }
-            for (int i = 0; i < DatesToDisplay; ++i)
-            {
-                RoomDateGrid.ColumnDefinitions.Add(new ColumnDefinition() { Width = GridLength.Auto }); // room has nice view
-            }
+            AddColumns();
             AddHeader();
             CreateDayLabels(dateStartColumn, dayNumberRow, dayNameRow, StartDate);
             AddGridRows();
             Rooms.CollectionChanged += OnRoomsChanged;
         }
 
+        private void AddColumns()
+        {
+            RoomDateGrid.ColumnDefinitions.Clear();
+            HeaderGrid.ColumnDefinitions.Clear();
+            for (int i = 0; i < HeaderColumns; ++i)
+            {
+                string columnSizeGroupName = "Column" + i;
+                RoomDateGrid.ColumnDefinitions.Add(new ColumnDefinition() { Width = GridLength.Auto, SharedSizeGroup = columnSizeGroupName });
+                HeaderGrid.ColumnDefinitions.Add(new ColumnDefinition() { Width = GridLength.Auto, SharedSizeGroup = columnSizeGroupName });
+            }
+            for (int i = 0; i < DatesToDisplay; ++i)
+            {
+                RoomDateGrid.ColumnDefinitions.Add(new ColumnDefinition() { Width = GridLength.Auto, MinWidth = DateBlockSize });
+                HeaderGrid.ColumnDefinitions.Add(new ColumnDefinition() { Width = GridLength.Auto, MinWidth = DateBlockSize });
+            }
+        }
+
         private void AddGridRows()
         {
-            int row = HeaderRows;
+            int row = 0;
             foreach (Room room in Rooms)
             {
                 AddGridRowForRoom(row, room);
@@ -166,7 +175,7 @@ namespace Hotel.View
 
         private void AddAvailabilityForRooms()
         {
-            int row = HeaderRows;
+            int row = 0;
             foreach (Room room in Rooms)
             {
                 AddRoomAvailability(row, room);
@@ -210,7 +219,7 @@ namespace Hotel.View
             if( e.NewItems != null)
             {
                 Room addedRoom = (Room)e.NewItems[0];
-                int row = HeaderRows + Rooms.Count - 1;
+                int row = Rooms.Count - 1;
                 AddGridRowForRoom(row, addedRoom);
             }
         }
@@ -276,12 +285,12 @@ namespace Hotel.View
                 int leftMargin = SelectedRange.StartDate >= viewPeriod.StartDate ? MarginForRoomDateSelectionElement : 0;
                 foreach (Room room in SelectedRooms)
                 {
-                    int row = HeaderRows + Rooms.IndexOf(room);
+                    int row = Rooms.IndexOf(room);
                     Canvas SelectionElement = new Canvas();
                     SelectionElement.Background = Brushes.Orange;
                     SelectionElement.Margin = new Thickness(leftMargin, 20, rightMargin, 10);
                     Grid.SetColumnSpan(SelectionElement, columnSpan);
-                    AddToGrid(startColumn, row, SelectionElement);
+                    AddToRoomDateGrid(startColumn, row, SelectionElement);
                     SelectionElements.Add(SelectionElement);
                 }
             }
@@ -333,7 +342,7 @@ namespace Hotel.View
                 DateRangeElement = new Canvas();
                 DateRangeElement.Background = Brushes.Orange;
                 DateRangeElement.Margin = new Thickness(MarginForDateSelectionElement, 30, MarginForDateSelectionElement, 5);
-                RoomDateGrid.Children.Add(DateRangeElement);
+                HeaderGrid.Children.Add(DateRangeElement);
             }
         }
 
@@ -352,22 +361,23 @@ namespace Hotel.View
         /// <param name="datesToDisplay">number of dates in the grid</param>
         private void AddHeader()
         {
+            HeaderGrid.RowDefinitions.Clear();
             for (int i = 0; i < HeaderRows; ++i)
             {
-                RoomDateGrid.RowDefinitions.Add(new RowDefinition() { Height = GridLength.Auto });
+                HeaderGrid.RowDefinitions.Add(new RowDefinition() { Height = GridLength.Auto });
             }
             int column = 0;
-            CreateTextBlock("Selected", true, column++, dayNumberRow).Margin = new Thickness(10d);
-            CreateTextBlock("Room", true, column++, dayNumberRow).Margin = new Thickness(10d);
-            CreateTextBlock("Quality", true, column++, dayNumberRow).Margin = new Thickness(10d);
-            CreateTextBlock("Beds", true, column++, dayNumberRow).Margin = new Thickness(10d);
-            CreateTextBlock("Price", true, column++, dayNumberRow).Margin = new Thickness(5d);
-            CreateTextBlock("View", true, column++, dayNumberRow).Margin = new Thickness(2d);
+            CreateTextBlock("Selected", true, column++, dayNumberRow, HeaderGrid).Margin = new Thickness(10d);
+            CreateTextBlock("Room", true, column++, dayNumberRow, HeaderGrid).Margin = new Thickness(10d);
+            CreateTextBlock("Quality", true, column++, dayNumberRow, HeaderGrid).Margin = new Thickness(10d);
+            CreateTextBlock("Beds", true, column++, dayNumberRow, HeaderGrid).Margin = new Thickness(10d);
+            CreateTextBlock("Price", true, column++, dayNumberRow, HeaderGrid).Margin = new Thickness(5d);
+            CreateTextBlock("View", true, column++, dayNumberRow, HeaderGrid).Margin = new Thickness(2d);
             dateStartColumn = column;
-            Button earlierButton = CreateButton("Earlier", dateStartColumn, monthRow, DateShiftButtonSize, ShiftDatesBack);
+            Button earlierButton = CreateHeaderButton("Earlier", dateStartColumn, monthRow, DateShiftButtonSize, ShiftDatesBack);
             CreateMonthLabels();
             int columnForLaterButton = dateStartColumn + GetMonthLabelsSize();
-            Button laterButton = CreateButton("Later", columnForLaterButton, monthRow, DateShiftButtonSize, ShiftDatesForward);
+            Button laterButton = CreateHeaderButton("Later", columnForLaterButton, monthRow, DateShiftButtonSize, ShiftDatesForward);
         }
 
         private int GetMonthLabelsSize()
@@ -435,7 +445,7 @@ namespace Hotel.View
                 }
             }
             Grid.SetColumnSpan(monthsPanel, GetMonthLabelsSize() - DateShiftButtonSize);
-            AddToGrid(dateStartColumn + DateShiftButtonSize, monthRow, monthsPanel);
+            AddToHeaderGrid(dateStartColumn + DateShiftButtonSize, monthRow, monthsPanel);
             DateDependentElements.Add(monthsPanel);
         }
 
@@ -451,12 +461,12 @@ namespace Hotel.View
             for (int i = 0; i < DatesToDisplay; ++i)
             {
                 bool boldDay = date.Month == StartDate.Month;
-                var dayNumberText = CreateTextBlock(date.Day.ToString(), boldDay, column, dayNumberRow);
+                var dayNumberText = CreateTextBlock(date.Day.ToString(), boldDay, column, dayNumberRow, HeaderGrid);
                 DateDependentElements.Add(dayNumberText);
-                var dayNameText = CreateTextBlock(date.ToString("ddd", CultureInfo.InvariantCulture), boldDay, column, dayNameRow);
+                var dayNameText = CreateTextBlock(date.ToString("ddd", CultureInfo.InvariantCulture), boldDay, column, dayNameRow, HeaderGrid);
                 dayNumberText.VerticalAlignment = VerticalAlignment.Top;
                 DateDependentElements.Add(dayNameText);
-                var clickHandler = AddBackgroundClicker(column, dayNumberRow, dayNameRow, date);
+                var clickHandler = AddDateBackgroundClicker(column, dayNumberRow, dayNameRow, date);
                 DateDependentElements.Add(clickHandler);
                 date = date.AddDays(1d);
                 ++column;
@@ -488,7 +498,9 @@ namespace Hotel.View
         {
             foreach(UIElement element in DateDependentElements)
             {
+                // one of these fails, don't care which
                 RoomDateGrid.Children.Remove(element);
+                HeaderGrid.Children.Remove(element);
             }
             DateDependentElements.Clear();
             foreach(var dateCanvasDict in FieldForRoomDate.Values)
@@ -504,12 +516,12 @@ namespace Hotel.View
         /// <param name="startRow">the row to start the element at</param>
         /// <param name="endRow">the last row the element should span across</param>
         /// <param name="date">the date for this element</param>
-        private Canvas AddBackgroundClicker(int column, int startRow, int endRow, DateTime date)
+        private Canvas AddDateBackgroundClicker(int column, int startRow, int endRow, DateTime date)
         {
             Canvas backgroundClicker = new Canvas();
             backgroundClicker.Background = Brushes.Transparent;
             Grid.SetRowSpan(backgroundClicker, endRow - startRow + 1);
-            AddToGrid(column, startRow, backgroundClicker);
+            AddToHeaderGrid(column, startRow, backgroundClicker);
             backgroundClicker.MouseLeftButtonDown += (object sender, MouseButtonEventArgs e) =>
             {
                 MouseDownOnDate(date);
@@ -540,19 +552,19 @@ namespace Hotel.View
             includedCheckbox.Checked += checkChangeClosure;
             includedCheckbox.Unchecked += checkChangeClosure;
             IncludedCheckBoxes.Add(room, includedCheckbox);
-            var numberText = CreateTextBlock(room.RoomNumber, false, column++, row);
+            var numberText = CreateTextBlock(room.RoomNumber, false, column++, row, RoomDateGrid);
             var numberBinding = MakeOneWayBinding(room, nameof(room.RoomNumber));
             numberText.SetBinding(TextBlock.TextProperty, numberBinding);
             RowElementsForRoom[room].uiElements.Add(numberText);
-            var qualityText = CreateTextBlock(room.Quality.ToString(), false, column++, row);
+            var qualityText = CreateTextBlock(room.Quality.ToString(), false, column++, row, RoomDateGrid);
             var qualityBinding = MakeOneWayBinding(room, nameof(room.Quality));
             qualityText.SetBinding(TextBlock.TextProperty, qualityBinding);
             RowElementsForRoom[room].uiElements.Add(qualityText);
-            var bedsText = CreateTextBlock("", false, column++, row);
+            var bedsText = CreateTextBlock("", false, column++, row, RoomDateGrid);
             var bedsBinding = MakeOneWayBinding(room, nameof(room.Beds));
             bedsText.SetBinding(TextBlock.TextProperty, bedsBinding);
             RowElementsForRoom[room].uiElements.Add(bedsText);
-            var priceText = CreateTextBlock(room.PricePerDay.ToString(), false, column++, row);
+            var priceText = CreateTextBlock(room.PricePerDay.ToString(), false, column++, row, RoomDateGrid);
             var priceBinding = MakeOneWayBinding(room, nameof(room.PricePerDay));
             priceText.SetBinding(TextBlock.TextProperty, priceBinding);
             RowElementsForRoom[room].uiElements.Add(priceText);
@@ -761,7 +773,7 @@ namespace Hotel.View
             canvas.Margin = new Thickness(0d);
             canvas.VerticalAlignment = VerticalAlignment.Center;
             canvas.HorizontalAlignment = HorizontalAlignment.Center;
-            AddToGrid(column, row, canvas);
+            AddToRoomDateGrid(column, row, canvas);
             return canvas;
         }
 
@@ -771,18 +783,28 @@ namespace Hotel.View
             checkbox.IsChecked = enabled;
             checkbox.VerticalAlignment = VerticalAlignment.Center;
             checkbox.HorizontalAlignment = HorizontalAlignment.Center;
-            AddToGrid(column, row, checkbox);
+            AddToRoomDateGrid(column, row, checkbox);
             return checkbox;
         }
 
-        private void AddToGrid(int column, int row, UIElement element)
+        private void AddToRoomDateGrid(int column, int row, UIElement element)
+        {
+            AddToGrid(column, row, element, RoomDateGrid);
+        }
+
+        private void AddToHeaderGrid(int column, int row, UIElement element)
+        {
+            AddToGrid(column, row, element, HeaderGrid);
+        }
+
+        private void AddToGrid(int column, int row, UIElement element, Grid grid)
         {
             Grid.SetColumn(element, column);
             Grid.SetRow(element, row);
-            RoomDateGrid.Children.Add(element);
+            grid.Children.Add(element);
         }
 
-        private Button CreateButton(string text, int column, int row, int columnSpan, Action onClickAction)
+        private Button CreateHeaderButton(string text, int column, int row, int columnSpan, Action onClickAction)
         {
             Button newButton = new Button();
             newButton.Click += (object sender, RoutedEventArgs e) =>
@@ -797,11 +819,11 @@ namespace Hotel.View
             newButton.VerticalAlignment = VerticalAlignment.Center;
             newButton.HorizontalAlignment = HorizontalAlignment.Center;
             Grid.SetColumnSpan(newButton, columnSpan);
-            AddToGrid(column, row, newButton);
+            AddToHeaderGrid(column, row, newButton);
             return newButton;
         }
 
-        private TextBlock CreateTextBlock(string text, bool bold, int column, int row)
+        private TextBlock CreateTextBlock(string text, bool bold, int column, int row, Grid grid)
         {
             TextBlock newBlock = new TextBlock();
             newBlock.Text = text;
@@ -810,7 +832,7 @@ namespace Hotel.View
             newBlock.Foreground = new SolidColorBrush(Colors.Black);
             newBlock.VerticalAlignment = VerticalAlignment.Center;
             newBlock.HorizontalAlignment = HorizontalAlignment.Center;
-            AddToGrid(column, row, newBlock);
+            AddToGrid(column, row, newBlock, grid);
             return newBlock;
         }
         #endregion

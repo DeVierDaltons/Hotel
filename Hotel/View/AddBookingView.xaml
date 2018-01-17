@@ -12,7 +12,11 @@
             </ListBox>
             <Button Width="200" Height="50" Command="{Binding AddBookingCommand}" Content="Save"></Button>
         </WrapPanel>
-        <Grid Name="RoomDateGrid">
-        </Grid>
+        <StackPanel Grid.IsSharedSizeScope="True">
+            <Grid Name="HeaderGrid" />
+            <ScrollViewer Height="600">
+                <Grid Name="RoomDateGrid" />
+            </ScrollViewer>
+        </StackPanel>
     </DockPanel>
 </UserControl>
