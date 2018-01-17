@@ -33,5 +33,10 @@ namespace Hotel.View
         {
             (DataContext as GuestsViewModel).SwitchToBookingTab.Invoke();
         }
-    }
+
+        private void dg_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            (DataContext as GuestsViewModel).StartEditingGuest(GuestsList.SelectedItem);
+        }
+            }
 }
