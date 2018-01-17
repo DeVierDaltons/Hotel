@@ -538,30 +538,37 @@ namespace Hotel.View
             int column = 0;
             var includedCheckbox = CreateCheckBox(SelectedRooms.Contains(room), column++, row);
             RowElementsForRoom[room].uiElements.Add(includedCheckbox);
+
             RoutedEventHandler checkChangeClosure = (object sender, RoutedEventArgs e) =>
             {
                 CheckBox box = (CheckBox)sender;
                 CheckBoxChanged(box.IsChecked.Value, room);
             };
+
             includedCheckbox.Checked += checkChangeClosure;
             includedCheckbox.Unchecked += checkChangeClosure;
             IncludedCheckBoxes.Add(room, includedCheckbox);
+
             var numberText = CreateTextBlock(room.RoomNumber, false, column++, row);
             var numberBinding = MakeOneWayBinding(room, nameof(room.RoomNumber));
             numberText.SetBinding(TextBlock.TextProperty, numberBinding);
             RowElementsForRoom[room].uiElements.Add(numberText);
+
             var qualityText = CreateTextBlock(room.Quality.ToString(), false, column++, row);
             var qualityBinding = MakeOneWayBinding(room, nameof(room.Quality));
             qualityText.SetBinding(TextBlock.TextProperty, qualityBinding);
             RowElementsForRoom[room].uiElements.Add(qualityText);
+
             var bedsText = CreateTextBlock("", false, column++, row);
             var bedsBinding = MakeOneWayBinding(room, nameof(room.Beds));
             bedsText.SetBinding(TextBlock.TextProperty, bedsBinding);
             RowElementsForRoom[room].uiElements.Add(bedsText);
+
             var priceText = CreateTextBlock(room.PricePerDay.ToString(), false, column++, row);
             var priceBinding = MakeOneWayBinding(room, nameof(room.PricePerDay));
             priceText.SetBinding(TextBlock.TextProperty, priceBinding);
             RowElementsForRoom[room].uiElements.Add(priceText);
+
             var checkbox = CreateCheckBox(room.HasNiceView, column++, row);
             var viewBinding = MakeOneWayBinding(room, nameof(room.HasNiceView));
             checkbox.SetBinding(ToggleButton.IsCheckedProperty, viewBinding);
