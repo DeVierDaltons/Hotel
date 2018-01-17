@@ -18,9 +18,7 @@ namespace Hotel
     public partial class MainWindow : Window
     {
         [Dependency("GuestsViewModel")]
-        public IViewModel guestsViewModel {
-            get;
-            set; }
+        public IViewModel guestsViewModel { get; set; }
 
         [Dependency("RoomViewModel")]
         public IViewModel RoomViewModel { get; set; }
@@ -57,7 +55,6 @@ namespace Hotel
         public void SetupBookingTab( )
         {
             BookingExplorerTab.DataContext = BookingViewModel;
-            
         }
 
         public void SwitchToBookingTab()

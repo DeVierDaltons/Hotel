@@ -80,7 +80,6 @@
             </DataGrid>
         </Grid>
         <Grid Grid.Column="1">
-            <Label>hi</Label>
             <views:AddBookingView Loaded="AddBookingView_Loaded" DataContext="{Binding AddBookingViewDataContext, NotifyOnSourceUpdated=True}"></views:AddBookingView>
         </Grid>
     </Grid>
