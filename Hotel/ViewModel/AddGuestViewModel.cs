@@ -83,13 +83,20 @@ namespace Hotel.ViewModel
 
         private ICommand GuestCommand;
 
+        public ICommand CancelCommand {
+            get;
+            set;
+        }
+
         #endregion Properties
 
-        public AddGuestViewModel(ICommand guestCommand, Guest currentGuestData, Action afterSubmitAction)
+
+        public AddGuestViewModel(ICommand guestCommand, Action cancelAction, Guest currentGuestData, Action afterSubmitAction)
         {
             Guest = new Guest();
             Guest.CopyDeltaProperties(currentGuestData);
             GuestCommand = guestCommand;
+            CancelCommand = new ActionCommand(cancelAction);
             SubmitCommand = new RelayCommand(OnSubmitClicked, (_) => ValidateInput());
             AfterSubmitAction = afterSubmitAction;
         }

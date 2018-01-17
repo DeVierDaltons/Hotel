@@ -22,11 +22,9 @@
         </StackPanel>
 
         <StackPanel Grid.Row="2" Margin="4" Orientation="Horizontal" HorizontalAlignment="Right">
-            <Button Content="Add Guest" Click="OnAddGuestClicked" Margin="4,0"/>
-            <Button Content="Edit Selected Guest" IsEnabled="{Binding HasSelectedGuest, NotifyOnSourceUpdated=True}" Click="OnEditGuestClicked"  Margin="4,0"/>
-            <Button Content="View bookings" IsEnabled="{Binding HasSelectedGuest, NotifyOnSourceUpdated=True}" Click="Button_Click"  Margin="4,0"/>
+            <Button Content="View bookings of selected Guest" IsEnabled="{Binding HasSelectedGuest, NotifyOnSourceUpdated=True}" Click="Button_Click"  Margin="4,0"/>
         </StackPanel>
-        <DataGrid ItemsSource="{Binding DisplayedGuests, Mode=TwoWay}" SelectedItem="{Binding SelectedGuest, Mode=TwoWay}" Name="GuestsList" Grid.Row="1" AutoGenerateColumns="False" IsReadOnly="True" Margin="4" >
+        <DataGrid ItemsSource="{Binding DisplayedGuests, Mode=TwoWay}" SelectedItem="{Binding SelectedGuest, Mode=TwoWay}" Name="GuestsList" Grid.Row="1" AutoGenerateColumns="False" IsReadOnly="True" Margin="4" SelectionChanged="dg_SelectionChanged">
             <DataGrid.Columns>
                 <DataGridTextColumn Binding="{Binding FirstName}" Header="First name"/>
                 <DataGridTextColumn Binding="{Binding LastName}" Header="Last name"/>
@@ -39,7 +37,7 @@
                 <DataGridTextColumn Binding="{Binding ICEPhoneNumber}" Header="ICE Phone number"/>
             </DataGrid.Columns>
         </DataGrid>
-        <GroupBox Grid.RowSpan="3" Grid.Column="1" Margin="4,4,0,0"  Header="Guest" Height="Auto" VerticalAlignment="Top">
+        <GroupBox Grid.RowSpan="3" Grid.Column="1" Margin="4,4,0,0" Header="{Binding GroupBoxName}" Height="Auto" VerticalAlignment="Top">
             <StackPanel>
                 <view:GuestDetailView DataContext="{Binding CurrentGuest}"/>
             </StackPanel>

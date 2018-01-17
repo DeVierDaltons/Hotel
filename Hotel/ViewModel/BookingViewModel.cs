@@ -58,6 +58,7 @@ namespace Hotel.ViewModel
             bookings.CollectionChanged += Bookings_CollectionChanged;
             FilterDisplayedBookings();
             SetupAddBookingViewModel(bookings, rooms, guests);
+            IsRemoveFilterButtonVisible = Visibility.Hidden;
         }
 
         public void SetupAddBookingViewModel(RepositoryBackedObservableCollection<Booking> bookings, RepositoryBackedObservableCollection<Room> rooms, RepositoryBackedObservableCollection<Guest> guests)
@@ -114,11 +115,11 @@ namespace Hotel.ViewModel
         }
 
         #region FilterProperties
-        private Visibility _IsRemoveFilterButtonVisible;
+        private Visibility _isRemoveFilterButtonVisible;
         public Visibility IsRemoveFilterButtonVisible
         {
-            get { return _IsRemoveFilterButtonVisible; }
-            set { _IsRemoveFilterButtonVisible = value; OnPropertyChanged(); }
+            get { return _isRemoveFilterButtonVisible; }
+            set { _isRemoveFilterButtonVisible = value; OnPropertyChanged(); }
         }
 
         private string _filterString;
@@ -131,62 +132,62 @@ namespace Hotel.ViewModel
             }
         }
 
-        private bool _ShowReserved = true;
+        private bool _showReserved = true;
         public bool ShowReservedFilter
         {
-            get { return _ShowReserved; }
+            get { return _showReserved; }
             set
             {
-                _ShowReserved = value;
+                _showReserved = value;
                 OnPropertyChanged();
                 FilterDisplayedBookings();
             }
         }
 
-        private bool _ShowCancelled = false;
+        private bool _showCancelled = false;
         public bool ShowCancelledFilter
         {
-            get { return _ShowCancelled; }
+            get { return _showCancelled; }
             set
             {
-                _ShowCancelled = value;
+                _showCancelled = value;
                 OnPropertyChanged();
                 FilterDisplayedBookings();
             }
         }
 
-        private bool _ShowCheckedIn = true;
+        private bool _showCheckedIn = true;
         public bool ShowCheckedInFilter
         {
-            get { return _ShowCheckedIn; }
+            get { return _showCheckedIn; }
             set
             {
-                _ShowCheckedIn = value;
+                _showCheckedIn = value;
                 OnPropertyChanged();
                 FilterDisplayedBookings();
             }
         }
 
-        private bool _ShowCheckedOut = false;
+        private bool _showCheckedOut = false;
         public bool ShowCheckedOutFilter
         {
-            get { return _ShowCheckedOut; }
+            get { return _showCheckedOut; }
             set
             {
-                _ShowCheckedOut = value;
+                _showCheckedOut = value;
                 OnPropertyChanged();
                 FilterDisplayedBookings();
             }
         }
 
 
-        private bool _ShowNoShow = false;
+        private bool _showNoShow = false;
         public bool ShowNoShowFilter
         {
-            get { return _ShowNoShow; }
+            get { return _showNoShow; }
             set
             {
-                _ShowNoShow = value;
+                _showNoShow = value;
                 OnPropertyChanged();
                 FilterDisplayedBookings();
             }

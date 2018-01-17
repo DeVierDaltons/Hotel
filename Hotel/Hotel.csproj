@@ -101,6 +101,7 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Compile Include="Command\ActionCommand.cs" />
     <Compile Include="Command\AddBookingCommand.cs" />
     <Compile Include="Command\AddRoomCommand.cs" />
     <Compile Include="DataAccessObjects\NHibernateRepository.cs" />

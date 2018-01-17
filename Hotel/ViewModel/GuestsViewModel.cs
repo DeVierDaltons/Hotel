@@ -13,6 +13,16 @@ namespace Hotel.ViewModel
     public class GuestsViewModel : INotifyPropertyChanged, IViewModel
     {
         #region Properties
+
+
+        private string _groupBoxName;
+
+        public string GroupBoxName
+        {
+            get { return _groupBoxName; }
+            set { _groupBoxName = value; OnPropertyChanged(); }
+        }
+
         private Hotel.ViewModel.AddGuestViewModel _currentGuest;
         public AddGuestViewModel CurrentGuest
         {
@@ -78,13 +88,15 @@ namespace Hotel.ViewModel
         public void StartEditingGuest(object selectedItem)
         {
             var guest = selectedItem as Guest;
-            CurrentGuest = new AddGuestViewModel(new EditGuestCommand(guest), guest, null);
+            GroupBoxName = string.Format("Editing {0}",guest.FirstName);
+            CurrentGuest = new AddGuestViewModel(new EditGuestCommand(guest), () => { StartAddingGuest(); }, guest, null);
         }
 
         public void StartAddingGuest()
         {
             var guest = new Guest();
-            CurrentGuest = new AddGuestViewModel(new EditGuestCommand(guest), guest, () =>
+            GroupBoxName = "New Guest";
+            CurrentGuest = new AddGuestViewModel(new EditGuestCommand(guest), () => { StartAddingGuest(); }, guest, () =>
             {
                 Guests.Add(guest);
                 StartAddingGuest();
