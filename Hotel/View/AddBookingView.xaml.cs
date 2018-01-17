@@ -259,13 +259,6 @@ namespace Hotel.View
             SelectionElements.Clear();
         }
 
-        private void ResetSelectionToNull()
-        {
-            DeselectAllRooms();
-            SelectedRange.StartDate = SelectedRange.EndDate = new DateTime(1, 1, 1);
-            SetSelectionElements();
-        }
-
         /// <summary>
         /// Sets the orange markers in the availability grid, and the date selection marker above the dates,
         /// and copies the data into the viewmodel
