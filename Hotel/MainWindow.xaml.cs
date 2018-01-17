@@ -35,7 +35,6 @@ namespace Hotel
         public void Initialize()
         {
             SetupGuestTab();
-            (guestsViewModel as GuestsViewModel).SwitchToBookingTab = SwitchToBookingTab;
             GuestExplorerTab.DataContext = guestsViewModel;
             SetupRoomTab();
             SetupBookingTab();
@@ -43,6 +42,7 @@ namespace Hotel
 
         private void SetupGuestTab()
         {
+            (guestsViewModel as GuestsViewModel).Initialize();
             (guestsViewModel as GuestsViewModel).SwitchToBookingTab = SwitchToBookingTab;
             GuestExplorerTab.DataContext = guestsViewModel;
         }

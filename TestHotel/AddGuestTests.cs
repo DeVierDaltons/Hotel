@@ -17,7 +17,8 @@ namespace TestHotel
         {
             IRepository<Guest> repository = new TestRepository<Guest>();
             RepositoryBackedObservableCollection<Guest> guestList = new RepositoryBackedObservableCollection<Guest>(repository);
-            GuestsViewModel viewModel = new GuestsViewModel(guestList);
+            GuestsViewModel viewModel = new GuestsViewModel();
+            viewModel.Initialize();
             viewModel.StartAddingGuest();
             viewModel.CurrentGuest.SubmitCommand.Execute(null);
             Assert.IsTrue(guestList.Count > 0);

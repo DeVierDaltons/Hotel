@@ -34,7 +34,6 @@ namespace Hotel.ViewModel
 
         private Guest filterGuest;
 
-
         private ObservableCollection<Booking> _displayedBookings = new ObservableCollection<Booking>();
 
         public ObservableCollection<Booking> DisplayedBookings
@@ -47,12 +46,12 @@ namespace Hotel.ViewModel
         
         public List<BookingStatus> BookingStatusFilters { get;} = new List<BookingStatus>();
 
-        [Unity.Attributes.Dependency("BookingRepository")]
+        [Unity.Attributes.Dependency]
         public RepositoryBackedObservableCollection<Booking> Bookings { get; set; }
-        [Unity.Attributes.Dependency("RoomRepository")]
-        public RepositoryBackedObservableCollection<Room> rooms { get; set; }
-        [Unity.Attributes.Dependency("GuestRepository")]
-        public RepositoryBackedObservableCollection<Guest> guests { get; set; }
+        [Unity.Attributes.Dependency]
+        public RepositoryBackedObservableCollection<Room> Rooms { get; set; }
+        [Unity.Attributes.Dependency]
+        public RepositoryBackedObservableCollection<Guest> Guests { get; set; }
         public BookingViewModel()
         { 
             InitializeStatusFilterList();
@@ -67,7 +66,7 @@ namespace Hotel.ViewModel
             }
             Bookings .CollectionChanged += Bookings_CollectionChanged;
             FilterDisplayedBookings();
-            SetupAddBookingViewModel(Bookings, rooms, guests);
+            SetupAddBookingViewModel(Bookings, Rooms, Guests);
         }
 
         public void SetupAddBookingViewModel(RepositoryBackedObservableCollection<Booking> bookings, RepositoryBackedObservableCollection<Room> rooms, RepositoryBackedObservableCollection<Guest> guests)

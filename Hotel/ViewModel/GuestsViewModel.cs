@@ -32,6 +32,7 @@ namespace Hotel.ViewModel
 
         private RepositoryBackedObservableCollection<Guest> _guests;
 
+        [Unity.Attributes.Dependency]
         public RepositoryBackedObservableCollection<Guest> Guests
         {
             get { return _guests; }
@@ -114,9 +115,15 @@ namespace Hotel.ViewModel
         }
 
 
-        public GuestsViewModel([Unity.Attributes.Dependency("GuestRepository")]IRepositoryBackedObservableCollection guestsRepositoryObservableCollection)
+        public GuestsViewModel()
         {
-            Guests = guestsRepositoryObservableCollection as RepositoryBackedObservableCollection<Guest>;
+        }
+
+        /// <summary>
+        /// DO NOT REMOVE, has to be done after the dependencies have been injected, so NOT in the constructor.
+        /// </summary>
+        public void Initialize()
+        {
             DisplayedGuests = Guests;
         }
 
