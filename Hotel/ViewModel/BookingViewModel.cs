@@ -34,7 +34,6 @@ namespace Hotel.ViewModel
 
         private Guest filterGuest;
 
-        private ObservableCollection<Booking> Bookings;
 
         private ObservableCollection<Booking> _displayedBookings = new ObservableCollection<Booking>();
 
@@ -47,18 +46,28 @@ namespace Hotel.ViewModel
         public event PropertyChangedEventHandler PropertyChanged;
         
         public List<BookingStatus> BookingStatusFilters { get;} = new List<BookingStatus>();
-        public BookingViewModel([Unity.Attributes.Dependency("BookingRepository")] RepositoryBackedObservableCollection<Booking> bookings, [Unity.Attributes.Dependency("RoomRepository")]RepositoryBackedObservableCollection<Room> rooms, [Unity.Attributes.Dependency("GuestRepository")]RepositoryBackedObservableCollection<Guest> guests)
+
+        [Unity.Attributes.Dependency("BookingRepository")]
+        public RepositoryBackedObservableCollection<Booking> Bookings { get; set; }
+        [Unity.Attributes.Dependency("RoomRepository")]
+        public RepositoryBackedObservableCollection<Room> rooms { get; set; }
+        [Unity.Attributes.Dependency("GuestRepository")]
+        public RepositoryBackedObservableCollection<Guest> guests { get; set; }
+        public BookingViewModel()
         { 
             InitializeStatusFilterList();
-            Bookings = bookings;
-            foreach(Booking booking in Bookings)
+            IsRemoveFilterButtonVisible = Visibility.Hidden;
+        }
+
+        public void Initialize()
+        {
+            foreach (Booking booking in Bookings)
             {
                 booking.PropertyChanged += InvalidateOnBookingStatusChanged;
             }
-            bookings.CollectionChanged += Bookings_CollectionChanged;
+            Bookings .CollectionChanged += Bookings_CollectionChanged;
             FilterDisplayedBookings();
-            SetupAddBookingViewModel(bookings, rooms, guests);
-            IsRemoveFilterButtonVisible = Visibility.Hidden;
+            SetupAddBookingViewModel(Bookings, rooms, guests);
         }
 
         public void SetupAddBookingViewModel(RepositoryBackedObservableCollection<Booking> bookings, RepositoryBackedObservableCollection<Room> rooms, RepositoryBackedObservableCollection<Guest> guests)
@@ -114,6 +123,20 @@ namespace Hotel.ViewModel
             }
         }
 
+       
+
+        public void OnPropertyChanged([CallerMemberName] string name = "")
+        {
+            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(name));
+        }
+        
+        public void InvalidateOnBookingStatusChanged(object sender, PropertyChangedEventArgs e)
+        {
+            if(e.PropertyName == nameof(Booking.BookingStatus))
+            {
+                FilterDisplayedBookings();
+            }
+        }
         #region FilterProperties
         private Visibility _isRemoveFilterButtonVisible;
         public Visibility IsRemoveFilterButtonVisible
@@ -126,7 +149,8 @@ namespace Hotel.ViewModel
         public string FilteredGuestString
         {
             get { return _filterString; }
-            set {
+            set
+            {
                 _filterString = value;
                 OnPropertyChanged();
             }
@@ -193,19 +217,6 @@ namespace Hotel.ViewModel
             }
         }
         #endregion FilterProperties
-
-        public void OnPropertyChanged([CallerMemberName] string name = "")
-        {
-            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(name));
-        }
-        
-        public void InvalidateOnBookingStatusChanged(object sender, PropertyChangedEventArgs e)
-        {
-            if(e.PropertyName == nameof(Booking.BookingStatus))
-            {
-                FilterDisplayedBookings();
-            }
-        }
 
         public void FilterDisplayedBookings()
         {

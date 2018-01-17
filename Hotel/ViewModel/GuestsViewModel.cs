@@ -13,8 +13,6 @@ namespace Hotel.ViewModel
     public class GuestsViewModel : INotifyPropertyChanged, IViewModel
     {
         #region Properties
-
-
         private string _groupBoxName;
 
         public string GroupBoxName
