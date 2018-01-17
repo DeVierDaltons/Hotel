@@ -1,5 +1,6 @@
 ﻿using Hotel.DataAccessObjects;
 using Hotel.Repository;
+using NHibernate.Util;
 using System.Diagnostics;
 using Unity.Attributes;
 
@@ -25,7 +26,24 @@ namespace Hotel.Model
             Bookings = new RepositoryBackedObservableCollection<Booking>(BookingRepository);
          
         }
+        private void AddAllBookingsToRoom()
+        {
+            foreach(Booking booking in Bookings)
+            {
+                AddBookingToRoom(booking);
+            }
+        }
 
+        private void AddBookingToRoom(Booking booking)
+        {
+            booking.Rooms.ForEach(room => room.Bookings.Add(booking));
+        }
+
+        public void AddBooking(Booking booking)
+        {
+            AddBookingToRoom(booking);
+            Bookings.Add(booking);
+        }
 
         public void AddRoom(Room room)
         {

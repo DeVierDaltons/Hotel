@@ -1,6 +1,7 @@
 ﻿using Hotel.DataAccessObjects;
 using Hotel.Model;
 using Hotel.Repository;
+using Hotel.View;
 using Hotel.ViewModel;
 using System;
 using System.Collections.Generic;
@@ -30,14 +31,13 @@ namespace Hotel
 
         private void RegisterTypes(IUnityContainer container)
         {
-            container.RegisterType<IViewModel, AddRoomViewModel>("AddRoomViewModel");
+
             container.RegisterType<IViewModel, AddBookingViewModel>("AddBookingViewModel");
             container.RegisterType<IViewModel, AddGuestViewModel>("AddGuestViewModel");
 
             container.RegisterType<IViewModel, RoomViewModel>("RoomViewModel");
-            container.RegisterType<IViewModel, BookingViewModel>("BookingViewModel");
             container.RegisterType<IViewModel, GuestsViewModel>("GuestsViewModel");
-
+            container.RegisterType<IViewModel, BookingViewModel>("BookingViewModel");
             container.RegisterType<IRepository<Room>, NHibernateRepository<Room>>("NHibernateRepository");
             container.RegisterType<IRepository<Booking>, NHibernateRepository<Booking>>("NHibernateRepository");
             container.RegisterType<IRepository<Guest>, NHibernateRepository<Guest>>("NHibernateRepository");

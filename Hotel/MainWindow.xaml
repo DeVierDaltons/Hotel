@@ -11,6 +11,7 @@
     <Window.DataContext>
         <vm:MainWindowViewModel/>
     </Window.DataContext>
+    <view:DpiDecorator>
     <Grid>
         <TabControl x:Name="TabControl"><!--
             <TabItem Header="Add Guest" x:Name="AddGuestTab">
@@ -26,5 +27,6 @@
                 <view:BookingView />
             </TabItem>
         </TabControl>
-    </Grid>
+        </Grid>
+    </view:DpiDecorator>
 </Window>

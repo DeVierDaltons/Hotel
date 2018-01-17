@@ -3,9 +3,9 @@
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-        xmlns:local="clr-namespace:Hotel.ViewModel"
         xmlns:core="clr-namespace:System;assembly=mscorlib"
         xmlns:models="clr-namespace:Hotel.Model"
+             xmlns:views="clr-namespace:Hotel.View"
         mc:Ignorable="d"
         >
     <UserControl.Resources>
@@ -17,9 +17,17 @@
     </UserControl.Resources>
     <Grid>
         <Grid.ColumnDefinitions>
-            <ColumnDefinition Width="8*"></ColumnDefinition>
-            <ColumnDefinition Width="2*"></ColumnDefinition>
+            <ColumnDefinition Width="390"></ColumnDefinition>
+            <ColumnDefinition Width="auto"></ColumnDefinition>
         </Grid.ColumnDefinitions>
+        <GridSplitter Grid.Column="1" 
+                      Grid.Row="0"
+                      Grid.RowSpan="1" 
+                      HorizontalAlignment="Left" 
+                      VerticalAlignment="Stretch"
+                      Background="Black" 
+                      ShowsPreview="true"
+                      Width="5"/>
         <Grid Grid.Column="0">
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="3*"></ColumnDefinition>
@@ -29,7 +37,6 @@
                 <RowDefinition Height="1*"></RowDefinition>
                 <RowDefinition Height="10*"></RowDefinition>
             </Grid.RowDefinitions>
-
             <GroupBox Header="Status filter">
                 <Grid Grid.Row="0">
                 <Grid.ColumnDefinitions>
@@ -43,14 +50,13 @@
                         <RowDefinition Height="4*"></RowDefinition>
                     </Grid.RowDefinitions>
                     <CheckBox Grid.Row="1" Grid.Column="0" Content="Reserved" IsChecked="{Binding ShowReservedFilter, Mode=TwoWay}"></CheckBox>
-                    <CheckBox Grid.Row="1" Grid.Column="1" Content="Cacelled" IsChecked="{Binding ShowCancelledFilter, Mode=TwoWay}"></CheckBox>
+                    <CheckBox Grid.Row="1" Grid.Column="1" Content="Cancelled" IsChecked="{Binding ShowCancelledFilter, Mode=TwoWay}"></CheckBox>
                     <CheckBox Grid.Row="1" Grid.Column="2" Content="No show" IsChecked="{Binding ShowNoShowFilter, Mode=TwoWay}"></CheckBox>
                     <CheckBox Grid.Row="2" Grid.Column="0" Content="Checked in"  IsChecked="{Binding ShowCheckedInFilter, Mode=TwoWay}"></CheckBox>
                     <CheckBox Grid.Row="2" Grid.Column="1" Content="Checked out" IsChecked="{Binding ShowCheckedOutFilter, Mode=TwoWay}"></CheckBox>
                 </Grid>
             </GroupBox>
             <StackPanel Grid.Row="0" Grid.Column="2" Orientation="Horizontal" HorizontalAlignment="Left" VerticalAlignment="Bottom">
-
                 <Label  Content="Filtered by:" Visibility="{Binding IsRemoveFilterButtonVisible}" VerticalAlignment="Center" HorizontalAlignment="Left"></Label>
                 <Label  Content="{Binding FilteredGuestString}" VerticalAlignment="Center" HorizontalAlignment="Left"></Label>
                 <Button Content="Remove filter" VerticalAlignment="Center" HorizontalAlignment="Center" Click="Button_Click" Visibility="{Binding IsRemoveFilterButtonVisible}"></Button>
@@ -60,7 +66,7 @@
                     <DataGridTextColumn Binding="{Binding StartDayString}" Header="Start day" IsReadOnly="True" ></DataGridTextColumn>
                     <DataGridTextColumn Binding="{Binding EndDayString}" Header="End day" IsReadOnly="True" ></DataGridTextColumn>
                     <DataGridTextColumn Binding="{Binding GuestName}" Header="Guest name" IsReadOnly="True" ></DataGridTextColumn>
-                    <DataGridTextColumn Binding="{Binding RoomNumber}" Header="Room number" IsReadOnly="True" ></DataGridTextColumn>
+                    <DataGridTextColumn Binding="{Binding RoomsDescription}" Header="Room number" IsReadOnly="True" ></DataGridTextColumn>
                     <DataGridTemplateColumn Header="Status">
                         <DataGridTemplateColumn.CellTemplate>
                             <DataTemplate>
@@ -74,7 +80,8 @@
             </DataGrid>
         </Grid>
         <Grid Grid.Column="1">
-            <Frame Content="{Binding AddBookingView}"></Frame>
+            <Label>hi</Label>
+            <views:AddBookingView Loaded="AddBookingView_Loaded" DataContext="{Binding AddBookingViewDataContext, NotifyOnSourceUpdated=True}"></views:AddBookingView>
         </Grid>
     </Grid>
 </UserControl>

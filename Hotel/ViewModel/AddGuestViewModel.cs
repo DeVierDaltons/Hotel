@@ -88,7 +88,7 @@ namespace Hotel.ViewModel
         public AddGuestViewModel(ICommand guestCommand, Guest currentGuestData, Action afterSubmitAction)
         {
             Guest = new Guest();
-            Guest.CopyDelta(currentGuestData);
+            Guest.CopyDeltaProperties(currentGuestData);
             GuestCommand = guestCommand;
             SubmitCommand = new RelayCommand(OnSubmitClicked, (_) => ValidateInput());
             AfterSubmitAction = afterSubmitAction;
@@ -97,9 +97,9 @@ namespace Hotel.ViewModel
         private void OnSubmitClicked(object _)
         {
             GuestCommand.Execute(Guest);
-            AfterSubmitAction?.Invoke();
             if (AfterSubmitAction != null)
             {
+                AfterSubmitAction();
                 IsSaveButtonEnabled = false;
             }
             AfterSubmitAction = null;

@@ -16,18 +16,18 @@ namespace Hotel.Model
 
         public virtual event PropertyChangedEventHandler PropertyChanged;
 
-        private Guest _guest;
-        public virtual Guest Guest
+        private ICollection<Guest> _guests;
+        public virtual ICollection<Guest> Guests
         {
-            get { return _guest; }
-            set { _guest = value; OnPropertyChanged(); }
+            get { return _guests; }
+            set { _guests = value; OnPropertyChanged(); }
         }
 
-        private Room _room;
-        public virtual Room Room
+        private ICollection<Room> _rooms = new List<Room>();
+        public virtual ICollection<Room> Rooms
         {
-            get { return _room; }
-            set { _room = value; OnPropertyChanged(); }
+            get { return _rooms; }
+            set { _rooms = value; OnPropertyChanged(); }
         }
 
         private BookingPeriod _bookingPeriod;
@@ -44,6 +44,7 @@ namespace Hotel.Model
             get { return _Status; }
             set { _Status = value; OnPropertyChanged(); }
         }
+
         public virtual bool OverlapsWith(Booking booking)
         {
             return BookingPeriod.OverlapsWith(booking.BookingPeriod);
@@ -66,18 +67,17 @@ namespace Hotel.Model
 
         public virtual string GuestName
         {
-            get { return Guest.ToString(); }
+            get { return Guests.ToString(); }
         }
 
-        public virtual string RoomNumber
+        public virtual string RoomsDescription
         {
-            get { return Room.RoomNumber ?? "null"; }
+            get { return String.Join(", ", Rooms.ToList().ConvertAll(room => room.RoomNumber)); }
         }
 
-
-        public virtual void SetDates(SelectedDatesCollection selectedDates)
+        public virtual void SetDates(BookingPeriod selectedDates)
         {
-            BookingPeriod = new BookingPeriod(selectedDates.FirstOrDefault(), selectedDates.LastOrDefault());
+            BookingPeriod = new BookingPeriod(selectedDates.StartDate, selectedDates.EndDate);
         }
 
         public virtual void OnPropertyChanged([CallerMemberName] string name = "")

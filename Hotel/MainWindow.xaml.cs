@@ -28,14 +28,7 @@ namespace Hotel
         [Dependency("BookingViewModel")]
         public IViewModel BookingViewModel { get; set; }
 
-        [Dependency("AddBookingViewModel")]
-        public IViewModel AddBookingViewModel { get; set;}
 
-        [Dependency("AddRoomView")]
-        public AddRoomView AddRoomView { get; set; }
-
-        [Dependency("AddRoomViewModel")]
-        public IViewModel AddRoomViewModel { get; set; }
         public MainWindow()
         {
             InitializeComponent();
@@ -44,6 +37,8 @@ namespace Hotel
         public void Initialize()
         {
             SetupGuestTab();
+            (guestsViewModel as GuestsViewModel).SwitchToBookingTab = SwitchToBookingTab;
+            GuestExplorerTab.DataContext = guestsViewModel;
             SetupRoomTab();
             SetupBookingTab();
         }
@@ -56,21 +51,13 @@ namespace Hotel
 
         public void SetupRoomTab()
         {
-            //creating the rooms tab
-            AddRoomView addRoomView = new AddRoomView();
-            addRoomView.DataContext = AddRoomViewModel;
-            (RoomViewModel as RoomViewModel).AddRoomView = AddRoomView as AddRoomView;
             RoomExplorerTab.DataContext = RoomViewModel;
         }
 
         public void SetupBookingTab( )
         {
-            //Creating the tab for bookings with addbooking and modify booking views.
-            AddBookingView addBookingView = new AddBookingView();
-            addBookingView.DataContext = AddBookingViewModel;
-            BookingViewModel modifyBookingViewModel = BookingViewModel as BookingViewModel;
-            modifyBookingViewModel.AddBookingView = addBookingView;
-            BookingExplorerTab.DataContext = modifyBookingViewModel;
+            BookingExplorerTab.DataContext = BookingViewModel;
+            
         }
 
         public void SwitchToBookingTab()

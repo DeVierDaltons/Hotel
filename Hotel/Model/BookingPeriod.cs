@@ -74,6 +74,10 @@ namespace Hotel.Model
             return !DoesNotoverlapWith(compareWith);
         }
 
+        public bool IsValid()
+        {
+            return StartDate != null && EndDate != null && StartDate.Year > 1 && EndDate.Year > 1 && StartDate <= EndDate;
+        }
     }
 
 }

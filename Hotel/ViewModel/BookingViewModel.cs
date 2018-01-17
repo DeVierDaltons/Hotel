@@ -3,67 +3,91 @@ using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Windows.Controls;
 using Hotel.View;
 using System.Windows;
-using System.Windows.Media;
 using System.ComponentModel;
 using System.Runtime.CompilerServices;
 using System.Windows.Input;
 using Hotel.Extensions;
 using Hotel.Repository;
+using NHibernate.Util;
 
 namespace Hotel.ViewModel
 {
     public class BookingViewModel : INotifyPropertyChanged, IViewModel
     {
-
-
         private AddBookingView _addBookingView;
 
         public AddBookingView AddBookingView
         {
             get { return _addBookingView; }
-            set { _addBookingView = value; }
+            set { _addBookingView = value; OnPropertyChanged(); }
         }
+
+        private AddBookingViewModel _AddBookingViewDataContext;
+
+        public AddBookingViewModel AddBookingViewDataContext
+        {
+            get { return _AddBookingViewDataContext; }
+            set { _AddBookingViewDataContext = value; OnPropertyChanged(); }
+        }
+
+        private Guest filterGuest;
+
         private ObservableCollection<Booking> Bookings;
 
-        private ObservableCollection<Booking> _DisplayedBookings;
+        private ObservableCollection<Booking> _displayedBookings = new ObservableCollection<Booking>();
 
         public ObservableCollection<Booking> DisplayedBookings
         {
-            get { return _DisplayedBookings; }
-            set { _DisplayedBookings = value; OnPropertyChanged(); }
+            get { return _displayedBookings; }
+            set { _displayedBookings = value; OnPropertyChanged(); }
         }
 
         public event PropertyChangedEventHandler PropertyChanged;
-
+        
         public List<BookingStatus> BookingStatusFilters { get;} = new List<BookingStatus>();
-
-        public List<KeyValuePair<BookingStatus, Func<bool>>> StatusFiltersList { get; set; } = new List<KeyValuePair<BookingStatus, Func<bool>>>();
-        public BookingViewModel([Unity.Attributes.Dependency("BookingRepository")]RepositoryBackedObservableCollection<Booking> bookings)
-        {
+        public BookingViewModel([Unity.Attributes.Dependency("BookingRepository")] RepositoryBackedObservableCollection<Booking> bookings, [Unity.Attributes.Dependency("RoomRepository")]RepositoryBackedObservableCollection<Room> rooms, [Unity.Attributes.Dependency("GuestRepository")]RepositoryBackedObservableCollection<Guest> guests)
+        { 
             InitializeStatusFilterList();
-            
             Bookings = bookings;
-            DisplayedBookings = new ObservableCollection<Booking>(bookings);
             foreach(Booking booking in Bookings)
             {
                 booking.PropertyChanged += InvalidateOnBookingStatusChanged;
             }
             bookings.CollectionChanged += Bookings_CollectionChanged;
-           
+            FilterDisplayedBookings();
+            SetupAddBookingViewModel(bookings, rooms, guests);
         }
+
+        public void SetupAddBookingViewModel(RepositoryBackedObservableCollection<Booking> bookings, RepositoryBackedObservableCollection<Room> rooms, RepositoryBackedObservableCollection<Guest> guests)
+        {
+           
+            AddBookingViewModel viewModel = new AddBookingViewModel();
+            viewModel.Bookings = bookings;
+            viewModel.RoomsRepo = rooms;
+            viewModel.AllGuests = guests;
+            AddBookingViewDataContext = viewModel;
+        }
+
+        public void SetupAddBookingView(AddBookingView view)
+        {
+            view.ViewModel = AddBookingViewDataContext;
+            view.DataContext = AddBookingViewDataContext;
+            view.Initialize();
+            AddBookingView = view;
+        }
+
+        public Dictionary<BookingStatus, Func<bool>> StatusFiltersList = new Dictionary<BookingStatus, Func<bool>>();
+          
 
         private void InitializeStatusFilterList()
         {
-            StatusFiltersList.Add(new KeyValuePair<BookingStatus, Func<bool>>(BookingStatus.Cancelled, () => { return ShowCancelledFilter; }));
-            StatusFiltersList.Add(new KeyValuePair<BookingStatus, Func<bool>>(BookingStatus.CheckedIn, () => { return ShowCheckedInFilter; }));
-            StatusFiltersList.Add(new KeyValuePair<BookingStatus, Func<bool>>(BookingStatus.CheckedOut, () => { return ShowCheckedOutFilter; }));
-            StatusFiltersList.Add(new KeyValuePair<BookingStatus, Func<bool>>(BookingStatus.NoShow, () => { return ShowNoShowFilter; }));
-            StatusFiltersList.Add(new KeyValuePair<BookingStatus, Func<bool>>(BookingStatus.Reserved, () => { return ShowReservedFilter; }));
+            StatusFiltersList.Add(BookingStatus.Cancelled, () => { return ShowCancelledFilter; });
+            StatusFiltersList.Add(BookingStatus.CheckedIn, () => { return ShowCheckedInFilter; });
+            StatusFiltersList.Add(BookingStatus.CheckedOut, () => { return ShowCheckedOutFilter; });
+            StatusFiltersList.Add(BookingStatus.NoShow, () => { return ShowNoShowFilter; });
+            StatusFiltersList.Add(BookingStatus.Reserved, () => { return ShowReservedFilter; });
         }
 
         /// <summary>
@@ -74,64 +98,40 @@ namespace Hotel.ViewModel
         /// <param name="e"></param>
         private void Bookings_CollectionChanged(object sender, System.Collections.Specialized.NotifyCollectionChangedEventArgs e)
         {
-            
             if (e.NewItems.Count > 0) {
                 var newBooking = (e.NewItems[0] as Booking);
                 newBooking.PropertyChanged += InvalidateOnBookingStatusChanged;
-                foreach (KeyValuePair<BookingStatus, Func<bool>> kvp in StatusFiltersList)
+                if( ShouldShowBooking(newBooking))
                 {
-                    //check if the item should be displayed or not, if not return otherwise add it to the displayed items.
-                    if (newBooking.BookingStatus == kvp.Key && !kvp.Value())
-                    {
-                        return;
-                    }
-                }
-                if (!DisplayedBookings.Contains(newBooking))
-                {
-                    DisplayedBookings.Add(newBooking);
+                    AddBookingToDisplayedIfNew(newBooking);
                 }
             }
             else if (e.OldItems.Count > 0)
             {
                 var oldBooking = (e.OldItems[0] as Booking);
-                if (DisplayedBookings.Contains(oldBooking))
-                {
-                    DisplayedBookings.Remove(oldBooking);
-                }
+                RemoveBookingFromDisplayedIfPossible(oldBooking);
             }
         }
 
         #region FilterProperties
         private Visibility _IsRemoveFilterButtonVisible;
-
         public Visibility IsRemoveFilterButtonVisible
         {
             get { return _IsRemoveFilterButtonVisible; }
             set { _IsRemoveFilterButtonVisible = value; OnPropertyChanged(); }
         }
 
-        private string _FilterString;
-
+        private string _filterString;
         public string FilteredGuestString
         {
-            get { return _FilterString; }
+            get { return _filterString; }
             set {
-                _FilterString = value;
-                if(value == "")
-                {
-                    IsRemoveFilterButtonVisible = Visibility.Hidden;
-                    filterGuest = null;
-                }
-                else
-                {
-                    IsRemoveFilterButtonVisible = Visibility.Visible;
-                }
+                _filterString = value;
                 OnPropertyChanged();
             }
         }
 
         private bool _ShowReserved = true;
-
         public bool ShowReservedFilter
         {
             get { return _ShowReserved; }
@@ -139,11 +139,11 @@ namespace Hotel.ViewModel
             {
                 _ShowReserved = value;
                 OnPropertyChanged();
+                FilterDisplayedBookings();
             }
         }
 
         private bool _ShowCancelled = false;
-
         public bool ShowCancelledFilter
         {
             get { return _ShowCancelled; }
@@ -151,11 +151,11 @@ namespace Hotel.ViewModel
             {
                 _ShowCancelled = value;
                 OnPropertyChanged();
+                FilterDisplayedBookings();
             }
         }
 
         private bool _ShowCheckedIn = true;
-
         public bool ShowCheckedInFilter
         {
             get { return _ShowCheckedIn; }
@@ -163,11 +163,11 @@ namespace Hotel.ViewModel
             {
                 _ShowCheckedIn = value;
                 OnPropertyChanged();
+                FilterDisplayedBookings();
             }
         }
 
         private bool _ShowCheckedOut = false;
-
         public bool ShowCheckedOutFilter
         {
             get { return _ShowCheckedOut; }
@@ -175,6 +175,7 @@ namespace Hotel.ViewModel
             {
                 _ShowCheckedOut = value;
                 OnPropertyChanged();
+                FilterDisplayedBookings();
             }
         }
 
@@ -187,6 +188,7 @@ namespace Hotel.ViewModel
             {
                 _ShowNoShow = value;
                 OnPropertyChanged();
+                FilterDisplayedBookings();
             }
         }
         #endregion FilterProperties
@@ -194,10 +196,6 @@ namespace Hotel.ViewModel
         public void OnPropertyChanged([CallerMemberName] string name = "")
         {
             PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(name));
-            if (name.Contains("Filter"))
-            {
-                FilterDisplayedBookings();
-            }
         }
         
         public void InvalidateOnBookingStatusChanged(object sender, PropertyChangedEventArgs e)
@@ -208,43 +206,54 @@ namespace Hotel.ViewModel
             }
         }
 
-        private Guest filterGuest;
-
         public void FilterDisplayedBookings()
         {
-           
-                DisplayedBookings = new ObservableCollection<Booking>();
-            List<Booking> filteredBookings = Bookings.Where(x =>
+            DisplayedBookings = new ObservableCollection<Booking>();
+            IEnumerable<Booking> filteredBookings = Bookings.Where(ShouldShowBooking);
+            filteredBookings.ForEach(x =>
             {
-                foreach (KeyValuePair<BookingStatus, Func<bool>> kvp in StatusFiltersList)
-                {
-                    //the filter is set to true so filter for this bookingstatus
-                    if (x.BookingStatus == kvp.Key)
-                    {
-                        return kvp.Value();
-                    }
-                }
-                return false;
-            }).ToList();
-            filteredBookings.ForEach(x => {
-                if (!DisplayedBookings.Contains(x))
-                {
-                    DisplayedBookings.Add(x);
-                }
+                AddBookingToDisplayedIfNew(x);
             });
             if (filterGuest != null)
             {
-               
                 DisplayedBookings = new ObservableCollection<Booking>(DisplayedBookings.Where(x =>
-                   x.Guest == filterGuest
+                   x.Guests.Contains(filterGuest)
                 ));
             }
+        }
+
+        private bool ShouldShowBooking(Booking booking)
+        {
+            return StatusFiltersList[booking.BookingStatus]();
+        }
+
+        private void AddBookingToDisplayedIfNew(Booking x)
+        {
+            if (!DisplayedBookings.Contains(x))
+            {
+                DisplayedBookings.Add(x);
+            }
+        }
+
+        private void RemoveBookingFromDisplayedIfPossible(Booking x)
+        {
+            DisplayedBookings.Remove(x); // ignore result that says whether item was removed
         }
 
         public void FilterDisplayedBookingsByGuest(Guest g)
         {
             filterGuest = g;
             FilteredGuestString = filterGuest.FirstName + " " + filterGuest.LastName;
+            IsRemoveFilterButtonVisible = Visibility.Visible;
+            FilterDisplayedBookings();
+        }
+
+        public void RemoveGuestFilter()
+        {
+            filterGuest = null;
+            FilteredGuestString = "";
+            IsRemoveFilterButtonVisible = Visibility.Hidden;
+            FilterDisplayedBookings();
         }
     }
 }

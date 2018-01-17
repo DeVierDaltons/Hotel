@@ -4,15 +4,22 @@ using System.ComponentModel;
 using System.Runtime.CompilerServices;
 using System;
 using System.Linq;
-using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using Unity.Attributes;
+using Hotel.View;
 
 namespace Hotel.ViewModel
 {
     public class GuestsViewModel : INotifyPropertyChanged, IViewModel
     {
         #region Properties
+        private Hotel.ViewModel.AddGuestViewModel _currentGuest;
+        public AddGuestViewModel CurrentGuest
+        {
+            get { return _currentGuest; }
+            set { _currentGuest = value; OnPropertyChanged(); }
+        }
+
         public event PropertyChangedEventHandler PropertyChanged;
 
         private RepositoryBackedObservableCollection<Guest> _guests;
@@ -66,36 +73,24 @@ namespace Hotel.ViewModel
 
         public void ViewBookingsForGuest()
         {
-
         }
 
-        public void EditGuest(object selectedItem, System.Windows.Controls.StackPanel stackpanel)
+        public void StartEditingGuest(object selectedItem)
         {
             var guest = selectedItem as Guest;
-            var GuestDetailView = new View.GuestDetailView();
-
-            if (guest == null)
-            {
-                guest = new Guest();
-                GuestDetailView.DataContext = new AddGuestViewModel(new EditGuestCommand(guest), guest, () =>
-                {
-                    Guests.Add(guest);
-                    AddGuest(stackpanel);
-                });
-            }
-            else
-            {
-                GuestDetailView.DataContext = new AddGuestViewModel(new EditGuestCommand(guest), guest, null);
-            }
-           
-            stackpanel.Children.Clear();
-            stackpanel.Children.Add(GuestDetailView);
+            CurrentGuest = new AddGuestViewModel(new EditGuestCommand(guest), guest, null);
         }
 
-        public void AddGuest(System.Windows.Controls.StackPanel stackpanel)
+        public void StartAddingGuest()
         {
-            EditGuest(null,stackpanel);
+            var guest = new Guest();
+            CurrentGuest = new AddGuestViewModel(new EditGuestCommand(guest), guest, () =>
+            {
+                Guests.Add(guest);
+                StartAddingGuest();
+            });
         }
+
         public void FilterGuests()
         {
             DisplayedGuests = new ObservableCollection<Guest>(Guests.Where(g =>

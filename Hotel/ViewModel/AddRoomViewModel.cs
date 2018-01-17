@@ -14,7 +14,6 @@ namespace Hotel.ViewModel
         public event PropertyChangedEventHandler PropertyChanged;
 
         #region Properties
-        public RepositoryBackedObservableCollection<Room> Rooms { get; set; }
         public ICommand AddRoomCommand { get; set; }
         public Room Room { get; set; } = new Room();
 
@@ -48,22 +47,26 @@ namespace Hotel.ViewModel
             set { Room.PricePerDay = value; OnNotifyPropertyChanged(); }
         }
         #endregion
-
-        public AddRoomViewModel([Unity.Attributes.Dependency("RoomRepository")] RepositoryBackedObservableCollection<Room> rooms)
+        Action Callback;
+        public AddRoomViewModel()
         {
-            Rooms = rooms;
             Beds = 1;
             AddRoomCommand = new AddRoomCommand(this);
         }
 
+        public void SetCallback(Action callback)
+        {
+            this.Callback = callback;
+        }
+
         public bool ValidateInput()
         {
-            return !string.IsNullOrEmpty(Room.RoomNumber);
+            return !string.IsNullOrEmpty(Room.RoomNumber) && Beds >= 0;
         }
 
         public void AddRoom()
         {
-            Rooms.Add(Room);
+            Callback?.Invoke();
             Room = new Room();
             ClearAllFields();
         }
