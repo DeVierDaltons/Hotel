@@ -31,10 +31,10 @@ namespace Hotel
 
         private void RegisterTypes(IUnityContainer container)
         {
-
-            container.RegisterType<IRepositoryBackedObservableCollection, RepositoryBackedObservableCollection<Guest>>("GuestRepository");
-            container.RegisterType<IRepositoryBackedObservableCollection, RepositoryBackedObservableCollection<Booking>>("BookingRepository");
-            container.RegisterType<IRepositoryBackedObservableCollection, RepositoryBackedObservableCollection<Room>>("RoomRepository");
+           
+            container.RegisterInstance(typeof(RepositoryBackedObservableCollection<Guest>), new RepositoryBackedObservableCollection<Guest>(new NHibernateRepository<Guest>()));
+            container.RegisterInstance(typeof(RepositoryBackedObservableCollection<Booking>), new RepositoryBackedObservableCollection<Booking>(new NHibernateRepository<Booking>()));
+            container.RegisterInstance(typeof(RepositoryBackedObservableCollection<Room>), new RepositoryBackedObservableCollection<Room>(new NHibernateRepository<Room>()));
 
             container.RegisterType<IViewModel, AddBookingViewModel>("AddBookingViewModel");
             container.RegisterType<IViewModel, AddGuestViewModel>("AddGuestViewModel");

@@ -26,16 +26,15 @@ namespace Hotel.ViewModel
         public RepositoryBackedObservableCollection<Booking> Bookings
         {
             get { return _Bookings; }
-            set { _Bookings = value; }
+            set { _Bookings = value; OnPropertyChanged(); }
         }
 
        
         private RepositoryBackedObservableCollection<Room> _RoomsRepo;
-        
         public RepositoryBackedObservableCollection<Room> RoomsRepo
         {
             get { return _RoomsRepo; }
-            set { _RoomsRepo = value; }
+            set { _RoomsRepo = value; OnPropertyChanged(); }
         }
         
         public RepositoryBackedObservableCollection<Guest> _AllGuests { get; set; }

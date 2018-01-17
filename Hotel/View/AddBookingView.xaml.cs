@@ -85,11 +85,6 @@ namespace Hotel.View
         /// All the UIElements that are dependent on the date range currently being shown
         /// </summary>
         private List<UIElement> DateDependentElements = new List<UIElement>();
-
-        /// <summary>
-        /// All the rooms
-        /// </summary>
-        private ObservableCollection<Room> Rooms;
         /// <summary>
         /// Dictionary linking each room to a checkbox; toggling this checkbox includes/removes the room from the booking selection.
         /// </summary>
@@ -147,7 +142,6 @@ namespace Hotel.View
 
         private void FillDateGrid(ObservableCollection<Room> rooms)
         {
-            Rooms = rooms;
             RoomDateGrid.ColumnDefinitions.Clear();
             for(int i = 0; i < HeaderColumns; ++i)
             {
@@ -160,13 +154,13 @@ namespace Hotel.View
             AddHeader();
             CreateDayLabels(dateStartColumn, dayNumberRow, dayNameRow, StartDate);
             AddGridRows();
-            Rooms.CollectionChanged += OnRoomsChanged;
+            ViewModel.RoomsRepo.CollectionChanged += OnRoomsChanged;
         }
 
         private void AddGridRows()
         {
             int row = HeaderRows;
-            foreach (Room room in Rooms)
+            foreach (Room room in ViewModel.RoomsRepo)
             {
                 AddGridRowForRoom(row, room);
                 ++row;
@@ -176,7 +170,7 @@ namespace Hotel.View
         private void AddAvailabilityForRooms()
         {
             int row = HeaderRows;
-            foreach (Room room in Rooms)
+            foreach (Room room in ViewModel.RoomsRepo)
             {
                 AddRoomAvailability(row, room);
                 ++row;
@@ -219,7 +213,7 @@ namespace Hotel.View
             if( e.NewItems != null)
             {
                 Room addedRoom = (Room)e.NewItems[0];
-                int row = HeaderRows + Rooms.Count - 1;
+                int row = HeaderRows + ViewModel.RoomsRepo.Count - 1;
                 AddGridRowForRoom(row, addedRoom);
             }
         }
@@ -285,7 +279,7 @@ namespace Hotel.View
                 int leftMargin = SelectedRange.StartDate >= viewPeriod.StartDate ? MarginForRoomDateSelectionElement : 0;
                 foreach (Room room in SelectedRooms)
                 {
-                    int row = HeaderRows + Rooms.IndexOf(room);
+                    int row = HeaderRows + ViewModel.RoomsRepo.IndexOf(room);
                     Canvas SelectionElement = new Canvas();
                     SelectionElement.Background = Brushes.Orange;
                     SelectionElement.Margin = new Thickness(leftMargin, 20, rightMargin, 10);
@@ -700,8 +694,8 @@ namespace Hotel.View
 
         private void SelectBetween(Room beginRoom, Room endRoom)
         {
-            int room1Index = Rooms.IndexOf(beginRoom);
-            int room2Index = Rooms.IndexOf(endRoom);
+            int room1Index = ViewModel.RoomsRepo.IndexOf(beginRoom);
+            int room2Index = ViewModel.RoomsRepo.IndexOf(endRoom);
             if( room1Index == -1 || room2Index == -1 )
             {
                 return;
@@ -710,7 +704,7 @@ namespace Hotel.View
             int endIndex = Math.Max(room1Index, room2Index);
             for(int i = beginIndex; i <= endIndex; ++i)
             {
-                Room roomToSelect = Rooms[i];
+                Room roomToSelect = ViewModel.RoomsRepo[i];
                 IncludedCheckBoxes[roomToSelect].IsChecked = true;
             }
         }
