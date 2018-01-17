@@ -66,16 +66,16 @@ namespace Hotel.ViewModel
             }
             Bookings .CollectionChanged += Bookings_CollectionChanged;
             FilterDisplayedBookings();
-            SetupAddBookingViewModel(Bookings, Rooms, Guests);
+            SetupAddBookingViewModel();
         }
 
-        public void SetupAddBookingViewModel(RepositoryBackedObservableCollection<Booking> bookings, RepositoryBackedObservableCollection<Room> rooms, RepositoryBackedObservableCollection<Guest> guests)
+        public void SetupAddBookingViewModel()
         {
            
             AddBookingViewModel viewModel = new AddBookingViewModel();
-            viewModel.Bookings = bookings;
-            viewModel.RoomsRepo = rooms;
-            viewModel.AllGuests = guests;
+            viewModel.Bookings = Bookings;
+            viewModel.RoomsRepo = Rooms;
+            viewModel.AllGuests = Guests;
             AddBookingViewDataContext = viewModel;
         }
 
