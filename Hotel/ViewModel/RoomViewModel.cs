@@ -7,8 +7,6 @@ namespace Hotel.ViewModel
 {
     public class RoomViewModel : IViewModel, INotifyPropertyChanged
     {
-       
-
         private AddRoomViewModel _AddRoomViewDataContext;
 
         public AddRoomViewModel AddRoomViewDataContext
@@ -16,7 +14,6 @@ namespace Hotel.ViewModel
             get { return _AddRoomViewDataContext; }
             set { _AddRoomViewDataContext = value; OnNotifyPropertyChanged(); }
         }
-
 
         private RepositoryBackedObservableCollection<Room> _Rooms;
 
@@ -47,8 +44,6 @@ namespace Hotel.ViewModel
                 Rooms.Add(AddRoomViewDataContext.Room);
             });
         }
-
-      
 
         private void OnNotifyPropertyChanged([CallerMemberName] string propertyName = "")
         {
