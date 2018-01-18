@@ -23,7 +23,7 @@
             </Grid.ColumnDefinitions>
 
             <Label Grid.Row="0" Grid.Column="0" Content="Room Number:" Grid.ColumnSpan="2"/>
-            <TextBox Grid.Row="0" Grid.Column="2" VerticalAlignment="Center" Margin="0,2" Validation.ErrorTemplate="{StaticResource validationErrorTemplate}">
+            <TextBox Grid.Row="0" Grid.Column="2" VerticalAlignment="Center" Margin="0, 14, 0, 0" Validation.ErrorTemplate="{StaticResource validationErrorTemplate}">
                 <TextBox.Text>
                     <Binding Path="RoomNumber" UpdateSourceTrigger="PropertyChanged">
                         <Binding.ValidationRules>
@@ -34,16 +34,16 @@
             </TextBox>
 
             <Label Grid.Row="1" Grid.Column="0" Content="Beds:" Grid.ColumnSpan="2"/>
-            <TextBox Grid.Row="1" Grid.Column="2" Text="{Binding Beds}" VerticalAlignment="Center" Margin="0,2"></TextBox>
+            <TextBox Grid.Row="1" Grid.Column="2" Text="{Binding Beds}" VerticalAlignment="Center" Margin="0, 14, 0, 0"></TextBox>
 
             <Label Grid.Row="2" Grid.Column="0" Content="Quality:" Grid.ColumnSpan="2"/>
-            <ComboBox Grid.Row="2" Grid.Column="2" Name="RoomQualityDropdown" SelectedItem="{Binding Quality}" VerticalAlignment="Center" Margin="0,2"/>
+            <ComboBox Grid.Row="2" Grid.Column="2" Name="RoomQualityDropdown" SelectedItem="{Binding Quality}" VerticalAlignment="Center" Margin="0, 14, 0, 0"/>
 
             <Label Grid.Row="3" Grid.Column="0" Content="Price per day:" Grid.ColumnSpan="2"/>
-            <TextBox Grid.Row="3" Grid.Column="2" Text="{Binding PricePerDay}" VerticalAlignment="Center" Margin="0,2"></TextBox>
+            <TextBox Grid.Row="3" Grid.Column="2" Text="{Binding PricePerDay}" VerticalAlignment="Center" Margin="0, 14, 0, 0"></TextBox>
 
-            <CheckBox Grid.Row="4" Grid.Column="2" IsChecked="{Binding HasNiceView}" Content="Has a nice view" VerticalAlignment="Center" HorizontalAlignment="Center" Margin="0,0,0,1"/>
-            <Button Grid.Row="5" Grid.ColumnSpan="3" Content="Save" Command="{Binding AddRoomCommand}" VerticalAlignment="Center" Margin="33,0"/>
+            <CheckBox Grid.Row="4" Grid.Column="2" IsChecked="{Binding HasNiceView}" Content="Has a nice view" VerticalAlignment="Center" HorizontalAlignment="Center" Margin="0, 14, 0, 0"/>
+            <Button Grid.Row="5" Grid.ColumnSpan="3" Content="Save" Command="{Binding AddRoomCommand}" VerticalAlignment="Center" Margin="33, 14, 33, 0"/>
         </Grid>
     </GroupBox>
 </UserControl>    

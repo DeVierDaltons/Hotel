@@ -7,7 +7,7 @@ namespace Hotel.UIValidators
         public override ValidationResult Validate
           (object value, System.Globalization.CultureInfo cultureInfo)
         {
-            if (value == null)
+            if (value.ToString() == "")
                 return new ValidationResult(false, "value cannot be empty.");
             else
             {
