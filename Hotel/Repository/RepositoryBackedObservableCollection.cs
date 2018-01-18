@@ -8,7 +8,7 @@ using Unity.Attributes;
 
 namespace Hotel.Repository
 {
-    public class RepositoryBackedObservableCollection<T> : ObservableCollection<T>, IRepositoryBackedObservableCollection where T : INotifyPropertyChanged
+    public class RepositoryBackedObservableCollection<T> : ObservableCollection<T> where T : INotifyPropertyChanged
     {
         private IRepository<T> repository;
 

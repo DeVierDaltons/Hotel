@@ -112,12 +112,10 @@
     <Compile Include="DataAccessObjects\NHibernateHelper.cs" />
     <Compile Include="DataAccessObjects\RoomMap.cs" />
     <Compile Include="Model\BookingStatus.cs" />
-    <Compile Include="Model\IHotelObject.cs" />
     <Compile Include="Model\IIdentifiable.cs" />
     <Compile Include="Model\Room.cs" />
     <Compile Include="Model\RoomQuality.cs" />
     <Compile Include="Repository\IRepository.cs" />
-    <Compile Include="Repository\IRepositoryBackedObservableCollection.cs" />
     <Compile Include="Repository\RepositoryBackedObservableCollection.cs" />
     <Compile Include="ViewModel\AddBookingViewModel.cs" />
     <Compile Include="ViewModel\AddRoomViewModel.cs" />
