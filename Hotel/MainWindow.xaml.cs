@@ -9,6 +9,7 @@ using System;
 using Hotel.View;
 using Unity.Attributes;
 using Hotel.Repository;
+using Hotel.DataAccessObjects;
 
 namespace Hotel
 {
@@ -25,11 +26,10 @@ namespace Hotel
 
         [Dependency("BookingViewModel")]
         public IViewModel BookingViewModel { get; set; }
-
-
         public MainWindow()
         {
             InitializeComponent();
+        
         }
 
         public void Initialize()

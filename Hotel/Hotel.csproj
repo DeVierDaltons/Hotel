@@ -128,7 +128,6 @@
     <Compile Include="View\AddRoomView.xaml.cs">
       <DependentUpon>AddRoomView.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Model\HotelManager.cs" />
     <Compile Include="Command\EditGuestCommand.cs" />
     <Compile Include="Command\RelayCommand.cs" />
     <Compile Include="ViewModel\AddGuestViewModel.cs" />
