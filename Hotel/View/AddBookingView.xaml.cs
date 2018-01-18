@@ -106,15 +106,49 @@ namespace Hotel.View
         public AddBookingView()
         {
             InitializeComponent();
-            //Application.Current.MainWindow.SizeChanged += AddBookingView_SizeChanged;
+            Application.Current.MainWindow.SizeChanged += AddBookingView_SizeChanged;
         }
 
         private void AddBookingView_SizeChanged(object sender, SizeChangedEventArgs e)
         {
-            if( e.NewSize.Width == 0d ) { return; }
-            int oldNumberOfDates = DatesToDisplay;
-            DatesToDisplay = Math.Max(12, (((int)e.NewSize.Width) - 780) / DateBlockSize);
-            //ModifyDatesAmount(oldNumberOfDates, DatesToDisplay);
+            if (e.NewSize.Width == 0d) { return; }
+            int newNumDates = Math.Max(12, (((int)e.NewSize.Width) - 740) / DateBlockSize);
+            SetNumDatesToDisplay(newNumDates);
+            RefreshMonthsPanel();
+            SetLaterButtonColumn();
+            CreateOrUpdateDayLabels();
+            ResetRoomDateSelectionElements();
+            ResetDateSelectionElement();
+        }
+
+        private void SetNumDatesToDisplay(int newNumDates)
+        {
+            int oldNumDates = DatesToDisplay;
+            DatesToDisplay = newNumDates;
+            if (oldNumDates > DatesToDisplay)
+            {
+                foreach (Dictionary<int, Canvas> dateFields in FieldForRoomDateOffset.Values)
+                {
+                    for (int i = DatesToDisplay; i < oldNumDates; ++i)
+                    {
+                        RoomDateGrid.Children.Remove(dateFields[i]);
+                        dateFields.Remove(i);
+                    }
+                }
+                RoomDateGrid.ColumnDefinitions.RemoveRange(DatesToDisplay, oldNumDates - DatesToDisplay);
+                HeaderGrid.ColumnDefinitions.RemoveRange(DatesToDisplay, oldNumDates - DatesToDisplay);
+            }
+            else if (DatesToDisplay > oldNumDates)
+            {
+                for (int i = oldNumDates; i < DatesToDisplay; ++i)
+                {
+                    foreach (Room room in Rooms)
+                    {
+                        CreateColouredField(room, i);
+                    }
+                    AddDateColumnDefinition();
+                }
+            }
         }
 
         public void Initialize()
@@ -167,9 +201,14 @@ namespace Hotel.View
             }
             for (int i = 0; i < DatesToDisplay; ++i)
             {
-                RoomDateGrid.ColumnDefinitions.Add(new ColumnDefinition() { Width = GridLength.Auto, MinWidth = DateBlockSize });
-                HeaderGrid.ColumnDefinitions.Add(new ColumnDefinition() { Width = GridLength.Auto, MinWidth = DateBlockSize });
+                AddDateColumnDefinition();
             }
+        }
+
+        private void AddDateColumnDefinition()
+        {
+            RoomDateGrid.ColumnDefinitions.Add(new ColumnDefinition() { Width = GridLength.Auto, MinWidth = DateBlockSize });
+            HeaderGrid.ColumnDefinitions.Add(new ColumnDefinition() { Width = GridLength.Auto, MinWidth = DateBlockSize });
         }
 
         private void AddGridRows()
@@ -184,12 +223,7 @@ namespace Hotel.View
 
         private void AddAvailabilityForRooms()
         {
-            int row = 0;
-            foreach (Room room in Rooms)
-            {
-                AddRoomAvailability(row, room);
-                ++row;
-            }
+            Rooms.ForEach(AddRoomAvailability);
         }
 
         private void AddGridRowForRoom(int row, Room room)
@@ -203,13 +237,14 @@ namespace Hotel.View
                 RoomDateGrid.RowDefinitions.Add(elements.rowDefinition);
                 RowElementsForRoom.Add(room, elements);
             }
-            AddRoomDescription(row, room);
-            AddRoomAvailability(row, room);
+            AddRoomDescription(room);
+            AddRoomAvailability(room);
         }
 
         private void RedrawAvailabilityForRoom(Room room)
         {
             DateTime date = StartDate;
+            int row = Rooms.IndexOf(room);
             for (int i = 0; i < DatesToDisplay; ++i)
             {
                 SetFieldColour(room, i);
@@ -403,12 +438,12 @@ namespace Hotel.View
 
         private void SetLaterButtonColumn()
         {
-            Grid.SetColumn(laterButton, HeaderColumns + GetMonthLabelsSize());
+            Grid.SetColumn(laterButton, HeaderColumns + DateShiftButtonSize + GetMonthLabelsSize());
         }
 
         private int GetMonthLabelsSize()
         {
-            return DateShiftButtonSize + (DatesToDisplay - 2 * DateShiftButtonSize);
+            return DatesToDisplay - 2 * DateShiftButtonSize;
         }
 
         private int NextMonth(int month)
@@ -476,7 +511,7 @@ namespace Hotel.View
                     ++year;
                 }
             }
-            Grid.SetColumnSpan(monthsPanel, GetMonthLabelsSize() - DateShiftButtonSize);
+            Grid.SetColumnSpan(monthsPanel, GetMonthLabelsSize());
         }
 
         /// <summary>
@@ -587,8 +622,9 @@ namespace Hotel.View
         /// </summary>
         /// <param name="row">the row of the grid we're adding to</param>
         /// <param name="room">the room to display properties of</param>
-        private void AddRoomDescription(int row, Room room)
+        private void AddRoomDescription(Room room)
         {
+            int row = Rooms.IndexOf(room);
             int column = 0;
             var includedCheckbox = CreateCheckBox(SelectedRooms.Contains(room), column++, row);
             RowElementsForRoom[room].uiElements.Add(includedCheckbox);
@@ -637,12 +673,12 @@ namespace Hotel.View
             return newBinding;
         }
 
-        private void AddRoomAvailability(int row, Room room)
+        private void AddRoomAvailability(Room room)
         {
             DateTime date = StartDate;
-            for(int column = HeaderColumns; column < HeaderColumns + DatesToDisplay; ++column)
+            for(int column = 0; column < DatesToDisplay; ++column)
             {
-                CreateColouredField(column, row, room, column - HeaderColumns);
+                CreateColouredField(room, column);
                 date = date.AddDays(1d);
             }
         }
@@ -808,8 +844,10 @@ namespace Hotel.View
         #endregion
 
         #region Creating grid elements
-        private void CreateColouredField(int column, int row, Room room, int dateOffset)
+        private void CreateColouredField(Room room, int dateOffset)
         {
+            int column = dateOffset + HeaderColumns;
+            int row = Rooms.IndexOf(room);
             Canvas canvas = CreateRoomDateField(column, row);
             RegisterField(room, dateOffset, canvas);
             SetFieldColour(room, dateOffset);
