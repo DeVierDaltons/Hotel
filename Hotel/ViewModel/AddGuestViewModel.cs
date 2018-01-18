@@ -8,7 +8,7 @@ using System.Windows.Input;
 
 namespace Hotel.ViewModel
 {
-    public class GuestDetailViewModel : INotifyPropertyChanged
+    public class AddGuestViewModel : INotifyPropertyChanged, IViewModel
     {
         public event PropertyChangedEventHandler PropertyChanged;
 
@@ -83,15 +83,17 @@ namespace Hotel.ViewModel
 
         private ICommand GuestCommand;
 
+        public ICommand CancelCommand {
+            get;
+            set;
+        }
+
         #endregion Properties
 
-        public GuestDetailViewModel(ICommand guestCommand, Guest currentGuestData, Action afterSubmitAction)
+
+        public AddGuestViewModel()
         {
-            Guest = new Guest();
-            Guest.CopyDeltaProperties(currentGuestData);
-            GuestCommand = guestCommand;
-            SubmitCommand = new RelayCommand(OnSubmitClicked, (_) => ValidateInput());
-            AfterSubmitAction = afterSubmitAction;
+          
         }
 
         private void OnSubmitClicked(object _)
@@ -135,6 +137,21 @@ namespace Hotel.ViewModel
         {
             PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(name));
             CommandManager.InvalidateRequerySuggested();
+        }
+
+        public void Initialize(ICommand guestCommand, Action cancelAction, Guest currentGuestData, Action afterSubmitAction)
+        {
+            Guest = new Guest();
+            Guest.CopyDeltaProperties(currentGuestData);
+            GuestCommand = guestCommand;
+            CancelCommand = new ActionCommand(cancelAction);
+            SubmitCommand = new RelayCommand(OnSubmitClicked, (_) => ValidateInput());
+            AfterSubmitAction = afterSubmitAction;
+        }
+
+        public void Initialize()
+        {
+        
         }
     }
 }

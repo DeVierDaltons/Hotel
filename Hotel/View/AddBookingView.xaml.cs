@@ -26,11 +26,6 @@ namespace Hotel.View
             public List<UIElement> uiElements = new List<UIElement>();
         }
 
-        private class DateColumnElements
-        {
-            public ColumnDefinition columnDefinition;
-        }
-
         private const int DateBlockSize = 40;
         private int DatesToDisplay = 29;
         private const int DateShiftButtonSize = 3;
@@ -111,6 +106,7 @@ namespace Hotel.View
 
         private void AddBookingView_SizeChanged(object sender, SizeChangedEventArgs e)
         {
+            if( Rooms == null ) { return; } // Initialize() has not been called yet
             if (e.NewSize.Width == 0d) { return; }
             int newNumDates = Math.Max(12, (((int)e.NewSize.Width) - 740) / DateBlockSize);
             SetNumDatesToDisplay(newNumDates);
@@ -213,12 +209,7 @@ namespace Hotel.View
 
         private void AddGridRows()
         {
-            int row = 0;
-            foreach (Room room in Rooms)
-            {
-                AddGridRowForRoom(row, room);
-                ++row;
-            }
+            Rooms.ForEach(AddGridRowForRoom);
         }
 
         private void AddAvailabilityForRooms()
@@ -226,7 +217,7 @@ namespace Hotel.View
             Rooms.ForEach(AddRoomAvailability);
         }
 
-        private void AddGridRowForRoom(int row, Room room)
+        private void AddGridRowForRoom(Room room)
         {
             if (!RowElementsForRoom.ContainsKey(room))
             {
@@ -264,7 +255,7 @@ namespace Hotel.View
             {
                 Room addedRoom = (Room)e.NewItems[0];
                 int row = Rooms.Count - 1;
-                AddGridRowForRoom(row, addedRoom);
+                AddGridRowForRoom(addedRoom);
             }
         }
 
@@ -634,6 +625,7 @@ namespace Hotel.View
                 CheckBox box = (CheckBox)sender;
                 CheckBoxChanged(box.IsChecked.Value, room);
             };
+
             includedCheckbox.Checked += checkChangeClosure;
             includedCheckbox.Unchecked += checkChangeClosure;
             IncludedCheckBoxes.Add(room, includedCheckbox);
