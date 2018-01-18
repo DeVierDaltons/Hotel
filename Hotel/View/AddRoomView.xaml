@@ -3,8 +3,9 @@
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-        mc:Ignorable="d"
-        >
+        xmlns:UIV="clr-namespace:Hotel.UIValidators"
+        mc:Ignorable="d">
+
     <GroupBox Header="Room" VerticalAlignment="Center">
         <Grid VerticalAlignment="Center">
             <Grid.RowDefinitions>
@@ -22,7 +23,15 @@
             </Grid.ColumnDefinitions>
 
             <Label Grid.Row="0" Grid.Column="0" Content="Room Number:" Grid.ColumnSpan="2"/>
-            <TextBox Grid.Row="0" Grid.Column="2" Text="{Binding RoomNumber}" VerticalAlignment="Center" Margin="0,2"/>
+            <TextBox Grid.Row="0" Grid.Column="2" VerticalAlignment="Center" Margin="0,2" Validation.ErrorTemplate="{StaticResource validationErrorTemplate}">
+                <TextBox.Text>
+                    <Binding Path="RoomNumber" UpdateSourceTrigger="PropertyChanged">
+                        <Binding.ValidationRules>
+                            <UIV:RoomValidator></UIV:RoomValidator>
+                        </Binding.ValidationRules>
+                    </Binding>
+                </TextBox.Text>
+            </TextBox>
 
             <Label Grid.Row="1" Grid.Column="0" Content="Beds:" Grid.ColumnSpan="2"/>
             <TextBox Grid.Row="1" Grid.Column="2" Text="{Binding Beds}" VerticalAlignment="Center" Margin="0,2"></TextBox>
@@ -37,4 +46,4 @@
             <Button Grid.Row="5" Grid.ColumnSpan="3" Content="Save" Command="{Binding AddRoomCommand}" VerticalAlignment="Center" Margin="33,0"/>
         </Grid>
     </GroupBox>
-</UserControl>
+</UserControl>    
