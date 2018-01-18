@@ -1,23 +1,58 @@
 ﻿using Hotel.Model;
-using Hotel.View;
-using System.Collections.ObjectModel;
+using Hotel.Repository;
+using System.ComponentModel;
+using System.Runtime.CompilerServices;
 
 namespace Hotel.ViewModel
 {
-    public class RoomViewModel
+    public class RoomViewModel : IViewModel, INotifyPropertyChanged
     {
-        private AddRoomView _AddRoomView;
+       
 
-        public AddRoomView AddRoomView
+        private AddRoomViewModel _AddRoomViewDataContext;
+
+        public AddRoomViewModel AddRoomViewDataContext
         {
-            get { return _AddRoomView; }
-            set { _AddRoomView = value; }
+            get { return _AddRoomViewDataContext; }
+            set { _AddRoomViewDataContext = value; OnNotifyPropertyChanged(); }
         }
 
-        public ObservableCollection<Room> Rooms { get; set; }
-        public RoomViewModel(ObservableCollection<Room> rooms)
+
+        private RepositoryBackedObservableCollection<Room> _Rooms;
+
+        public event PropertyChangedEventHandler PropertyChanged;
+
+        [Unity.Attributes.Dependency]
+        public RepositoryBackedObservableCollection<Room> Rooms
         {
-            Rooms = rooms;
+            get { return _Rooms; }
+            set { _Rooms = value; OnNotifyPropertyChanged(); }
+        }
+        public RoomViewModel()
+        {
+        }
+
+        public void Initialize()
+        {
+
+            AddRoom();
+        }
+
+        public void AddRoom()
+        {
+            AddRoomViewDataContext = new AddRoomViewModel();
+            AddRoomViewDataContext.Initialize();
+            AddRoomViewDataContext.SetCallback(() =>
+            {
+                Rooms.Add(AddRoomViewDataContext.Room);
+            });
+        }
+
+      
+
+        private void OnNotifyPropertyChanged([CallerMemberName] string propertyName = "")
+        {
+            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
         }
     }
 }

@@ -5,15 +5,14 @@ using System.Runtime.CompilerServices;
 using System;
 using System.Linq;
 using System.Collections.ObjectModel;
+using Unity.Attributes;
+using Hotel.View;
 
 namespace Hotel.ViewModel
 {
-    public class GuestsViewModel : INotifyPropertyChanged
+    public class GuestsViewModel : INotifyPropertyChanged, IViewModel
     {
         #region Properties
-        private GuestDetailViewModel _currentGuest;
-
-
         private string _groupBoxName;
 
         public string GroupBoxName
@@ -21,8 +20,9 @@ namespace Hotel.ViewModel
             get { return _groupBoxName; }
             set { _groupBoxName = value; OnPropertyChanged(); }
         }
-        
-        public GuestDetailViewModel CurrentGuest
+
+        private Hotel.ViewModel.AddGuestViewModel _currentGuest;
+        public AddGuestViewModel CurrentGuest
         {
             get { return _currentGuest; }
             set { _currentGuest = value; OnPropertyChanged(); }
@@ -32,6 +32,7 @@ namespace Hotel.ViewModel
 
         private RepositoryBackedObservableCollection<Guest> _guests;
 
+        [Unity.Attributes.Dependency]
         public RepositoryBackedObservableCollection<Guest> Guests
         {
             get { return _guests; }
@@ -87,14 +88,16 @@ namespace Hotel.ViewModel
         {
             var guest = selectedItem as Guest;
             GroupBoxName = string.Format("Editing {0}",guest.FirstName);
-            CurrentGuest = new GuestDetailViewModel(new EditGuestCommand(guest), () => { StartAddingGuest(); }, guest, null);
+            CurrentGuest = new AddGuestViewModel();
+            CurrentGuest.Initialize(new EditGuestCommand(guest), () => { StartAddingGuest(); }, guest, null);
         }
 
         public void StartAddingGuest()
         {
             var guest = new Guest();
             GroupBoxName = "New Guest";
-            CurrentGuest = new GuestDetailViewModel(new EditGuestCommand(guest), () => { StartAddingGuest(); }, guest, () =>
+            CurrentGuest = new AddGuestViewModel();
+            CurrentGuest.Initialize(new EditGuestCommand(guest), () => { StartAddingGuest(); }, guest, () =>
             {
                 Guests.Add(guest);
                 StartAddingGuest();
@@ -114,10 +117,16 @@ namespace Hotel.ViewModel
         }
 
 
-        public GuestsViewModel(RepositoryBackedObservableCollection<Guest> guests)
+        public GuestsViewModel()
         {
-            Guests = guests;
-            DisplayedGuests = guests;
+        }
+
+        /// <summary>
+        /// DO NOT REMOVE, has to be done after the dependencies have been injected, so NOT in the constructor.
+        /// </summary>
+        public void Initialize()
+        {
+            DisplayedGuests = Guests;
         }
 
         public void OnPropertyChanged([CallerMemberName] string name = "")

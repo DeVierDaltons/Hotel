@@ -1,18 +1,19 @@
 ﻿using Hotel.Command;
 using Hotel.Model;
+using Hotel.Repository;
 using System;
 using System.ComponentModel;
 using System.Runtime.CompilerServices;
 using System.Windows.Input;
+using Unity.Attributes;
 
 namespace Hotel.ViewModel
 {
-    public class AddRoomViewModel : INotifyPropertyChanged
+    public class AddRoomViewModel : INotifyPropertyChanged, IViewModel
     {
         public event PropertyChangedEventHandler PropertyChanged;
 
         #region Properties
-        public HotelManager HotelManager { get; private set; }
         public ICommand AddRoomCommand { get; set; }
         public Room Room { get; set; } = new Room();
 
@@ -46,12 +47,15 @@ namespace Hotel.ViewModel
             set { Room.PricePerDay = value; OnNotifyPropertyChanged(); }
         }
         #endregion
-
-        public AddRoomViewModel(HotelManager hotelManager)
+        Action Callback;
+        public AddRoomViewModel()
         {
-            Beds = 1;
-            HotelManager = hotelManager;
-            AddRoomCommand = new AddRoomCommand(this);
+          
+        }
+
+        public void SetCallback(Action callback)
+        {
+            this.Callback = callback;
         }
 
         public bool ValidateInput()
@@ -61,7 +65,7 @@ namespace Hotel.ViewModel
 
         public void AddRoom()
         {
-            HotelManager.AddRoom(Room);
+            Callback?.Invoke();
             Room = new Room();
             ClearAllFields();
         }
@@ -78,6 +82,12 @@ namespace Hotel.ViewModel
         private void OnNotifyPropertyChanged([CallerMemberName] string propertyName = "")
         {
             PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName)); 
+        }
+
+        public void Initialize()
+        {
+            Beds = 1;
+            AddRoomCommand = new AddRoomCommand(this);
         }
     }
 }

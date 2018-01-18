@@ -26,5 +26,14 @@ namespace Hotel.View
         {
             (DataContext as BookingViewModel).RemoveGuestFilter();
         }
+        
+        private void AddBookingView_Loaded(object sender, RoutedEventArgs e)
+        {
+            BookingViewModel bookingViewModel = (DataContext as BookingViewModel);
+            if (bookingViewModel.AddBookingView == null) { 
+                bookingViewModel.AddBookingView = sender as AddBookingView;
+                (DataContext as BookingViewModel).SetupAddBookingView(sender as AddBookingView);
+            }
+        }
     }
 }
