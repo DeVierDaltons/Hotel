@@ -1,15 +1,11 @@
 ﻿using Hotel.Command;
 using Hotel.Model;
-using System;
+using Hotel.Repository;
+using System.Collections.Generic;
 using System.ComponentModel;
+using System.Linq;
 using System.Runtime.CompilerServices;
 using System.Windows.Input;
-using System.Windows.Controls;
-using System.Linq;
-using System.Collections.ObjectModel;
-using System.Collections.Generic;
-using System.Collections.Specialized;
-using Hotel.Repository;
 
 namespace Hotel.ViewModel
 {
@@ -71,6 +67,11 @@ namespace Hotel.ViewModel
         #endregion
 
         public AddBookingViewModel()
+        {
+           
+        }
+
+        public void Initialize()
         {
             AddBookingCommand = new AddBookingCommand(this);
         }

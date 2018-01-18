@@ -48,8 +48,16 @@ namespace Hotel.ViewModel
 
         [Unity.Attributes.Dependency]
         public RepositoryBackedObservableCollection<Booking> Bookings { get; set; }
+
+        private RepositoryBackedObservableCollection<Room> _Rooms;
+
         [Unity.Attributes.Dependency]
-        public RepositoryBackedObservableCollection<Room> Rooms { get; set; }
+        public RepositoryBackedObservableCollection<Room> Rooms
+        {
+            get { return _Rooms; }
+            set { _Rooms = value; OnPropertyChanged(); }
+        }
+
         [Unity.Attributes.Dependency]
         public RepositoryBackedObservableCollection<Guest> Guests { get; set; }
         public BookingViewModel()
@@ -64,7 +72,7 @@ namespace Hotel.ViewModel
             {
                 booking.PropertyChanged += InvalidateOnBookingStatusChanged;
             }
-            Bookings .CollectionChanged += Bookings_CollectionChanged;
+            Bookings.CollectionChanged += Bookings_CollectionChanged;
             FilterDisplayedBookings();
             SetupAddBookingViewModel();
         }
@@ -76,6 +84,7 @@ namespace Hotel.ViewModel
             viewModel.Bookings = Bookings;
             viewModel.RoomsRepo = Rooms;
             viewModel.AllGuests = Guests;
+            viewModel.Initialize();
             AddBookingViewDataContext = viewModel;
         }
 

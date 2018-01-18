@@ -4,6 +4,7 @@ using Hotel.View;
 using System.Collections.ObjectModel;
 using System.ComponentModel;
 using System.Runtime.CompilerServices;
+using System.Windows;
 using Unity.Attributes;
 
 namespace Hotel.ViewModel
@@ -25,7 +26,7 @@ namespace Hotel.ViewModel
 
         public event PropertyChangedEventHandler PropertyChanged;
 
-        [Unity.Attributes.Dependency("RoomRepository")]
+        [Unity.Attributes.Dependency]
         public RepositoryBackedObservableCollection<Room> Rooms
         {
             get { return _Rooms; }
@@ -33,6 +34,11 @@ namespace Hotel.ViewModel
         }
         public RoomViewModel()
         {
+        }
+
+        public void Initialize()
+        {
+
             AddRoom();
         }
 
@@ -44,6 +50,8 @@ namespace Hotel.ViewModel
                 Rooms.Add(AddRoomViewDataContext.Room);
             });
         }
+
+      
 
         private void OnNotifyPropertyChanged([CallerMemberName] string propertyName = "")
         {
