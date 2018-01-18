@@ -23,12 +23,12 @@ namespace Hotel
     {
         protected override void OnStartup(StartupEventArgs e)
         {
-            IUnityContainer container = new UnityContainer();
-            RegisterTypes(container);
             var schemaUpdate = new SchemaUpdate(NHibernateHelper.Configuration);
             schemaUpdate.Execute(false, true);
+            IUnityContainer container = new UnityContainer();
+            RegisterTypes(container);
             MainWindow window = container.Resolve<MainWindow>();
-            
+           
             window.Initialize();
             window.Show();
         }

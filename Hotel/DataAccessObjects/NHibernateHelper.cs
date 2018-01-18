@@ -46,8 +46,6 @@ namespace Hotel.DataAccessObjects
             configuration.Configure();
             //Loads nhibernate mappings 
             configuration.AddDeserializedMapping(CreateMapping(), null);
-            new SchemaExport(configuration).Create(false, true);
-
             return configuration;
         }
 
