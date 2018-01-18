@@ -91,14 +91,9 @@ namespace Hotel.ViewModel
         #endregion Properties
 
 
-        public AddGuestViewModel(ICommand guestCommand, Action cancelAction, Guest currentGuestData, Action afterSubmitAction)
+        public AddGuestViewModel()
         {
-            Guest = new Guest();
-            Guest.CopyDeltaProperties(currentGuestData);
-            GuestCommand = guestCommand;
-            CancelCommand = new ActionCommand(cancelAction);
-            SubmitCommand = new RelayCommand(OnSubmitClicked, (_) => ValidateInput());
-            AfterSubmitAction = afterSubmitAction;
+          
         }
 
         private void OnSubmitClicked(object _)
@@ -142,6 +137,21 @@ namespace Hotel.ViewModel
         {
             PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(name));
             CommandManager.InvalidateRequerySuggested();
+        }
+
+        public void Initialize(ICommand guestCommand, Action cancelAction, Guest currentGuestData, Action afterSubmitAction)
+        {
+            Guest = new Guest();
+            Guest.CopyDeltaProperties(currentGuestData);
+            GuestCommand = guestCommand;
+            CancelCommand = new ActionCommand(cancelAction);
+            SubmitCommand = new RelayCommand(OnSubmitClicked, (_) => ValidateInput());
+            AfterSubmitAction = afterSubmitAction;
+        }
+
+        public void Initialize()
+        {
+        
         }
     }
 }

@@ -7,8 +7,6 @@ using Hotel.View;
 using System.Windows;
 using System.ComponentModel;
 using System.Runtime.CompilerServices;
-using System.Windows.Input;
-using Hotel.Extensions;
 using Hotel.Repository;
 using NHibernate.Util;
 

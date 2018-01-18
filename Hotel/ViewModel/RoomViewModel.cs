@@ -1,11 +1,7 @@
 ﻿using Hotel.Model;
 using Hotel.Repository;
-using Hotel.View;
-using System.Collections.ObjectModel;
 using System.ComponentModel;
 using System.Runtime.CompilerServices;
-using System.Windows;
-using Unity.Attributes;
 
 namespace Hotel.ViewModel
 {
@@ -45,6 +41,7 @@ namespace Hotel.ViewModel
         public void AddRoom()
         {
             AddRoomViewDataContext = new AddRoomViewModel();
+            AddRoomViewDataContext.Initialize();
             AddRoomViewDataContext.SetCallback(() =>
             {
                 Rooms.Add(AddRoomViewDataContext.Room);

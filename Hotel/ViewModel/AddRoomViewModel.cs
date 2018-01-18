@@ -50,8 +50,7 @@ namespace Hotel.ViewModel
         Action Callback;
         public AddRoomViewModel()
         {
-            Beds = 1;
-            AddRoomCommand = new AddRoomCommand(this);
+          
         }
 
         public void SetCallback(Action callback)
@@ -83,6 +82,12 @@ namespace Hotel.ViewModel
         private void OnNotifyPropertyChanged([CallerMemberName] string propertyName = "")
         {
             PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName)); 
+        }
+
+        public void Initialize()
+        {
+            Beds = 1;
+            AddRoomCommand = new AddRoomCommand(this);
         }
     }
 }
