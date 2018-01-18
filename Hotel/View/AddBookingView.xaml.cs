@@ -746,6 +746,10 @@ namespace Hotel.View
 
         private void SelectBetween(Room beginRoom, Room endRoom)
         {
+            if( beginRoom == null )
+            {
+                beginRoom = endRoom;
+            }
             int room1Index = Rooms.IndexOf(beginRoom);
             int room2Index = Rooms.IndexOf(endRoom);
             if( room1Index == -1 || room2Index == -1 )
@@ -772,12 +776,31 @@ namespace Hotel.View
         private void MouseDownOnDate(int offset)
         {
             DateTime date = StartDate.AddDays(offset);
+            lastDownRoom = null;
+            lastDownDate = date;
             SelectedRange.StartDate = date;
         }
 
         private void MouseUpOnDate(int offset)
         {
             DateTime date = StartDate.AddDays(offset);
+            if (date == lastDownDate)
+            {
+                if (ExpectingEndOfRangeSelection)
+                {
+                    SelectedRange.StartDate = SelectedRange.EndDate;
+                    ExpectingEndOfRangeSelection = false;
+                }
+                else
+                {
+                    ExpectingEndOfRangeSelection = true;
+                }
+            }
+            else
+            {
+                ExpectingEndOfRangeSelection = false;
+            }
+            SetOtherDate(date);
             SelectedRange.EndDate = date;
             ResetDateSelectionElement();
             SetSelectionElements();
