@@ -3,6 +3,7 @@ using Hotel.Model;
 using Hotel.Repository;
 using Hotel.View;
 using Hotel.ViewModel;
+using NHibernate.Tool.hbm2ddl;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
@@ -24,7 +25,10 @@ namespace Hotel
         {
             IUnityContainer container = new UnityContainer();
             RegisterTypes(container);
+            var schemaUpdate = new SchemaUpdate(NHibernateHelper.Configuration);
+            schemaUpdate.Execute(false, true);
             MainWindow window = container.Resolve<MainWindow>();
+            
             window.Initialize();
             window.Show();
         }
