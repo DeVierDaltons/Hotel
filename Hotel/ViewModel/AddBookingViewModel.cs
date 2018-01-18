@@ -1,81 +1,110 @@
 ﻿using Hotel.Command;
 using Hotel.Model;
-using System;
+using Hotel.Repository;
+using System.Collections.Generic;
 using System.ComponentModel;
+using System.Linq;
 using System.Runtime.CompilerServices;
 using System.Windows.Input;
-using System.Windows.Controls;
-using System.Linq;
-using System.Collections.ObjectModel;
 
 namespace Hotel.ViewModel
 {
-    public class AddBookingViewModel : INotifyPropertyChanged
+    public class AddBookingViewModel : INotifyPropertyChanged, IViewModel
     {
         public event PropertyChangedEventHandler PropertyChanged;
 
         #region Properties
-        public HotelManager HotelManager { get; private set; }
         public ICommand AddBookingCommand { get; private set; }
         public Booking Booking { get; set; } = new Booking();
 
-        public ObservableCollection<Guest> Guests
+        private RepositoryBackedObservableCollection<Booking> _Bookings;
+
+        public RepositoryBackedObservableCollection<Booking> Bookings
         {
-            get { return HotelManager.Guests; }
+            get { return _Bookings; }
+            set { _Bookings = value; OnPropertyChanged(); }
         }
 
-        public ObservableCollection<Room> Rooms
+       
+        private RepositoryBackedObservableCollection<Room> _RoomsRepo;
+        public RepositoryBackedObservableCollection<Room> RoomsRepo
         {
-            get { return HotelManager.Rooms; }
+            get { return _RoomsRepo; }
+            set { _RoomsRepo = value; OnPropertyChanged(); }
+        }
+        
+        public RepositoryBackedObservableCollection<Guest> _AllGuests { get; set; }
+
+        public RepositoryBackedObservableCollection<Guest> AllGuests
+        {
+            get { return _AllGuests; }
+            set { _AllGuests = value; OnPropertyChanged(); }
         }
 
-        public Guest Guest
+        public RepositoryBackedObservableCollection<Room> AllRooms
         {
-            get { return Booking.Guest; }
-            set { Booking.Guest = value; OnPropertyChanged(); }
+            get { return RoomsRepo; }
         }
 
-        public Room Room
+        public RepositoryBackedObservableCollection<Booking> AllBookings
         {
-            get { return Booking.Room; }
-            set { Booking.Room = value; OnPropertyChanged(); }
+            get { return Bookings as RepositoryBackedObservableCollection<Booking>; }
         }
 
-        public SelectedDatesCollection SelectedDates { get; set; }
+        public ICollection<Guest> Guests
+        {
+            get { return Booking.Guests; }
+            set { Booking.Guests = value; OnPropertyChanged(); }
+        }
+
+        public ICollection<Room> Rooms
+        {
+            get { return Booking.Rooms; }
+            set { Booking.Rooms = value; OnPropertyChanged(); }
+        }
+
+        public BookingPeriod SelectedDates { get; set; }
         #endregion
 
-        public AddBookingViewModel(HotelManager hotelManager)
+        public AddBookingViewModel()
         {
-            HotelManager = hotelManager;
+           
+        }
+
+        public void Initialize()
+        {
             AddBookingCommand = new AddBookingCommand(this);
+        }
+
+        private bool GuestsValid()
+        {
+            return Booking.Guests != null && Booking.Guests.Count > 0;
+        }
+
+        private bool RoomsValid()
+        {
+            return Booking.Rooms != null && Booking.Rooms.Count > 0;
+        }
+
+        private bool DatesValid()
+        {
+            return SelectedDates != null && SelectedDates.IsValid();
         }
 
         public bool ValidateInput()
         {
-            if( Booking.Guest == null || Booking.Room == null || SelectedDates == null)
+            if( !GuestsValid() || !RoomsValid() || !DatesValid() )
             {
                 return false;
             }
-            return Booking.Room.TimePeriodAvailable(new BookingPeriod(SelectedDates));
+            return Booking.Rooms.All(room => room.TimePeriodAvailable(SelectedDates));
         }
 
         public void AddBooking()
         {
             Booking.SetDates(SelectedDates);
-            HotelManager.AddBooking(Booking);
+            (Bookings as RepositoryBackedObservableCollection<Booking>).Add(Booking);
             Booking = new Booking();
-            ClearAllFields();
-        }
-
-        private void ClearAllFields()
-        {
-            Guest = null;
-            Room = null;
-            Booking.BookingPeriod = new BookingPeriod() {
-                StartDate = DateTime.Today,
-                EndDate = DateTime.Today
-            };
-            SelectedDates.Clear();
         }
 
         public void OnPropertyChanged([CallerMemberName] string name = "")

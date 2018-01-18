@@ -4,18 +4,35 @@ using System.ComponentModel;
 using System.Runtime.CompilerServices;
 using System;
 using System.Linq;
-using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using Unity.Attributes;
+using Hotel.View;
 
 namespace Hotel.ViewModel
 {
-    public class GuestsViewModel : INotifyPropertyChanged
+    public class GuestsViewModel : INotifyPropertyChanged, IViewModel
     {
         #region Properties
+        private string _groupBoxName;
+
+        public string GroupBoxName
+        {
+            get { return _groupBoxName; }
+            set { _groupBoxName = value; OnPropertyChanged(); }
+        }
+
+        private Hotel.ViewModel.AddGuestViewModel _currentGuest;
+        public AddGuestViewModel CurrentGuest
+        {
+            get { return _currentGuest; }
+            set { _currentGuest = value; OnPropertyChanged(); }
+        }
+
         public event PropertyChangedEventHandler PropertyChanged;
 
         private RepositoryBackedObservableCollection<Guest> _guests;
 
+        [Unity.Attributes.Dependency]
         public RepositoryBackedObservableCollection<Guest> Guests
         {
             get { return _guests; }
@@ -65,26 +82,30 @@ namespace Hotel.ViewModel
 
         public void ViewBookingsForGuest()
         {
-
         }
 
-        public void EditGuest(object selectedItem, System.Windows.Controls.StackPanel stackpanel)
+        public void StartEditingGuest(object selectedItem)
         {
             var guest = selectedItem as Guest;
-            if(guest == null)
-            {
-                guest = new Guest();
-                Guests.Add(guest);
-            }
-            var GuestDetailView = new View.GuestDetailView();
-            GuestDetailView.DataContext = new GuestDetailViewModel(new EditGuestCommand(guest), guest, null);            
-            stackpanel.Children.Clear();
-            stackpanel.Children.Add(GuestDetailView);
+            GroupBoxName = string.Format("Editing {0}",guest.FirstName);
+            var g = new AddGuestViewModel();
+            g.Initialize(new EditGuestCommand(guest), () => { StartAddingGuest(); }, guest, null);
+            CurrentGuest = g;
         }
-        public void AddGuest(System.Windows.Controls.StackPanel stackpanel)
+
+        public void StartAddingGuest()
         {
-            EditGuest(null,stackpanel);
+            var guest = new Guest();
+            GroupBoxName = "New Guest";
+            var g = new AddGuestViewModel();
+            g.Initialize(new EditGuestCommand(guest), () => { StartAddingGuest(); }, guest, () =>
+            {
+                Guests.Add(guest);
+                StartAddingGuest();
+            });
+            CurrentGuest = g;
         }
+
         public void FilterGuests()
         {
             DisplayedGuests = new ObservableCollection<Guest>(Guests.Where(g =>
@@ -98,10 +119,16 @@ namespace Hotel.ViewModel
         }
 
 
-        public GuestsViewModel(RepositoryBackedObservableCollection<Guest> guests)
+        public GuestsViewModel()
         {
-            Guests = guests;
-            DisplayedGuests = guests;
+        }
+
+        /// <summary>
+        /// DO NOT REMOVE, has to be done after the dependencies have been injected, so NOT in the constructor.
+        /// </summary>
+        public void Initialize()
+        {
+            DisplayedGuests = Guests;
         }
 
         public void OnPropertyChanged([CallerMemberName] string name = "")

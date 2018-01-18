@@ -5,6 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:core="clr-namespace:System;assembly=mscorlib"
         xmlns:models="clr-namespace:Hotel.Model"
+        xmlns:view="clr-namespace:Hotel.View"
         mc:Ignorable="d"
         >
     <UserControl.Resources>
@@ -26,7 +27,7 @@
             <Grid.RowDefinitions>
                 <RowDefinition Height="*"></RowDefinition>
             </Grid.RowDefinitions>
-            <DataGrid Grid.Row="0" CanUserAddRows="False"  Grid.Column="0" Unloaded="DataGrid_Unloaded" ItemsSource="{Binding Rooms, Mode=TwoWay}" Margin="0,0,0,20" AutoGenerateColumns="False" >
+            <DataGrid Grid.Row="0" CanUserAddRows="False"  Grid.Column="0" Unloaded="DataGrid_Unloaded" ItemsSource="{Binding Rooms, Mode=TwoWay, NotifyOnSourceUpdated=True}" Margin="0,0,0,20" AutoGenerateColumns="False" >
                 <DataGrid.Columns>
                     <DataGridTextColumn Binding="{Binding RoomNumber, Mode=TwoWay}" Header="Room number"></DataGridTextColumn>
                     <DataGridTextColumn Binding="{Binding Beds, Mode=TwoWay}" Header="Amount of beds" ></DataGridTextColumn>
@@ -36,6 +37,7 @@
                 </DataGrid.Columns>
             </DataGrid>
         </Grid>
-        <Frame Grid.Column="1" Content="{Binding AddRoomView}" VerticalAlignment="Top"/>
+        <view:AddRoomView Grid.Column="1" DataContext="{Binding AddRoomViewDataContext}" VerticalAlignment="Top"/>
     </Grid>
 </UserControl>
+ 

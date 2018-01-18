@@ -1,6 +1,8 @@
 ﻿using Hotel.DataAccessObjects;
 using Hotel.Repository;
+using NHibernate.Util;
 using System.Diagnostics;
+using Unity.Attributes;
 
 namespace Hotel.Model
 {
@@ -14,7 +16,7 @@ namespace Hotel.Model
         public RepositoryBackedObservableCollection<Room> Rooms { get; }
         public RepositoryBackedObservableCollection<Booking> Bookings { get; }
 
-        public HotelManager(IRepository<Guest> guestRepository, IRepository<Room> roomRepository, IRepository<Booking> bookingRepository)
+        public HotelManager([Dependency]IRepository<Guest> guestRepository, [Dependency]IRepository<Room> roomRepository, [Dependency]IRepository<Booking> bookingRepository)
         {
             GuestRepository = guestRepository;
             RoomRepository = roomRepository;
@@ -22,9 +24,8 @@ namespace Hotel.Model
             Guests = new RepositoryBackedObservableCollection<Guest>(GuestRepository);
             Rooms = new RepositoryBackedObservableCollection<Room>(RoomRepository);
             Bookings = new RepositoryBackedObservableCollection<Booking>(BookingRepository);
-            AddAllBookingsToRoom();
+         
         }
-
         private void AddAllBookingsToRoom()
         {
             foreach(Booking booking in Bookings)
@@ -35,24 +36,18 @@ namespace Hotel.Model
 
         private void AddBookingToRoom(Booking booking)
         {
-            Debug.Assert(Rooms.Contains(booking.Room));
-            booking.Room.Bookings.Add(booking);
+            booking.Rooms.ForEach(room => room.Bookings.Add(booking));
         }
 
         public void AddBooking(Booking booking)
         {
-            Bookings.Add(booking);
             AddBookingToRoom(booking);
+            Bookings.Add(booking);
         }
 
         public void AddRoom(Room room)
         {
             Rooms.Add(room);
-        }
-
-        public void AddGuest(Guest guest)
-        {
-            Guests.Add(guest);
         }
     }
 }

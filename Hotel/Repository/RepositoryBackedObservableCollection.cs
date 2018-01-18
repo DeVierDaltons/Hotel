@@ -4,6 +4,7 @@ using System.ComponentModel;
 using System.Collections.Generic;
 using System.Collections.Specialized;
 using System.Windows;
+using Unity.Attributes;
 
 namespace Hotel.Repository
 {
@@ -11,7 +12,7 @@ namespace Hotel.Repository
     {
         private IRepository<T> repository;
 
-        public RepositoryBackedObservableCollection(IRepository<T> repository) : base(repository.GetAll())
+        public RepositoryBackedObservableCollection([Dependency("NHibernateRepository")]IRepository<T> repository) : base(repository.GetAll())
         {
             this.repository = repository;
             foreach(T item in this)

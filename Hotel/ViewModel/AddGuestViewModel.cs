@@ -8,13 +8,21 @@ using System.Windows.Input;
 
 namespace Hotel.ViewModel
 {
-    public class GuestDetailViewModel : INotifyPropertyChanged
+    public class AddGuestViewModel : INotifyPropertyChanged, IViewModel
     {
         public event PropertyChangedEventHandler PropertyChanged;
 
         private Action AfterSubmitAction;
 
         #region Properties
+        private bool _IsSaveButtonEnabled = true;
+
+        public bool IsSaveButtonEnabled
+        {
+            get { return _IsSaveButtonEnabled; }
+            set { _IsSaveButtonEnabled = value; OnPropertyChanged(); }
+        }
+
         public Guest Guest { get; set; }
 
         public string FirstName
@@ -75,21 +83,28 @@ namespace Hotel.ViewModel
 
         private ICommand GuestCommand;
 
+        public ICommand CancelCommand {
+            get;
+            set;
+        }
+
         #endregion Properties
 
-        public GuestDetailViewModel(ICommand guestCommand, Guest currentGuestData, Action afterSubmitAction)
+
+        public AddGuestViewModel()
         {
-            Guest = new Guest();
-            Guest.CopyDelta(currentGuestData);
-            GuestCommand = guestCommand;
-            SubmitCommand = new RelayCommand(OnSubmitClicked, (_) => ValidateInput());
-            AfterSubmitAction = afterSubmitAction;
+          
         }
 
         private void OnSubmitClicked(object _)
         {
             GuestCommand.Execute(Guest);
-            AfterSubmitAction?.Invoke();
+            if (AfterSubmitAction != null)
+            {
+                AfterSubmitAction();
+                IsSaveButtonEnabled = false;
+            }
+            AfterSubmitAction = null;
         }
 
         private void ClearAllFields()
@@ -122,6 +137,21 @@ namespace Hotel.ViewModel
         {
             PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(name));
             CommandManager.InvalidateRequerySuggested();
+        }
+
+        public void Initialize(ICommand guestCommand, Action cancelAction, Guest currentGuestData, Action afterSubmitAction)
+        {
+            Guest = new Guest();
+            Guest.CopyDeltaProperties(currentGuestData);
+            GuestCommand = guestCommand;
+            CancelCommand = new ActionCommand(cancelAction);
+            SubmitCommand = new RelayCommand(OnSubmitClicked, (_) => ValidateInput());
+            AfterSubmitAction = afterSubmitAction;
+        }
+
+        public void Initialize()
+        {
+        
         }
     }
 }
