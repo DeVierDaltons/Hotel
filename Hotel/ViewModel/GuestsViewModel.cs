@@ -86,11 +86,14 @@ namespace Hotel.ViewModel
 
         public void StartEditingGuest(object selectedItem)
         {
-            var guest = selectedItem as Guest;
-            GroupBoxName = string.Format("Editing {0}",guest.FirstName);
-            var g = new AddGuestViewModel();
-            g.Initialize(new EditGuestCommand(guest), () => { StartAddingGuest(); }, guest, null);
-            CurrentGuest = g;
+            if (selectedItem != null)
+            {
+                var guest = selectedItem as Guest;
+                GroupBoxName = string.Format("Editing {0}", guest.FirstName);
+                var g = new AddGuestViewModel();
+                g.Initialize(new EditGuestCommand(guest), () => { StartAddingGuest(); }, guest, null);
+                CurrentGuest = g;
+            }
         }
 
         public void StartAddingGuest()
