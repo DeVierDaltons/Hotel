@@ -19,16 +19,13 @@ namespace TestHotel
         {
             AddBookingViewModel addBookingViewModel = CreateBookingViewModel();
             addBookingViewModel.AddBooking();
-            Assert.IsTrue(addBookingViewModel.HotelManager.Bookings.Count > 0);
+            Assert.IsTrue(addBookingViewModel.Bookings.Count > 0);
         }
 
         private static AddBookingViewModel CreateBookingViewModel()
         {
-            var hotelManager = CreateTestHotelManager();
-            AddBookingViewModel addBookingViewModel = new AddBookingViewModel(hotelManager)
+            AddBookingViewModel addBookingViewModel = new AddBookingViewModel()
             {
-                Rooms = hotelManager.Rooms.ToList(),
-                Guests = hotelManager.Guests.ToList(),
                 SelectedDates = CreateSelectedDates()
             };
             return addBookingViewModel;
@@ -42,7 +39,7 @@ namespace TestHotel
         [TestMethod]
         public void InvalidBookingCommandFails()
         {
-            AddBookingViewModel vm = new AddBookingViewModel(null)
+            AddBookingViewModel vm = new AddBookingViewModel()
             {
                 Booking = new Booking(),
                 Guests = null,
@@ -59,15 +56,6 @@ namespace TestHotel
             Assert.IsFalse(addBookingViewModel.ValidateInput());
         }
 
-        public static HotelManager CreateTestHotelManager()
-        {
-            IRepository<Guest> guestsRepo = new TestRepository<Guest>();
-            IRepository<Room> roomsRepo = new TestRepository<Room>();
-            IRepository<Booking> bookingsRepo = new TestRepository<Booking>();
-            var hotelManager = new HotelManager(guestsRepo, roomsRepo, bookingsRepo);
-            hotelManager.AddRoom(new Room());
-            hotelManager.Guests.Add(new Guest());
-            return hotelManager;
-        }
+      
     }
 }

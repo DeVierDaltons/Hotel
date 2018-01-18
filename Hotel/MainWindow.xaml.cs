@@ -7,6 +7,9 @@ using System.Collections.Generic;
 using System.Linq;
 using System;
 using Hotel.View;
+using Unity.Attributes;
+using Hotel.Repository;
+using Hotel.DataAccessObjects;
 
 namespace Hotel
 {
@@ -15,39 +18,45 @@ namespace Hotel
     /// </summary>
     public partial class MainWindow : Window
     {
-        private HotelManager HotelManager;
+        [Dependency("GuestsViewModel")]
+        public IViewModel guestsViewModel { get; set; }
 
+        [Dependency("RoomViewModel")]
+        public IViewModel RoomViewModel { get; set; }
+
+        [Dependency("BookingViewModel")]
+        public IViewModel BookingViewModel { get; set; }
         public MainWindow()
         {
             InitializeComponent();
-            HotelManager = (DataContext as MainWindowViewModel).HotelManager;
-            GuestsViewModel guestsViewModel = new GuestsViewModel(HotelManager.Guests);
-            guestsViewModel.SwitchToBookingTab = SwitchToBookingTab;
+        
+        }
+
+        public void Initialize()
+        {
+            SetupGuestTab();
             GuestExplorerTab.DataContext = guestsViewModel;
             SetupRoomTab();
             SetupBookingTab();
         }
 
-        public void SetupRoomTab()
+        private void SetupGuestTab()
         {
-            //creating the rooms tab
-            AddRoomView addRoomView = new AddRoomView();
-            addRoomView.DataContext = new AddRoomViewModel(HotelManager);
-            RoomViewModel roomViewModel = new RoomViewModel(HotelManager.Rooms);
-            roomViewModel.AddRoomView = addRoomView;
-            RoomExplorerTab.DataContext = roomViewModel;
+            (guestsViewModel as GuestsViewModel).Initialize();
+            (guestsViewModel as GuestsViewModel).SwitchToBookingTab = SwitchToBookingTab;
+            GuestExplorerTab.DataContext = guestsViewModel;
         }
 
-        public void SetupBookingTab()
+        public void SetupRoomTab()
         {
-            //Creating the tab for bookings with addbooking and modify booking views.
-            AddBookingView addBookingView = new AddBookingView();
-            var addBookingViewModel = new AddBookingViewModel(HotelManager);
-            addBookingView.DataContext = addBookingViewModel;
-            addBookingView.Initialize(addBookingViewModel);
-            BookingViewModel modifyBookingViewModel = new BookingViewModel(HotelManager.Bookings);
-            modifyBookingViewModel.AddBookingView = addBookingView;
-            BookingExplorerTab.DataContext = modifyBookingViewModel;
+            RoomExplorerTab.DataContext = RoomViewModel;
+            (RoomViewModel as RoomViewModel).Initialize();
+        }
+
+        public void SetupBookingTab( )
+        {
+            (BookingViewModel as BookingViewModel).Initialize();
+            BookingExplorerTab.DataContext = BookingViewModel;
         }
 
         public void SwitchToBookingTab()
