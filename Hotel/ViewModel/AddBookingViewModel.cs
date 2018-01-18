@@ -9,7 +9,7 @@ using System.Windows.Input;
 
 namespace Hotel.ViewModel
 {
-    public class AddBookingViewModel : INotifyPropertyChanged, IViewModel
+    public class AddBookingViewModel : INotifyPropertyChanged
     {
         public event PropertyChangedEventHandler PropertyChanged;
 
@@ -65,11 +65,6 @@ namespace Hotel.ViewModel
 
         public BookingPeriod SelectedDates { get; set; }
         #endregion
-
-        public AddBookingViewModel()
-        {
-           
-        }
 
         public void Initialize()
         {

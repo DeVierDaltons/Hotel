@@ -8,7 +8,7 @@ using System.Windows.Input;
 
 namespace Hotel.ViewModel
 {
-    public class AddGuestViewModel : INotifyPropertyChanged, IViewModel
+    public class AddGuestViewModel : INotifyPropertyChanged
     {
         public event PropertyChangedEventHandler PropertyChanged;
 
@@ -147,11 +147,6 @@ namespace Hotel.ViewModel
             CancelCommand = new ActionCommand(cancelAction);
             SubmitCommand = new RelayCommand(OnSubmitClicked, (_) => ValidateInput());
             AfterSubmitAction = afterSubmitAction;
-        }
-
-        public void Initialize()
-        {
-        
         }
     }
 }

@@ -12,7 +12,7 @@ using NHibernate.Util;
 
 namespace Hotel.ViewModel
 {
-    public class BookingViewModel : INotifyPropertyChanged, IViewModel
+    public class BookingViewModel : INotifyPropertyChanged
     {
         private AddBookingView _addBookingView;
 

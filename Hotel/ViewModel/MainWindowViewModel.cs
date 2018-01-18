@@ -4,15 +4,7 @@ using NHibernate.Tool.hbm2ddl;
 
 namespace Hotel.ViewModel
 {
-    public class MainWindowViewModel : IViewModel
+    public class MainWindowViewModel
     {
-
-        public MainWindowViewModel()
-        {
-        }
-
-        public void Initialize()
-        {
-        }
     }
 }

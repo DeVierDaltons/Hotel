@@ -5,7 +5,7 @@ using System.Runtime.CompilerServices;
 
 namespace Hotel.ViewModel
 {
-    public class RoomViewModel : IViewModel, INotifyPropertyChanged
+    public class RoomViewModel : INotifyPropertyChanged
     {
         private AddRoomViewModel _AddRoomViewDataContext;
 
@@ -25,13 +25,9 @@ namespace Hotel.ViewModel
             get { return _Rooms; }
             set { _Rooms = value; OnNotifyPropertyChanged(); }
         }
-        public RoomViewModel()
-        {
-        }
 
         public void Initialize()
         {
-
             AddRoom();
         }
 
