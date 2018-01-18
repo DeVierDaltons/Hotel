@@ -79,8 +79,8 @@ namespace Hotel.ViewModel
         {
            
             AddBookingViewModel viewModel = new AddBookingViewModel();
-            viewModel.Bookings = Bookings;
-            viewModel.RoomsRepo = Rooms;
+            viewModel.AllBookings = Bookings;
+            viewModel.AllRooms = Rooms;
             viewModel.AllGuests = Guests;
             viewModel.Initialize();
             AddBookingViewDataContext = viewModel;
