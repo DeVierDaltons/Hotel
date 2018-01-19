@@ -15,6 +15,7 @@ using System.Collections.Specialized;
 using System.Windows.Data;
 using System.Windows.Controls.Primitives;
 using NHibernate.Util;
+using Unity.Attributes;
 
 namespace Hotel.View
 {
@@ -97,6 +98,7 @@ namespace Hotel.View
         /// The last date the mouse went down on
         /// </summary>
         private DateTime lastDownDate;
+        private const int RightSideMargin = 70;
 
         public AddBookingView()
         {
@@ -104,17 +106,31 @@ namespace Hotel.View
             Application.Current.MainWindow.SizeChanged += AddBookingView_SizeChanged;
         }
 
+        public BookingView BookingView { get; set; }
+
         private void AddBookingView_SizeChanged(object sender, SizeChangedEventArgs e)
         {
             if( Rooms == null ) { return; } // Initialize() has not been called yet
             if (e.NewSize.Width == 0d) { return; }
-            int newNumDates = Math.Max(12, (((int)e.NewSize.Width) - 740) / DateBlockSize);
+            int widthForDateBlocks = ((int)Window.GetWindow(this).ActualWidth - RightSideMargin) - ((int)BookingView.BookingsGrid.ActualWidth + HeaderColumnsWidth());
+            int newNumDates = Math.Max(12, (widthForDateBlocks / DateBlockSize));
             SetNumDatesToDisplay(newNumDates);
             RefreshMonthsPanel();
             SetLaterButtonColumn();
             CreateOrUpdateDayLabels();
             ResetRoomDateSelectionElements();
             ResetDateSelectionElement();
+        }
+
+        private int HeaderColumnsWidth()
+        {
+            double total = 0;
+            var columns = RoomDateGrid.ColumnDefinitions;
+            for(int i = 0; i < HeaderColumns; ++i)
+            {
+                total += columns[i].ActualWidth;
+            }
+            return (int)total;
         }
 
         private void SetNumDatesToDisplay(int newNumDates)
@@ -153,6 +169,7 @@ namespace Hotel.View
             Rooms = viewModel.AllRooms;
             FillDateGrid();
             ListenForChanges(viewModel.AllBookings);
+            BookingView.BookingsGrid.SizeChanged += AddBookingView_SizeChanged;
         }
 
         private void ListenForChanges(ObservableCollection<Booking> bookings)

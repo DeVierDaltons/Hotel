@@ -10,6 +10,13 @@ namespace Hotel.View
     /// </summary>
     public partial class BookingView : UserControl
     {
+        public DataGrid BookingsGrid
+        {
+            get
+            {
+                return BookingsList;
+            }
+        }
 
         public BookingView()
         {
@@ -30,8 +37,10 @@ namespace Hotel.View
         private void AddBookingView_Loaded(object sender, RoutedEventArgs e)
         {
             BookingViewModel bookingViewModel = (DataContext as BookingViewModel);
-            if (bookingViewModel.AddBookingView == null) { 
-                bookingViewModel.AddBookingView = sender as AddBookingView;
+            if (bookingViewModel.AddBookingView == null) {
+                var addBookingView = (AddBookingView)sender;
+                addBookingView.BookingView = this;
+                bookingViewModel.AddBookingView = addBookingView;
                 bookingViewModel.SetupAddBookingView();
             }
         }
