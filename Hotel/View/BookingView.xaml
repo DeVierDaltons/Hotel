@@ -61,7 +61,6 @@
                 </DataGrid.Columns>
             </DataGrid>
         </StackPanel>
-        <!--<Frame Content="{Binding AddBookingView}"></Frame>-->
         <views:AddBookingView Loaded="AddBookingView_Loaded" DataContext="{Binding AddBookingViewDataContext, NotifyOnSourceUpdated=True}"></views:AddBookingView>
     </StackPanel>
 </UserControl>
