@@ -19,7 +19,7 @@ namespace TestHotel
         {
             AddBookingViewModel addBookingViewModel = CreateBookingViewModel();
             addBookingViewModel.AddBooking();
-            Assert.IsTrue(addBookingViewModel.Bookings.Count > 0);
+            Assert.IsTrue(addBookingViewModel.AllBookings.Count > 0);
         }
 
         private static AddBookingViewModel CreateBookingViewModel()

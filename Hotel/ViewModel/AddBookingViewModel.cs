@@ -17,38 +17,25 @@ namespace Hotel.ViewModel
         public ICommand AddBookingCommand { get; private set; }
         public Booking Booking { get; set; } = new Booking();
 
-        private RepositoryBackedObservableCollection<Booking> _Bookings;
-
-        public RepositoryBackedObservableCollection<Booking> Bookings
-        {
-            get { return _Bookings; }
-            set { _Bookings = value; OnPropertyChanged(); }
-        }
-
-       
-        private RepositoryBackedObservableCollection<Room> _RoomsRepo;
-        public RepositoryBackedObservableCollection<Room> RoomsRepo
-        {
-            get { return _RoomsRepo; }
-            set { _RoomsRepo = value; OnPropertyChanged(); }
-        }
-        
-        public RepositoryBackedObservableCollection<Guest> _AllGuests { get; set; }
-
-        public RepositoryBackedObservableCollection<Guest> AllGuests
-        {
-            get { return _AllGuests; }
-            set { _AllGuests = value; OnPropertyChanged(); }
-        }
-
-        public RepositoryBackedObservableCollection<Room> AllRooms
-        {
-            get { return RoomsRepo; }
-        }
-
+        private RepositoryBackedObservableCollection<Booking> _allBookings;
         public RepositoryBackedObservableCollection<Booking> AllBookings
         {
-            get { return Bookings as RepositoryBackedObservableCollection<Booking>; }
+            get { return _allBookings; }
+            set { _allBookings = value; OnPropertyChanged(); }
+        }
+
+        private RepositoryBackedObservableCollection<Room> _roomsRepo;
+        public RepositoryBackedObservableCollection<Room> AllRooms
+        {
+            get { return _roomsRepo; }
+            set { _roomsRepo = value; OnPropertyChanged(); }
+        }
+        
+        public RepositoryBackedObservableCollection<Guest> _allGuests { get; set; }
+        public RepositoryBackedObservableCollection<Guest> AllGuests
+        {
+            get { return _allGuests; }
+            set { _allGuests = value; OnPropertyChanged(); }
         }
 
         public ICollection<Guest> Guests
@@ -98,7 +85,7 @@ namespace Hotel.ViewModel
         public void AddBooking()
         {
             Booking.SetDates(SelectedDates);
-            (Bookings as RepositoryBackedObservableCollection<Booking>).Add(Booking);
+            (AllBookings as RepositoryBackedObservableCollection<Booking>).Add(Booking);
             Booking = new Booking();
         }
 
