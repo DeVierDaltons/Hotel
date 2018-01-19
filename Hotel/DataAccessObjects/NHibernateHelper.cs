@@ -3,6 +3,7 @@ using NHibernate.Cfg;
 using NHibernate.Cfg.MappingSchema;
 using NHibernate.Mapping.ByCode;
 using NHibernate;
+using NHibernate.Tool.hbm2ddl;
 
 namespace Hotel.DataAccessObjects
 {
@@ -45,7 +46,6 @@ namespace Hotel.DataAccessObjects
             configuration.Configure();
             //Loads nhibernate mappings 
             configuration.AddDeserializedMapping(CreateMapping(), null);
-
             return configuration;
         }
 

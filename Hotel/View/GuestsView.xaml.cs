@@ -14,26 +14,29 @@ namespace Hotel.View
             InitializeComponent();
         }
 
-        
-
         private void OnEditGuestClicked(object sender, RoutedEventArgs e)
         {
-            (DataContext as GuestsViewModel).EditGuest(GuestsList.SelectedItem, GuestDetail);
+            (DataContext as GuestsViewModel).StartEditingGuest(GuestsList.SelectedItem);
         }
 
         private void OnAddGuestClicked(object sender, RoutedEventArgs e)
         {
-            (DataContext as GuestsViewModel).AddGuest(GuestDetail);
+            (DataContext as GuestsViewModel).StartAddingGuest();
         }
 
         private void UserControl_Loaded(object sender, RoutedEventArgs e)
         {
-            (DataContext as GuestsViewModel).AddGuest(GuestDetail);
+            (DataContext as GuestsViewModel).StartAddingGuest();
         }
 
         private void Button_Click(object sender, RoutedEventArgs e)
         {
             (DataContext as GuestsViewModel).SwitchToBookingTab.Invoke();
         }
-    }
+
+        private void dg_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            (DataContext as GuestsViewModel).StartEditingGuest(GuestsList.SelectedItem);
+        }
+            }
 }

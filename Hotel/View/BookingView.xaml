@@ -3,9 +3,9 @@
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-        xmlns:local="clr-namespace:Hotel.ViewModel"
         xmlns:core="clr-namespace:System;assembly=mscorlib"
         xmlns:models="clr-namespace:Hotel.Model"
+             xmlns:views="clr-namespace:Hotel.View"
         mc:Ignorable="d"
         >
     <UserControl.Resources>
@@ -15,48 +15,40 @@
             </ObjectDataProvider.MethodParameters>
         </ObjectDataProvider>
     </UserControl.Resources>
-    <Grid>
-        <Grid.ColumnDefinitions>
-            <ColumnDefinition Width="8*"></ColumnDefinition>
-            <ColumnDefinition Width="2*"></ColumnDefinition>
-        </Grid.ColumnDefinitions>
-        <Grid Grid.Column="0">
-            <Grid.ColumnDefinitions>
-                <ColumnDefinition Width="3*"></ColumnDefinition>
-                <ColumnDefinition Width="7*"></ColumnDefinition>
-            </Grid.ColumnDefinitions>
-            <Grid.RowDefinitions>
-                <RowDefinition Height="1*"></RowDefinition>
-                <RowDefinition Height="10*"></RowDefinition>
-            </Grid.RowDefinitions>
-
-            <GroupBox Header="Status filter">
-                <Grid Grid.Row="0">
-                <Grid.ColumnDefinitions>
-                    <ColumnDefinition Width="1*"></ColumnDefinition>
-                    <ColumnDefinition Width="1*"></ColumnDefinition>
-                    <ColumnDefinition Width="1*"></ColumnDefinition>
-                    </Grid.ColumnDefinitions>
-                <Grid.RowDefinitions>
-                    <RowDefinition Height="2*"></RowDefinition>
-                    <RowDefinition Height="4*"></RowDefinition>
-                    <RowDefinition Height="4*"></RowDefinition>
-                </Grid.RowDefinitions>
-                    <CheckBox Grid.Row="1" Grid.Column="0" Content="Available" IsChecked="{Binding ShowAvailableFilter, Mode=TwoWay}"></CheckBox>
-                    <CheckBox Grid.Row="1" Grid.Column="1" Content="Reserved" IsChecked="{Binding ShowReservedFilter, Mode=TwoWay}"></CheckBox>
-                    <CheckBox Grid.Row="1" Grid.Column="2" Content="Cacelled" IsChecked="{Binding ShowCancelledFilter, Mode=TwoWay}"></CheckBox>
-
-                    <CheckBox Grid.Row="2" Grid.Column="0" Content="Checked in"  IsChecked="{Binding ShowCheckedInFilter, Mode=TwoWay}"></CheckBox>
-                    <CheckBox Grid.Row="2" Grid.Column="1" Content="Checked out" IsChecked="{Binding ShowCheckedOutFilter, Mode=TwoWay}"></CheckBox>
-                    <CheckBox Grid.Row="2" Grid.Column="2" Content="No show" IsChecked="{Binding ShowNoShowFilter, Mode=TwoWay}"></CheckBox>
-                </Grid>
-            </GroupBox>
-            <DataGrid Grid.Row="1" Grid.ColumnSpan="2" CanUserAddRows="False"  Grid.Column="0" Unloaded="DataGrid_Unloaded" ItemsSource="{Binding DisplayedBookings}" SelectedItem="{Binding SelectedBooking}" Margin="0,0,0,20" AutoGenerateColumns="False">
+    <StackPanel Orientation="Horizontal">
+        <StackPanel Orientation="Vertical">
+            <StackPanel Orientation="Horizontal">
+                <GroupBox Header="Status filter">
+                    <Grid>
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="*"></RowDefinition>
+                            <RowDefinition Height="*"></RowDefinition>
+                            <RowDefinition Height="*"></RowDefinition>
+                            <RowDefinition Height="*"></RowDefinition>
+                            <RowDefinition Height="*"></RowDefinition>
+                        </Grid.RowDefinitions>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="*"></ColumnDefinition>
+                        </Grid.ColumnDefinitions>
+                        <CheckBox Grid.Column="0" Grid.Row="0" Content="Reserved" IsChecked="{Binding ShowReservedFilter, Mode=TwoWay}"></CheckBox>
+                        <CheckBox Grid.Column="0" Grid.Row="1" Content="Cancelled" IsChecked="{Binding ShowCancelledFilter, Mode=TwoWay}"></CheckBox>
+                        <CheckBox Grid.Column="0" Grid.Row="2" Content="No show" IsChecked="{Binding ShowNoShowFilter, Mode=TwoWay}"></CheckBox>
+                        <CheckBox Grid.Column="0" Grid.Row="3" Content="Checked in"  IsChecked="{Binding ShowCheckedInFilter, Mode=TwoWay}"></CheckBox>
+                        <CheckBox Grid.Column="0" Grid.Row="4" Content="Checked out" IsChecked="{Binding ShowCheckedOutFilter, Mode=TwoWay}"></CheckBox>
+                    </Grid>
+                </GroupBox>
+                <StackPanel Grid.Column="1" Grid.Row="0" Orientation="Horizontal" HorizontalAlignment="Left" VerticalAlignment="Bottom">
+                    <Label  Content="Filtered by:" Visibility="{Binding IsRemoveFilterButtonVisible}" VerticalAlignment="Center" HorizontalAlignment="Left"></Label>
+                    <Label  Content="{Binding FilteredGuestString}" VerticalAlignment="Center" HorizontalAlignment="Left"></Label>
+                    <Button Content="Remove filter" VerticalAlignment="Center" HorizontalAlignment="Center" Click="Button_Click" Visibility="{Binding IsRemoveFilterButtonVisible}"></Button>
+                </StackPanel>
+            </StackPanel>
+            <DataGrid Name="BookingsList" Grid.Column="0" Grid.Row="1" Grid.ColumnSpan="2" CanUserAddRows="False" Unloaded="DataGrid_Unloaded" ItemsSource="{Binding DisplayedBookings}" SelectedItem="{Binding SelectedBooking}" Margin="0,0,0,20" AutoGenerateColumns="False">
                 <DataGrid.Columns>
                     <DataGridTextColumn Binding="{Binding StartDayString}" Header="Start day" IsReadOnly="True" ></DataGridTextColumn>
                     <DataGridTextColumn Binding="{Binding EndDayString}" Header="End day" IsReadOnly="True" ></DataGridTextColumn>
                     <DataGridTextColumn Binding="{Binding GuestName}" Header="Guest name" IsReadOnly="True" ></DataGridTextColumn>
-                    <DataGridTextColumn Binding="{Binding RoomNumber}" Header="Room number" IsReadOnly="True" ></DataGridTextColumn>
+                    <DataGridTextColumn Binding="{Binding RoomsDescription}" Header="Room number" IsReadOnly="True" ></DataGridTextColumn>
                     <DataGridTemplateColumn Header="Status">
                         <DataGridTemplateColumn.CellTemplate>
                             <DataTemplate>
@@ -64,13 +56,11 @@
                                 </ComboBox>
                             </DataTemplate>
                         </DataGridTemplateColumn.CellTemplate>
-                    
+
                     </DataGridTemplateColumn>
                 </DataGrid.Columns>
             </DataGrid>
-        </Grid>
-        <Grid Grid.Column="1">
-            <Frame Content="{Binding AddBookingView}"></Frame>
-        </Grid>
-    </Grid>
+        </StackPanel>
+        <views:AddBookingView Loaded="AddBookingView_Loaded" DataContext="{Binding AddBookingViewDataContext, NotifyOnSourceUpdated=True}"></views:AddBookingView>
+    </StackPanel>
 </UserControl>

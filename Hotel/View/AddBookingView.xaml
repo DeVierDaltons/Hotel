@@ -3,38 +3,18 @@
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-        mc:Ignorable="d" VerticalAlignment="Top"
-        >
-    <GroupBox Header="Add booking" VerticalAlignment="Center">
-        <Grid VerticalAlignment="Center">
-            <Grid.ColumnDefinitions>
-                <ColumnDefinition Width="*"></ColumnDefinition>
-                <ColumnDefinition Width="*"></ColumnDefinition>
-            </Grid.ColumnDefinitions>
-            <Grid.RowDefinitions>
-                <RowDefinition Height="6*"></RowDefinition>
-                <RowDefinition Height="2*"></RowDefinition>
-            </Grid.RowDefinitions>
-            <Viewbox Grid.Row="0" Grid.ColumnSpan="2" >
-             <Calendar Name="BookingRangeCalendar" SelectionMode="SingleRange" SelectedDatesChanged="Calendar_SelectedDatesChanged"/>
-            </Viewbox>
-            <Grid Grid.Row="1" Grid.ColumnSpan="2" VerticalAlignment="Center" HorizontalAlignment="Center">
-                <Grid.RowDefinitions>
-                    <RowDefinition Height="*"></RowDefinition>
-                    <RowDefinition Height="*"></RowDefinition>
-                    <RowDefinition Height="*"></RowDefinition>
-                </Grid.RowDefinitions>
-                <Grid.ColumnDefinitions>
-                    <ColumnDefinition Width="*"></ColumnDefinition>
-                    <ColumnDefinition Width="*"></ColumnDefinition>
-                </Grid.ColumnDefinitions>
-                <Label Grid.Row="0" Grid.Column="0" Content="Guest:" HorizontalAlignment="Center"/>
-                <ComboBox Grid.Row="0" Grid.Column="1" Name="GuestDropdown" Width="80" SelectedItem="{Binding Guest}" ItemsSource="{Binding Guests}" HorizontalAlignment="Center"/>
-
-                <Label Grid.Row="1" Grid.Column="0" Content="Room:" HorizontalAlignment="Left"/>
-                <ComboBox Grid.Row="1" Grid.Column="1" Name="RoomDropdown" Width="80" SelectedItem="{Binding Room}" ItemsSource="{Binding Rooms}" HorizontalAlignment="Center"/>
-                <Button  Grid.Row="2" Grid.ColumnSpan="2" Width="80" Command="{Binding AddBookingCommand}" Content="Save" HorizontalAlignment="Center"></Button>
-            </Grid>
-        </Grid>
-    </GroupBox>
+        mc:Ignorable="d"
+        >  
+    <DockPanel LastChildFill="True" Grid.IsSharedSizeScope="True">
+        <WrapPanel DockPanel.Dock="Bottom">
+            <Label Content="Guest:"/>
+            <ListBox Name="SelectedGuests" Width="80" SelectionMode="Multiple" SelectionChanged="SelectedGuests_SelectionChanged" ItemsSource="{Binding AllGuests}">
+            </ListBox>
+            <Button Width="200" Height="50" Command="{Binding AddBookingCommand}" Content="Save"></Button>
+        </WrapPanel>
+        <Grid Name="HeaderGrid" DockPanel.Dock="Top" />
+        <ScrollViewer VerticalAlignment="Stretch" VerticalScrollBarVisibility="Auto">
+            <Grid Name="RoomDateGrid" />
+        </ScrollViewer>
+    </DockPanel>
 </UserControl>
