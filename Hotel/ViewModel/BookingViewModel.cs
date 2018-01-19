@@ -77,7 +77,6 @@ namespace Hotel.ViewModel
 
         public void SetupAddBookingViewModel()
         {
-           
             AddBookingViewModel viewModel = new AddBookingViewModel();
             viewModel.AllBookings = Bookings;
             viewModel.AllRooms = Rooms;
@@ -86,11 +85,10 @@ namespace Hotel.ViewModel
             AddBookingViewDataContext = viewModel;
         }
 
-        public void SetupAddBookingView(AddBookingView view)
+        public void SetupAddBookingView()
         {
-            view.DataContext = AddBookingViewDataContext;
-            view.Initialize();
-            AddBookingView = view;
+            AddBookingView.DataContext = AddBookingViewDataContext;
+            AddBookingView.Initialize();
         }
 
         public Dictionary<BookingStatus, Func<bool>> StatusFiltersList = new Dictionary<BookingStatus, Func<bool>>();
