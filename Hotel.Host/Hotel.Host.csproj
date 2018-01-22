@@ -4,10 +4,10 @@
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProjectGuid>{95C7FFBA-7DF9-4F06-8F25-2D2F37B90014}</ProjectGuid>
-    <OutputType>Library</OutputType>
-    <RootNamespace>Hotel.Contracts</RootNamespace>
-    <AssemblyName>Hotel.Contracts</AssemblyName>
+    <ProjectGuid>{52CC65B4-905D-4B18-A0FC-D241282A933A}</ProjectGuid>
+    <OutputType>Exe</OutputType>
+    <RootNamespace>Hotel.Host</RootNamespace>
+    <AssemblyName>Hotel.Host</AssemblyName>
     <TargetFrameworkVersion>v4.6.1</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <AutoGenerateBindingRedirects>true</AutoGenerateBindingRedirects>
@@ -31,13 +31,9 @@
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
-  <PropertyGroup>
-    <StartupObject />
-  </PropertyGroup>
   <ItemGroup>
     <Reference Include="System" />
     <Reference Include="System.Core" />
-    <Reference Include="System.Runtime.Serialization" />
     <Reference Include="System.ServiceModel" />
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Data.DataSetExtensions" />
@@ -47,12 +43,17 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="BookingData.cs" />
-    <Compile Include="IHotelService.cs" />
+    <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\Hotel.Services\Hotel.Services.csproj">
+      <Project>{0a98bdfb-1a1c-4b99-9a3f-b2a37b631123}</Project>
+      <Name>Hotel.Services</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>
