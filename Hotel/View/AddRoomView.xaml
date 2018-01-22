@@ -23,7 +23,7 @@
             </Grid.ColumnDefinitions>
 
             <Label Grid.Row="0" Grid.Column="0" Content="Room Number:" Grid.ColumnSpan="2"/>
-            <TextBox Grid.Row="0" Grid.Column="2" VerticalAlignment="Center" Margin="0, 14, 0, 0" Validation.ErrorTemplate="{StaticResource validationErrorTemplate}">
+            <TextBox Name="RoomNr" Grid.Row="0" Grid.Column="2" VerticalAlignment="Center" Margin="0, 14, 0, 0" Validation.ErrorTemplate="{StaticResource validationErrorTemplate}">
                 <TextBox.Text>
                     <Binding Path="RoomNumber" UpdateSourceTrigger="PropertyChanged">
                         <Binding.ValidationRules>

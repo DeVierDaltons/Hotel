@@ -1,9 +1,11 @@
 ﻿using Hotel.Model;
+using Hotel.UIValidators;
 using Hotel.ViewModel;
 using System;
 using System.Linq;
 using System.Windows;
 using System.Windows.Controls;
+using System.Windows.Data;
 
 namespace Hotel.View
 {
@@ -13,6 +15,8 @@ namespace Hotel.View
         {
             InitializeComponent();
             RoomQualityDropdown.ItemsSource = Enum.GetValues(typeof(RoomQuality)).Cast<RoomQuality>();
+            Binding binding = BindingOperations.GetBinding(RoomNr, TextBox.TextProperty);
+            ((RoomValidator)binding.ValidationRules.First()).Rooms = ((AddRoomViewModel)DataContext).Rooms;
         }
     }
 }

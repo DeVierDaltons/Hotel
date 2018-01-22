@@ -6,6 +6,7 @@ using System.ComponentModel;
 using System.Runtime.CompilerServices;
 using System.Windows.Input;
 using Unity.Attributes;
+using System.Collections.Generic;
 
 namespace Hotel.ViewModel
 {
@@ -46,11 +47,14 @@ namespace Hotel.ViewModel
             get { return Room.PricePerDay; }
             set { Room.PricePerDay = value; OnNotifyPropertyChanged(); }
         }
+
+        public IEnumerable<Room> Rooms { get; private set; }
+
         #endregion
         Action Callback;
-        public AddRoomViewModel()
+        public AddRoomViewModel(IEnumerable<Room> rooms)
         {
-          
+            Rooms = rooms;
         }
 
         public void SetCallback(Action callback)
