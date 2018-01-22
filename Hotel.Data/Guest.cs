@@ -7,7 +7,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Input;
 
-namespace Hotel.Model
+namespace Hotel.Data
 {
     public class Guest : INotifyPropertyChanged, IIdentifiable
     {

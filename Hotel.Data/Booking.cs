@@ -8,7 +8,7 @@ using System.Runtime.CompilerServices;
 using System.Windows.Controls;
 using System.Windows.Input;
 
-namespace Hotel.Model
+namespace Hotel.Data
 {
     public class Booking : INotifyPropertyChanged, IIdentifiable
     {

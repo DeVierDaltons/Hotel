@@ -1,4 +1,4 @@
-﻿namespace Hotel.Model
+﻿namespace Hotel.Data
 {
     public enum RoomQuality
     {

@@ -3,7 +3,7 @@ using System.Threading;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
-using Hotel.Model;
+using Hotel.Data;
 using System;
 using System.Collections.ObjectModel;
 using System.Windows.Media;

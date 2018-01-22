@@ -1,4 +1,4 @@
-﻿using Hotel.Model;
+﻿using Hotel.Data;
 using NHibernate.Mapping.ByCode;
 using NHibernate.Mapping.ByCode.Conformist;
 

@@ -1,6 +1,6 @@
 ﻿using System;
 using System.Windows.Input;
-using Hotel.Model;
+using Hotel.Data;
 using Hotel.View;
 using Hotel.Command;
 using Hotel.Extensions;

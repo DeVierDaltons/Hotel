@@ -3,7 +3,7 @@ using NHibernate;
 using System.Linq;
 using System.Collections.Generic;
 using Hotel.Repository;
-using Hotel.Model;
+using Hotel.Data;
 
 namespace Hotel.DataAccessObjects
 {

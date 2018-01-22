@@ -1,6 +1,6 @@
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System.Collections.ObjectModel;
-using Hotel.Model;
+using Hotel.Data;
 using Hotel.Command;
 using Hotel.ViewModel;
 using Hotel.Repository;

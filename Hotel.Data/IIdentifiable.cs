@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace Hotel.Model
+namespace Hotel.Data
 {
     public interface IIdentifiable
     {

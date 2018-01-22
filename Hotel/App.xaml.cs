@@ -1,5 +1,5 @@
 ﻿using Hotel.DataAccessObjects;
-using Hotel.Model;
+using Hotel.Data;
 using Hotel.Repository;
 using Hotel.View;
 using Hotel.ViewModel;

@@ -1,5 +1,5 @@
 ﻿using Hotel.Command;
-using Hotel.Model;
+using Hotel.Data;
 using Hotel.Repository;
 using System;
 using System.ComponentModel;

@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using Hotel.Repository;
-using Hotel.Model;
+using Hotel.Data;
 using System.Diagnostics;
 
 namespace TestHotel

@@ -4,7 +4,7 @@ using System.ComponentModel;
 using System.Runtime.CompilerServices;
 using System.Windows.Input;
 
-namespace Hotel.Model
+namespace Hotel.Data
 {
     public class Room : INotifyPropertyChanged, IIdentifiable
     {

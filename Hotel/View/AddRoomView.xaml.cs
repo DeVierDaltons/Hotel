@@ -1,4 +1,4 @@
-﻿using Hotel.Model;
+﻿using Hotel.Data;
 using Hotel.ViewModel;
 using System;
 using System.Linq;

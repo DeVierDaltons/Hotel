@@ -1,5 +1,5 @@
 ﻿using Hotel.DataAccessObjects;
-using Hotel.Model;
+using Hotel.Data;
 using NHibernate.Tool.hbm2ddl;
 
 namespace Hotel.ViewModel

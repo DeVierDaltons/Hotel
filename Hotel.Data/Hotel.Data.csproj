@@ -42,13 +42,13 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Model\Booking.cs" />
-    <Compile Include="Model\BookingPeriod.cs" />
-    <Compile Include="Model\BookingStatus.cs" />
-    <Compile Include="Model\Guest.cs" />
-    <Compile Include="Model\IIdentifiable.cs" />
-    <Compile Include="Model\Room.cs" />
-    <Compile Include="Model\RoomQuality.cs" />
+    <Compile Include="Booking.cs" />
+    <Compile Include="BookingPeriod.cs" />
+    <Compile Include="BookingStatus.cs" />
+    <Compile Include="Guest.cs" />
+    <Compile Include="IIdentifiable.cs" />
+    <Compile Include="Room.cs" />
+    <Compile Include="RoomQuality.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

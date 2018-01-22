@@ -1,4 +1,4 @@
-﻿using Hotel.Model;
+﻿using Hotel.Data;
 using Hotel.Repository;
 using System.ComponentModel;
 using System.Runtime.CompilerServices;

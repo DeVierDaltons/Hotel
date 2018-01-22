@@ -4,7 +4,7 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:core="clr-namespace:System;assembly=mscorlib"
-        xmlns:models="clr-namespace:Hotel.Model;assembly=Hotel.Data"
+        xmlns:models="clr-namespace:Hotel.Data;assembly=Hotel.Data"
         xmlns:view="clr-namespace:Hotel.View"
         mc:Ignorable="d"
         >
