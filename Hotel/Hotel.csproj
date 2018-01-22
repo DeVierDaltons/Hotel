@@ -135,7 +135,6 @@
     <Compile Include="ViewModel\AddGuestViewModel.cs" />
     <Compile Include="ViewModel\MainWindowViewModel.cs" />
     <Compile Include="ViewModel\GuestsViewModel.cs" />
-    <Compile Include="View\DpiDecorator.cs" />
     <Compile Include="View\GuestDetailView.xaml.cs">
       <DependentUpon>GuestDetailView.xaml</DependentUpon>
     </Compile>
