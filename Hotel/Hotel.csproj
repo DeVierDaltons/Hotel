@@ -207,6 +207,10 @@
     <None Include="App.config" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\Hotel.Contracts\Hotel.Contracts.csproj">
+      <Project>{95c7ffba-7df9-4f06-8f25-2d2f37b90014}</Project>
+      <Name>Hotel.Contracts</Name>
+    </ProjectReference>
     <ProjectReference Include="..\Hotel.Data\Hotel.Data.csproj">
       <Project>{ae7be7a0-9396-4ec6-8563-e6ff5ed50498}</Project>
       <Name>Hotel.Data</Name>

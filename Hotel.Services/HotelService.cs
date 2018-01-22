@@ -6,15 +6,22 @@ using System.Text;
 using System.Threading.Tasks;
 using Hotel.Data;
 using System.Collections.ObjectModel;
+using Hotel.Data.DataAccessObjects;
+using System.ServiceModel;
 
 namespace Hotel.Services
 {
+    [ServiceBehavior(ConcurrencyMode = ConcurrencyMode.Multiple, InstanceContextMode = InstanceContextMode.PerSession)]
     public class HotelService : IHotelService
     {
+        NHibernateRepository<Guest> GuestRepository = new NHibernateRepository<Guest>();
+        NHibernateRepository<Room> RoomRepository = new NHibernateRepository<Room>();
+        NHibernateRepository<Booking> BookingRepository = new NHibernateRepository<Booking>();
+
         #region add
         public void AddBooking(Booking booking)
         {
-            throw new NotImplementedException();
+            BookingRepository.Save(booking);
         }
 
         public void AddGuest(Guest guest)
