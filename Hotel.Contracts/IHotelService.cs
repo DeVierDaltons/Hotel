@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Hotel.Model;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.ServiceModel;
@@ -11,6 +12,6 @@ namespace Hotel.Contracts
     public interface IHotelService
     {
         [OperationContract]
-        void DummyOperation();
+        void AddGuest(Guest guest);
     }
 }
