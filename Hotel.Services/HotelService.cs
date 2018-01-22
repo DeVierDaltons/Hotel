@@ -11,6 +11,7 @@ namespace Hotel.Services
 {
     public class HotelService : IHotelService
     {
+        #region add
         public void AddBooking(Booking booking)
         {
             throw new NotImplementedException();
@@ -25,7 +26,8 @@ namespace Hotel.Services
         {
             throw new NotImplementedException();
         }
-
+        #endregion
+        #region edit
         public void EditBooking(Booking booking)
         {
             throw new NotImplementedException();
@@ -41,6 +43,8 @@ namespace Hotel.Services
             throw new NotImplementedException();
         }
 
+        #endregion
+        #region Filter
         public ObservableCollection<Guest> FilterBookings(BookingStatus status, string filterString)
         {
             throw new NotImplementedException();
@@ -50,7 +54,8 @@ namespace Hotel.Services
         {
             throw new NotImplementedException();
         }
-
+        #endregion Filter
+        #region Get
         public ObservableCollection<Booking> GetAllBookings()
         {
             throw new NotImplementedException();
@@ -65,7 +70,8 @@ namespace Hotel.Services
         {
             throw new NotImplementedException();
         }
-
+        #endregion
+        #region remove
         public void RemoveBooking(Booking booking)
         {
             throw new NotImplementedException();
@@ -80,5 +86,6 @@ namespace Hotel.Services
         {
             throw new NotImplementedException();
         }
+        #endregion
     }
 }
