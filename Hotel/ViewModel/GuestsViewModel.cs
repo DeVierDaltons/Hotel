@@ -93,6 +93,7 @@ namespace Hotel.ViewModel
             var g = new AddGuestViewModel();
             g.Initialize(new EditGuestCommand(guest), () => { StartAddingGuest(); }, guest, () =>
             {
+                DisplayedGuests.Add(guest);
                 new HotelServiceProxy().AddGuest(guest);
                 StartAddingGuest();
             });
@@ -101,7 +102,7 @@ namespace Hotel.ViewModel
 
         public void FilterGuests()
         {
-            DisplayedGuests = new ObservableCollection<Guest>(new HotelServiceProxy().FilterGuests(FilterGuestString));
+            DisplayedGuests = new HotelServiceProxy().FilterGuests(FilterGuestString);
         }
 
         /// <summary>
