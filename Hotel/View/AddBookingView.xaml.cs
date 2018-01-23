@@ -1,6 +1,4 @@
 ﻿using Hotel.ViewModel;
-using System.Threading;
-using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
 using Hotel.Model;
@@ -10,13 +8,12 @@ using System.Windows.Media;
 using System.Globalization;
 using System.Windows.Input;
 using System.Collections.Generic;
-using System.Linq;
 using System.Collections.Specialized;
 using System.Windows.Data;
 using System.Windows.Controls.Primitives;
 using NHibernate.Util;
-using Unity.Attributes;
 using System.Windows.Shapes;
+using System.ComponentModel;
 
 namespace Hotel.View
 {
@@ -177,6 +174,21 @@ namespace Hotel.View
         {
             bookings.CollectionChanged += BookingsChanged;
             Rooms.CollectionChanged += OnRoomsChanged;
+            foreach(Booking booking in bookings)
+            {
+                SubscribeToBookingStatus(booking);
+            }
+        }
+
+        private void SubscribeToBookingStatus(Booking booking)
+        {
+            booking.PropertyChanged += delegate (object sender, PropertyChangedEventArgs eventArgs)
+            {
+                if (eventArgs.PropertyName == nameof(Booking.BookingStatus))
+                {
+                    RedrawAvailabilityForBooking(booking);
+                }
+            };
         }
 
         private void BookingsChanged(object sender, NotifyCollectionChangedEventArgs e)
@@ -187,7 +199,9 @@ namespace Hotel.View
             }
             if( e.NewItems != null)
             {
-                RedrawAvailabilityForBooking((Booking)e.NewItems[0]);
+                Booking newBooking = (Booking)e.NewItems[0];
+                RedrawAvailabilityForBooking(newBooking);
+                SubscribeToBookingStatus(newBooking);
             }
         }
 
