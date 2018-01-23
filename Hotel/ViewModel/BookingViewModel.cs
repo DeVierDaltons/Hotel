@@ -1,14 +1,13 @@
 ﻿using Hotel.Data;
+using Hotel.View;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
-using System.Linq;
-using Hotel.View;
-using System.Windows;
 using System.ComponentModel;
+using System.Linq;
 using System.Runtime.CompilerServices;
-using Hotel.Repository;
-using NHibernate.Util;
+using System.Windows;
+using Unity.Interception.Utilities;
 
 namespace Hotel.ViewModel
 {
@@ -43,21 +42,18 @@ namespace Hotel.ViewModel
         public event PropertyChangedEventHandler PropertyChanged;
         
         public List<BookingStatus> BookingStatusFilters { get;} = new List<BookingStatus>();
+        
+        public ObservableCollection<Booking> Bookings { get; set; }
 
-        [Unity.Attributes.Dependency]
-        public RepositoryBackedObservableCollection<Booking> Bookings { get; set; }
-
-        private RepositoryBackedObservableCollection<Room> _Rooms;
-
-        [Unity.Attributes.Dependency]
-        public RepositoryBackedObservableCollection<Room> Rooms
+        private ObservableCollection<Room> _Rooms;
+        
+        public ObservableCollection<Room> Rooms
         {
             get { return _Rooms; }
             set { _Rooms = value; OnPropertyChanged(); }
         }
-
-        [Unity.Attributes.Dependency]
-        public RepositoryBackedObservableCollection<Guest> Guests { get; set; }
+        
+        public ObservableCollection<Guest> Guests { get; set; }
         public BookingViewModel()
         { 
             InitializeStatusFilterList();
@@ -66,6 +62,9 @@ namespace Hotel.ViewModel
 
         public void Initialize()
         {
+            Bookings = new Proxy.HotelServiceProxy().GetAllBookings();
+            Rooms = new Proxy.HotelServiceProxy().GetAllRooms();
+            Guests = new Proxy.HotelServiceProxy().GetAllGuests();
             foreach (Booking booking in Bookings)
             {
                 booking.PropertyChanged += InvalidateOnBookingStatusChanged;

@@ -1,19 +1,4 @@
-﻿using Hotel.DataAccessObjects;
-using Hotel.Data;
-using Hotel.Repository;
-using Hotel.View;
-using Hotel.ViewModel;
-using NHibernate.Tool.hbm2ddl;
-using NHibernate.Util;
-using System;
-using System.Collections.Generic;
-using System.Collections.ObjectModel;
-using System.Collections.Specialized;
-using System.Configuration;
-using System.Data;
-using System.Linq;
-using System.Threading.Tasks;
-using System.Windows;
+﻿using System.Windows;
 using Unity;
 
 namespace Hotel
@@ -25,17 +10,14 @@ namespace Hotel
     {
         protected override void OnStartup(StartupEventArgs e)
         {
-            var schemaUpdate = new SchemaUpdate(NHibernateHelper.Configuration);
-            schemaUpdate.Execute(false, true);
             IUnityContainer container = new UnityContainer();
-            RegisterTypes(container);
             MainWindow window = container.Resolve<MainWindow>();
-            InitializeRoomBookings(container);
+            //InitializeRoomBookings(container);
            
             window.Initialize();
             window.Show();
         }
-
+        /*
         private void InitializeRoomBookings(IUnityContainer container)
         {
             var bookings = container.Resolve<RepositoryBackedObservableCollection<Booking>>();
@@ -55,14 +37,7 @@ namespace Hotel
                     Booking addedBooking = (Booking)e.NewItems[0];
                     addedBooking.Rooms.ForEach(room => room.Bookings.Add(addedBooking));
                 }
-            };
-        }
-
-        private void RegisterTypes(IUnityContainer container)
-        {
-            container.RegisterInstance(typeof(RepositoryBackedObservableCollection<Guest>), new RepositoryBackedObservableCollection<Guest>(new NHibernateRepository<Guest>()));
-            container.RegisterInstance(typeof(RepositoryBackedObservableCollection<Booking>), new RepositoryBackedObservableCollection<Booking>(new NHibernateRepository<Booking>()));
-            container.RegisterInstance(typeof(RepositoryBackedObservableCollection<Room>), new RepositoryBackedObservableCollection<Room>(new NHibernateRepository<Room>()));
+            };*/
         }
     }
-}
+

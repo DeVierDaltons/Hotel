@@ -1,11 +1,9 @@
 ﻿using Hotel.Command;
 using Hotel.Data;
-using Hotel.Repository;
 using System;
 using System.ComponentModel;
 using System.Runtime.CompilerServices;
 using System.Windows.Input;
-using Unity.Attributes;
 
 namespace Hotel.ViewModel
 {

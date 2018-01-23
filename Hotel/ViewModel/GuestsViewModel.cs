@@ -1,5 +1,4 @@
 ﻿using Hotel.Data;
-using Hotel.Repository;
 using System.ComponentModel;
 using System.Runtime.CompilerServices;
 using System;
@@ -7,6 +6,7 @@ using System.Linq;
 using System.Collections.ObjectModel;
 using Unity.Attributes;
 using Hotel.View;
+using Hotel.Proxy;
 
 namespace Hotel.ViewModel
 {
@@ -29,16 +29,7 @@ namespace Hotel.ViewModel
         }
 
         public event PropertyChangedEventHandler PropertyChanged;
-
-        private RepositoryBackedObservableCollection<Guest> _guests;
-
-        [Unity.Attributes.Dependency]
-        public RepositoryBackedObservableCollection<Guest> Guests
-        {
-            get { return _guests; }
-            set { _guests = value; OnPropertyChanged(); }
-        }
-
+        
         private ObservableCollection<Guest> _DisplayedGuests;
 
         public ObservableCollection<Guest> DisplayedGuests
@@ -103,7 +94,7 @@ namespace Hotel.ViewModel
             var g = new AddGuestViewModel();
             g.Initialize(new EditGuestCommand(guest), () => { StartAddingGuest(); }, guest, () =>
             {
-                Guests.Add(guest);
+                new HotelServiceProxy().AddGuest(guest);
                 StartAddingGuest();
             });
             CurrentGuest = g;
@@ -111,7 +102,7 @@ namespace Hotel.ViewModel
 
         public void FilterGuests()
         {
-            DisplayedGuests = new ObservableCollection<Guest>(Guests.Where(g =>
+            DisplayedGuests = new ObservableCollection<Guest>(new HotelServiceProxy().GetAllGuests().Where(g =>
                (g.FirstName != null && g.FirstName.ToLower().Contains(FilterGuestString)) ||
                (g.LastName != null && g.LastName.ToLower().Contains(FilterGuestString)) ||
                (g.PhoneNumber != null && g.PhoneNumber.ToLower().Contains(FilterGuestString)) ||
@@ -126,7 +117,7 @@ namespace Hotel.ViewModel
         /// </summary>
         public void Initialize()
         {
-            DisplayedGuests = Guests;
+            DisplayedGuests = new HotelServiceProxy().GetAllGuests();
         }
 
         public void OnPropertyChanged([CallerMemberName] string name = "")

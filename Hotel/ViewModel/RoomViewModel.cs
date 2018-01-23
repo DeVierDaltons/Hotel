@@ -1,5 +1,6 @@
 ﻿using Hotel.Data;
-using Hotel.Repository;
+using Hotel.Proxy;
+using System.Collections.ObjectModel;
 using System.ComponentModel;
 using System.Runtime.CompilerServices;
 
@@ -15,12 +16,11 @@ namespace Hotel.ViewModel
             set { _AddRoomViewDataContext = value; OnNotifyPropertyChanged(); }
         }
 
-        private RepositoryBackedObservableCollection<Room> _Rooms;
-
         public event PropertyChangedEventHandler PropertyChanged;
 
-        [Unity.Attributes.Dependency]
-        public RepositoryBackedObservableCollection<Room> Rooms
+        private ObservableCollection<Room> _Rooms;
+        
+        public ObservableCollection<Room> Rooms
         {
             get { return _Rooms; }
             set { _Rooms = value; OnNotifyPropertyChanged(); }
@@ -28,6 +28,7 @@ namespace Hotel.ViewModel
 
         public void Initialize()
         {
+            _Rooms = new HotelServiceProxy().GetAllRooms();
             AddRoom();
         }
 
@@ -37,6 +38,7 @@ namespace Hotel.ViewModel
             AddRoomViewDataContext.Initialize();
             AddRoomViewDataContext.SetCallback(() =>
             {
+                new HotelServiceProxy().AddRoom(AddRoomViewDataContext.Room);
                 Rooms.Add(AddRoomViewDataContext.Room);
             });
         }

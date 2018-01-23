@@ -1,14 +1,10 @@
 ﻿using Hotel.Contracts;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using Hotel.Data;
-using System.Collections.ObjectModel;
 using Hotel.Data.DataAccessObjects;
-using System.ServiceModel;
 using NHibernate.Tool.hbm2ddl;
+using System;
+using System.Collections.ObjectModel;
+using System.ServiceModel;
 
 namespace Hotel.Services
 {

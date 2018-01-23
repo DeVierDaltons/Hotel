@@ -1,15 +1,7 @@
-using Hotel.Command;
 using Hotel.Data;
 using Hotel.ViewModel;
 using System.Windows;
-using System.Windows.Controls;
-using System.Collections.Generic;
-using System.Linq;
-using System;
-using Hotel.View;
 using Unity.Attributes;
-using Hotel.Repository;
-using Hotel.DataAccessObjects;
 
 namespace Hotel
 {

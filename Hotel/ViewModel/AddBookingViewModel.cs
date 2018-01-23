@@ -1,7 +1,7 @@
 ﻿using Hotel.Command;
 using Hotel.Data;
-using Hotel.Repository;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.ComponentModel;
 using System.Linq;
 using System.Runtime.CompilerServices;
@@ -17,22 +17,22 @@ namespace Hotel.ViewModel
         public ICommand AddBookingCommand { get; private set; }
         public Booking Booking { get; set; } = new Booking();
 
-        private RepositoryBackedObservableCollection<Booking> _allBookings;
-        public RepositoryBackedObservableCollection<Booking> AllBookings
+        private ObservableCollection<Booking> _allBookings;
+        public ObservableCollection<Booking> AllBookings
         {
             get { return _allBookings; }
             set { _allBookings = value; OnPropertyChanged(); }
         }
 
-        private RepositoryBackedObservableCollection<Room> _roomsRepo;
-        public RepositoryBackedObservableCollection<Room> AllRooms
+        private ObservableCollection<Room> _roomsRepo;
+        public ObservableCollection<Room> AllRooms
         {
             get { return _roomsRepo; }
             set { _roomsRepo = value; OnPropertyChanged(); }
         }
         
-        public RepositoryBackedObservableCollection<Guest> _allGuests { get; set; }
-        public RepositoryBackedObservableCollection<Guest> AllGuests
+        public ObservableCollection<Guest> _allGuests { get; set; }
+        public ObservableCollection<Guest> AllGuests
         {
             get { return _allGuests; }
             set { _allGuests = value; OnPropertyChanged(); }
@@ -85,7 +85,7 @@ namespace Hotel.ViewModel
         public void AddBooking()
         {
             Booking.SetDates(SelectedDates);
-            (AllBookings as RepositoryBackedObservableCollection<Booking>).Add(Booking);
+            (AllBookings as ObservableCollection<Booking>).Add(Booking);
             Booking = new Booking();
         }
 
