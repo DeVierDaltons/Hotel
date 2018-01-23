@@ -63,7 +63,9 @@
     <Compile Include="Booking.cs" />
     <Compile Include="BookingPeriod.cs" />
     <Compile Include="BookingStatus.cs" />
+    <Compile Include="ChangeTracker.cs" />
     <Compile Include="DataAccessObjects\BookingMap.cs" />
+    <Compile Include="DataAccessObjects\ChangeTrackerMap.cs" />
     <Compile Include="DataAccessObjects\GuestMap.cs" />
     <Compile Include="DataAccessObjects\NHibernateHelper.cs" />
     <Compile Include="DataAccessObjects\NHibernateRepository.cs" />

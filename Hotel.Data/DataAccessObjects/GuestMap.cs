@@ -4,7 +4,7 @@ using NHibernate.Mapping.ByCode.Conformist;
 
 namespace Hotel.Data.DataAccessObjects
 {
-    public class GuestMap : ClassMapping<Guest>
+    internal class GuestMap : ClassMapping<Guest>
     {
         public GuestMap()
         {

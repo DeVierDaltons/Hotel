@@ -12,6 +12,12 @@ namespace Hotel.Proxy
 {
     public class HotelServiceProxy : ClientBase<IHotelService>, IHotelService
     {
+
+        public HotelServiceProxy()
+        {
+            
+        }
+
         public void AddBooking(Booking booking)
         {
             Channel.AddBooking(booking);

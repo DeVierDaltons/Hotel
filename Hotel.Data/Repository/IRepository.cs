@@ -3,7 +3,7 @@ using System.Collections.Generic;
 
 namespace Hotel.Data.Repository
 {
-    public interface IRepository<T>
+    internal interface IRepository<T>
     {
         T Get(Guid guid);
         void Save(T item);

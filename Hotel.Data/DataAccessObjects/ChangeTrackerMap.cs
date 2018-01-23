@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace Hotel.Data.DataAccessObjects
 {
-    public class ChangeTrackerMap : ClassMapping<ChangeTracker>
+    internal class ChangeTrackerMap : ClassMapping<ChangeTracker>
     {
     }
 }

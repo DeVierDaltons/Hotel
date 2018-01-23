@@ -14,7 +14,7 @@ namespace Hotel.Host
         {
             ServiceHost hotelServiceHost = new ServiceHost(typeof(HotelService));
             hotelServiceHost.Open();
-
+           
             Console.WriteLine("Services started. Press [Enter] to quit.");
             Console.ReadLine();
 

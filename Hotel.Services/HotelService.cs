@@ -8,6 +8,7 @@ using Hotel.Data;
 using System.Collections.ObjectModel;
 using Hotel.Data.DataAccessObjects;
 using System.ServiceModel;
+using NHibernate.Tool.hbm2ddl;
 
 namespace Hotel.Services
 {
@@ -17,6 +18,17 @@ namespace Hotel.Services
         NHibernateRepository<Guest> GuestRepository = new NHibernateRepository<Guest>();
         NHibernateRepository<Room> RoomRepository = new NHibernateRepository<Room>();
         NHibernateRepository<Booking> BookingRepository = new NHibernateRepository<Booking>();
+
+        public HotelService()
+        {
+           
+        }
+
+        public void CreateDatabaseIfNeeded()
+        {
+            var schemaUpdate = new SchemaUpdate(NHibernateHelper.Configuration);
+            schemaUpdate.Execute(false, true);
+        }
 
         #region add
         public void AddBooking(Booking booking)
