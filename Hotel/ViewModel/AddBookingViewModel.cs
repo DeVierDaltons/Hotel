@@ -1,5 +1,6 @@
 ﻿using Hotel.Command;
 using Hotel.Data;
+using Hotel.Proxy;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.ComponentModel;
@@ -85,6 +86,9 @@ namespace Hotel.ViewModel
         public void AddBooking()
         {
             Booking.SetDates(SelectedDates);
+            HotelServiceProxy proxy = new HotelServiceProxy();
+            proxy.AddBooking(Booking);
+            proxy.Close();
             (AllBookings as ObservableCollection<Booking>).Add(Booking);
             Booking = new Booking();
         }
