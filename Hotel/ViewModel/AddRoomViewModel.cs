@@ -14,6 +14,9 @@ namespace Hotel.ViewModel
 {
     public class AddRoomViewModel : INotifyPropertyChanged
     {
+        private const int MaximumRoomNumberLength = 15;
+        private const int MinimumBeds = 0;
+
         public event PropertyChangedEventHandler PropertyChanged;
 
         #region Properties
@@ -77,6 +80,7 @@ namespace Hotel.ViewModel
 
         #endregion
         Action Callback;
+
         public AddRoomViewModel(IEnumerable<Room> rooms)
         {
             Rooms = rooms;
@@ -89,38 +93,55 @@ namespace Hotel.ViewModel
 
         public bool ValidateInput()
         {
-            bool valid = true;
+            bool roomNumberValid = ValidateRoomNumber();
+            bool bedsValid = ValidateBeds();
+            return roomNumberValid && bedsValid;
+        }
+
+        private bool ValidateRoomNumber()
+        {
             RoomNrErrorMessage = "";
-            RoomBedsErrorMessage = "";
-            if( string.IsNullOrEmpty(Room.RoomNumber) || string.IsNullOrWhiteSpace(Room.RoomNumber) )
+            if (string.IsNullOrEmpty(Room.RoomNumber) || string.IsNullOrWhiteSpace(Room.RoomNumber))
             {
                 RoomNrErrorMessage = "Room Number cannot be empty.";
-                valid = false;
+                return false;
             }
-            else if( Rooms.Any(room => room.RoomNumber == Room.RoomNumber) )
+            else if (Room.RoomNumber.Length > MaximumRoomNumberLength)
+            {
+                RoomNrErrorMessage = $"Room Number must be less than {MaximumRoomNumberLength} characters.";
+                return false;
+            }
+            else if (Rooms.Any(room => room.RoomNumber == Room.RoomNumber))
             {
                 RoomNrErrorMessage = "Already have a room with that name.";
-                valid = false;
+                return false;
             }
-            if( string.IsNullOrEmpty(Beds) )
+            return true;
+        }
+
+        private bool ValidateBeds()
+        {
+            RoomBedsErrorMessage = "";
+            if (string.IsNullOrEmpty(Beds))
             {
                 RoomBedsErrorMessage = "Beds cannot be empty.";
-                valid = false;
-            } else
+                return false;
+            }
+            else
             {
                 int numOfBeds;
                 if (!int.TryParse(Beds, out numOfBeds))
                 {
                     RoomBedsErrorMessage = $"{Beds} is not a valid integer.";
-                    valid = false;
+                    return false;
                 }
-                else if(numOfBeds < 0)
+                else if (numOfBeds < MinimumBeds)
                 {
-                    RoomBedsErrorMessage = "Must have at least 0 beds.";
-                    valid = false;
+                    RoomBedsErrorMessage = $"Must have at least {MinimumBeds} beds.";
+                    return false;
                 }
             }
-            return valid;
+            return true;
         }
 
         public void AddRoom()
