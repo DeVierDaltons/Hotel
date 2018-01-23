@@ -102,14 +102,7 @@ namespace Hotel.ViewModel
 
         public void FilterGuests()
         {
-            DisplayedGuests = new ObservableCollection<Guest>(new HotelServiceProxy().GetAllGuests().Where(g =>
-               (g.FirstName != null && g.FirstName.ToLower().Contains(FilterGuestString)) ||
-               (g.LastName != null && g.LastName.ToLower().Contains(FilterGuestString)) ||
-               (g.PhoneNumber != null && g.PhoneNumber.ToLower().Contains(FilterGuestString)) ||
-               (g.PostalCode != null && g.PostalCode.ToLower().Contains(FilterGuestString)) ||
-               (g.EmailAdress != null && g.EmailAdress.ToLower().Contains(FilterGuestString)) ||
-               (g.City != null && g.City.ToLower().Contains(FilterGuestString)) ||
-               (g.Country != null && g.Country.ToLower().Contains(FilterGuestString))));
+            DisplayedGuests = new ObservableCollection<Guest>(new HotelServiceProxy().FilterGuests(FilterGuestString));
         }
 
         /// <summary>
