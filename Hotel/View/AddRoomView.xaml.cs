@@ -20,7 +20,7 @@ namespace Hotel.View
         public void Initialize(AddRoomViewModel viewModel)
         {
             Binding binding = BindingOperations.GetBinding(RoomNr, TextBox.TextProperty);
-            ((RoomValidator)binding.ValidationRules.First()).Rooms = viewModel.Rooms;
+            ((RoomNameValidator)binding.ValidationRules.First()).Rooms = viewModel.Rooms;
         }
     }
 }

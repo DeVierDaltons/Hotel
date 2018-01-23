@@ -9,7 +9,7 @@ using Unity.Attributes;
 
 namespace Hotel.UIValidators
 {
-    public class RoomValidator : ValidationRule
+    public class RoomNameValidator : ValidationRule
     {
         const int MaximumRoomLength = 15;
 
