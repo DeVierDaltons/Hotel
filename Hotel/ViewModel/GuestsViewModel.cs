@@ -102,6 +102,7 @@ namespace Hotel.ViewModel
 
         public void FilterGuests()
         {
+            
             DisplayedGuests = new HotelServiceProxy().FilterGuests(FilterGuestString);
         }
 
