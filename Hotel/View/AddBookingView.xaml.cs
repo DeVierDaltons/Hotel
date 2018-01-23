@@ -898,7 +898,6 @@ namespace Hotel.View
         private void SetFieldColour(Room room, int dateOffset)
         {
             Canvas canvas = FieldForRoomDateOffset[room][dateOffset];
-            canvas.Children.Clear();
             if (room.DayAvailable(StartDate.AddDays(dateOffset)))
             {
                 canvas.Background = Brushes.DarkOliveGreen;
@@ -913,26 +912,26 @@ namespace Hotel.View
 
         private static void AddCheckersToCanvas(Canvas canvas)
         {
-            const int numCheckers = 5;
-            const int spaceForChecker = DateBlockSize / (numCheckers * 2);
-            for (int xi = 0; xi < numCheckers; ++xi)
+            GeometryDrawing backgroundSquare = new GeometryDrawing(Brushes.Red, null, new RectangleGeometry(new Rect(0, 0, 100, 100)));
+
+            GeometryGroup aGeometryGroup = new GeometryGroup();
+            aGeometryGroup.Children.Add(new RectangleGeometry(new Rect(0, 0, 50, 50)));
+            aGeometryGroup.Children.Add(new RectangleGeometry(new Rect(50, 50, 50, 50)));
+
+            GeometryDrawing checkers = new GeometryDrawing(Brushes.Black, null, aGeometryGroup);
+
+            DrawingGroup checkersDrawingGroup = new DrawingGroup();
+            checkersDrawingGroup.Children.Add(backgroundSquare);
+            checkersDrawingGroup.Children.Add(checkers);
+
+            DrawingBrush myBrush = new DrawingBrush
             {
-                for (int yi = 0; yi < numCheckers; ++yi)
-                {
-                    for (int extraOffset = 0; extraOffset < 2; ++extraOffset)
-                    {
-                        Rectangle rect = new Rectangle()
-                        {
-                            Fill = Brushes.Black,
-                            Width = spaceForChecker,
-                            Height = spaceForChecker,
-                        };
-                        Canvas.SetLeft(rect, (xi * 2 + extraOffset) * spaceForChecker);
-                        Canvas.SetTop(rect, (yi * 2 + extraOffset) * spaceForChecker);
-                        canvas.Children.Add(rect);
-                    }
-                }
-            }
+                Drawing = checkersDrawingGroup,
+                Viewport = new Rect(0, 0, 0.2, 0.2),
+                TileMode = TileMode.Tile
+            };
+
+            canvas.Background = myBrush;
         }
 
         private Canvas CreateRoomDateField(int column, int row)
