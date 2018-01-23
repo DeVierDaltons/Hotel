@@ -9,15 +9,16 @@ using System.Collections.ObjectModel;
 using Hotel.Data.DataAccessObjects;
 using System.ServiceModel;
 using NHibernate.Tool.hbm2ddl;
+using Hotel.Data.Repository;
 
 namespace Hotel.Services
 {
     [ServiceBehavior(ConcurrencyMode = ConcurrencyMode.Multiple, InstanceContextMode = InstanceContextMode.PerSession)]
     public class HotelService : IHotelService
     {
-        NHibernateRepository<Guest> GuestRepository = new NHibernateRepository<Guest>();
-        NHibernateRepository<Room> RoomRepository = new NHibernateRepository<Room>();
-        NHibernateRepository<Booking> BookingRepository = new NHibernateRepository<Booking>();
+        RepositoryBackedObservableCollection<Guest> GuestRepository = new RepositoryBackedObservableCollection<Guest>(new NHibernateRepository<Guest>());
+        RepositoryBackedObservableCollection<Room> RoomRepository = new RepositoryBackedObservableCollection<Room>(new NHibernateRepository<Room>());
+        RepositoryBackedObservableCollection<Booking> BookingRepository = new RepositoryBackedObservableCollection<Booking>(new NHibernateRepository<Booking>());
 
         public HotelService()
         {
@@ -38,12 +39,12 @@ namespace Hotel.Services
 
         public void AddGuest(Guest guest)
         {
-            throw new NotImplementedException();
+            GuestRepository.Save(guest);
         }
 
         public void AddRoom(Room room)
         {
-            throw new NotImplementedException();
+            RoomRepository.Save(room);
         }
         #endregion
         #region edit
@@ -64,15 +65,54 @@ namespace Hotel.Services
 
         #endregion
         #region Filter
-        public ObservableCollection<Guest> FilterBookings(BookingStatus status, string filterString)
+        public ObservableCollection<Booking> FilterBookings(BookingStatus? status = null, Guest guest = null)
         {
-            throw new NotImplementedException();
+            ObservableCollection<Booking> filteredList = new ObservableCollection<Booking>();
+            if (status == null && guest==null)
+            {
+                return null;
+                
+            }
+
+            if(status != null)
+            {
+                filteredList = BookingRepository.Where(x => x.BookingStatus == status) as ObservableCollection<Booking>;
+            }
+
+            if(guest != null)
+            {
+                if (filteredList.Count > 0)
+                {
+                    return filteredList.Where(x => x.Guests.Contains(guest)) as ObservableCollection<Booking>;
+                }
+                else
+                {
+                    return BookingRepository.Where(x => x.Guests.Contains(guest)) as ObservableCollection<Booking>;
+                }
+            }
+
+            return filteredList;
         }
 
         public ObservableCollection<Guest> FilterGuests(string filterString)
         {
-            throw new NotImplementedException();
+            ObservableCollection<Guest> filteredGuests = new ObservableCollection<Guest>();
+            foreach (Guest g in GuestRepository)
+            {
+                 if((g.FirstName != null && g.FirstName.ToLower().Contains(filterString)) ||
+                (g.LastName != null && g.LastName.ToLower().Contains(filterString)) ||
+                (g.PhoneNumber != null && g.PhoneNumber.ToLower().Contains(filterString)) ||
+                (g.PostalCode != null && g.PostalCode.ToLower().Contains(filterString)) ||
+                (g.EmailAdress != null && g.EmailAdress.ToLower().Contains(filterString)) ||
+                (g.City != null && g.City.ToLower().Contains(filterString)) ||
+                (g.Country != null && g.Country.ToLower().Contains(filterString)))
+                {
+                    filteredGuests.Add(g);
+                }
+            }
+            return filteredGuests;
         }
+
         #endregion Filter
         #region Get
         public ObservableCollection<Booking> GetAllBookings()

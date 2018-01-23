@@ -34,7 +34,7 @@ namespace Hotel.Contracts
         [OperationContract]
         ObservableCollection<Booking> GetAllBookings();
         [OperationContract]
-        ObservableCollection<Guest> FilterBookings(BookingStatus status, string filterString);
+        ObservableCollection<Booking> FilterBookings(BookingStatus? status = null, Guest guest = null);
 
         //Room operations
         [OperationContract]
