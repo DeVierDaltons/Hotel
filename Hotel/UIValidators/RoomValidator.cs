@@ -11,6 +11,8 @@ namespace Hotel.UIValidators
 {
     public class RoomValidator : ValidationRule
     {
+        const int MaximumRoomLength = 15;
+
         [Dependency]
         public IEnumerable<Room> Rooms { get; set; }
 
@@ -27,9 +29,9 @@ namespace Hotel.UIValidators
             {
                 return new ValidationResult(false, "Room Number cannot be empty.");
             }
-            else if (value.ToString().Length > 3)
+            else if (value.ToString().Length > MaximumRoomLength)
             {
-                return new ValidationResult(false, "Name cannot be more than 3 characters long.");
+                return new ValidationResult(false, $"Name cannot be more than {MaximumRoomLength} characters long.");
             }
             return ValidationResult.ValidResult;
         }
