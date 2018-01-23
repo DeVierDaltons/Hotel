@@ -23,7 +23,7 @@ namespace Hotel.UIValidators
             {
                 return new ValidationResult(false, "Another room has the same name");
             }
-            if (value.ToString() == "")
+            if (value.ToString() == "" || string.IsNullOrWhiteSpace(value.ToString()))
             {
                 return new ValidationResult(false, "Room Number cannot be empty.");
             }
