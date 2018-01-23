@@ -31,7 +31,7 @@ namespace Hotel.ViewModel
             _Rooms = new HotelServiceProxy().GetAllRooms();
             AddRoom();
         }
-
+        
         public void AddRoom()
         {
             AddRoomViewDataContext = new AddRoomViewModel();

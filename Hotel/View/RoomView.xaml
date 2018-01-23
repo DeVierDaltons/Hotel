@@ -27,7 +27,7 @@
             <Grid.RowDefinitions>
                 <RowDefinition Height="*"></RowDefinition>
             </Grid.RowDefinitions>
-            <DataGrid Grid.Row="0" CanUserAddRows="False"  Grid.Column="0" Unloaded="DataGrid_Unloaded" ItemsSource="{Binding Rooms, Mode=TwoWay, NotifyOnSourceUpdated=True}" Margin="0,0,0,20" AutoGenerateColumns="False" >
+            <DataGrid Grid.Row="0" IsReadOnly="True" Grid.Column="0" Unloaded="DataGrid_Unloaded" ItemsSource="{Binding Rooms, Mode=TwoWay, NotifyOnSourceUpdated=True}" Margin="0,0,0,20" AutoGenerateColumns="False" >
                 <DataGrid.Columns>
                     <DataGridTextColumn Binding="{Binding RoomNumber, Mode=TwoWay}" Header="Room number"></DataGridTextColumn>
                     <DataGridTextColumn Binding="{Binding Beds, Mode=TwoWay}" Header="Amount of beds" ></DataGridTextColumn>
