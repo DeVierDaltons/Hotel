@@ -7,6 +7,8 @@ using System.Runtime.CompilerServices;
 using System.Windows.Input;
 using Unity.Attributes;
 using System.Collections.Generic;
+using Hotel.UIValidators;
+using System.Globalization;
 
 namespace Hotel.ViewModel
 {
@@ -24,10 +26,17 @@ namespace Hotel.ViewModel
             set { Room.RoomNumber = value; OnNotifyPropertyChanged(); }
         }
 
-        public int Beds
+        private string _beds;
+        public string Beds
         {
-            get { return Room.Beds; }
-            set { Room.Beds = value; OnNotifyPropertyChanged(); }
+            get { return _beds; }
+            set {
+                int numBeds = -1;
+                int.TryParse(value, out numBeds);
+                Room.Beds = numBeds;
+                _beds = numBeds.ToString();
+                OnNotifyPropertyChanged();
+            }
         }
 
         public RoomQuality Quality
@@ -62,9 +71,15 @@ namespace Hotel.ViewModel
             this.Callback = callback;
         }
 
+        private bool ValidateBeds()
+        {
+            RoomBedsValidator bedsValidator = new RoomBedsValidator();
+            return bedsValidator.Validate(Beds, CultureInfo.CurrentCulture).IsValid;
+        }
+
         public bool ValidateInput()
         {
-            return !string.IsNullOrEmpty(Room.RoomNumber) && Beds >= 0;
+            return !string.IsNullOrEmpty(Room.RoomNumber) && ValidateBeds();
         }
 
         public void AddRoom()
@@ -77,7 +92,7 @@ namespace Hotel.ViewModel
         private void ClearAllFields()
         {
             RoomNumber = string.Empty;
-            Beds = 1;
+            Beds = "";
             Quality = RoomQuality.Budget;
             HasNiceView = false;
             PricePerDay = 0;
@@ -90,7 +105,7 @@ namespace Hotel.ViewModel
 
         public void Initialize()
         {
-            Beds = 1;
+            Beds = "";
             AddRoomCommand = new AddRoomCommand(this);
         }
     }
