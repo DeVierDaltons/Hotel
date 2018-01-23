@@ -55,7 +55,7 @@ namespace Hotel.Services
             {
                 if(booking.Id == b.Id)
                 {
-                    return;
+                    break;
                 }
                 bookingIndex++;
             }
@@ -69,7 +69,7 @@ namespace Hotel.Services
             {
                 if (guest.Id == b.Id)
                 {
-                    return;
+                    break;
                 }
                 guestIndex++;
             }
@@ -83,7 +83,7 @@ namespace Hotel.Services
             {
                 if (room.Id == b.Id)
                 {
-                    return;
+                    break;
                 }
                 roomindex++;
             }
