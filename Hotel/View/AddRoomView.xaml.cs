@@ -20,14 +20,21 @@ namespace Hotel.View
         {
             viewModel.PropertyChanged += delegate (object sender, PropertyChangedEventArgs e)
             {
-                if (viewModel.RoomNrErrorMessage == "")
-                {
-                    RoomNumberError.Visibility = Visibility.Hidden;
-                } else
-                {
-                    RoomNumberError.Visibility = Visibility.Visible;
-                }
+                SetHiddenIfEmptyString(RoomNumberError, viewModel.RoomNrErrorMessage);
+                SetHiddenIfEmptyString(RoomBedsError, viewModel.RoomBedsErrorMessage);
             };
+        }
+
+        private void SetHiddenIfEmptyString(UIElement element, string stringProperty)
+        {
+            if (stringProperty == "")
+            {
+                element.Visibility = Visibility.Hidden;
+            }
+            else
+            {
+                element.Visibility = Visibility.Visible;
+            }
         }
     }
 }

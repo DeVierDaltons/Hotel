@@ -33,15 +33,24 @@ namespace Hotel.ViewModel
             set { _roomNrErrorMessage = value; OnNotifyPropertyChanged(); }
         }
 
+        string _roomBedsErrorMessage;
+        public string RoomBedsErrorMessage
+        {
+            get { return _roomBedsErrorMessage; }
+            set { _roomBedsErrorMessage = value; OnNotifyPropertyChanged(); }
+        }
+
         private string _beds;
         public string Beds
         {
             get { return _beds; }
             set {
-                int numBeds = -1;
-                int.TryParse(value, out numBeds);
-                Room.Beds = numBeds;
-                _beds = numBeds.ToString();
+                int numBeds;
+                if( int.TryParse(value, out numBeds))
+                {
+                    Room.Beds = numBeds;
+                }
+                _beds = value;
                 OnNotifyPropertyChanged();
             }
         }
@@ -80,18 +89,38 @@ namespace Hotel.ViewModel
 
         public bool ValidateInput()
         {
+            bool valid = true;
+            RoomNrErrorMessage = "";
+            RoomBedsErrorMessage = "";
             if( string.IsNullOrEmpty(Room.RoomNumber) || string.IsNullOrWhiteSpace(Room.RoomNumber) )
             {
                 RoomNrErrorMessage = "Room Number cannot be empty.";
-                return false;
+                valid = false;
             }
-            if( Rooms.Any(room => room.RoomNumber == Room.RoomNumber) )
+            else if( Rooms.Any(room => room.RoomNumber == Room.RoomNumber) )
             {
                 RoomNrErrorMessage = "Already have a room with that name.";
-                return false;
+                valid = false;
             }
-            RoomNrErrorMessage = "";
-            return true;
+            if( string.IsNullOrEmpty(Beds) )
+            {
+                RoomBedsErrorMessage = "Beds cannot be empty.";
+                valid = false;
+            } else
+            {
+                int numOfBeds;
+                if (!int.TryParse(Beds, out numOfBeds))
+                {
+                    RoomBedsErrorMessage = $"{Beds} is not a valid integer.";
+                    valid = false;
+                }
+                else if(numOfBeds < 0)
+                {
+                    RoomBedsErrorMessage = "Must have at least 0 beds.";
+                    valid = false;
+                }
+            }
+            return valid;
         }
 
         public void AddRoom()
