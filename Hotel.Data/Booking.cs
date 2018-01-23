@@ -54,20 +54,10 @@ namespace Hotel.Data
         {
             return BookingPeriod.DoesNotoverlapWith(booking.BookingPeriod);
         }
-
-        public virtual string StartDayString
-        {
-            get { return BookingPeriod.StartDate.ToShortDateString(); }
-        }
-
-        public virtual string EndDayString
-        {
-            get { return BookingPeriod.EndDate.ToShortDateString(); }
-        }
-
+        
         public virtual string GuestName
         {
-            get { return Guests.ToString(); }
+            get { return String.Join(", ", Guests.ToList().ConvertAll(b => b.FirstName)); }
         }
 
         public virtual string RoomsDescription

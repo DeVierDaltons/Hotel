@@ -68,10 +68,18 @@ namespace Hotel.ViewModel
             foreach (Booking booking in Bookings)
             {
                 booking.PropertyChanged += InvalidateOnBookingStatusChanged;
+                booking.PropertyChanged += updateInDatabase;
+                booking.Rooms.ForEach(r => r.Bookings.Add(booking));
             }
             Bookings.CollectionChanged += Bookings_CollectionChanged;
             FilterDisplayedBookings();
             SetupAddBookingViewModel();
+        }
+
+        private void updateInDatabase(object sender, PropertyChangedEventArgs e)
+        {
+            Booking changedItem = (Booking)sender;
+            new Proxy.HotelServiceProxy().EditBooking(changedItem);
         }
 
         public void SetupAddBookingViewModel()

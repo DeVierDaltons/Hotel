@@ -45,8 +45,8 @@
             </StackPanel>
             <DataGrid Name="BookingsList" Grid.Column="0" Grid.Row="1" Grid.ColumnSpan="2" CanUserAddRows="False" Unloaded="DataGrid_Unloaded" ItemsSource="{Binding DisplayedBookings}" SelectedItem="{Binding SelectedBooking}" Margin="0,0,0,20" AutoGenerateColumns="False">
                 <DataGrid.Columns>
-                    <DataGridTextColumn Binding="{Binding StartDayString}" Header="Start day" IsReadOnly="True" ></DataGridTextColumn>
-                    <DataGridTextColumn Binding="{Binding EndDayString}" Header="End day" IsReadOnly="True" ></DataGridTextColumn>
+                    <DataGridTextColumn Binding="{Binding BookingPeriod.StartDate, StringFormat=d}" Header="Start day" IsReadOnly="True" ></DataGridTextColumn>
+                    <DataGridTextColumn Binding="{Binding BookingPeriod.EndDate, StringFormat=d}" Header="End day" IsReadOnly="True" ></DataGridTextColumn>
                     <DataGridTextColumn Binding="{Binding GuestName}" Header="Guest name" IsReadOnly="True" ></DataGridTextColumn>
                     <DataGridTextColumn Binding="{Binding RoomsDescription}" Header="Room number" IsReadOnly="True" ></DataGridTextColumn>
                     <DataGridTemplateColumn Header="Status">
