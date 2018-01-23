@@ -3,7 +3,7 @@ using System.Windows.Input;
 using Hotel.Data;
 using Hotel.View;
 using Hotel.Command;
-using Hotel.Extensions;
+using Hotel.Data.Extensions;
 namespace Hotel.ViewModel
 {
     public class EditGuestCommand : ICommand

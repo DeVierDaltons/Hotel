@@ -1,12 +1,11 @@
 ﻿using Hotel.Contracts;
 using Hotel.Data;
 using Hotel.Data.DataAccessObjects;
-using NHibernate.Tool.hbm2ddl;
-using System;
-using System.Collections.ObjectModel;
-using System.ServiceModel;
+using Hotel.Data.Extensions;
 using Hotel.Data.Repository;
+using System.Collections.ObjectModel;
 using System.Linq;
+using System.ServiceModel;
 
 namespace Hotel.Services
 {
@@ -50,7 +49,7 @@ namespace Hotel.Services
                 }
                 bookingIndex++;
             }
-            BookingRepository[bookingIndex] = booking;
+            BookingRepository[bookingIndex].CopyDeltaProperties(booking);
         }
 
         public void EditGuest(Guest guest)
@@ -64,7 +63,7 @@ namespace Hotel.Services
                 }
                 guestIndex++;
             }
-            GuestRepository[guestIndex] = guest;
+            GuestRepository[guestIndex].CopyDeltaProperties(guest);
         }
 
         public void EditRoom(Room room)
@@ -78,7 +77,7 @@ namespace Hotel.Services
                 }
                 roomindex++;
             }
-            RoomRepository[roomindex] = room;
+            RoomRepository[roomindex].CopyDeltaProperties(room);
         }
 
         #endregion

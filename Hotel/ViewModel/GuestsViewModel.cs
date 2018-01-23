@@ -45,8 +45,6 @@ namespace Hotel.ViewModel
             get { return _FilterGuestString; }
             set { _FilterGuestString = value.ToLower(); OnPropertyChanged(); FilterGuests(); }
         }
-        #endregion
-      
 
         private Guest _SelectedGuest;
 
@@ -71,9 +69,7 @@ namespace Hotel.ViewModel
         }
 
 
-        public void ViewBookingsForGuest()
-        {
-        }
+        #endregion
 
         public void StartEditingGuest(object selectedItem)
         {
@@ -82,7 +78,10 @@ namespace Hotel.ViewModel
                 var guest = selectedItem as Guest;
                 GroupBoxName = string.Format("Editing {0}", guest.FirstName);
                 var g = new AddGuestViewModel();
-                g.Initialize(new EditGuestCommand(guest), () => { StartAddingGuest(); }, guest, null);
+                g.Initialize(new EditGuestCommand(guest), () => { StartAddingGuest(); }, guest, () =>
+                {
+                    new HotelServiceProxy().EditGuest(guest);
+                });
                 CurrentGuest = g;
             }
         }
@@ -94,6 +93,7 @@ namespace Hotel.ViewModel
             var g = new AddGuestViewModel();
             g.Initialize(new EditGuestCommand(guest), () => { StartAddingGuest(); }, guest, () =>
             {
+                DisplayedGuests.Add(guest);
                 new HotelServiceProxy().AddGuest(guest);
                 StartAddingGuest();
             });
@@ -102,7 +102,7 @@ namespace Hotel.ViewModel
 
         public void FilterGuests()
         {
-            DisplayedGuests = new ObservableCollection<Guest>(new HotelServiceProxy().FilterGuests(FilterGuestString));
+            DisplayedGuests = new HotelServiceProxy().FilterGuests(FilterGuestString);
         }
 
         /// <summary>
