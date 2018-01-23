@@ -27,14 +27,22 @@
                 <TextBox.Text>
                     <Binding Path="RoomNumber" UpdateSourceTrigger="PropertyChanged">
                         <Binding.ValidationRules>
-                            <UIV:RoomValidator></UIV:RoomValidator>
+                            <UIV:RoomNameValidator></UIV:RoomNameValidator>
                         </Binding.ValidationRules>
                     </Binding>
                 </TextBox.Text>
             </TextBox>
 
             <Label Grid.Row="1" Grid.Column="0" Content="Beds:" Grid.ColumnSpan="2"/>
-            <TextBox Grid.Row="1" Grid.Column="2" Text="{Binding Beds}" VerticalAlignment="Center" Margin="0, 14, 0, 0"></TextBox>
+            <TextBox Grid.Row="1" Grid.Column="2" VerticalAlignment="Center" Margin="0, 14, 0, 0" Validation.ErrorTemplate="{StaticResource validationErrorTemplate}">
+                <TextBox.Text>
+                    <Binding Path="Beds" UpdateSourceTrigger="PropertyChanged">
+                        <Binding.ValidationRules>
+                            <UIV:RoomBedsValidator></UIV:RoomBedsValidator>
+                        </Binding.ValidationRules>
+                    </Binding>
+                </TextBox.Text>
+            </TextBox>
 
             <Label Grid.Row="2" Grid.Column="0" Content="Quality:" Grid.ColumnSpan="2"/>
             <ComboBox Grid.Row="2" Grid.Column="2" Name="RoomQualityDropdown" SelectedItem="{Binding Quality}" VerticalAlignment="Center" Margin="0, 14, 0, 0"/>

@@ -13,7 +13,6 @@ namespace Hotel.UIValidators
     {
         const int MaximumRoomLength = 15;
 
-        [Dependency]
         public IEnumerable<Room> Rooms { get; set; }
 
         public override ValidationResult Validate
