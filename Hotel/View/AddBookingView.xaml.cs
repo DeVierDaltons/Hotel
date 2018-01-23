@@ -16,6 +16,7 @@ using System.Windows.Data;
 using System.Windows.Controls.Primitives;
 using NHibernate.Util;
 using Unity.Attributes;
+using System.ComponentModel;
 
 namespace Hotel.View
 {
@@ -176,6 +177,16 @@ namespace Hotel.View
         {
             bookings.CollectionChanged += BookingsChanged;
             Rooms.CollectionChanged += OnRoomsChanged;
+            foreach(Booking booking in bookings)
+            {
+                booking.PropertyChanged += delegate(object sender, PropertyChangedEventArgs eventArgs)
+                {
+                    if (eventArgs.PropertyName == nameof(Booking.BookingStatus))
+                    {
+                        RedrawAvailabilityForBooking(booking);
+                    }
+                };
+            }
         }
 
         private void BookingsChanged(object sender, NotifyCollectionChangedEventArgs e)
