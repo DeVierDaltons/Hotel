@@ -40,9 +40,9 @@ namespace Hotel.ViewModel
             AddRoomViewDataContext.Initialize();
             AddRoomViewDataContext.SetCallback(() =>
             {
-                var p = new HotelServiceProxy();
-                p.AddRoom(AddRoomViewDataContext.Room);
-                p.Close();
+                HotelServiceProxy proxy = new HotelServiceProxy();
+                proxy.AddRoom(AddRoomViewDataContext.Room);
+                proxy.Close();
                 Rooms.Add(AddRoomViewDataContext.Room);
             });
         }

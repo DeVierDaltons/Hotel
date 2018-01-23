@@ -1,4 +1,5 @@
 ﻿using Hotel.Data;
+using Hotel.Proxy;
 using Hotel.View;
 using System;
 using System.Collections.Generic;
@@ -62,17 +63,18 @@ namespace Hotel.ViewModel
 
         public void Initialize()
         {
-            var p = new Proxy.HotelServiceProxy();
-            Bookings = p.GetAllBookings();
-            Rooms = p.GetAllRooms();
-            Guests = p.GetAllGuests();
-            p.Close();
+            HotelServiceProxy proxy = new HotelServiceProxy();
+            Bookings = proxy.GetAllBookings();
+            Rooms = proxy.GetAllRooms();
+            Guests = proxy.GetAllGuests();
             foreach (Booking booking in Bookings)
             {
                 booking.PropertyChanged += InvalidateOnBookingStatusChanged;
                 booking.PropertyChanged += updateInDatabase;
                 booking.Rooms.ForEach(r => r.Bookings.Add(booking));
             }
+            proxy.Close();
+
             Bookings.CollectionChanged += Bookings_CollectionChanged;
             FilterDisplayedBookings();
             SetupAddBookingViewModel();
