@@ -79,7 +79,7 @@ namespace Hotel.Model
         {
             get
             {
-                return BookingStatus != BookingStatus.Cancelled && BookingStatus != BookingStatus.NoShow;
+                return BookingStatus != BookingStatus.Cancelled && BookingStatus != BookingStatus.NoShow && BookingStatus != BookingStatus.CheckedOut;
             }
         }
 
