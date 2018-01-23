@@ -51,6 +51,7 @@ namespace Hotel
         {
             RoomExplorerTab.DataContext = RoomViewModel;
             (RoomViewModel as RoomViewModel).Initialize();
+          //  ((RoomView)RoomExplorerTab).Initialize();
         }
 
         public void SetupBookingTab( )

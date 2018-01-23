@@ -5,17 +5,21 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Windows;
 using System.Windows.Controls;
+using Unity.Attributes;
 
 namespace Hotel.UIValidators
 {
     public class RoomValidator : ValidationRule
     {
-        public IEnumerable<Room> Rooms { get; set; }
+        [Dependency]
+        public RepositoryBackedObservableCollection<Room> Rooms { get; set; }
+
+        //  public IEnumerable<Room> Rooms { get; set; }
 
         public override ValidationResult Validate
           (object value, System.Globalization.CultureInfo cultureInfo)
         {
-            if( Rooms.Any(room => room.RoomNumber == value.ToString()) )
+            if(Rooms.Any(room => room.RoomNumber == value.ToString()))
             {
                 return new ValidationResult(false, "Another room has the same name");
             }

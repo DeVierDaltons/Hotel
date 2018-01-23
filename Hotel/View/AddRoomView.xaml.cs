@@ -15,6 +15,10 @@ namespace Hotel.View
         {
             InitializeComponent();
             RoomQualityDropdown.ItemsSource = Enum.GetValues(typeof(RoomQuality)).Cast<RoomQuality>();
+        }
+
+        public void Initialize()
+        {
             Binding binding = BindingOperations.GetBinding(RoomNr, TextBox.TextProperty);
             ((RoomValidator)binding.ValidationRules.First()).Rooms = ((AddRoomViewModel)DataContext).Rooms;
         }
