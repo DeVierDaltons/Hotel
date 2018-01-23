@@ -80,7 +80,9 @@ namespace Hotel.ViewModel
                 var g = new AddGuestViewModel();
                 g.Initialize(new EditGuestCommand(guest), () => { StartAddingGuest(); }, guest, () =>
                 {
-                    new HotelServiceProxy().EditGuest(guest);
+                    HotelServiceProxy proxy = new HotelServiceProxy();
+                    proxy.EditGuest(guest);
+                    proxy.Close();
                 });
                 CurrentGuest = g;
             }
@@ -88,13 +90,16 @@ namespace Hotel.ViewModel
 
         public void StartAddingGuest()
         {
+            
             var guest = new Guest();
             GroupBoxName = "New Guest";
             var g = new AddGuestViewModel();
             g.Initialize(new EditGuestCommand(guest), () => { StartAddingGuest(); }, guest, () =>
             {
                 DisplayedGuests.Add(guest);
-                new HotelServiceProxy().AddGuest(guest);
+                HotelServiceProxy proxy = new HotelServiceProxy();
+                proxy.AddGuest(guest);
+                proxy.Close();
                 StartAddingGuest();
             });
             CurrentGuest = g;
@@ -102,8 +107,9 @@ namespace Hotel.ViewModel
 
         public void FilterGuests()
         {
-            
-            DisplayedGuests = new HotelServiceProxy().FilterGuests(FilterGuestString);
+            HotelServiceProxy proxy = new HotelServiceProxy();
+            DisplayedGuests = proxy.FilterGuests(FilterGuestString);
+            proxy.Close();
         }
 
         /// <summary>
