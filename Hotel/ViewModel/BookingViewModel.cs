@@ -40,31 +40,33 @@ namespace Hotel.ViewModel
         }
 
         public event PropertyChangedEventHandler PropertyChanged;
-        
-        public List<BookingStatus> BookingStatusFilters { get;} = new List<BookingStatus>();
-        
+
+        public List<BookingStatus> BookingStatusFilters { get; } = new List<BookingStatus>();
+
         public ObservableCollection<Booking> Bookings { get; set; }
 
         private ObservableCollection<Room> _Rooms;
-        
+
         public ObservableCollection<Room> Rooms
         {
             get { return _Rooms; }
             set { _Rooms = value; OnPropertyChanged(); }
         }
-        
+
         public ObservableCollection<Guest> Guests { get; set; }
         public BookingViewModel()
-        { 
+        {
             InitializeStatusFilterList();
             IsRemoveFilterButtonVisible = Visibility.Hidden;
         }
 
         public void Initialize()
         {
-            Bookings = new Proxy.HotelServiceProxy().GetAllBookings();
-            Rooms = new Proxy.HotelServiceProxy().GetAllRooms();
-            Guests = new Proxy.HotelServiceProxy().GetAllGuests();
+            var p = new Proxy.HotelServiceProxy();
+            Bookings = p.GetAllBookings();
+            Rooms = p.GetAllRooms();
+            Guests = p.GetAllGuests();
+            p.Close();
             foreach (Booking booking in Bookings)
             {
                 booking.PropertyChanged += InvalidateOnBookingStatusChanged;
@@ -79,7 +81,10 @@ namespace Hotel.ViewModel
         private void updateInDatabase(object sender, PropertyChangedEventArgs e)
         {
             Booking changedItem = (Booking)sender;
-            new Proxy.HotelServiceProxy().EditBooking(changedItem);
+            var p = new Proxy.HotelServiceProxy();
+
+            p.EditBooking(changedItem);
+            p.Close();
         }
 
         public void SetupAddBookingViewModel()
@@ -99,7 +104,7 @@ namespace Hotel.ViewModel
         }
 
         public Dictionary<BookingStatus, Func<bool>> StatusFiltersList = new Dictionary<BookingStatus, Func<bool>>();
-          
+
 
         private void InitializeStatusFilterList()
         {
@@ -118,10 +123,11 @@ namespace Hotel.ViewModel
         /// <param name="e"></param>
         private void Bookings_CollectionChanged(object sender, System.Collections.Specialized.NotifyCollectionChangedEventArgs e)
         {
-            if (e.NewItems.Count > 0) {
+            if (e.NewItems.Count > 0)
+            {
                 var newBooking = (e.NewItems[0] as Booking);
                 newBooking.PropertyChanged += InvalidateOnBookingStatusChanged;
-                if( ShouldShowBooking(newBooking))
+                if (ShouldShowBooking(newBooking))
                 {
                     AddBookingToDisplayedIfNew(newBooking);
                 }
@@ -133,16 +139,16 @@ namespace Hotel.ViewModel
             }
         }
 
-       
+
 
         public void OnPropertyChanged([CallerMemberName] string name = "")
         {
             PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(name));
         }
-        
+
         public void InvalidateOnBookingStatusChanged(object sender, PropertyChangedEventArgs e)
         {
-            if(e.PropertyName == nameof(Booking.BookingStatus))
+            if (e.PropertyName == nameof(Booking.BookingStatus))
             {
                 FilterDisplayedBookings();
             }

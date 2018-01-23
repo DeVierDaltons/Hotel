@@ -30,7 +30,7 @@ namespace Hotel.ViewModel
             get { return _roomsRepo; }
             set { _roomsRepo = value; OnPropertyChanged(); }
         }
-        
+
         public ObservableCollection<Guest> _allGuests { get; set; }
         public ObservableCollection<Guest> AllGuests
         {
@@ -75,7 +75,7 @@ namespace Hotel.ViewModel
 
         public bool ValidateInput()
         {
-            if( !GuestsValid() || !RoomsValid() || !DatesValid() )
+            if (!GuestsValid() || !RoomsValid() || !DatesValid())
             {
                 return false;
             }
@@ -85,7 +85,9 @@ namespace Hotel.ViewModel
         public void AddBooking()
         {
             Booking.SetDates(SelectedDates);
-            new Proxy.HotelServiceProxy().AddBooking(Booking);
+            var p = new Proxy.HotelServiceProxy();
+            p.AddBooking(Booking);
+            p.Close();
             (AllBookings as ObservableCollection<Booking>).Add(Booking);
             Booking = new Booking();
         }

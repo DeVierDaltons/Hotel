@@ -80,7 +80,9 @@ namespace Hotel.ViewModel
                 var g = new AddGuestViewModel();
                 g.Initialize(new EditGuestCommand(guest), () => { StartAddingGuest(); }, guest, () =>
                 {
-                    new HotelServiceProxy().EditGuest(guest);
+                    var p = new HotelServiceProxy();
+                    p.EditGuest(guest);
+                    p.Close();
                 });
                 CurrentGuest = g;
             }
@@ -94,7 +96,9 @@ namespace Hotel.ViewModel
             g.Initialize(new EditGuestCommand(guest), () => { StartAddingGuest(); }, guest, () =>
             {
                 DisplayedGuests.Add(guest);
-                new HotelServiceProxy().AddGuest(guest);
+                var p = new HotelServiceProxy();
+                p.AddGuest(guest);
+                p.Close();
                 StartAddingGuest();
             });
             CurrentGuest = g;
@@ -102,7 +106,10 @@ namespace Hotel.ViewModel
 
         public void FilterGuests()
         {
-            DisplayedGuests = new HotelServiceProxy().FilterGuests(FilterGuestString);
+
+            var p = new HotelServiceProxy();
+            DisplayedGuests = p.FilterGuests(FilterGuestString);
+            p.Close();
         }
 
         /// <summary>
@@ -110,7 +117,10 @@ namespace Hotel.ViewModel
         /// </summary>
         public void Initialize()
         {
-            DisplayedGuests = new HotelServiceProxy().GetAllGuests();
+
+            var p = new HotelServiceProxy();
+            DisplayedGuests = p.GetAllGuests();
+            p.Close();
         }
 
         public void OnPropertyChanged([CallerMemberName] string name = "")
