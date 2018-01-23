@@ -49,17 +49,17 @@ namespace Hotel.Services
         #region edit
         public void EditBooking(Booking booking)
         {
-            throw new NotImplementedException();
+            BookingRepository.Update(booking);
         }
 
         public void EditGuest(Guest guest)
         {
-            throw new NotImplementedException();
+            GuestRepository.Update(guest);
         }
 
         public void EditRoom(Room room)
         {
-            throw new NotImplementedException();
+            RoomRepository.Update(room);
         }
 
         #endregion
@@ -77,33 +77,33 @@ namespace Hotel.Services
         #region Get
         public ObservableCollection<Booking> GetAllBookings()
         {
-            throw new NotImplementedException();
+            return new ObservableCollection<Booking>(BookingRepository.GetAll());
         }
 
         public ObservableCollection<Guest> GetAllGuests()
         {
-            throw new NotImplementedException();
+            return new ObservableCollection<Guest>(GuestRepository.GetAll());
         }
 
         public ObservableCollection<Room> GetAllRooms()
         {
-            throw new NotImplementedException();
+            return new ObservableCollection<Room>(RoomRepository.GetAll());
         }
         #endregion
         #region remove
         public void RemoveBooking(Booking booking)
         {
-            throw new NotImplementedException();
+            BookingRepository.Delete(booking);
         }
 
         public void RemoveGuest(Guest guest)
         {
-            throw new NotImplementedException();
+            GuestRepository.Delete(guest);
         }
 
         public void RemoveRoom(Room room)
         {
-            throw new NotImplementedException();
+            RoomRepository.Delete(room);
         }
         #endregion
     }
