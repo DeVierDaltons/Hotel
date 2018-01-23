@@ -33,7 +33,7 @@ namespace Hotel.Data.DataAccessObjects
                 transaction.Commit();
             }
         }
-
+        
         public List<T> GetAll()
         {
             return session.Query<T>().ToList();

@@ -102,6 +102,7 @@
     <Compile Include="Guest.cs" />
     <Compile Include="IIdentifiable.cs" />
     <Compile Include="Repository\IRepository.cs" />
+    <Compile Include="Repository\RepositoryBackedObservableCollection.cs" />
     <Compile Include="Room.cs" />
     <Compile Include="RoomQuality.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
