@@ -1,11 +1,6 @@
-﻿using System.Linq;
-using System.Collections.ObjectModel;
+﻿using System.Collections.ObjectModel;
 using System.ComponentModel;
-using System.Collections.Generic;
 using System.Collections.Specialized;
-using System.Windows;
-using Unity.Attributes;
-using Hotel.Data.Repository;
 
 namespace Hotel.Data.Repository
 {

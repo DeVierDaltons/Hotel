@@ -48,9 +48,9 @@ namespace Hotel.Proxy
             Channel.EditRoom(room);
         }
 
-        public ObservableCollection<Guest> FilterBookings(BookingStatus status, string filterString)
+        public ObservableCollection<Booking> FilterBookings(BookingStatus? status, Guest guest)
         {
-            return Channel.FilterBookings(status, filterString);
+            return Channel.FilterBookings(status, guest);
         }
 
         public ObservableCollection<Guest> FilterGuests(string filterString)

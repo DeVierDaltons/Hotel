@@ -50,17 +50,44 @@ namespace Hotel.Services
         #region edit
         public void EditBooking(Booking booking)
         {
-            BookingRepository.Update(booking);
+            int bookingIndex = 0;
+            foreach(Booking b in BookingRepository)
+            {
+                if(booking.Id == b.Id)
+                {
+                    return;
+                }
+                bookingIndex++;
+            }
+            BookingRepository[bookingIndex] = booking;
         }
 
         public void EditGuest(Guest guest)
         {
-            GuestRepository.Update(guest);
+            int guestIndex = 0;
+            foreach (Guest b in GuestRepository)
+            {
+                if (guest.Id == b.Id)
+                {
+                    return;
+                }
+                guestIndex++;
+            }
+            GuestRepository[guestIndex] = guest;
         }
 
         public void EditRoom(Room room)
         {
-            RoomRepository.Update(room);
+            int roomindex = 0;
+            foreach (Room b in RoomRepository)
+            {
+                if (room.Id == b.Id)
+                {
+                    return;
+                }
+                roomindex++;
+            }
+            RoomRepository[roomindex] = room;
         }
 
         #endregion
