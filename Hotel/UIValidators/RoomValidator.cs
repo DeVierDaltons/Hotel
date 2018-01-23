@@ -16,8 +16,6 @@ namespace Hotel.UIValidators
         [Dependency]
         public IEnumerable<Room> Rooms { get; set; }
 
-        //  public IEnumerable<Room> Rooms { get; set; }
-
         public override ValidationResult Validate
           (object value, System.Globalization.CultureInfo cultureInfo)
         {
