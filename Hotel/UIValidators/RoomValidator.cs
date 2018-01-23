@@ -12,7 +12,7 @@ namespace Hotel.UIValidators
     public class RoomValidator : ValidationRule
     {
         [Dependency]
-        public RepositoryBackedObservableCollection<Room> Rooms { get; set; }
+        public IEnumerable<Room> Rooms { get; set; }
 
         //  public IEnumerable<Room> Rooms { get; set; }
 

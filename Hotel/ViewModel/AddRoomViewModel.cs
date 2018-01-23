@@ -10,7 +10,7 @@ using System.Collections.Generic;
 
 namespace Hotel.ViewModel
 {
-    public class AddRoomViewModel : INotifyPropertyChanged, IViewModel
+    public class AddRoomViewModel : INotifyPropertyChanged
     {
         public event PropertyChangedEventHandler PropertyChanged;
 

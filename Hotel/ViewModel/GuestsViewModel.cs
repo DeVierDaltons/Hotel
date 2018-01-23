@@ -10,7 +10,7 @@ using Hotel.View;
 
 namespace Hotel.ViewModel
 {
-    public class GuestsViewModel : INotifyPropertyChanged, IViewModel
+    public class GuestsViewModel : INotifyPropertyChanged
     {
         #region Properties
         private string _groupBoxName;
@@ -86,11 +86,14 @@ namespace Hotel.ViewModel
 
         public void StartEditingGuest(object selectedItem)
         {
-            var guest = selectedItem as Guest;
-            GroupBoxName = string.Format("Editing {0}",guest.FirstName);
-            var g = new AddGuestViewModel();
-            g.Initialize(new EditGuestCommand(guest), () => { StartAddingGuest(); }, guest, null);
-            CurrentGuest = g;
+            if (selectedItem != null)
+            {
+                var guest = selectedItem as Guest;
+                GroupBoxName = string.Format("Editing {0}", guest.FirstName);
+                var g = new AddGuestViewModel();
+                g.Initialize(new EditGuestCommand(guest), () => { StartAddingGuest(); }, guest, null);
+                CurrentGuest = g;
+            }
         }
 
         public void StartAddingGuest()
@@ -116,11 +119,6 @@ namespace Hotel.ViewModel
                (g.EmailAdress != null && g.EmailAdress.ToLower().Contains(FilterGuestString)) ||
                (g.City != null && g.City.ToLower().Contains(FilterGuestString)) ||
                (g.Country != null && g.Country.ToLower().Contains(FilterGuestString))));
-        }
-
-
-        public GuestsViewModel()
-        {
         }
 
         /// <summary>

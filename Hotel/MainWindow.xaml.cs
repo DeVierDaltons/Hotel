@@ -18,18 +18,18 @@ namespace Hotel
     /// </summary>
     public partial class MainWindow : Window
     {
-        [Dependency("GuestsViewModel")]
-        public IViewModel guestsViewModel { get; set; }
+        [Dependency]
+        public GuestsViewModel guestsViewModel { get; set; }
 
-        [Dependency("RoomViewModel")]
-        public IViewModel RoomViewModel { get; set; }
+        [Dependency]
+        public RoomViewModel RoomViewModel { get; set; }
 
-        [Dependency("BookingViewModel")]
-        public IViewModel BookingViewModel { get; set; }
+        [Dependency]
+        public BookingViewModel BookingViewModel { get; set; }
+
         public MainWindow()
         {
             InitializeComponent();
-        
         }
 
         public void Initialize()
@@ -42,28 +42,28 @@ namespace Hotel
 
         private void SetupGuestTab()
         {
-            (guestsViewModel as GuestsViewModel).Initialize();
-            (guestsViewModel as GuestsViewModel).SwitchToBookingTab = SwitchToBookingTab;
+            guestsViewModel.Initialize();
+            guestsViewModel.SwitchToBookingTab = SwitchToBookingTab;
             GuestExplorerTab.DataContext = guestsViewModel;
         }
 
         public void SetupRoomTab()
         {
             RoomExplorerTab.DataContext = RoomViewModel;
-            (RoomViewModel as RoomViewModel).Initialize();
-          //  ((RoomView)RoomExplorerTab).Initialize();
+            RoomViewModel.Initialize();
         }
 
-        public void SetupBookingTab( )
+        public void SetupBookingTab()
         {
-            (BookingViewModel as BookingViewModel).Initialize();
+            BookingViewModel.Initialize();
             BookingExplorerTab.DataContext = BookingViewModel;
         }
 
         public void SwitchToBookingTab()
         {
             BookingExplorerTab.IsSelected = true;
-            (BookingExplorerTab.DataContext as BookingViewModel).FilterDisplayedBookingsByGuest((GuestExplorerTab.DataContext as GuestsViewModel).SelectedGuest);
+            Guest selectedGuest = (GuestExplorerTab.DataContext as GuestsViewModel).SelectedGuest;
+            (BookingExplorerTab.DataContext as BookingViewModel).FilterDisplayedBookingsByGuest(selectedGuest);
         }
     }
 }

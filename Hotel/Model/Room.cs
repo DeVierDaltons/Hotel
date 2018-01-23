@@ -1,8 +1,10 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel;
+using System.Linq;
 using System.Runtime.CompilerServices;
 using System.Windows.Input;
+using Hotel.Extensions;
 
 namespace Hotel.Model
 {
@@ -67,7 +69,8 @@ namespace Hotel.Model
 
         public virtual bool TimePeriodAvailable(BookingPeriod period)
         {
-            foreach (BookingPeriod bookingPeriod in Bookings.ConvertAll((Booking booking) => booking.BookingPeriod))
+            var RelevantBookings = Bookings.Where(b => b.BlocksOtherBookings).ToList();
+            foreach (BookingPeriod bookingPeriod in RelevantBookings.ConvertEnumerable(booking => booking.BookingPeriod))
             {
                 if (bookingPeriod.OverlapsWith(period))
                 {

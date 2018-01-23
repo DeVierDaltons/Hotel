@@ -12,7 +12,7 @@ using NHibernate.Util;
 
 namespace Hotel.ViewModel
 {
-    public class BookingViewModel : INotifyPropertyChanged, IViewModel
+    public class BookingViewModel : INotifyPropertyChanged
     {
         private AddBookingView _addBookingView;
 
@@ -77,21 +77,18 @@ namespace Hotel.ViewModel
 
         public void SetupAddBookingViewModel()
         {
-           
             AddBookingViewModel viewModel = new AddBookingViewModel();
-            viewModel.Bookings = Bookings;
-            viewModel.RoomsRepo = Rooms;
+            viewModel.AllBookings = Bookings;
+            viewModel.AllRooms = Rooms;
             viewModel.AllGuests = Guests;
             viewModel.Initialize();
             AddBookingViewDataContext = viewModel;
         }
 
-        public void SetupAddBookingView(AddBookingView view)
+        public void SetupAddBookingView()
         {
-            view.ViewModel = AddBookingViewDataContext;
-            view.DataContext = AddBookingViewDataContext;
-            view.Initialize();
-            AddBookingView = view;
+            AddBookingView.DataContext = AddBookingViewDataContext;
+            AddBookingView.Initialize();
         }
 
         public Dictionary<BookingStatus, Func<bool>> StatusFiltersList = new Dictionary<BookingStatus, Func<bool>>();
