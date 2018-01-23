@@ -34,17 +34,17 @@ namespace Hotel.Services
         #region add
         public void AddBooking(Booking booking)
         {
-            BookingRepository.Save(booking);
+            BookingRepository.Add(booking);
         }
 
         public void AddGuest(Guest guest)
         {
-            GuestRepository.Save(guest);
+            GuestRepository.Add(guest);
         }
 
         public void AddRoom(Room room)
         {
-            RoomRepository.Save(room);
+            RoomRepository.Add(room);
         }
         #endregion
         #region edit
@@ -117,33 +117,33 @@ namespace Hotel.Services
         #region Get
         public ObservableCollection<Booking> GetAllBookings()
         {
-            return new ObservableCollection<Booking>(BookingRepository.GetAll());
+            return new ObservableCollection<Booking>(BookingRepository);
         }
 
         public ObservableCollection<Guest> GetAllGuests()
         {
-            return new ObservableCollection<Guest>(GuestRepository.GetAll());
+            return new ObservableCollection<Guest>(GuestRepository);
         }
 
         public ObservableCollection<Room> GetAllRooms()
         {
-            return new ObservableCollection<Room>(RoomRepository.GetAll());
+            return new ObservableCollection<Room>(RoomRepository);
         }
         #endregion
         #region remove
         public void RemoveBooking(Booking booking)
         {
-            BookingRepository.Delete(booking);
+            BookingRepository.Remove(booking);
         }
 
         public void RemoveGuest(Guest guest)
         {
-            GuestRepository.Delete(guest);
+            GuestRepository.Remove(guest);
         }
 
         public void RemoveRoom(Room room)
         {
-            RoomRepository.Delete(room);
+            RoomRepository.Remove(room);
         }
         #endregion
     }
