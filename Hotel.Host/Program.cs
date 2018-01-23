@@ -1,4 +1,5 @@
-﻿using Hotel.Services;
+﻿using Hotel.Data.DataAccessObjects;
+using Hotel.Services;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -12,6 +13,7 @@ namespace Hotel.Host
     {
         static void Main(string[] args)
         {
+            NHibernateHelper.CreateDatabaseIfNeeded();
             ServiceHost hotelServiceHost = new ServiceHost(typeof(HotelService));
             hotelServiceHost.Open();
            
