@@ -1,11 +1,10 @@
 ﻿using Hotel.Model;
-using Hotel.UIValidators;
 using Hotel.ViewModel;
 using System;
+using System.ComponentModel;
 using System.Linq;
 using System.Windows;
 using System.Windows.Controls;
-using System.Windows.Data;
 
 namespace Hotel.View
 {
@@ -19,8 +18,16 @@ namespace Hotel.View
 
         public void Initialize(AddRoomViewModel viewModel)
         {
-            Binding binding = BindingOperations.GetBinding(RoomNr, TextBox.TextProperty);
-            ((RoomNameValidator)binding.ValidationRules.First()).Rooms = viewModel.Rooms;
+            viewModel.PropertyChanged += delegate (object sender, PropertyChangedEventArgs e)
+            {
+                if (viewModel.RoomNrErrorMessage == "")
+                {
+                    RoomNumberError.Visibility = Visibility.Hidden;
+                } else
+                {
+                    RoomNumberError.Visibility = Visibility.Visible;
+                }
+            };
         }
     }
 }

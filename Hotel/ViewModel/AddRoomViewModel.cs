@@ -7,8 +7,8 @@ using System.Runtime.CompilerServices;
 using System.Windows.Input;
 using Unity.Attributes;
 using System.Collections.Generic;
-using Hotel.UIValidators;
 using System.Globalization;
+using System.Linq;
 
 namespace Hotel.ViewModel
 {
@@ -24,6 +24,13 @@ namespace Hotel.ViewModel
         {
             get { return Room.RoomNumber; }
             set { Room.RoomNumber = value; OnNotifyPropertyChanged(); }
+        }
+
+        string _roomNrErrorMessage;
+        public string RoomNrErrorMessage
+        {
+            get { return _roomNrErrorMessage; }
+            set { _roomNrErrorMessage = value; OnNotifyPropertyChanged(); }
         }
 
         private string _beds;
@@ -71,15 +78,20 @@ namespace Hotel.ViewModel
             this.Callback = callback;
         }
 
-        private bool ValidateBeds()
-        {
-            RoomBedsValidator bedsValidator = new RoomBedsValidator();
-            return bedsValidator.Validate(Beds, CultureInfo.CurrentCulture).IsValid;
-        }
-
         public bool ValidateInput()
         {
-            return !string.IsNullOrEmpty(Room.RoomNumber) && ValidateBeds();
+            if( string.IsNullOrEmpty(Room.RoomNumber) || string.IsNullOrWhiteSpace(Room.RoomNumber) )
+            {
+                RoomNrErrorMessage = "Room Number cannot be empty.";
+                return false;
+            }
+            if( Rooms.Any(room => room.RoomNumber == Room.RoomNumber) )
+            {
+                RoomNrErrorMessage = "Already have a room with that name.";
+                return false;
+            }
+            RoomNrErrorMessage = "";
+            return true;
         }
 
         public void AddRoom()

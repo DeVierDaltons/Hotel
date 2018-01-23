@@ -105,8 +105,6 @@
     <Compile Include="Command\AddBookingCommand.cs" />
     <Compile Include="Command\AddRoomCommand.cs" />
     <Compile Include="DataAccessObjects\NHibernateRepository.cs" />
-    <Compile Include="UIValidators\RoomBedsValidator.cs" />
-    <Compile Include="UIValidators\RoomNameValidator.cs" />
     <Compile Include="View\DpiDecorator.cs" />
     <Compile Include="Extensions\IEnumerableExtensions.cs" />
     <Compile Include="Extensions\ObjectExtension.cs" />
