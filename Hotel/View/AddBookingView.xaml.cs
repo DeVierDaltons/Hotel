@@ -16,6 +16,7 @@ using System.Windows.Data;
 using System.Windows.Controls.Primitives;
 using NHibernate.Util;
 using Unity.Attributes;
+using System.Windows.Shapes;
 
 namespace Hotel.View
 {
@@ -883,8 +884,41 @@ namespace Hotel.View
         private void SetFieldColour(Room room, int dateOffset)
         {
             Canvas canvas = FieldForRoomDateOffset[room][dateOffset];
-            canvas.Background = room.DayAvailable(StartDate.AddDays(dateOffset)) ? Brushes.Green : Brushes.Red;
+            canvas.Children.Clear();
+            if (room.DayAvailable(StartDate.AddDays(dateOffset)))
+            {
+                canvas.Background = Brushes.DarkOliveGreen;
+            }
+            else
+            {
+                canvas.Background = Brushes.Red;
+                AddCheckersToCanvas(canvas);
+            }
             canvas.InvalidateVisual();
+        }
+
+        private static void AddCheckersToCanvas(Canvas canvas)
+        {
+            const int numCheckers = 5;
+            const int spaceForChecker = DateBlockSize / (numCheckers * 2);
+            for (int xi = 0; xi < numCheckers; ++xi)
+            {
+                for (int yi = 0; yi < numCheckers; ++yi)
+                {
+                    for (int extraOffset = 0; extraOffset < 2; ++extraOffset)
+                    {
+                        Rectangle rect = new Rectangle()
+                        {
+                            Fill = Brushes.Black,
+                            Width = spaceForChecker,
+                            Height = spaceForChecker,
+                        };
+                        Canvas.SetLeft(rect, (xi * 2 + extraOffset) * spaceForChecker);
+                        Canvas.SetTop(rect, (yi * 2 + extraOffset) * spaceForChecker);
+                        canvas.Children.Add(rect);
+                    }
+                }
+            }
         }
 
         private Canvas CreateRoomDateField(int column, int row)
