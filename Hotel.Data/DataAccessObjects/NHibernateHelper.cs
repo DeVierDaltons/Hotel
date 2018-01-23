@@ -58,5 +58,12 @@ namespace Hotel.Data.DataAccessObjects
             //Create and return a HbmMapping of the model mapping in code
             return mapper.CompileMappingForAllExplicitlyAddedEntities();
         }
+
+
+        public static void CreateDatabaseIfNeeded()
+        {
+            var schemaUpdate = new SchemaUpdate(NHibernateHelper.Configuration);
+            schemaUpdate.Execute(false, true);
+        }
     }
 }

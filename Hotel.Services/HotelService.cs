@@ -19,14 +19,8 @@ namespace Hotel.Services
 
         public HotelService()
         {
-           
         }
 
-        public void CreateDatabaseIfNeeded()
-        {
-            var schemaUpdate = new SchemaUpdate(NHibernateHelper.Configuration);
-            schemaUpdate.Execute(false, true);
-        }
 
         #region add
         public void AddBooking(Booking booking)

@@ -34,6 +34,7 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="NHibernate, Version=5.0.0.0, Culture=neutral, PublicKeyToken=aa95f207798dfdb4" />
     <Reference Include="System" />
     <Reference Include="System.Configuration" />
     <Reference Include="System.Core" />
@@ -58,6 +59,10 @@
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\Hotel.Data\Hotel.Data.csproj">
+      <Project>{AE7BE7A0-9396-4EC6-8563-E6FF5ED50498}</Project>
+      <Name>Hotel.Data</Name>
+    </ProjectReference>
     <ProjectReference Include="..\Hotel.Services\Hotel.Services.csproj">
       <Project>{0a98bdfb-1a1c-4b99-9a3f-b2a37b631123}</Project>
       <Name>Hotel.Services</Name>
