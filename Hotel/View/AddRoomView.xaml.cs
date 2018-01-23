@@ -17,10 +17,10 @@ namespace Hotel.View
             RoomQualityDropdown.ItemsSource = Enum.GetValues(typeof(RoomQuality)).Cast<RoomQuality>();
         }
 
-        public void Initialize()
+        public void Initialize(AddRoomViewModel viewModel)
         {
             Binding binding = BindingOperations.GetBinding(RoomNr, TextBox.TextProperty);
-            ((RoomValidator)binding.ValidationRules.First()).Rooms = ((AddRoomViewModel)DataContext).Rooms;
+            ((RoomValidator)binding.ValidationRules.First()).Rooms = viewModel.Rooms;
         }
     }
 }
