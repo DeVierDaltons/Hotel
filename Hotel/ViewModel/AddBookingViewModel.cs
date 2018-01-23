@@ -85,6 +85,7 @@ namespace Hotel.ViewModel
         public void AddBooking()
         {
             Booking.SetDates(SelectedDates);
+            new Proxy.HotelServiceProxy().AddBooking(Booking);
             (AllBookings as ObservableCollection<Booking>).Add(Booking);
             Booking = new Booking();
         }
