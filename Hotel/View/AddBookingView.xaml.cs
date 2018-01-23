@@ -900,7 +900,7 @@ namespace Hotel.View
             Canvas canvas = FieldForRoomDateOffset[room][dateOffset];
             if (room.DayAvailable(StartDate.AddDays(dateOffset)))
             {
-                canvas.Background = Brushes.DarkOliveGreen;
+                canvas.Background = Brushes.ForestGreen;
             }
             else
             {
