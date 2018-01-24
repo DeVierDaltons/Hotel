@@ -5,11 +5,6 @@ namespace Hotel.Data.Extensions
 {
     public static class ObjectExtension 
     {
-        private static object GetPropertyValue(this object thisObject, string propertyName)
-        {
-            return thisObject.GetType().GetProperty(propertyName).GetValue(thisObject, null);
-        }
-
         public static void CopyDeltaProperties(this object target, object source)
         {
             Type TargetType = target.GetType();
@@ -31,7 +26,7 @@ namespace Hotel.Data.Extensions
         {
             foreach (var item in target.GetType().GetProperties())
             {
-                if(GetPropertyValue(target, item.Name) == value)
+                if(item.GetValue(target) == value)
                 {
                     return true;
                 }
