@@ -16,11 +16,6 @@ namespace Hotel.Services
         RepositoryBackedObservableCollection<Room> RoomRepository = new RepositoryBackedObservableCollection<Room>(new NHibernateRepository<Room>());
         RepositoryBackedObservableCollection<Booking> BookingRepository = new RepositoryBackedObservableCollection<Booking>(new NHibernateRepository<Booking>());
 
-        public HotelService()
-        {
-        }
-
-
         #region add
         public void AddBooking(Booking booking)
         {
