@@ -1,8 +1,8 @@
 ﻿using Hotel.Contracts;
 using Hotel.Data;
-using Hotel.Data.DataAccessObjects;
 using Hotel.Data.Extensions;
 using Hotel.Data.Repository;
+using Hotel.Services.Repository;
 using System.Collections.ObjectModel;
 using System.Linq;
 using System.ServiceModel;

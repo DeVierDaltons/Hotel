@@ -93,17 +93,10 @@
     <Compile Include="BookingPeriod.cs" />
     <Compile Include="BookingStatus.cs" />
     <Compile Include="ChangeTracker.cs" />
-    <Compile Include="DataAccessObjects\BookingMap.cs" />
-    <Compile Include="DataAccessObjects\ChangeTrackerMap.cs" />
-    <Compile Include="DataAccessObjects\GuestMap.cs" />
-    <Compile Include="DataAccessObjects\NHibernateHelper.cs" />
-    <Compile Include="DataAccessObjects\NHibernateRepository.cs" />
-    <Compile Include="DataAccessObjects\RoomMap.cs" />
     <Compile Include="Extensions\ObjectExtension.cs" />
     <Compile Include="Guest.cs" />
     <Compile Include="IIdentifiable.cs" />
     <Compile Include="Repository\IRepository.cs" />
-    <Compile Include="Repository\RepositoryBackedObservableCollection.cs" />
     <Compile Include="Room.cs" />
     <Compile Include="RoomQuality.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

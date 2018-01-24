@@ -4,9 +4,9 @@ using NHibernate.Cfg.MappingSchema;
 using NHibernate.Mapping.ByCode;
 using NHibernate;
 using NHibernate.Tool.hbm2ddl;
-using Hotel.Data.DataAccessObjects;
+using Hotel.Services.ClassMappings;
 
-namespace Hotel.Data.DataAccessObjects
+namespace Hotel.Services.Repository
 {
     public static class NHibernateHelper
     {

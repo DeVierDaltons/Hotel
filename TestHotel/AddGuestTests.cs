@@ -3,9 +3,9 @@ using System.Collections.ObjectModel;
 using Hotel.Data;
 using Hotel.Command;
 using Hotel.ViewModel;
-using Hotel.Repository;
-using Hotel.DataAccessObjects;
 using System.Windows.Controls;
+using Hotel.Services.Repository;
+using Hotel.Data.Repository;
 
 namespace TestHotel
 {
