@@ -1,5 +1,5 @@
-﻿using Hotel.Data.DataAccessObjects;
-using Hotel.Services;
+﻿using Hotel.Services;
+using Hotel.Services.Repository;
 using System;
 using System.Collections.Generic;
 using System.Linq;

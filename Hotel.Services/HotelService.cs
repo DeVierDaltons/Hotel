@@ -1,8 +1,8 @@
 ﻿using Hotel.Contracts;
 using Hotel.Data;
-using Hotel.Data.DataAccessObjects;
 using Hotel.Data.Extensions;
 using Hotel.Data.Repository;
+using Hotel.Services.Repository;
 using System.Collections.ObjectModel;
 using System.Linq;
 using System.ServiceModel;
@@ -40,44 +40,20 @@ namespace Hotel.Services
         #region edit
         public void EditBooking(Booking booking)
         {
-            int bookingIndex = 0;
-            foreach(Booking b in BookingRepository)
-            {
-                if(booking.Id == b.Id)
-                {
-                    break;
-                }
-                bookingIndex++;
-            }
-            BookingRepository[bookingIndex].CopyDeltaProperties(booking);
+            Booking target = BookingRepository.First(candidate => candidate.Id == booking.Id);
+            target.CopyDeltaProperties(booking);
         }
 
         public void EditGuest(Guest guest)
         {
-            int guestIndex = 0;
-            foreach (Guest b in GuestRepository)
-            {
-                if (guest.Id == b.Id)
-                {
-                    break;
-                }
-                guestIndex++;
-            }
-            GuestRepository[guestIndex].CopyDeltaProperties(guest);
+            Guest target = GuestRepository.First(candidate => candidate.Id == guest.Id);
+            target.CopyDeltaProperties(guest);
         }
 
         public void EditRoom(Room room)
         {
-            int roomindex = 0;
-            foreach (Room b in RoomRepository)
-            {
-                if (room.Id == b.Id)
-                {
-                    break;
-                }
-                roomindex++;
-            }
-            RoomRepository[roomindex].CopyDeltaProperties(room);
+            Room target = RoomRepository.First(candidate => candidate.Id == room.Id);
+            target.CopyDeltaProperties(room);
         }
 
         #endregion

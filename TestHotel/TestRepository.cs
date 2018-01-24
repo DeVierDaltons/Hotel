@@ -1,8 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
-using Hotel.Repository;
 using Hotel.Data;
 using System.Diagnostics;
+using Hotel.Data.Repository;
 
 namespace TestHotel
 {

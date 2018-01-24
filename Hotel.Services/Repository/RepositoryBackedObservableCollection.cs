@@ -1,8 +1,9 @@
 ﻿using System.Collections.ObjectModel;
 using System.ComponentModel;
 using System.Collections.Specialized;
+using Hotel.Data.Repository;
 
-namespace Hotel.Data.Repository
+namespace Hotel.Services.Repository
 {
     public class RepositoryBackedObservableCollection<T> : ObservableCollection<T> where T : INotifyPropertyChanged
     {

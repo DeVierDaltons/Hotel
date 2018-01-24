@@ -2,7 +2,7 @@
 using NHibernate.Mapping.ByCode;
 using NHibernate.Mapping.ByCode.Conformist;
 
-namespace Hotel.Data.DataAccessObjects
+namespace Hotel.Services.ClassMappings
 {
     internal class BookingMap : ClassMapping<Booking>
     {

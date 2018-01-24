@@ -2,10 +2,9 @@
 using NHibernate;
 using System.Linq;
 using System.Collections.Generic;
-using Hotel.Data;
 using Hotel.Data.Repository;
 
-namespace Hotel.Data.DataAccessObjects
+namespace Hotel.Services.Repository
 {
     public class NHibernateRepository<T> : IRepository<T> where T : class
     {

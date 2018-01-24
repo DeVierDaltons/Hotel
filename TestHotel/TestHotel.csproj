@@ -37,6 +37,7 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="Microsoft.VisualStudio.QualityTools.UnitTestFramework, Version=10.1.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL" />
     <Reference Include="PresentationFramework" />
     <Reference Include="System" />
     <Reference Include="System.Configuration" />
@@ -48,13 +49,30 @@
     <Compile Include="AddBookingTests.cs" />
     <Compile Include="AddRoomTests.cs" />
     <Compile Include="AddGuestTests.cs" />
+    <Compile Include="BookingPeriodTests.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="TestRepository.cs" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\Hotel.Contracts\Hotel.Contracts.csproj">
+      <Project>{95c7ffba-7df9-4f06-8f25-2d2f37b90014}</Project>
+      <Name>Hotel.Contracts</Name>
+    </ProjectReference>
     <ProjectReference Include="..\Hotel.Data\Hotel.Data.csproj">
       <Project>{ae7be7a0-9396-4ec6-8563-e6ff5ed50498}</Project>
       <Name>Hotel.Data</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Hotel.Host\Hotel.Host.csproj">
+      <Project>{52cc65b4-905d-4b18-a0fc-d241282a933a}</Project>
+      <Name>Hotel.Host</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Hotel.Proxy\Hotel.Proxy.csproj">
+      <Project>{574850dc-45fe-4dcf-a89d-24b5270160e5}</Project>
+      <Name>Hotel.Proxy</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Hotel.Services\Hotel.Services.csproj">
+      <Project>{0a98bdfb-1a1c-4b99-9a3f-b2a37b631123}</Project>
+      <Name>Hotel.Services</Name>
     </ProjectReference>
     <ProjectReference Include="..\Hotel\Hotel.csproj">
       <Project>{f1583ab4-3ac5-44da-90fa-9bc1bc18bf20}</Project>

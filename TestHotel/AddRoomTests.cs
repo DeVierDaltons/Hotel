@@ -3,8 +3,6 @@ using System.Collections.ObjectModel;
 using Hotel.Data;
 using Hotel.Command;
 using Hotel.ViewModel;
-using Hotel.Repository;
-using Hotel.DataAccessObjects;
 using System.Diagnostics;
 
 namespace TestHotel
