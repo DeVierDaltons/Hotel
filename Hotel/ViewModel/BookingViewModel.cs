@@ -84,7 +84,6 @@ namespace Hotel.ViewModel
         {
             Booking changedItem = (Booking)sender;
             var p = new HotelServiceProxy();
-
             p.EditBooking(changedItem);
             p.Close();
         }
@@ -137,11 +136,9 @@ namespace Hotel.ViewModel
             else if (e.OldItems.Count > 0)
             {
                 var oldBooking = (e.OldItems[0] as Booking);
-                RemoveBookingFromDisplayedIfPossible(oldBooking);
+                DisplayedBookings.Remove(oldBooking);
             }
         }
-
-
 
         public void OnPropertyChanged([CallerMemberName] string name = "")
         {
@@ -263,11 +260,6 @@ namespace Hotel.ViewModel
             {
                 DisplayedBookings.Add(x);
             }
-        }
-
-        private void RemoveBookingFromDisplayedIfPossible(Booking x)
-        {
-            DisplayedBookings.Remove(x); // ignore result that says whether item was removed
         }
 
         public void FilterDisplayedBookingsByGuest(Guest g)
