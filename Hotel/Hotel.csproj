@@ -104,6 +104,10 @@
     <Compile Include="Command\ActionCommand.cs" />
     <Compile Include="Command\AddBookingCommand.cs" />
     <Compile Include="Command\AddRoomCommand.cs" />
+    <Compile Include="Common\FileLogger.cs" />
+    <Compile Include="Common\ILogger.cs" />
+    <Compile Include="Common\ILogSystem.cs" />
+    <Compile Include="Common\Logger.cs" />
     <Compile Include="DataAccessObjects\NHibernateRepository.cs" />
     <Compile Include="View\DpiDecorator.cs" />
     <Compile Include="Extensions\IEnumerableExtensions.cs" />
@@ -214,9 +218,7 @@
   <ItemGroup>
     <None Include="App.config" />
   </ItemGroup>
-  <ItemGroup>
-    <Folder Include="Common\" />
-  </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <Import Project="..\packages\System.Data.SQLite.Core.1.0.106.0\build\net46\System.Data.SQLite.Core.targets" Condition="Exists('..\packages\System.Data.SQLite.Core.1.0.106.0\build\net46\System.Data.SQLite.Core.targets')" />
   <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">

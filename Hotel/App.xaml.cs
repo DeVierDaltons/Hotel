@@ -1,4 +1,5 @@
-﻿using Hotel.DataAccessObjects;
+﻿using Hotel.Common;
+using Hotel.DataAccessObjects;
 using Hotel.Model;
 using Hotel.Repository;
 using Hotel.View;
@@ -63,6 +64,15 @@ namespace Hotel
             container.RegisterInstance(typeof(RepositoryBackedObservableCollection<Guest>), new RepositoryBackedObservableCollection<Guest>(new NHibernateRepository<Guest>()));
             container.RegisterInstance(typeof(RepositoryBackedObservableCollection<Booking>), new RepositoryBackedObservableCollection<Booking>(new NHibernateRepository<Booking>()));
             container.RegisterInstance(typeof(RepositoryBackedObservableCollection<Room>), new RepositoryBackedObservableCollection<Room>(new NHibernateRepository<Room>()));
+
+
+            container.RegisterInstance<ILogger>(new Logger());
+        }
+
+        private Logger BuildLogger()
+        {
+            var logger = new Logger();
+            logger.RegisterLogSystem();
         }
     }
 }
