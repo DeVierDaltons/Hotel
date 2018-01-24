@@ -21,7 +21,7 @@
                 <ColumnDefinition Width="98*" />
             </Grid.ColumnDefinitions>
 
-            <Label Grid.Row="0" Grid.Column="0" Content="Room Number:" Grid.ColumnSpan="2"/>
+            <Label Grid.Row="0" Grid.Column="0" Content="Room Number:*" Grid.ColumnSpan="2"/>
             <TextBox Name="RoomNr" Text="{Binding RoomNumber, UpdateSourceTrigger=PropertyChanged}" Grid.Row="0" Grid.Column="2" VerticalAlignment="Center" Margin="0, 14, 0, 0"></TextBox>
             <StackPanel Name="RoomNumberError" Grid.Row="0" Grid.Column="2" Orientation="Horizontal" VerticalAlignment="Top">
                 <Grid Width="12" Height="12">
@@ -31,7 +31,7 @@
                 <TextBlock Foreground="Red" Margin="2,0,0,0" Text="{Binding RoomNrErrorMessage}"></TextBlock>
             </StackPanel>
 
-            <Label Grid.Row="1" Grid.Column="0" Content="Beds:" Grid.ColumnSpan="2"/>
+            <Label Grid.Row="1" Grid.Column="0" Content="Beds:*" Grid.ColumnSpan="2"/>
             <TextBox Grid.Row="1" Grid.Column="2" Text="{Binding Beds, UpdateSourceTrigger=PropertyChanged}" VerticalAlignment="Center" Margin="0, 14, 0, 0"></TextBox>
             <StackPanel Name="RoomBedsError" Grid.Row="1" Grid.Column="2" Orientation="Horizontal" VerticalAlignment="Top">
                 <Grid Width="12" Height="12">
