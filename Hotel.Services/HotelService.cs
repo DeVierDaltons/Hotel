@@ -59,7 +59,6 @@ namespace Hotel.Services
             if (status == null && guest==null)
             {
                 return null;
-                
             }
 
             if(status != null)
@@ -71,11 +70,11 @@ namespace Hotel.Services
             {
                 if (filteredList.Count > 0)
                 {
-                    return filteredList.Where(x => x.Guests.Contains(guest)) as ObservableCollection<Booking>;
+                    return filteredList.Where(x => x.GuestIds.Contains(guest.Id)) as ObservableCollection<Booking>;
                 }
                 else
                 {
-                    return BookingRepository.Where(x => x.Guests.Contains(guest)) as ObservableCollection<Booking>;
+                    return BookingRepository.Where(x => x.GuestIds.Contains(guest.Id)) as ObservableCollection<Booking>;
                 }
             }
 

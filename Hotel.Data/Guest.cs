@@ -3,18 +3,22 @@ using System.Collections.Generic;
 using System.ComponentModel;
 using System.Linq;
 using System.Runtime.CompilerServices;
+using System.Runtime.Serialization;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Input;
 
 namespace Hotel.Data
 {
+    [DataContract]
     public class Guest : INotifyPropertyChanged, IIdentifiable
     {
         public virtual event PropertyChangedEventHandler PropertyChanged;
 
+        [DataMember]
         public virtual Guid Id { get; set; }
 
+        [DataMember]
         private string _firstName;
         public virtual string FirstName
         {
@@ -22,6 +26,7 @@ namespace Hotel.Data
             set { _firstName = value; OnPropertyChanged();  }
         }
 
+        [DataMember]
         private string _lastName;
         public virtual string LastName
         {
@@ -29,6 +34,7 @@ namespace Hotel.Data
             set { _lastName = value; OnPropertyChanged(); }
         }
         
+        [DataMember]
         private string _phoneNumber;
         /// <summary>
         /// Storing phone number as string to perserve preceding zeros
@@ -39,6 +45,7 @@ namespace Hotel.Data
             set { _phoneNumber = value; OnPropertyChanged(); }
         }
 
+        [DataMember]
         private string _emailAdress;
         public virtual string EmailAdress
         {
@@ -46,6 +53,7 @@ namespace Hotel.Data
             set { _emailAdress = value; OnPropertyChanged(); }
         }
 
+        [DataMember]
         private string _address;
         public virtual string Address
         {
@@ -53,6 +61,7 @@ namespace Hotel.Data
             set { _address = value; OnPropertyChanged(); }
         }
 
+        [DataMember]
         private string _postalCode;
         public virtual string PostalCode
         {
@@ -60,6 +69,7 @@ namespace Hotel.Data
             set { _postalCode = value; OnPropertyChanged(); }
         }
 
+        [DataMember]
         private string _city;
         public virtual string City
         {
@@ -67,6 +77,7 @@ namespace Hotel.Data
             set { _city = value; OnPropertyChanged(); }
         }
 
+        [DataMember]
         private string _country;
         public virtual string Country
         {
@@ -74,13 +85,14 @@ namespace Hotel.Data
             set { _country = value; OnPropertyChanged(); }
         }
 
+        [DataMember]
         private string _ICEPhoneNumber;
         public virtual string ICEPhoneNumber
         {
             get { return _ICEPhoneNumber; }
             set { _ICEPhoneNumber = value; OnPropertyChanged(); }
         }
-        
+
         public virtual void OnPropertyChanged([CallerMemberName] string name = "")
         {
             PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(name));

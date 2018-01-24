@@ -3,13 +3,16 @@ using System.Collections.Generic;
 using System.ComponentModel;
 using System.Linq;
 using System.Runtime.CompilerServices;
+using System.Runtime.Serialization;
 using System.Windows.Input;
 using Hotel.Data.Extensions;
 
 namespace Hotel.Data
 {
+    [DataContract]
     public class Room : INotifyPropertyChanged, IIdentifiable
     {
+        [DataMember]
         public virtual Guid Id { get; set; }
 
         public virtual event PropertyChangedEventHandler PropertyChanged;
@@ -21,6 +24,7 @@ namespace Hotel.Data
             set { _bookings = value; }
         }
 
+        [DataMember]
         private string _roomNumber;
         public virtual string RoomNumber
         {
@@ -33,6 +37,7 @@ namespace Hotel.Data
             return TimePeriodAvailable(new BookingPeriod() { StartDate = startDate, EndDate = startDate });
         }
 
+        [DataMember]
         private int _beds;
         public virtual int Beds
         {
@@ -40,6 +45,7 @@ namespace Hotel.Data
             set { _beds = value; OnPropertyChanged(); }
         }
 
+        [DataMember]
         private RoomQuality _quality;
         public virtual RoomQuality Quality
         {
@@ -47,6 +53,7 @@ namespace Hotel.Data
             set { _quality = value; OnPropertyChanged(); }
         }
 
+        [DataMember]
         private bool _hasNiceView;
         public virtual bool HasNiceView
         {
@@ -54,6 +61,7 @@ namespace Hotel.Data
             set { _hasNiceView = value; OnPropertyChanged(); } 
         }
 
+        [DataMember]
         private decimal _pricePerDay;
         public virtual decimal PricePerDay
         {

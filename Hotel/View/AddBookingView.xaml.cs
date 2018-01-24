@@ -5,6 +5,7 @@ using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Collections.Specialized;
 using System.Globalization;
+using System.Linq;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Controls.Primitives;
@@ -206,7 +207,7 @@ namespace Hotel.View
 
         private void RedrawAvailabilityForBooking(Booking booking)
         {
-            booking.Rooms.ForEach(RedrawAvailabilityForRoom);
+            booking.RoomIds.ForEach(id => RedrawAvailabilityForRoom(Rooms.First(room => room.Id == id)));
         }
 
         private void FillDateGrid()

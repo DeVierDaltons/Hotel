@@ -1,5 +1,6 @@
 ﻿using Hotel.Command;
 using Hotel.Data;
+using Hotel.Data.Extensions;
 using Hotel.Proxy;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
@@ -41,14 +42,14 @@ namespace Hotel.ViewModel
 
         public ICollection<Guest> Guests
         {
-            get { return Booking.Guests; }
-            set { Booking.Guests = value; OnPropertyChanged(); }
+            get { return Booking.GuestIds.ConvertAll(id => AllGuests.First(guest => guest.Id == id)); }
+            set { Booking.GuestIds = value.ConvertEnumerable(guest => guest.Id).ToList(); OnPropertyChanged(); }
         }
 
         public ICollection<Room> Rooms
         {
-            get { return Booking.Rooms; }
-            set { Booking.Rooms = value; OnPropertyChanged(); }
+            get { return Booking.RoomIds.ConvertAll(id => AllRooms.First(room => room.Id == id)); }
+            set { Booking.RoomIds = value.ConvertEnumerable(room => room.Id).ToList(); OnPropertyChanged(); }
         }
 
         public BookingPeriod SelectedDates { get; set; }
@@ -61,12 +62,12 @@ namespace Hotel.ViewModel
 
         private bool GuestsValid()
         {
-            return Booking.Guests != null && Booking.Guests.Count > 0;
+            return Booking.GuestIds != null && Booking.GuestIds.Count > 0;
         }
 
         private bool RoomsValid()
         {
-            return Booking.Rooms != null && Booking.Rooms.Count > 0;
+            return Booking.RoomIds != null && Booking.RoomIds.Count > 0;
         }
 
         private bool DatesValid()
@@ -80,7 +81,7 @@ namespace Hotel.ViewModel
             {
                 return false;
             }
-            return Booking.Rooms.All(room => room.TimePeriodAvailable(SelectedDates));
+            return Booking.RoomIds.All(id => AllRooms.First(room => room.Id == id).TimePeriodAvailable(SelectedDates));
         }
 
         public void AddBooking()
