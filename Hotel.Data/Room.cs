@@ -18,7 +18,7 @@ namespace Hotel.Data
         public virtual List<Booking> Bookings
         {
             get { return _bookings; }
-            set { _bookings = value ?? new List<Booking>(); }
+            set { _bookings = value; }
         }
 
         private string _roomNumber;
