@@ -104,17 +104,17 @@ namespace Hotel.Services
         #region Get
         public ObservableCollection<Booking> GetAllBookings()
         {
-            return new ObservableCollection<Booking>(BookingRepository);
+            return BookingRepository;
         }
 
         public ObservableCollection<Guest> GetAllGuests()
         {
-            return new ObservableCollection<Guest>(GuestRepository);
+            return GuestRepository;
         }
 
         public ObservableCollection<Room> GetAllRooms()
         {
-            return new ObservableCollection<Room>(RoomRepository);
+            return RoomRepository;
         }
         #endregion
         #region remove
