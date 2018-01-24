@@ -21,17 +21,5 @@ namespace Hotel.Data.Extensions
                 }
             }
         }
-
-        public static bool ValueOccursInProperties<T>(this T target, object value) where T : class
-        {
-            foreach (var item in target.GetType().GetProperties())
-            {
-                if(item.GetValue(target) == value)
-                {
-                    return true;
-                }
-            }
-            return false;
-        }
     }
 }
