@@ -7,16 +7,21 @@ using System.ComponentModel;
 using System.Runtime.CompilerServices;
 using System.Windows.Controls;
 using System.Windows.Input;
+using System.Runtime.Serialization;
 
 namespace Hotel.Data
 {
+    [DataContract]
     public class Booking : INotifyPropertyChanged, IIdentifiable
     {
+        [DataMember]
         public virtual Guid Id { get; set; }
 
         public virtual event PropertyChangedEventHandler PropertyChanged;
 
         private ICollection<Guest> _guests;
+
+        [DataMember]
         public virtual ICollection<Guest> Guests
         {
             get { return _guests; }
@@ -24,6 +29,7 @@ namespace Hotel.Data
         }
 
         private ICollection<Room> _rooms = new List<Room>();
+        [DataMember]
         public virtual ICollection<Room> Rooms
         {
             get { return _rooms; }
@@ -32,6 +38,7 @@ namespace Hotel.Data
 
         private BookingPeriod _bookingPeriod;
 
+        [DataMember]
         public virtual BookingPeriod BookingPeriod
         {
             get { return _bookingPeriod; }
@@ -39,6 +46,7 @@ namespace Hotel.Data
         }
 
         private BookingStatus _Status = BookingStatus.Reserved;
+        [DataMember]
         public virtual BookingStatus BookingStatus
         {
             get { return _Status; }

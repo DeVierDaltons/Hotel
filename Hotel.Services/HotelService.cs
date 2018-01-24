@@ -6,17 +6,18 @@ using Hotel.Services.Repository;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Linq;
+using System.Runtime.Serialization;
 using System.ServiceModel;
 
 namespace Hotel.Services
 {
-    [ServiceBehavior(ConcurrencyMode = ConcurrencyMode.Multiple, InstanceContextMode = InstanceContextMode.PerSession)]
+    [KnownType(typeof(Guest))]
+    [ServiceBehavior(ConcurrencyMode = ConcurrencyMode.Reentrant, InstanceContextMode = InstanceContextMode.PerSession)]
     public class HotelService : IHotelService
     {
         RepositoryBackedObservableCollection<Guest> GuestRepository = new RepositoryBackedObservableCollection<Guest>(new NHibernateRepository<Guest>());
         RepositoryBackedObservableCollection<Room> RoomRepository = new RepositoryBackedObservableCollection<Room>(new NHibernateRepository<Room>());
         RepositoryBackedObservableCollection<Booking> BookingRepository = new RepositoryBackedObservableCollection<Booking>(new NHibernateRepository<Booking>());
-
         List<ICallback> CallbackChannels = new List<ICallback>();
 
 
@@ -36,8 +37,6 @@ namespace Hotel.Services
             }
         }
 
-
-
         #region add
         public void AddBooking(Booking booking)
         {
@@ -56,6 +55,10 @@ namespace Hotel.Services
         public void AddRoom(Room room)
         {
             RoomRepository.Add(room);
+            foreach (ICallback client in CallbackChannels)
+            {
+                client.Add(room);
+            }
         }
         #endregion
         #region edit
@@ -63,6 +66,10 @@ namespace Hotel.Services
         {
             Booking target = BookingRepository.First(candidate => candidate.Id == booking.Id);
             target.CopyDeltaProperties(booking);
+            foreach (ICallback client in CallbackChannels)
+            {
+                client.Edit(booking);
+            }
         }
 
         public void EditGuest(Guest guest)
@@ -79,6 +86,10 @@ namespace Hotel.Services
         {
             Room target = RoomRepository.First(candidate => candidate.Id == room.Id);
             target.CopyDeltaProperties(room);
+            foreach (ICallback client in CallbackChannels)
+            {
+                client.Edit(room);
+            }
         }
 
         #endregion
@@ -152,6 +163,10 @@ namespace Hotel.Services
         public void RemoveBooking(Booking booking)
         {
             BookingRepository.Remove(booking);
+            foreach (ICallback client in CallbackChannels)
+            {
+                client.Remove(booking);
+            }
         }
 
         public void RemoveGuest(Guest guest)
@@ -166,7 +181,12 @@ namespace Hotel.Services
         public void RemoveRoom(Room room)
         {
             RoomRepository.Remove(room);
+            foreach (ICallback client in CallbackChannels)
+            {
+                client.Remove(room);
+            }
         }
+
         #endregion
     }
 }

@@ -47,6 +47,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="ICallback.cs" />
     <Compile Include="IHotelService.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>

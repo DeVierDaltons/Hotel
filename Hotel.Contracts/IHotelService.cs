@@ -3,16 +3,21 @@ using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Linq;
+using System.Runtime.Serialization;
 using System.ServiceModel;
 using System.Text;
 using System.Threading.Tasks;
 
 namespace Hotel.Contracts
 {
-    [ServiceContract]
+    [ServiceContract(CallbackContract = typeof(ICallback))]
     public interface IHotelService
     {
+        [OperationContract(IsOneWay = true)]
+        void SubscribeClient();
+
         //Guest operations
+
         [OperationContract]
         void AddGuest(Guest guest);
         [OperationContract]

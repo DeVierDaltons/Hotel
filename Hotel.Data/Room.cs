@@ -5,16 +5,21 @@ using System.Linq;
 using System.Runtime.CompilerServices;
 using System.Windows.Input;
 using Hotel.Data.Extensions;
+using System.Runtime.Serialization;
 
 namespace Hotel.Data
 {
+    [DataContract]
     public class Room : INotifyPropertyChanged, IIdentifiable
     {
+        [DataMember]
         public virtual Guid Id { get; set; }
 
         public virtual event PropertyChangedEventHandler PropertyChanged;
 
         private List<Booking> _bookings = new List<Booking>();
+
+        [DataMember]
         public virtual List<Booking> Bookings
         {
             get { return _bookings; }
@@ -22,6 +27,7 @@ namespace Hotel.Data
         }
 
         private string _roomNumber;
+        [DataMember]
         public virtual string RoomNumber
         {
             get { return _roomNumber; }
@@ -34,6 +40,7 @@ namespace Hotel.Data
         }
 
         private int _beds;
+        [DataMember]
         public virtual int Beds
         {
             get { return _beds; }
@@ -41,6 +48,7 @@ namespace Hotel.Data
         }
 
         private RoomQuality _quality;
+        [DataMember]
         public virtual RoomQuality Quality
         {
             get { return _quality; }
@@ -48,6 +56,7 @@ namespace Hotel.Data
         }
 
         private bool _hasNiceView;
+        [DataMember]
         public virtual bool HasNiceView
         {
             get { return _hasNiceView; }
@@ -55,6 +64,7 @@ namespace Hotel.Data
         }
 
         private decimal _pricePerDay;
+        [DataMember]
         public virtual decimal PricePerDay
         {
             get { return _pricePerDay; }

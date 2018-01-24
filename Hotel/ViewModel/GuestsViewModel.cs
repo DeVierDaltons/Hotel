@@ -7,6 +7,9 @@ using System.Collections.ObjectModel;
 using Unity.Attributes;
 using Hotel.View;
 using Hotel.Proxy;
+using Hotel.Callback;
+using System.Threading;
+using System.Threading.Tasks;
 
 namespace Hotel.ViewModel
 {
@@ -80,9 +83,13 @@ namespace Hotel.ViewModel
                 var g = new AddGuestViewModel();
                 g.Initialize(new EditGuestCommand(guest), () => { StartAddingGuest(); }, guest, () =>
                 {
-                    HotelServiceProxy proxy = new HotelServiceProxy();
-                    proxy.EditGuest(guest);
-                    proxy.Close();
+                    CallbackOperations<Guest> callback = new CallbackOperations<Guest>(DisplayedGuests);
+                    HotelServiceProxy proxy = new HotelServiceProxy(new System.ServiceModel.InstanceContext(callback));
+                    Task.Run(() =>
+                    {
+                        proxy.EditGuest(guest);
+                        proxy.Close();
+                    });
                 });
                 CurrentGuest = g;
             }
@@ -96,10 +103,13 @@ namespace Hotel.ViewModel
             var g = new AddGuestViewModel();
             g.Initialize(new EditGuestCommand(guest), () => { StartAddingGuest(); }, guest, () =>
             {
-                DisplayedGuests.Add(guest);
-                HotelServiceProxy proxy = new HotelServiceProxy();
-                proxy.AddGuest(guest);
-                proxy.Close();
+                CallbackOperations<Guest> callback = new CallbackOperations<Guest>(DisplayedGuests);
+                HotelServiceProxy proxy = new HotelServiceProxy(new System.ServiceModel.InstanceContext(callback));
+                Task.Run(() =>
+                {
+                    proxy.AddGuest(guest);
+                    proxy.Close();
+                });
                 StartAddingGuest();
             });
             CurrentGuest = g;
@@ -107,7 +117,8 @@ namespace Hotel.ViewModel
 
         public void FilterGuests()
         {
-            HotelServiceProxy proxy = new HotelServiceProxy();
+            CallbackOperations<Guest> callback = new CallbackOperations<Guest>(DisplayedGuests);
+            HotelServiceProxy proxy = new HotelServiceProxy(new System.ServiceModel.InstanceContext(callback));
             DisplayedGuests = proxy.FilterGuests(FilterGuestString);
             proxy.Close();
         }
@@ -117,8 +128,8 @@ namespace Hotel.ViewModel
         /// </summary>
         public void Initialize()
         {
-
-            var p = new HotelServiceProxy();
+            CallbackOperations<Guest> callback = new CallbackOperations<Guest>(DisplayedGuests);
+            var p = new HotelServiceProxy(new System.ServiceModel.InstanceContext(callback));
             DisplayedGuests = p.GetAllGuests();
             p.Close();
         }

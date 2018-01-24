@@ -72,6 +72,7 @@
     <Reference Include="System" />
     <Reference Include="System.Configuration" />
     <Reference Include="System.Data" />
+    <Reference Include="System.Runtime.Serialization" />
     <Reference Include="System.ServiceModel" />
     <Reference Include="System.Transactions" />
     <Reference Include="System.Xml" />
@@ -113,6 +114,7 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Compile Include="Callback\CallbackOperations.cs" />
     <Compile Include="Command\ActionCommand.cs" />
     <Compile Include="Command\AddBookingCommand.cs" />
     <Compile Include="Command\AddRoomCommand.cs" />

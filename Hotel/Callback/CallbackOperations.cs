@@ -6,10 +6,11 @@ using System.Text;
 using System.Threading.Tasks;
 using Hotel.Data;
 using System.Collections.ObjectModel;
+using System.Runtime.Serialization;
 
 namespace Hotel.Callback
-{
-    public class CallbackOperations<T> where T: IIdentifiable, ICallback
+{ 
+    public class CallbackOperations<T> : ICallback where T: IIdentifiable
     {
         ObservableCollection<T> Collection;
         public CallbackOperations(ObservableCollection<T> collection )
@@ -17,20 +18,20 @@ namespace Hotel.Callback
             Collection = collection;
         }
 
-        public void Add(T item)
+        public void Add(object item)
         {
-            Collection.Add(item);
+            Collection.Add((T)item);
         }
 
-        public void Edit(T item)
+        public void Edit(object item)
         {
-            T editItem = Collection.First(x => x.Id == item.Id);
-            editItem = item;
+            T editItem = Collection.First(x => x.Id == ((T)item).Id);
+            editItem = (T)item;
         }
 
-        public void Remove(T item)
+        public void Remove(object item)
         {
-            Collection.Remove(item);
+            Collection.Remove((T)item);
         }
     }
 }

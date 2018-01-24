@@ -1,8 +1,10 @@
-﻿using Hotel.Data;
+﻿using Hotel.Callback;
+using Hotel.Data;
 using Hotel.Proxy;
 using System.Collections.ObjectModel;
 using System.ComponentModel;
 using System.Runtime.CompilerServices;
+using System.Threading.Tasks;
 
 namespace Hotel.ViewModel
 {
@@ -28,7 +30,8 @@ namespace Hotel.ViewModel
 
         public void Initialize()
         {
-            var p = new HotelServiceProxy();
+            CallbackOperations<Room> callback = new CallbackOperations<Room>(Rooms);
+            var p = new HotelServiceProxy(new System.ServiceModel.InstanceContext(callback));
             _Rooms = p.GetAllRooms();
             p.Close();
             AddRoom();
@@ -40,10 +43,13 @@ namespace Hotel.ViewModel
             AddRoomViewDataContext.Initialize();
             AddRoomViewDataContext.SetCallback(() =>
             {
-                HotelServiceProxy proxy = new HotelServiceProxy();
-                proxy.AddRoom(AddRoomViewDataContext.Room);
-                proxy.Close();
-                Rooms.Add(AddRoomViewDataContext.Room);
+                CallbackOperations<Room> callback = new CallbackOperations<Room>(Rooms);
+                HotelServiceProxy proxy = new HotelServiceProxy(new System.ServiceModel.InstanceContext(callback));
+                Task.Run(() =>
+                {
+                    proxy.AddRoom(AddRoomViewDataContext.Room);
+                    proxy.Close();
+                });
             });
         }
 

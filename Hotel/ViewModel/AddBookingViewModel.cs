@@ -1,4 +1,5 @@
-﻿using Hotel.Command;
+﻿using Hotel.Callback;
+using Hotel.Command;
 using Hotel.Data;
 using Hotel.Proxy;
 using System.Collections.Generic;
@@ -6,6 +7,7 @@ using System.Collections.ObjectModel;
 using System.ComponentModel;
 using System.Linq;
 using System.Runtime.CompilerServices;
+using System.Threading.Tasks;
 using System.Windows.Input;
 
 namespace Hotel.ViewModel
@@ -86,10 +88,14 @@ namespace Hotel.ViewModel
         public void AddBooking()
         {
             Booking.SetDates(SelectedDates);
-            HotelServiceProxy proxy = new HotelServiceProxy();
-            proxy.AddBooking(Booking);
-            proxy.Close();
-            (AllBookings as ObservableCollection<Booking>).Add(Booking);
+            CallbackOperations<Booking> callback = new CallbackOperations<Booking>(AllBookings);
+            HotelServiceProxy proxy = new HotelServiceProxy(new System.ServiceModel.InstanceContext(callback));
+            Task.Run(() =>
+            {
+                proxy.AddBooking(Booking);
+                proxy.Close();
+
+            });
             Booking = new Booking();
         }
 

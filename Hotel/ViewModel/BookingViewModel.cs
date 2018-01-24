@@ -1,4 +1,5 @@
-﻿using Hotel.Data;
+﻿using Hotel.Callback;
+using Hotel.Data;
 using Hotel.Proxy;
 using Hotel.View;
 using System;
@@ -7,6 +8,7 @@ using System.Collections.ObjectModel;
 using System.ComponentModel;
 using System.Linq;
 using System.Runtime.CompilerServices;
+using System.Threading.Tasks;
 using System.Windows;
 using Unity.Interception.Utilities;
 
@@ -63,7 +65,8 @@ namespace Hotel.ViewModel
 
         public void Initialize()
         {
-            HotelServiceProxy proxy = new HotelServiceProxy();
+            CallbackOperations<Booking> callback = new CallbackOperations<Booking>(Bookings);
+            HotelServiceProxy proxy = new HotelServiceProxy(new System.ServiceModel.InstanceContext(callback));
             Bookings = proxy.GetAllBookings();
             Rooms = proxy.GetAllRooms();
             Guests = proxy.GetAllGuests();
@@ -83,10 +86,13 @@ namespace Hotel.ViewModel
         private void updateInDatabase(object sender, PropertyChangedEventArgs e)
         {
             Booking changedItem = (Booking)sender;
-            var p = new Proxy.HotelServiceProxy();
-
-            p.EditBooking(changedItem);
-            p.Close();
+            CallbackOperations<Booking> callback = new CallbackOperations<Booking>(Bookings);
+            var p = new Proxy.HotelServiceProxy(new System.ServiceModel.InstanceContext(callback));
+            Task.Run(() =>
+            {
+                p.EditBooking(changedItem);
+                p.Close();
+            });
         }
 
         public void SetupAddBookingViewModel()
