@@ -92,7 +92,7 @@
     <Compile Include="Booking.cs" />
     <Compile Include="BookingPeriod.cs" />
     <Compile Include="BookingStatus.cs" />
-    <Compile Include="ChangeTracker.cs" />
+    <Compile Include="Extensions\IEnumerableExtensions.cs" />
     <Compile Include="Extensions\ObjectExtension.cs" />
     <Compile Include="Guest.cs" />
     <Compile Include="IIdentifiable.cs" />

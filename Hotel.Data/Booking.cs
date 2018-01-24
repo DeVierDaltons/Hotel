@@ -65,6 +65,14 @@ namespace Hotel.Data
             get { return String.Join(", ", Rooms.ToList().ConvertAll(room => room.RoomNumber)); }
         }
 
+        public virtual bool BlocksOtherBookings
+        {
+            get
+            {
+                return BookingStatus != BookingStatus.Cancelled && BookingStatus != BookingStatus.NoShow && BookingStatus != BookingStatus.CheckedOut;
+            }
+        }
+
         public virtual void SetDates(BookingPeriod selectedDates)
         {
             BookingPeriod = new BookingPeriod(selectedDates.StartDate, selectedDates.EndDate);

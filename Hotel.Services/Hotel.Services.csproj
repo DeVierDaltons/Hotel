@@ -59,13 +59,12 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="ClassMappings\BookingMap.cs" />
-    <Compile Include="ClassMappings\ChangeTrackerMap.cs" />
     <Compile Include="ClassMappings\GuestMap.cs" />
-    <Compile Include="Repository\NHibernateHelper.cs" />
-    <Compile Include="Repository\NHibernateRepository.cs" />
     <Compile Include="ClassMappings\RoomMap.cs" />
     <Compile Include="HotelService.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Repository\NHibernateHelper.cs" />
+    <Compile Include="Repository\NHibernateRepository.cs" />
     <Compile Include="Repository\RepositoryBackedObservableCollection.cs" />
   </ItemGroup>
   <ItemGroup>

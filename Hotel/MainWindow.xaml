@@ -21,7 +21,7 @@
                 <view:GuestsView />
             </TabItem>
             <TabItem Header="Rooms" x:Name="RoomExplorerTab">
-                <view:RoomView />
+                <view:RoomView x:Name="RoomTabView"/>
             </TabItem>
             <TabItem Header="Bookings" x:Name="BookingExplorerTab">
                 <view:BookingView />
