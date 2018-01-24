@@ -37,7 +37,7 @@
                 </DataGrid.Columns>
             </DataGrid>
         </Grid>
-        <view:AddRoomView Grid.Column="1" DataContext="{Binding AddRoomViewDataContext}" VerticalAlignment="Top"/>
+        <view:AddRoomView x:Name="AddRoomPanel" Grid.Column="1" DataContext="{Binding AddRoomViewDataContext}" VerticalAlignment="Top"/>
     </Grid>
 </UserControl>
  
