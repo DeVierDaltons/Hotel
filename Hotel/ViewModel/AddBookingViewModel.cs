@@ -19,25 +19,19 @@ namespace Hotel.ViewModel
         public ICommand AddBookingCommand { get; private set; }
         public Booking Booking { get; set; } = new Booking();
 
-        private ObservableCollection<Booking> _allBookings;
         public ObservableCollection<Booking> AllBookings
         {
-            get { return _allBookings; }
-            set { _allBookings = value; OnPropertyChanged(); }
+            get { return HotelManager.AllBookings; }
         }
 
-        private ObservableCollection<Room> _roomsRepo;
         public ObservableCollection<Room> AllRooms
         {
-            get { return _roomsRepo; }
-            set { _roomsRepo = value; OnPropertyChanged(); }
+            get { return HotelManager.AllRooms; }
         }
 
-        public ObservableCollection<Guest> _allGuests { get; set; }
         public ObservableCollection<Guest> AllGuests
         {
-            get { return _allGuests; }
-            set { _allGuests = value; OnPropertyChanged(); }
+            get { return HotelManager.AllGuests; }
         }
 
         public ICollection<Guest> Guests
@@ -55,7 +49,7 @@ namespace Hotel.ViewModel
         public BookingPeriod SelectedDates { get; set; }
         #endregion
 
-        public void Initialize()
+        public AddBookingViewModel()
         {
             AddBookingCommand = new AddBookingCommand(this);
         }
@@ -87,10 +81,7 @@ namespace Hotel.ViewModel
         public void AddBooking()
         {
             Booking.SetDates(SelectedDates);
-            HotelServiceProxy proxy = new HotelServiceProxy();
-            proxy.AddBooking(Booking);
-            proxy.Close();
-            (AllBookings as ObservableCollection<Booking>).Add(Booking);
+            AllBookings.Add(Booking);
             Booking = new Booking();
         }
 

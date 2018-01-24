@@ -97,9 +97,7 @@ namespace Hotel.ViewModel
             g.Initialize(new EditGuestCommand(guest), () => { StartAddingGuest(); }, guest, () =>
             {
                 DisplayedGuests.Add(guest);
-                HotelServiceProxy proxy = new HotelServiceProxy();
-                proxy.AddGuest(guest);
-                proxy.Close();
+                HotelManager.AllGuests.Add(guest);
                 StartAddingGuest();
             });
             CurrentGuest = g;
@@ -112,15 +110,9 @@ namespace Hotel.ViewModel
             proxy.Close();
         }
 
-        /// <summary>
-        /// DO NOT REMOVE, has to be done after the dependencies have been injected, so NOT in the constructor.
-        /// </summary>
         public void Initialize()
         {
-
-            var p = new HotelServiceProxy();
-            DisplayedGuests = p.GetAllGuests();
-            p.Close();
+            DisplayedGuests = HotelManager.AllGuests;
         }
 
         public void OnPropertyChanged([CallerMemberName] string name = "")

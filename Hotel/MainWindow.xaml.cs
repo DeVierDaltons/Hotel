@@ -21,6 +21,7 @@ namespace Hotel
 
         public MainWindow()
         {
+            HotelManager.Initialize();
             InitializeComponent();
         }
 
