@@ -69,15 +69,20 @@ namespace Hotel.ViewModel
             Guests = proxy.GetAllGuests();
             foreach (Booking booking in Bookings)
             {
-                booking.PropertyChanged += InvalidateOnBookingStatusChanged;
-                booking.PropertyChanged += UpdateInDatabase;
-                booking.Rooms.ForEach(r => r.Bookings.Add(booking));
+                RegisterBooking(booking);
             }
             proxy.Close();
 
             Bookings.CollectionChanged += Bookings_CollectionChanged;
             FilterDisplayedBookings();
             SetupAddBookingViewModel();
+        }
+
+        private void RegisterBooking(Booking booking)
+        {
+            booking.PropertyChanged += InvalidateOnBookingStatusChanged;
+            booking.PropertyChanged += UpdateInDatabase;
+            booking.Rooms.ForEach(r => r.Bookings.Add(booking));
         }
 
         private void UpdateInDatabase(object sender, PropertyChangedEventArgs e)
@@ -127,7 +132,7 @@ namespace Hotel.ViewModel
             if (e.NewItems.Count > 0)
             {
                 var newBooking = (e.NewItems[0] as Booking);
-                newBooking.PropertyChanged += InvalidateOnBookingStatusChanged;
+                RegisterBooking(newBooking);
                 if (ShouldShowBooking(newBooking))
                 {
                     AddBookingToDisplayedIfNew(newBooking);
