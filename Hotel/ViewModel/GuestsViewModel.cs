@@ -15,6 +15,7 @@ namespace Hotel.ViewModel
 {
     public class GuestsViewModel : INotifyPropertyChanged
     {
+        
         #region Properties
         private string _groupBoxName;
 
@@ -32,8 +33,8 @@ namespace Hotel.ViewModel
         }
 
         public event PropertyChangedEventHandler PropertyChanged;
-        
-        private ObservableCollection<Guest> _DisplayedGuests;
+
+        private ObservableCollection<Guest> _DisplayedGuests = new ObservableCollection<Guest>();
 
         public ObservableCollection<Guest> DisplayedGuests
         {
@@ -83,12 +84,9 @@ namespace Hotel.ViewModel
                 var g = new AddGuestViewModel();
                 g.Initialize(new EditGuestCommand(guest), () => { StartAddingGuest(); }, guest, () =>
                 {
-                    CallbackOperations<Guest> callback = new CallbackOperations<Guest>(DisplayedGuests);
-                    HotelServiceProxy proxy = new HotelServiceProxy(new System.ServiceModel.InstanceContext(callback));
                     Task.Run(() =>
                     {
                         proxy.EditGuest(guest);
-                        proxy.Close();
                     });
                 });
                 CurrentGuest = g;
@@ -103,12 +101,9 @@ namespace Hotel.ViewModel
             var g = new AddGuestViewModel();
             g.Initialize(new EditGuestCommand(guest), () => { StartAddingGuest(); }, guest, () =>
             {
-                CallbackOperations<Guest> callback = new CallbackOperations<Guest>(DisplayedGuests);
-                HotelServiceProxy proxy = new HotelServiceProxy(new System.ServiceModel.InstanceContext(callback));
                 Task.Run(() =>
                 {
                     proxy.AddGuest(guest);
-                    proxy.Close();
                 });
                 StartAddingGuest();
             });
@@ -117,21 +112,20 @@ namespace Hotel.ViewModel
 
         public void FilterGuests()
         {
-            CallbackOperations<Guest> callback = new CallbackOperations<Guest>(DisplayedGuests);
-            HotelServiceProxy proxy = new HotelServiceProxy(new System.ServiceModel.InstanceContext(callback));
             DisplayedGuests = proxy.FilterGuests(FilterGuestString);
-            proxy.Close();
         }
 
+
+        CallbackOperations<Guest> callback;
+        HotelServiceProxy proxy;
         /// <summary>
         /// DO NOT REMOVE, has to be done after the dependencies have been injected, so NOT in the constructor.
         /// </summary>
         public void Initialize()
         {
-            CallbackOperations<Guest> callback = new CallbackOperations<Guest>(DisplayedGuests);
-            var p = new HotelServiceProxy(new System.ServiceModel.InstanceContext(callback));
-            DisplayedGuests = p.GetAllGuests();
-            p.Close();
+            callback = new CallbackOperations<Guest>(DisplayedGuests);
+            proxy = new HotelServiceProxy(new System.ServiceModel.InstanceContext(callback));
+            DisplayedGuests = proxy.GetAllGuests();
         }
 
         public void OnPropertyChanged([CallerMemberName] string name = "")

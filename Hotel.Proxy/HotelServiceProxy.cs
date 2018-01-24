@@ -15,6 +15,7 @@ namespace Hotel.Proxy
         public HotelServiceProxy(InstanceContext callbackInstance) : base(callbackInstance)
         {
             SubscribeClient();
+           
         }
 
         public void AddBooking(Booking booking)
@@ -91,5 +92,6 @@ namespace Hotel.Proxy
         {
             Channel.SubscribeClient();
         }
+
     }
 }

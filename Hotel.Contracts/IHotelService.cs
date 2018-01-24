@@ -15,7 +15,6 @@ namespace Hotel.Contracts
     {
         [OperationContract(IsOneWay = true)]
         void SubscribeClient();
-
         //Guest operations
 
         [OperationContract]

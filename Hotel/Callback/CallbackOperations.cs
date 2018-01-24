@@ -29,6 +29,10 @@ namespace Hotel.Callback
             editItem = (T)item;
         }
 
+        public void Reachable()
+        {
+        }
+
         public void Remove(object item)
         {
             Collection.Remove((T)item);

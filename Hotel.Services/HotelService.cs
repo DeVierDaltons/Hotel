@@ -3,16 +3,15 @@ using Hotel.Data;
 using Hotel.Data.Extensions;
 using Hotel.Data.Repository;
 using Hotel.Services.Repository;
+using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Linq;
-using System.Runtime.Serialization;
 using System.ServiceModel;
 
 namespace Hotel.Services
 {
-    [KnownType(typeof(Guest))]
-    [ServiceBehavior(ConcurrencyMode = ConcurrencyMode.Reentrant, InstanceContextMode = InstanceContextMode.PerSession)]
+    [ServiceBehavior(ConcurrencyMode = ConcurrencyMode.Reentrant, InstanceContextMode = InstanceContextMode.Single)]
     public class HotelService : IHotelService
     {
         RepositoryBackedObservableCollection<Guest> GuestRepository = new RepositoryBackedObservableCollection<Guest>(new NHibernateRepository<Guest>());
@@ -23,6 +22,7 @@ namespace Hotel.Services
 
         public HotelService()
         {
+           
         }
 
         /// <summary>
@@ -31,10 +31,17 @@ namespace Hotel.Services
         public void SubscribeClient()
         {
             var channel = OperationContext.Current.GetCallbackChannel<ICallback>();
+            
             if (!CallbackChannels.Contains(channel)) //if CallbackChannels not contain current one.
             {
+                (channel as ICommunicationObject).Closed += (object sender, EventArgs e) => UnSubscribeClient(channel);
                 CallbackChannels.Add(channel);
             }
+        }
+
+        public void UnSubscribeClient(ICallback callback)
+        {
+             CallbackChannels.Remove(callback);
         }
 
         #region add
@@ -186,6 +193,8 @@ namespace Hotel.Services
                 client.Remove(room);
             }
         }
+
+       
 
         #endregion
     }
