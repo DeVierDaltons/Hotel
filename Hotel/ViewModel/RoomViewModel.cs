@@ -1,4 +1,5 @@
-﻿using Hotel.Model;
+﻿using Hotel.Common;
+using Hotel.Model;
 using Hotel.Repository;
 using System.ComponentModel;
 using System.Runtime.CompilerServices;
@@ -7,6 +8,9 @@ namespace Hotel.ViewModel
 {
     public class RoomViewModel : INotifyPropertyChanged
     {
+        [Unity.Attributes.Dependency]
+        public Logger Logger { get; set; }
+
         private AddRoomViewModel _AddRoomViewDataContext;
 
         public AddRoomViewModel AddRoomViewDataContext
@@ -37,6 +41,7 @@ namespace Hotel.ViewModel
             AddRoomViewDataContext.Initialize();
             AddRoomViewDataContext.SetCallback(() =>
             {
+                Logger.AddLogMessage("Room added!");
                 Rooms.Add(AddRoomViewDataContext.Room);
             });
         }

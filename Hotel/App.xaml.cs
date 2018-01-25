@@ -16,6 +16,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using System.Windows;
 using Unity;
+using Unity.Lifetime;
 
 namespace Hotel
 {
@@ -24,6 +25,9 @@ namespace Hotel
     /// </summary>
     public partial class App : Application
     {
+
+        private FileLogger fileLogger;
+
         protected override void OnStartup(StartupEventArgs e)
         {
             var schemaUpdate = new SchemaUpdate(NHibernateHelper.Configuration);
@@ -35,6 +39,13 @@ namespace Hotel
            
             window.Initialize();
             window.Show();
+        }
+
+        protected override void OnExit(ExitEventArgs e)
+        {
+            base.OnExit(e);
+
+            fileLogger.Terminate();
         }
 
         private void InitializeRoomBookings(IUnityContainer container)
@@ -65,14 +76,19 @@ namespace Hotel
             container.RegisterInstance(typeof(RepositoryBackedObservableCollection<Booking>), new RepositoryBackedObservableCollection<Booking>(new NHibernateRepository<Booking>()));
             container.RegisterInstance(typeof(RepositoryBackedObservableCollection<Room>), new RepositoryBackedObservableCollection<Room>(new NHibernateRepository<Room>()));
 
-
-            container.RegisterInstance<ILogger>(new Logger());
+            container.RegisterInstance<ILogger>(BuildLogger());
         }
 
         private Logger BuildLogger()
         {
             var logger = new Logger();
-            logger.RegisterLogSystem();
+            
+            fileLogger = new FileLogger("App.log");
+            fileLogger.Init();
+            
+            logger.RegisterLogSystem(fileLogger);
+
+            return logger;
         }
     }
 }
