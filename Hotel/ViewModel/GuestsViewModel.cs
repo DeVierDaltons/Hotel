@@ -38,7 +38,7 @@ namespace Hotel.ViewModel
             set { _DisplayedGuests = value; OnPropertyChanged(); }
         }
 
-        private string _FilterGuestString;
+        private string _FilterGuestString = "";
 
         public string FilterGuestString
         {
@@ -96,8 +96,8 @@ namespace Hotel.ViewModel
             var g = new AddGuestViewModel();
             g.Initialize(new EditGuestCommand(guest), () => { StartAddingGuest(); }, guest, () =>
             {
-                DisplayedGuests.Add(guest);
                 HotelManager.AllGuests.Add(guest);
+                FilterGuests();
                 StartAddingGuest();
             });
             CurrentGuest = g;
@@ -112,7 +112,7 @@ namespace Hotel.ViewModel
 
         public void Initialize()
         {
-            DisplayedGuests = new ObservableCollection<Guest>();
+            FilterGuests();
         }
 
         public void OnPropertyChanged([CallerMemberName] string name = "")
