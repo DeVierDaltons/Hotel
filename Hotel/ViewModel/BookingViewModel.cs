@@ -65,7 +65,7 @@ namespace Hotel.ViewModel
 
         public void Initialize()
         {
-            CallbackOperations<Booking> callback = new CallbackOperations<Booking>(Bookings);
+            CallbackOperations<Booking> callback = new CallbackOperations<Booking>(ref _displayedBookings);
             HotelServiceProxy proxy = new HotelServiceProxy(new System.ServiceModel.InstanceContext(callback));
             Bookings = proxy.GetAllBookings();
             Rooms = proxy.GetAllRooms();
@@ -86,7 +86,7 @@ namespace Hotel.ViewModel
         private void updateInDatabase(object sender, PropertyChangedEventArgs e)
         {
             Booking changedItem = (Booking)sender;
-            CallbackOperations<Booking> callback = new CallbackOperations<Booking>(Bookings);
+            CallbackOperations<Booking> callback = new CallbackOperations<Booking>(ref _displayedBookings);
             var p = new Proxy.HotelServiceProxy(new System.ServiceModel.InstanceContext(callback));
             Task.Run(() =>
             {

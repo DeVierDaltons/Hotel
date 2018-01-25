@@ -88,7 +88,7 @@ namespace Hotel.ViewModel
         public void AddBooking()
         {
             Booking.SetDates(SelectedDates);
-            CallbackOperations<Booking> callback = new CallbackOperations<Booking>(AllBookings);
+            CallbackOperations<Booking> callback = new CallbackOperations<Booking>(ref _allBookings);
             HotelServiceProxy proxy = new HotelServiceProxy(new System.ServiceModel.InstanceContext(callback));
             Task.Run(() =>
             {

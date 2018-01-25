@@ -13,7 +13,7 @@ namespace Hotel.Callback
     public class CallbackOperations<T> : ICallback where T: IIdentifiable
     {
         ObservableCollection<T> Collection;
-        public CallbackOperations(ObservableCollection<T> collection )
+        public CallbackOperations(ref ObservableCollection<T> collection )
         {
             Collection = collection;
         }

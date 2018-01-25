@@ -30,7 +30,7 @@ namespace Hotel.ViewModel
 
         public void Initialize()
         {
-            CallbackOperations<Room> callback = new CallbackOperations<Room>(Rooms);
+            CallbackOperations<Room> callback = new CallbackOperations<Room>(ref _Rooms);
             var p = new HotelServiceProxy(new System.ServiceModel.InstanceContext(callback));
             _Rooms = p.GetAllRooms();
             p.Close();
@@ -43,7 +43,7 @@ namespace Hotel.ViewModel
             AddRoomViewDataContext.Initialize();
             AddRoomViewDataContext.SetCallback(() =>
             {
-                CallbackOperations<Room> callback = new CallbackOperations<Room>(Rooms);
+                CallbackOperations<Room> callback = new CallbackOperations<Room>(ref _Rooms);
                 HotelServiceProxy proxy = new HotelServiceProxy(new System.ServiceModel.InstanceContext(callback));
                 Task.Run(() =>
                 {

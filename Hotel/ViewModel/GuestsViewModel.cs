@@ -123,7 +123,7 @@ namespace Hotel.ViewModel
         /// </summary>
         public void Initialize()
         {
-            callback = new CallbackOperations<Guest>(DisplayedGuests);
+            callback = new CallbackOperations<Guest>(ref _DisplayedGuests);
             proxy = new HotelServiceProxy(new System.ServiceModel.InstanceContext(callback));
             DisplayedGuests = proxy.GetAllGuests();
         }
