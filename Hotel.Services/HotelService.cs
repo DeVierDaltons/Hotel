@@ -17,6 +17,20 @@ namespace Hotel.Services
         RepositoryBackedObservableCollection<Room> RoomRepository = new RepositoryBackedObservableCollection<Room>(new NHibernateRepository<Room>());
         RepositoryBackedObservableCollection<Booking> BookingRepository = new RepositoryBackedObservableCollection<Booking>(new NHibernateRepository<Booking>());
 
+        List<ICallback> CallbackChannels = new List<ICallback>();
+
+        /// <summary>
+        /// client should call this method before being notified to some event
+        /// </summary>
+        public void SubscribeClient()
+        {
+            var channel = OperationContext.Current.GetCallbackChannel<ICallback>();
+            if (!CallbackChannels.Contains(channel)) //if CallbackChannels not contain current one.
+            {
+                CallbackChannels.Add(channel);
+            }
+        }
+
         #region add
         public void AddBooking(Booking booking)
         {
@@ -26,6 +40,10 @@ namespace Hotel.Services
         public void AddGuest(Guest guest)
         {
             GuestRepository.Add(guest);
+            foreach(ICallback client in CallbackChannels)
+            {
+                client.Add(guest);
+            }
         }
 
         public void AddRoom(Room room)
@@ -44,6 +62,10 @@ namespace Hotel.Services
         {
             Guest target = GuestRepository.First(candidate => candidate.Id == guest.Id);
             target.CopyDeltaProperties(guest);
+            foreach (ICallback client in CallbackChannels)
+            {
+                client.Edit(guest);
+            }
         }
 
         public void EditRoom(Room room)
@@ -127,6 +149,10 @@ namespace Hotel.Services
         public void RemoveGuest(Guest guest)
         {
             GuestRepository.Remove(guest);
+            foreach (ICallback client in CallbackChannels)
+            {
+                client.Remove(guest);
+            }
         }
 
         public void RemoveRoom(Room room)
