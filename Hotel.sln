@@ -17,6 +17,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Hotel.Services", "Hotel.Ser
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Hotel.Proxy", "Hotel.Proxy\Hotel.Proxy.csproj", "{574850DC-45FE-4DCF-A89D-24B5270160E5}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Hotel.Logger.Contracts", "Hotel.Logger.Contracts\Hotel.Logger.Contracts.csproj", "{3EC574ED-FE96-44A6-BE71-24A1B8D7D7F7}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -51,6 +53,10 @@ Global
 		{574850DC-45FE-4DCF-A89D-24B5270160E5}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{574850DC-45FE-4DCF-A89D-24B5270160E5}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{574850DC-45FE-4DCF-A89D-24B5270160E5}.Release|Any CPU.Build.0 = Release|Any CPU
+		{3EC574ED-FE96-44A6-BE71-24A1B8D7D7F7}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{3EC574ED-FE96-44A6-BE71-24A1B8D7D7F7}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{3EC574ED-FE96-44A6-BE71-24A1B8D7D7F7}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{3EC574ED-FE96-44A6-BE71-24A1B8D7D7F7}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
