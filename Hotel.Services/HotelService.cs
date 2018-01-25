@@ -62,10 +62,6 @@ namespace Hotel.Services
         public void AddRoom(Room room)
         {
             RoomRepository.Add(room);
-            foreach (ICallback client in CallbackChannels)
-            {
-                client.Add(room);
-            }
         }
         #endregion
         #region edit
