@@ -37,7 +37,6 @@ namespace TestHotel
             AddBookingViewModel vm = new AddBookingViewModel()
             {
                 Booking = new Booking(),
-                Guests = null,
                 SelectedDates = null
             };
             Assert.IsFalse(new AddBookingCommand(vm).CanExecute(null));

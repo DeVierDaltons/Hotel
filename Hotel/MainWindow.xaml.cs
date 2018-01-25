@@ -21,12 +21,12 @@ namespace Hotel
 
         public MainWindow()
         {
-            HotelManager.Initialize();
             InitializeComponent();
         }
 
         public void Initialize()
         {
+            HotelManager.Initialize();
             SetupGuestTab();
             GuestExplorerTab.DataContext = guestsViewModel;
             SetupRoomTab();

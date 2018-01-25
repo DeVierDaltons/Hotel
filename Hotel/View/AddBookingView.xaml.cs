@@ -716,21 +716,13 @@ namespace Hotel.View
         {
             AddBookingViewModel viewModel = (AddBookingViewModel)DataContext;
             viewModel.SelectedDates = new BookingPeriod(SelectedRange.StartDate, SelectedRange.EndDate);
-            viewModel.Rooms = SelectedRooms;
+            viewModel.SetRooms(SelectedRooms);
         }
 
         private void SelectedGuests_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
             AddBookingViewModel viewModel = (AddBookingViewModel)DataContext;
-            if( viewModel.Guests == null)
-            {
-                viewModel.Guests = new List<Guest>();
-            }
-            viewModel.Guests.Clear();
-            foreach(object guest in ((ListBox)sender).SelectedItems)
-            {
-                viewModel.Guests.Add((Guest)guest);
-            }
+            viewModel.SetGuests(((ListBox)sender).SelectedItems.Cast<Guest>());
         }
 
         private void SetGridStyle()

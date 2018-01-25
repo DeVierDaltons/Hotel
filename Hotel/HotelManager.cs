@@ -30,10 +30,25 @@ namespace Hotel
         public static void Initialize()
         {
             HotelServiceProxy proxy = new HotelServiceProxy();
-            AllGuests = proxy.GetAllGuests();
-            AllRooms = proxy.GetAllRooms();
-            AllBookings = proxy.GetAllBookings();
+            AllGuests = new ObservableCollection<Guest>(proxy.GetAllGuests());
+            AllRooms = new ObservableCollection<Room>(proxy.GetAllRooms());
+            AllBookings = new ObservableCollection<Booking>(proxy.GetAllBookings());
             proxy.Close();
+            LinkBookings();
+            Subscribe();
+        }
+
+        private static void LinkBookings()
+        {
+            AllRooms.ForEach(room => room.Bookings = new List<Booking>());
+            foreach(Booking booking in AllBookings)
+            {
+                booking.RoomIds.ForEach(id => AllRooms.First(candidate => candidate.Id == id).Bookings.Add(booking));
+            }
+        }
+
+        private static void Subscribe()
+        {
             AllGuests.CollectionChanged += AllGuests_CollectionChanged;
             AllGuests.ForEach(SubscribeToGuest);
             AllRooms.CollectionChanged += AllRooms_CollectionChanged;
@@ -106,6 +121,7 @@ namespace Hotel
                 Room newRoom = (Room)e.NewItems[0];
                 proxy.AddRoom(newRoom);
                 SubscribeToRoom(newRoom);
+                newRoom.Bookings = new List<Booking>();
             }
             proxy.Close();
         }

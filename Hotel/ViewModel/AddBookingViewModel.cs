@@ -8,6 +8,7 @@ using System.ComponentModel;
 using System.Linq;
 using System.Runtime.CompilerServices;
 using System.Windows.Input;
+using System;
 
 namespace Hotel.ViewModel
 {
@@ -32,18 +33,6 @@ namespace Hotel.ViewModel
         public ObservableCollection<Guest> AllGuests
         {
             get { return HotelManager.AllGuests; }
-        }
-
-        public ICollection<Guest> Guests
-        {
-            get { return Booking.GuestIds.ConvertAll(id => AllGuests.First(guest => guest.Id == id)); }
-            set { Booking.GuestIds = value.ConvertEnumerable(guest => guest.Id).ToList(); OnPropertyChanged(); }
-        }
-
-        public ICollection<Room> Rooms
-        {
-            get { return Booking.RoomIds.ConvertAll(id => AllRooms.First(room => room.Id == id)); }
-            set { Booking.RoomIds = value.ConvertEnumerable(room => room.Id).ToList(); OnPropertyChanged(); }
         }
 
         public BookingPeriod SelectedDates { get; set; }
@@ -89,6 +78,16 @@ namespace Hotel.ViewModel
         {
             PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(name));
             CommandManager.InvalidateRequerySuggested();
+        }
+
+        public void SetGuests(IEnumerable<Guest> selectedGuests)
+        {
+            Booking.GuestIds = selectedGuests.ConvertEnumerable(guest => guest.Id).ToList();
+        }
+
+        public void SetRooms(List<Room> selectedRooms)
+        {
+            Booking.RoomIds = selectedRooms.ConvertEnumerable(room => room.Id).ToList();
         }
     }
 }

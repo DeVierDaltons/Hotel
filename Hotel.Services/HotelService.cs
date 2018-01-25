@@ -3,6 +3,7 @@ using Hotel.Data;
 using Hotel.Data.Extensions;
 using Hotel.Data.Repository;
 using Hotel.Services.Repository;
+using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Linq;
 using System.ServiceModel;
@@ -102,19 +103,19 @@ namespace Hotel.Services
 
         #endregion Filter
         #region Get
-        public ObservableCollection<Booking> GetAllBookings()
+        public List<Booking> GetAllBookings()
         {
-            return BookingRepository;
+            return BookingRepository.ToList();
         }
 
-        public ObservableCollection<Guest> GetAllGuests()
+        public List<Guest> GetAllGuests()
         {
-            return GuestRepository;
+            return GuestRepository.ToList();
         }
 
-        public ObservableCollection<Room> GetAllRooms()
+        public List<Room> GetAllRooms()
         {
-            return RoomRepository;
+            return RoomRepository.ToList();
         }
         #endregion
         #region remove

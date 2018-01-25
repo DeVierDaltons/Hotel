@@ -20,7 +20,7 @@ namespace Hotel.Contracts
         [OperationContract]
         void EditGuest(Guest guest);
         [OperationContract]
-        ObservableCollection<Guest> GetAllGuests();
+        List<Guest> GetAllGuests();
         [OperationContract]
         ObservableCollection<Guest> FilterGuests(string filterString);
 
@@ -32,7 +32,7 @@ namespace Hotel.Contracts
         [OperationContract]
         void EditBooking(Booking booking);
         [OperationContract]
-        ObservableCollection<Booking> GetAllBookings();
+        List<Booking> GetAllBookings();
         [OperationContract]
         ObservableCollection<Booking> FilterBookings(BookingStatus? status = null, Guest guest = null);
 
@@ -44,6 +44,6 @@ namespace Hotel.Contracts
         [OperationContract]
         void EditRoom(Room room);
         [OperationContract]
-        ObservableCollection<Room> GetAllRooms();
+        List<Room> GetAllRooms();
     }
 }

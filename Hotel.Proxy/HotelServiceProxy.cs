@@ -52,17 +52,17 @@ namespace Hotel.Proxy
             return Channel.FilterGuests(filterString);
         }
 
-        public ObservableCollection<Booking> GetAllBookings()
+        public List<Booking> GetAllBookings()
         {
             return Channel.GetAllBookings();
         }
 
-        public ObservableCollection<Guest> GetAllGuests()
+        public List<Guest> GetAllGuests()
         {
             return Channel.GetAllGuests();
         }
 
-        public ObservableCollection<Room> GetAllRooms()
+        public List<Room> GetAllRooms()
         {
             return Channel.GetAllRooms();
         }
