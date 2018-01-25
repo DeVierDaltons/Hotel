@@ -5,11 +5,11 @@
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
     <ProductVersion>8.0.50727</ProductVersion>
     <SchemaVersion>2.0</SchemaVersion>
-    <ProjectGuid>{3EC574ED-FE96-44A6-BE71-24A1B8D7D7F7}</ProjectGuid>
+    <ProjectGuid>{E21E21B5-AABE-4E58-B716-8876FBD38228}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>Hotel.Logger.Contracts</RootNamespace>
-    <AssemblyName>Hotel.Logger.Contracts</AssemblyName>
+    <RootNamespace>Hotel.Logger.Proxy</RootNamespace>
+    <AssemblyName>Hotel.Logger.Proxy</AssemblyName>
     <ProjectTypeGuids>{3D9AD99F-2412-4246-B90B-4EAA41C64699};{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}</ProjectTypeGuids>
     <StartArguments>/client:"WcfTestClient.exe"</StartArguments>
     <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
@@ -44,8 +44,14 @@
     <Reference Include="System.Xml.Linq" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="ILoggerService.cs" />
+    <Compile Include="LoggerProxy.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\Hotel.Logger.Contracts\Hotel.Logger.Contracts.csproj">
+      <Project>{3ec574ed-fe96-44a6-be71-24a1b8d7d7f7}</Project>
+      <Name>Hotel.Logger.Contracts</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <PropertyGroup>
