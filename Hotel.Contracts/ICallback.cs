@@ -9,8 +9,8 @@ namespace Hotel.Contracts
 {
     public interface ICallback
     {
-        void Add(object item);
-        void Remove(object item);
-        void Edit(object item);
+        void AddGuest(Guest item);
+        void RemoveGuest(Guest item);
+        void EditGuest(Guest item);
     }
 }

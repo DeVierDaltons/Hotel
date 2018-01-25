@@ -42,7 +42,7 @@ namespace Hotel.Services
             GuestRepository.Add(guest);
             foreach(ICallback client in CallbackChannels)
             {
-                client.Add(guest);
+                client.AddGuest(guest);
             }
         }
 
@@ -64,7 +64,7 @@ namespace Hotel.Services
             target.CopyDeltaProperties(guest);
             foreach (ICallback client in CallbackChannels)
             {
-                client.Edit(guest);
+                client.EditGuest(guest);
             }
         }
 
@@ -151,7 +151,7 @@ namespace Hotel.Services
             GuestRepository.Remove(guest);
             foreach (ICallback client in CallbackChannels)
             {
-                client.Remove(guest);
+                client.RemoveGuest(guest);
             }
         }
 
