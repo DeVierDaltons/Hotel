@@ -227,9 +227,8 @@ namespace Hotel.ViewModel
             });
             if (filterGuest != null)
             {
-                DisplayedBookings = new ObservableCollection<Booking>(DisplayedBookings.Where(x =>
-                   x.GuestIds.Contains(filterGuest.Id)
-                ));
+                IEnumerable<Booking> filteredBookings = DisplayedBookings.Where(x => x.GuestIds.Contains(filterGuest.Id));
+                DisplayedBookings = new ObservableCollection<Booking>(filteredBookings);
             }
         }
 

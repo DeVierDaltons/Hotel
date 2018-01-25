@@ -106,13 +106,13 @@ namespace Hotel.ViewModel
         public void FilterGuests()
         {
             HotelServiceProxy proxy = new HotelServiceProxy();
-            DisplayedGuests = proxy.FilterGuests(FilterGuestString);
+            DisplayedGuests = new ObservableCollection<Guest>(proxy.FilterGuests(FilterGuestString));
             proxy.Close();
         }
 
         public void Initialize()
         {
-            DisplayedGuests = HotelManager.AllGuests;
+            DisplayedGuests = new ObservableCollection<Guest>();
         }
 
         public void OnPropertyChanged([CallerMemberName] string name = "")

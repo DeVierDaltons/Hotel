@@ -42,12 +42,12 @@ namespace Hotel.Proxy
             Channel.EditRoom(room);
         }
 
-        public ObservableCollection<Booking> FilterBookings(BookingStatus? status, Guest guest)
+        public List<Booking> FilterBookings(BookingStatus? status, Guest guest)
         {
             return Channel.FilterBookings(status, guest);
         }
 
-        public ObservableCollection<Guest> FilterGuests(string filterString)
+        public List<Guest> FilterGuests(string filterString)
         {
             return Channel.FilterGuests(filterString);
         }
