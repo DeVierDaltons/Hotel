@@ -54,7 +54,7 @@ namespace Hotel.ViewModel
         {
             foreach (Booking booking in HotelManager.AllBookings)
             {
-                booking.SetGuestsAndRooms(HotelManager.AllGuests.ToList(), HotelManager.AllRooms.ToList());
+                booking.SetGuestsAndRooms(HotelManager.AllGuests, HotelManager.AllRooms);
                 RegisterBooking(booking);
             }
 

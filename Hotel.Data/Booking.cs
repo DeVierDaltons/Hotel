@@ -51,10 +51,10 @@ namespace Hotel.Data
             set { _Status = value; OnPropertyChanged(); }
         }
 
-        private List<Guest> AllGuests;
-        private List<Room> AllRooms;
+        private ICollection<Guest> AllGuests;
+        private ICollection<Room> AllRooms;
 
-        public virtual void SetGuestsAndRooms(List<Guest> guests, List<Room> rooms)
+        public virtual void SetGuestsAndRooms(ICollection<Guest> guests, ICollection<Room> rooms)
         {
             AllGuests = guests;
             AllRooms = rooms;
