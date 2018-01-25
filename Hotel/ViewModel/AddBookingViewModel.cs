@@ -39,6 +39,7 @@ namespace Hotel.ViewModel
         public AddBookingViewModel()
         {
             AddBookingCommand = new AddBookingCommand(this);
+            Booking.SetGuestsAndRooms(AllGuests.ToList(), AllRooms.ToList());
         }
 
         private bool GuestsValid()
