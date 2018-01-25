@@ -10,7 +10,8 @@ using System.ServiceModel;
 
 namespace Hotel.Services
 {
-    [ServiceBehavior(ConcurrencyMode = ConcurrencyMode.Multiple, InstanceContextMode = InstanceContextMode.PerSession)]
+    [KnownType(typeof(Guest))]
+    [ServiceBehavior(ConcurrencyMode = ConcurrencyMode.Reentrant, InstanceContextMode = InstanceContextMode.PerSession)]
     public class HotelService : IHotelService
     {
         RepositoryBackedObservableCollection<Guest> GuestRepository = new RepositoryBackedObservableCollection<Guest>(new NHibernateRepository<Guest>());
@@ -159,6 +160,7 @@ namespace Hotel.Services
         {
             RoomRepository.Remove(room);
         }
+
         #endregion
     }
 }
