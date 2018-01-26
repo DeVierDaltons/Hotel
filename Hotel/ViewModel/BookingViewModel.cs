@@ -54,7 +54,7 @@ namespace Hotel.ViewModel
         {
             foreach (Booking booking in HotelManager.AllBookings)
             {
-                booking.SetGuestsAndRooms(HotelManager.AllGuests.ToList(), HotelManager.AllRooms.ToList());
+                booking.SetGuestsAndRooms(HotelManager.AllGuests, HotelManager.AllRooms);
                 RegisterBooking(booking);
             }
 
@@ -66,16 +66,7 @@ namespace Hotel.ViewModel
         private void RegisterBooking(Booking booking)
         {
             booking.PropertyChanged += InvalidateOnBookingStatusChanged;
-            booking.PropertyChanged += UpdateInDatabase;
             booking.RoomIds.ForEach(id => HotelManager.AllRooms.First(room => room.Id == id).Bookings.Add(booking));
-        }
-
-        private void UpdateInDatabase(object sender, PropertyChangedEventArgs e)
-        {
-            Booking changedItem = (Booking)sender;
-            HotelServiceProxy p = new HotelServiceProxy();
-            p.EditBooking(changedItem);
-            p.Close();
         }
 
         public void SetupAddBookingViewModel()
@@ -227,9 +218,8 @@ namespace Hotel.ViewModel
             });
             if (filterGuest != null)
             {
-                DisplayedBookings = new ObservableCollection<Booking>(DisplayedBookings.Where(x =>
-                   x.GuestIds.Contains(filterGuest.Id)
-                ));
+                IEnumerable<Booking> filteredBookings = DisplayedBookings.Where(x => x.GuestIds.Contains(filterGuest.Id));
+                DisplayedBookings = new ObservableCollection<Booking>(filteredBookings);
             }
         }
 

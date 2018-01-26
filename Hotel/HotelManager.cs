@@ -1,12 +1,12 @@
 ﻿using Hotel.Data;
 using Hotel.Proxy;
-using NHibernate.Util;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Unity.Interception.Utilities;
 
 namespace Hotel
 {
@@ -43,7 +43,11 @@ namespace Hotel
             AllRooms.ForEach(room => room.Bookings = new List<Booking>());
             foreach(Booking booking in AllBookings)
             {
-                booking.RoomIds.ForEach(id => AllRooms.First(candidate => candidate.Id == id).Bookings.Add(booking));
+                foreach (Guid roomId in booking.RoomIds)
+                {
+                    Room matchedRoom = AllRooms.First(candidate => candidate.Id == roomId);
+                    matchedRoom.Bookings.Add(booking);
+                }
             }
         }
 

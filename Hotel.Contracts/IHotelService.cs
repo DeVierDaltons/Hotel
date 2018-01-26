@@ -22,7 +22,7 @@ namespace Hotel.Contracts
         [OperationContract]
         List<Guest> GetAllGuests();
         [OperationContract]
-        ObservableCollection<Guest> FilterGuests(string filterString);
+        List<Guest> FilterGuests(string filterString);
 
         //Booking operations
         [OperationContract]
@@ -34,7 +34,7 @@ namespace Hotel.Contracts
         [OperationContract]
         List<Booking> GetAllBookings();
         [OperationContract]
-        ObservableCollection<Booking> FilterBookings(BookingStatus? status = null, Guest guest = null);
+        List<Booking> FilterBookings(BookingStatus? status = null, Guest guest = null);
 
         //Room operations
         [OperationContract]

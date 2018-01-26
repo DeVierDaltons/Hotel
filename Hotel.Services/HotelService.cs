@@ -54,9 +54,9 @@ namespace Hotel.Services
 
         #endregion
         #region Filter
-        public ObservableCollection<Booking> FilterBookings(BookingStatus? status = null, Guest guest = null)
+        public List<Booking> FilterBookings(BookingStatus? status = null, Guest guest = null)
         {
-            ObservableCollection<Booking> filteredList = new ObservableCollection<Booking>();
+            List<Booking> filteredList = new List<Booking>();
             if (status == null && guest==null)
             {
                 return null;
@@ -64,27 +64,27 @@ namespace Hotel.Services
 
             if(status != null)
             {
-                filteredList = BookingRepository.Where(x => x.BookingStatus == status) as ObservableCollection<Booking>;
+                filteredList = BookingRepository.Where(x => x.BookingStatus == status).ToList();
             }
 
             if(guest != null)
             {
                 if (filteredList.Count > 0)
                 {
-                    return filteredList.Where(x => x.GuestIds.Contains(guest.Id)) as ObservableCollection<Booking>;
+                    return filteredList.Where(x => x.GuestIds.Contains(guest.Id)).ToList();
                 }
                 else
                 {
-                    return BookingRepository.Where(x => x.GuestIds.Contains(guest.Id)) as ObservableCollection<Booking>;
+                    return BookingRepository.Where(x => x.GuestIds.Contains(guest.Id)).ToList();
                 }
             }
 
             return filteredList;
         }
 
-        public ObservableCollection<Guest> FilterGuests(string filterString)
+        public List<Guest> FilterGuests(string filterString)
         {
-            ObservableCollection<Guest> filteredGuests = new ObservableCollection<Guest>();
+            List<Guest> filteredGuests = new List<Guest>();
             foreach (Guest g in GuestRepository)
             {
                  if((g.FirstName != null && g.FirstName.ToLower().Contains(filterString)) ||
