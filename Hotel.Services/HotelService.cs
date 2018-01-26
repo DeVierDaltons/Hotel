@@ -31,6 +31,18 @@ namespace Hotel.Services
             }
         }
 
+        private void UpdateClients(Action<ICallback> update)
+        {
+            foreach (ICallback client in CallbackChannels)
+            {
+                ICallback callingClient = OperationContext.Current.GetCallbackChannel<ICallback>();
+                if (callingClient != client)
+                {
+                    update(client);
+                }
+            }
+        }
+
         private void UnsubscribeClient(ICallback callback)
         {
             CallbackChannels.Remove(callback);
@@ -45,10 +57,7 @@ namespace Hotel.Services
         public void AddGuest(Guest guest)
         {
             GuestRepository.Add(guest);
-            foreach (ICallback client in CallbackChannels)
-            {
-                client.AddGuest(guest);
-            }
+            UpdateClients(client => client.AddGuest(guest));
         }
 
         public void AddRoom(Room room)
@@ -80,9 +89,6 @@ namespace Hotel.Services
         }
 
         #endregion
-        #region Filter
-
-        #endregion Filter
         #region Get
         public List<Booking> GetAllBookings()
         {
