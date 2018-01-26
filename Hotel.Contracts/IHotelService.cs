@@ -21,8 +21,6 @@ namespace Hotel.Contracts
         void EditGuest(Guest guest);
         [OperationContract]
         List<Guest> GetAllGuests();
-        [OperationContract]
-        List<Guest> FilterGuests(string filterString);
 
         //Booking operations
         [OperationContract]
@@ -33,8 +31,6 @@ namespace Hotel.Contracts
         void EditBooking(Booking booking);
         [OperationContract]
         List<Booking> GetAllBookings();
-        [OperationContract]
-        List<Booking> FilterBookings(BookingStatus? status = null, Guest guest = null);
 
         //Room operations
         [OperationContract]

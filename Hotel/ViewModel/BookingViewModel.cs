@@ -82,7 +82,6 @@ namespace Hotel.ViewModel
 
         public Dictionary<BookingStatus, Func<bool>> StatusFiltersList = new Dictionary<BookingStatus, Func<bool>>();
 
-
         private void InitializeStatusFilterList()
         {
             StatusFiltersList.Add(BookingStatus.Cancelled, () => { return ShowCancelledFilter; });

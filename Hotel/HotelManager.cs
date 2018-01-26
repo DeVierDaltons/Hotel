@@ -10,6 +10,7 @@ using System.Linq;
 using System.ServiceModel;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows;
 using Unity.Interception.Utilities;
 
 namespace Hotel
@@ -155,7 +156,7 @@ namespace Hotel
 
         public void AddGuest(Guest item)
         {
-            throw new NotImplementedException();
+            MessageBox.Show(item.ToString());
         }
 
         public void RemoveGuest(Guest item)

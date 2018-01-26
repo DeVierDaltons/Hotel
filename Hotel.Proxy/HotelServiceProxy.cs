@@ -47,16 +47,6 @@ namespace Hotel.Proxy
             Channel.EditRoom(room);
         }
 
-        public List<Booking> FilterBookings(BookingStatus? status, Guest guest)
-        {
-            return Channel.FilterBookings(status, guest);
-        }
-
-        public List<Guest> FilterGuests(string filterString)
-        {
-            return Channel.FilterGuests(filterString);
-        }
-
         public List<Booking> GetAllBookings()
         {
             return Channel.GetAllBookings();

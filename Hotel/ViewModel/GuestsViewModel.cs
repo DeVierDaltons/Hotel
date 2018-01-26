@@ -7,6 +7,7 @@ using System.Collections.ObjectModel;
 using Unity.Attributes;
 using Hotel.View;
 using Hotel.Proxy;
+using System.Collections.Generic;
 
 namespace Hotel.ViewModel
 {
@@ -103,11 +104,23 @@ namespace Hotel.ViewModel
             CurrentGuest = g;
         }
 
+        private bool MatchesFilter(Guest g)
+        {
+            return    ((g.FirstName != null && g.FirstName.ToLower().Contains(FilterGuestString)) ||
+                       (g.LastName != null && g.LastName.ToLower().Contains(FilterGuestString)) ||
+                       (g.PhoneNumber != null && g.PhoneNumber.ToLower().Contains(FilterGuestString)) ||
+                       (g.EmailAdress != null && g.EmailAdress.ToLower().Contains(FilterGuestString)) ||
+                       (g.Address != null && g.Address.ToLower().Contains(FilterGuestString)) ||
+                       (g.PostalCode != null && g.PostalCode.ToLower().Contains(FilterGuestString)) ||
+                       (g.City != null && g.City.ToLower().Contains(FilterGuestString)) ||
+                       (g.Country != null && g.Country.ToLower().Contains(FilterGuestString)) ||
+                       (g.ICEPhoneNumber != null && g.ICEPhoneNumber.ToLower().Contains(FilterGuestString)));
+
+        }
+
         public void FilterGuests()
         {
-            //HotelServiceProxy proxy = new HotelServiceProxy();
-            //DisplayedGuests = new ObservableCollection<Guest>(proxy.FilterGuests(FilterGuestString));
-            //proxy.Close();
+            DisplayedGuests = new ObservableCollection<Guest>(HotelManager.AllGuests.Where(MatchesFilter));
         }
 
         public void Initialize()

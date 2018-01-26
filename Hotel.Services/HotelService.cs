@@ -81,52 +81,6 @@ namespace Hotel.Services
 
         #endregion
         #region Filter
-        public List<Booking> FilterBookings(BookingStatus? status = null, Guest guest = null)
-        {
-            List<Booking> filteredList = new List<Booking>();
-            if (status == null && guest == null)
-            {
-                return null;
-            }
-
-            if (status != null)
-            {
-                filteredList = BookingRepository.Where(x => x.BookingStatus == status).ToList();
-            }
-
-            if (guest != null)
-            {
-                if (filteredList.Count > 0)
-                {
-                    return filteredList.Where(x => x.GuestIds.Contains(guest.Id)).ToList();
-                }
-                else
-                {
-                    return BookingRepository.Where(x => x.GuestIds.Contains(guest.Id)).ToList();
-                }
-            }
-
-            return filteredList;
-        }
-
-        public List<Guest> FilterGuests(string filterString)
-        {
-            List<Guest> filteredGuests = new List<Guest>();
-            foreach (Guest g in GuestRepository)
-            {
-                if ((g.FirstName != null && g.FirstName.ToLower().Contains(filterString)) ||
-               (g.LastName != null && g.LastName.ToLower().Contains(filterString)) ||
-               (g.PhoneNumber != null && g.PhoneNumber.ToLower().Contains(filterString)) ||
-               (g.PostalCode != null && g.PostalCode.ToLower().Contains(filterString)) ||
-               (g.EmailAdress != null && g.EmailAdress.ToLower().Contains(filterString)) ||
-               (g.City != null && g.City.ToLower().Contains(filterString)) ||
-               (g.Country != null && g.Country.ToLower().Contains(filterString)))
-                {
-                    filteredGuests.Add(g);
-                }
-            }
-            return filteredGuests;
-        }
 
         #endregion Filter
         #region Get
