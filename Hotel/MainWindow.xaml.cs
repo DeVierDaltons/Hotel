@@ -26,6 +26,7 @@ namespace Hotel
 
         public void Initialize()
         {
+            HotelManager.Initialize();
             SetupGuestTab();
             GuestExplorerTab.DataContext = guestsViewModel;
             SetupRoomTab();

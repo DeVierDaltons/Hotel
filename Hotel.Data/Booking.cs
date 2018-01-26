@@ -19,23 +19,23 @@ namespace Hotel.Data
 
         public virtual event PropertyChangedEventHandler PropertyChanged;
 
-        private ICollection<Guest> _guests;
-
         [DataMember]
-        public virtual ICollection<Guest> Guests
+        private List<Guid> _guestIds = new List<Guid>();
+        public virtual List<Guid> GuestIds
         {
-            get { return _guests; }
-            set { _guests = value; OnPropertyChanged(); }
+            get { return _guestIds; }
+            set { _guestIds = value; OnPropertyChanged(); }
         }
 
-        private ICollection<Room> _rooms = new List<Room>();
         [DataMember]
-        public virtual ICollection<Room> Rooms
+        private List<Guid> _roomIds = new List<Guid>();
+        public virtual List<Guid> RoomIds
         {
-            get { return _rooms; }
-            set { _rooms = value; OnPropertyChanged(); }
+            get { return _roomIds; }
+            set { _roomIds = value; OnPropertyChanged(); }
         }
 
+        [DataMember]
         private BookingPeriod _bookingPeriod;
 
         [DataMember]
@@ -45,12 +45,22 @@ namespace Hotel.Data
             set { _bookingPeriod = value; OnPropertyChanged(); }
         }
 
+        [DataMember]
         private BookingStatus _Status = BookingStatus.Reserved;
         [DataMember]
         public virtual BookingStatus BookingStatus
         {
             get { return _Status; }
             set { _Status = value; OnPropertyChanged(); }
+        }
+
+        private ICollection<Guest> AllGuests;
+        private ICollection<Room> AllRooms;
+
+        public virtual void SetGuestsAndRooms(ICollection<Guest> guests, ICollection<Room> rooms)
+        {
+            AllGuests = guests;
+            AllRooms = rooms;
         }
 
         public virtual bool OverlapsWith(Booking booking)
@@ -65,12 +75,12 @@ namespace Hotel.Data
         
         public virtual string GuestName
         {
-            get { return String.Join(", ", Guests.ToList().ConvertAll(b => b.FirstName)); }
+            get { return String.Join(", ", GuestIds.ConvertAll(id => AllGuests.First(guest => guest.Id == id).FirstName)); }
         }
 
         public virtual string RoomsDescription
         {
-            get { return String.Join(", ", Rooms.ToList().ConvertAll(room => room.RoomNumber)); }
+            get { return String.Join(", ", RoomIds.ToList().ConvertAll(id => AllRooms.First(room => room.Id == id).RoomNumber)); }
         }
 
         public virtual bool BlocksOtherBookings

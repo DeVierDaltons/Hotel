@@ -27,11 +27,5 @@ namespace Hotel.Contracts
         [ServiceKnownType(typeof(Booking))]
         [ServiceKnownType(typeof(Room))]
         void Edit(object item);
-
-        /// <summary>
-        /// Method to check if the client can be reached
-        /// </summary>
-        [OperationContract]
-        void Reachable();
     }
 }

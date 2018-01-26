@@ -42,7 +42,7 @@ namespace Hotel.ViewModel
             set { _DisplayedGuests = value; OnPropertyChanged(); }
         }
 
-        private string _FilterGuestString;
+        private string _FilterGuestString = "";
 
         public string FilterGuestString
         {
@@ -105,6 +105,8 @@ namespace Hotel.ViewModel
                 {
                     proxy.AddGuest(guest);
                 });
+                HotelManager.AllGuests.Add(guest);
+                FilterGuests();
                 StartAddingGuest();
             });
             CurrentGuest = g;
@@ -112,7 +114,7 @@ namespace Hotel.ViewModel
 
         public void FilterGuests()
         {
-            DisplayedGuests = proxy.FilterGuests(FilterGuestString);
+            DisplayedGuests = new ObservableCollection<Guest>(proxy.FilterGuests(FilterGuestString));
         }
 
 
@@ -123,10 +125,9 @@ namespace Hotel.ViewModel
         /// </summary>
         public void Initialize()
         {
-            callback = new CallbackOperations<Guest>(ref _DisplayedGuests);
-            proxy = new HotelServiceProxy(new System.ServiceModel.InstanceContext(callback));
-            DisplayedGuests = proxy.GetAllGuests();
+            DisplayedGuests = HotelManager.AllGuests;
         }
+        
 
         public void OnPropertyChanged([CallerMemberName] string name = "")
         {

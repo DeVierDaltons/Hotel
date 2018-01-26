@@ -19,7 +19,7 @@ namespace Hotel.Services
         RepositoryBackedObservableCollection<Booking> BookingRepository = new RepositoryBackedObservableCollection<Booking>(new NHibernateRepository<Booking>());
         List<ICallback> CallbackChannels = new List<ICallback>();
 
-
+        
         public HotelService()
         {
            
@@ -43,7 +43,7 @@ namespace Hotel.Services
         {
              CallbackChannels.Remove(callback);
         }
-
+        
         #region add
         public void AddBooking(Booking booking)
         {
@@ -55,6 +55,7 @@ namespace Hotel.Services
             GuestRepository.Add(guest);
             foreach(ICallback client in CallbackChannels)
             {
+                
                 client.Add(guest);
             }
         }
@@ -101,38 +102,37 @@ namespace Hotel.Services
 
         #endregion
         #region Filter
-        public ObservableCollection<Booking> FilterBookings(BookingStatus? status = null, Guest guest = null)
+        public List<Booking> FilterBookings(BookingStatus? status = null, Guest guest = null)
         {
-            ObservableCollection<Booking> filteredList = new ObservableCollection<Booking>();
+            List<Booking> filteredList = new List<Booking>();
             if (status == null && guest==null)
             {
                 return null;
-                
             }
 
             if(status != null)
             {
-                filteredList = BookingRepository.Where(x => x.BookingStatus == status) as ObservableCollection<Booking>;
+                filteredList = BookingRepository.Where(x => x.BookingStatus == status).ToList();
             }
 
             if(guest != null)
             {
                 if (filteredList.Count > 0)
                 {
-                    return filteredList.Where(x => x.Guests.Contains(guest)) as ObservableCollection<Booking>;
+                    return filteredList.Where(x => x.GuestIds.Contains(guest.Id)).ToList();
                 }
                 else
                 {
-                    return BookingRepository.Where(x => x.Guests.Contains(guest)) as ObservableCollection<Booking>;
+                    return BookingRepository.Where(x => x.GuestIds.Contains(guest.Id)).ToList();
                 }
             }
 
             return filteredList;
         }
 
-        public ObservableCollection<Guest> FilterGuests(string filterString)
+        public List<Guest> FilterGuests(string filterString)
         {
-            ObservableCollection<Guest> filteredGuests = new ObservableCollection<Guest>();
+            List<Guest> filteredGuests = new List<Guest>();
             foreach (Guest g in GuestRepository)
             {
                  if((g.FirstName != null && g.FirstName.ToLower().Contains(filterString)) ||
@@ -151,19 +151,19 @@ namespace Hotel.Services
 
         #endregion Filter
         #region Get
-        public ObservableCollection<Booking> GetAllBookings()
+        public List<Booking> GetAllBookings()
         {
-            return new ObservableCollection<Booking>(BookingRepository);
+            return BookingRepository.ToList();
         }
 
-        public ObservableCollection<Guest> GetAllGuests()
+        public List<Guest> GetAllGuests()
         {
-            return new ObservableCollection<Guest>(GuestRepository);
+            return GuestRepository.ToList();
         }
 
-        public ObservableCollection<Room> GetAllRooms()
+        public List<Room> GetAllRooms()
         {
-            return new ObservableCollection<Room>(RoomRepository);
+            return RoomRepository.ToList();
         }
         #endregion
         #region remove

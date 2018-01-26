@@ -25,24 +25,8 @@ namespace Hotel.Services.ClassMappings
             });
 
             Property(x => x.BookingStatus);
-
-            Set(x => x.Guests, collectionMapping =>
-            {
-                collectionMapping.Table("GuestBookings");
-                collectionMapping.Cascade(Cascade.None);
-                collectionMapping.Key(k => k.Column("BookingID"));
-            },
-                map => map.ManyToMany(p => p.Column("GuestID"))
-            );
-
-            Set(x => x.Rooms, collectionMapping =>
-            {
-                collectionMapping.Table("RoomBookings");
-                collectionMapping.Cascade(Cascade.None);
-                collectionMapping.Key(k => k.Column("BookingID"));
-            },
-                map => map.ManyToMany(p => p.Column("RoomID"))
-            );
+            Property(x => x.GuestIds);
+            Property(x => x.RoomIds);
         }
     }
 }

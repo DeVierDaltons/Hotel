@@ -20,20 +20,13 @@ namespace Hotel.ViewModel
 
         public event PropertyChangedEventHandler PropertyChanged;
 
-        private ObservableCollection<Room> _Rooms;
-        
         public ObservableCollection<Room> Rooms
         {
-            get { return _Rooms; }
-            set { _Rooms = value; OnNotifyPropertyChanged(); }
+            get { return HotelManager.AllRooms; }
         }
 
         public void Initialize()
         {
-            CallbackOperations<Room> callback = new CallbackOperations<Room>(ref _Rooms);
-            var p = new HotelServiceProxy(new System.ServiceModel.InstanceContext(callback));
-            _Rooms = p.GetAllRooms();
-            p.Close();
             AddRoom();
         }
         
@@ -43,7 +36,7 @@ namespace Hotel.ViewModel
             AddRoomViewDataContext.Initialize();
             AddRoomViewDataContext.SetCallback(() =>
             {
-                CallbackOperations<Room> callback = new CallbackOperations<Room>(ref _Rooms);
+                CallbackOperations<Room> callback = new CallbackOperations<Room>( HotelManager.AllRooms);
                 HotelServiceProxy proxy = new HotelServiceProxy(new System.ServiceModel.InstanceContext(callback));
                 Task.Run(() =>
                 {
