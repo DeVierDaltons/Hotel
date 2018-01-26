@@ -204,6 +204,7 @@ namespace Hotel
         public void AddRoom(Room item)
         {
             ProcessingUpdatesFromServer = true;
+            item.Bookings = AllBookings.Where(booking => booking.RoomIds.Contains(item.Id)).ToList();
             AllRooms.Add(item);
             ProcessingUpdatesFromServer = false;
         }
@@ -225,6 +226,7 @@ namespace Hotel
         public void AddBooking(Booking item)
         {
             ProcessingUpdatesFromServer = true;
+            item.SetGuestsAndRooms(AllGuests, AllRooms);
             AllBookings.Add(item);
             ProcessingUpdatesFromServer = false;
         }
