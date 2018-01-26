@@ -82,7 +82,7 @@ namespace Hotel.ViewModel
                 var guest = selectedItem as Guest;
                 GroupBoxName = string.Format("Editing {0}", guest.FirstName);
                 var g = new AddGuestViewModel();
-                g.Initialize(new EditGuestCommand(guest), () => { StartAddingGuest(); }, guest, () =>
+                g.Initialize(new EditGuestCommand(guest), StartAddingGuest, guest, () =>
                 {
                     Task.Run(() =>
                     {
@@ -99,7 +99,7 @@ namespace Hotel.ViewModel
             var guest = new Guest();
             GroupBoxName = "New Guest";
             var g = new AddGuestViewModel();
-            g.Initialize(new EditGuestCommand(guest), () => { StartAddingGuest(); }, guest, () =>
+            g.Initialize(new EditGuestCommand(guest), StartAddingGuest, guest, () =>
             {
                 Task.Run(() =>
                 {

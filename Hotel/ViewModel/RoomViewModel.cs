@@ -31,9 +31,9 @@ namespace Hotel.ViewModel
         public void Initialize()
         {
             CallbackOperations<Room> callback = new CallbackOperations<Room>(ref _Rooms);
-            var p = new HotelServiceProxy(new System.ServiceModel.InstanceContext(callback));
-            _Rooms = p.GetAllRooms();
-            p.Close();
+            var proxy = new HotelServiceProxy(new System.ServiceModel.InstanceContext(callback));
+            _Rooms = proxy.GetAllRooms();
+            proxy.Close();
             AddRoom();
         }
         

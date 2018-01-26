@@ -27,11 +27,11 @@ namespace Hotel.ViewModel
             set { _allBookings = value; OnPropertyChanged(); }
         }
 
-        private ObservableCollection<Room> _roomsRepo;
+        private ObservableCollection<Room> _allRooms;
         public ObservableCollection<Room> AllRooms
         {
-            get { return _roomsRepo; }
-            set { _roomsRepo = value; OnPropertyChanged(); }
+            get { return _allRooms; }
+            set { _allRooms = value; OnPropertyChanged(); }
         }
 
         public ObservableCollection<Guest> _allGuests { get; set; }

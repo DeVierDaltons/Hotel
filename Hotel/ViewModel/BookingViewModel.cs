@@ -73,7 +73,7 @@ namespace Hotel.ViewModel
             foreach (Booking booking in Bookings)
             {
                 booking.PropertyChanged += InvalidateOnBookingStatusChanged;
-                booking.PropertyChanged += updateInDatabase;
+                booking.PropertyChanged += UpdateInDatabase;
                 booking.Rooms.ForEach(r => r.Bookings.Add(booking));
             }
             proxy.Close();
@@ -83,24 +83,26 @@ namespace Hotel.ViewModel
             SetupAddBookingViewModel();
         }
 
-        private void updateInDatabase(object sender, PropertyChangedEventArgs e)
+        private void UpdateInDatabase(object sender, PropertyChangedEventArgs e)
         {
             Booking changedItem = (Booking)sender;
             CallbackOperations<Booking> callback = new CallbackOperations<Booking>(ref _displayedBookings);
-            var p = new Proxy.HotelServiceProxy(new System.ServiceModel.InstanceContext(callback));
+            var proxy = new Proxy.HotelServiceProxy(new System.ServiceModel.InstanceContext(callback));
             Task.Run(() =>
             {
-                p.EditBooking(changedItem);
-                p.Close();
+                proxy.EditBooking(changedItem);
+                proxy.Close();
             });
         }
 
         public void SetupAddBookingViewModel()
         {
-            AddBookingViewModel viewModel = new AddBookingViewModel();
-            viewModel.AllBookings = Bookings;
-            viewModel.AllRooms = Rooms;
-            viewModel.AllGuests = Guests;
+            AddBookingViewModel viewModel = new AddBookingViewModel
+            {
+                AllBookings = Bookings,
+                AllRooms = Rooms,
+                AllGuests = Guests
+            };
             viewModel.Initialize();
             AddBookingViewDataContext = viewModel;
         }
