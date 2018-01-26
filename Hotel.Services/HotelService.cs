@@ -2,6 +2,7 @@
 using Hotel.Data;
 using Hotel.Data.Extensions;
 using Hotel.Data.Repository;
+using Hotel.Logger.Proxy;
 using Hotel.Services.Repository;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
@@ -21,11 +22,13 @@ namespace Hotel.Services
         public void AddBooking(Booking booking)
         {
             BookingRepository.Add(booking);
+
         }
 
         public void AddGuest(Guest guest)
         {
             GuestRepository.Add(guest);
+            SendMsgToLoggerSvc("Guest added!");
         }
 
         public void AddRoom(Room room)
@@ -134,5 +137,12 @@ namespace Hotel.Services
             RoomRepository.Remove(room);
         }
         #endregion
+
+        private void SendMsgToLoggerSvc(string msg)
+        {
+            var loggerProxy = new LoggerProxy();
+            loggerProxy.AddLogMessage(msg);
+            loggerProxy.Close();
+        }
     }
 }

@@ -70,6 +70,14 @@
       <Project>{ae7be7a0-9396-4ec6-8563-e6ff5ed50498}</Project>
       <Name>Hotel.Data</Name>
     </ProjectReference>
+    <ProjectReference Include="..\Hotel.Logger.Contracts\Hotel.Logger.Contracts.csproj">
+      <Project>{3ec574ed-fe96-44a6-be71-24a1b8d7d7f7}</Project>
+      <Name>Hotel.Logger.Contracts</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Hotel.Logger.Proxy\Hotel.Logger.Proxy.csproj">
+      <Project>{e21e21b5-aabe-4e58-b716-8876fbd38228}</Project>
+      <Name>Hotel.Logger.Proxy</Name>
+    </ProjectReference>
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />
