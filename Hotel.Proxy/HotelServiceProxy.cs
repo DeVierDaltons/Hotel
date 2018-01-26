@@ -10,11 +10,10 @@ using System.Collections.ObjectModel;
 
 namespace Hotel.Proxy
 {
-    public class HotelServiceProxy : DuplexClientBase<IHotelService>, IHotelService
+    public class HotelServiceProxy : ClientBase<IHotelService>, IHotelService
     {
-        public HotelServiceProxy(InstanceContext callbackInstance) : base(callbackInstance)
+        public HotelServiceProxy()
         {
-            SubscribeClient();
            
         }
 
@@ -86,11 +85,6 @@ namespace Hotel.Proxy
         public void RemoveRoom(Room room)
         {
             Channel.RemoveRoom(room);
-        }
-
-        public void SubscribeClient()
-        {
-            Channel.SubscribeClient();
         }
 
     }

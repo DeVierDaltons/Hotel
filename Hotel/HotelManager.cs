@@ -27,6 +27,9 @@ namespace Hotel
         {
             get; private set;
         }
+        public static GuestCallbackServiceProxy GuestCallbackProxy { get; internal set; }
+        public static RoomCallbackServiceProxy RoomCallbackProxy { get; internal set; }
+        public static BookingCallbackServiceProxy BookingCallbackProxy { get; internal set; }
 
         private static CallbackOperations<Guest> guestCallback;
         private static CallbackOperations<Room> roomCallback;
@@ -37,9 +40,8 @@ namespace Hotel
 
         public static void Initialize()
         {
-            AllGuests = new ObservableCollection<Guest>(); 
-            guestCallback = new CallbackOperations<Guest>(AllGuests);
-            HotelServiceProxy proxy = new HotelServiceProxy(new System.ServiceModel.InstanceContext(guestCallback));
+            
+            HotelServiceProxy proxy = new HotelServiceProxy();
             AllGuests = new ObservableCollection<Guest>(proxy.GetAllGuests());
             AllRooms = new ObservableCollection<Room>(proxy.GetAllRooms());
             AllBookings = new ObservableCollection<Booking>(proxy.GetAllBookings());
@@ -48,9 +50,11 @@ namespace Hotel
             roomCallback = new CallbackOperations<Room>(AllRooms);
             bookingCallback = new CallbackOperations<Booking>(AllBookings);
             guestCallback = new CallbackOperations<Guest>(AllGuests);
-            guestProxy = new HotelServiceProxy(new System.ServiceModel.InstanceContext(guestCallback));
-            roomProxy = new HotelServiceProxy(new System.ServiceModel.InstanceContext(roomCallback));
-            bookingProxy = new HotelServiceProxy(new System.ServiceModel.InstanceContext(bookingCallback));
+
+            GuestCallbackProxy = new GuestCallbackServiceProxy(new System.ServiceModel.InstanceContext(guestCallback));
+            RoomCallbackProxy = new RoomCallbackServiceProxy(new System.ServiceModel.InstanceContext(roomCallback));
+            BookingCallbackProxy = new BookingCallbackServiceProxy(new System.ServiceModel.InstanceContext(bookingCallback));
+
             LinkBookings();
             Subscribe();
         }

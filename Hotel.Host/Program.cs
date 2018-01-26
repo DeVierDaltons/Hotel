@@ -15,12 +15,19 @@ namespace Hotel.Host
         {
             NHibernateHelper.CreateDatabaseIfNeeded();
             ServiceHost hotelServiceHost = new ServiceHost(typeof(HotelService));
+            ServiceHost guestCallbackhost = new ServiceHost(typeof(GuestCallbackService));
+            ServiceHost roomCallbackHost = new ServiceHost(typeof(RoomCallbackService));
+            ServiceHost bookingCallbackHost = new ServiceHost(typeof(BookingCallbackService));
             hotelServiceHost.Open();
-           
-            Console.WriteLine("Services started. Press [Enter] to quit.");
+            guestCallbackhost.Open();
+            roomCallbackHost.Open();
+            bookingCallbackHost.Open();
+            Console.WriteLine("Services: Callback (guests, rooms and bookings) and hotel started. Press [Enter] to quit.");
             Console.ReadLine();
-
             hotelServiceHost.Close();
+            guestCallbackhost.Close();
+            roomCallbackHost.Close();
+            bookingCallbackHost.Close();
         }
     }
 }

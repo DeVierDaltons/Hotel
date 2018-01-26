@@ -34,5 +34,10 @@ namespace Hotel.Callback
         {
             Collection.Remove((T)item);
         }
+
+        public void SubscribeClient()
+        {
+            throw new NotImplementedException();
+        }
     }
 }

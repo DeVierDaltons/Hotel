@@ -36,12 +36,9 @@ namespace Hotel.ViewModel
             AddRoomViewDataContext.Initialize();
             AddRoomViewDataContext.SetCallback(() =>
             {
-                CallbackOperations<Room> callback = new CallbackOperations<Room>( HotelManager.AllRooms);
-                HotelServiceProxy proxy = new HotelServiceProxy(new System.ServiceModel.InstanceContext(callback));
                 Task.Run(() =>
                 {
-                    proxy.AddRoom(AddRoomViewDataContext.Room);
-                    proxy.Close();
+                    HotelManager.RoomCallbackProxy.Add(AddRoomViewDataContext.Room);
                 });
             });
         }

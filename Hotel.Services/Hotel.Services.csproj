@@ -53,6 +53,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="CallbackService.cs" />
     <Compile Include="ClassMappings\BookingMap.cs" />
     <Compile Include="ClassMappings\GuestMap.cs" />
     <Compile Include="ClassMappings\RoomMap.cs" />

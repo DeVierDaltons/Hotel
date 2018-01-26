@@ -67,12 +67,9 @@ namespace Hotel.ViewModel
 
         private void RegisterBooking(Booking booking)
         {
-            CallbackOperations<Booking> callback = new CallbackOperations<Booking>(HotelManager.AllBookings);
-            var p = new Proxy.HotelServiceProxy(new System.ServiceModel.InstanceContext(callback));
             Task.Run(() =>
             {
-                p.EditBooking(booking);
-                p.Close();
+                HotelManager.BookingCallbackProxy.Edit(booking);
             });
             booking.PropertyChanged += InvalidateOnBookingStatusChanged;
             booking.RoomIds.ForEach(id => HotelManager.AllRooms.First(room => room.Id == id).Bookings.Add(booking));

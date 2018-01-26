@@ -9,9 +9,11 @@ using System.Threading.Tasks;
 
 namespace Hotel.Contracts
 {
-    [ServiceContract]
+    [ServiceContract(CallbackContract = typeof(ICallback))]
     public interface ICallback
     {
+        [OperationContract(IsOneWay = true)]
+        void SubscribeClient();
         [OperationContract]
         [ServiceKnownType(typeof(Guest))]
         [ServiceKnownType(typeof(Booking))]
