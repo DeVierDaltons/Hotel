@@ -9,6 +9,7 @@ using Hotel.View;
 using Hotel.Proxy;
 using System.Collections.Generic;
 using Hotel.Data.Extensions;
+using System.Collections.Specialized;
 
 namespace Hotel.ViewModel
 {
@@ -123,11 +124,23 @@ namespace Hotel.ViewModel
         public void Initialize()
         {
             FilterGuests();
-            HotelManager.AllGuests.CollectionChanged += delegate { FilterGuests(); };
+            HotelManager.AllGuests.CollectionChanged += delegate(object sender, NotifyCollectionChangedEventArgs args)
+            {
+                if(args.NewItems != null)
+                {
+                    Guest newGuest = (Guest)args.NewItems[0];
+                    SubscribeToGuest(newGuest);
+                }
+            };
             foreach(Guest guest in HotelManager.AllGuests)
             {
-                guest.PropertyChanged += delegate { FilterGuests(); };
+                SubscribeToGuest(guest);
             }
+        }
+
+        private void SubscribeToGuest(Guest guest)
+        {
+            guest.PropertyChanged += delegate { FilterGuests(); };
         }
 
         public void OnPropertyChanged([CallerMemberName] string name = "")
