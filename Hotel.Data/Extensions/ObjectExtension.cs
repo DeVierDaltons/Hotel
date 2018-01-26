@@ -13,6 +13,10 @@ namespace Hotel.Data.Extensions
 
             foreach (PropertyInfo propertyInfo in TargetType.GetProperties())
             {
+                if( !propertyInfo.CanWrite )
+                {
+                    continue;
+                }
                 var sourceValue = propertyInfo.GetValue(source);
                 var targetValue = propertyInfo.GetValue(target);
                 if (sourceValue != targetValue)

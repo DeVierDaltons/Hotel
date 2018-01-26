@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.ComponentModel;
 using System.Linq;
 using System.Runtime.CompilerServices;
+using System.Runtime.Serialization;
 using System.Windows.Input;
 using Hotel.Data.Extensions;
 using System.Runtime.Serialization;
@@ -23,9 +24,10 @@ namespace Hotel.Data
         public virtual List<Booking> Bookings
         {
             get { return _bookings; }
-            set { _bookings = value ?? new List<Booking>(); }
+            set { _bookings = value; }
         }
 
+        [DataMember]
         private string _roomNumber;
         [DataMember]
         public virtual string RoomNumber
@@ -39,6 +41,7 @@ namespace Hotel.Data
             return TimePeriodAvailable(new BookingPeriod() { StartDate = startDate, EndDate = startDate });
         }
 
+        [DataMember]
         private int _beds;
         [DataMember]
         public virtual int Beds
@@ -47,6 +50,7 @@ namespace Hotel.Data
             set { _beds = value; OnPropertyChanged(); }
         }
 
+        [DataMember]
         private RoomQuality _quality;
         [DataMember]
         public virtual RoomQuality Quality
@@ -55,6 +59,7 @@ namespace Hotel.Data
             set { _quality = value; OnPropertyChanged(); }
         }
 
+        [DataMember]
         private bool _hasNiceView;
         [DataMember]
         public virtual bool HasNiceView
@@ -63,6 +68,7 @@ namespace Hotel.Data
             set { _hasNiceView = value; OnPropertyChanged(); } 
         }
 
+        [DataMember]
         private decimal _pricePerDay;
         [DataMember]
         public virtual decimal PricePerDay

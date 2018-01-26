@@ -13,7 +13,7 @@ namespace Hotel.Callback
     public class CallbackOperations<T> : ICallback where T: IIdentifiable
     {
         ObservableCollection<T> Collection;
-        public CallbackOperations(ref ObservableCollection<T> collection )
+        public CallbackOperations(ObservableCollection<T> collection )
         {
             Collection = collection;
         }
@@ -28,10 +28,7 @@ namespace Hotel.Callback
             T editItem = Collection.First(x => x.Id == ((T)item).Id);
             editItem = (T)item;
         }
-
-        public void Reachable()
-        {
-        }
+        
 
         public void Remove(object item)
         {
