@@ -8,6 +8,11 @@ namespace Hotel.View
     /// </summary>
     public partial class RoomView : UserControl
     {
+        public AddRoomView GetAddRoomPanel()
+        {
+            return AddRoomPanel;
+        }
+
         public RoomView()
         {
             InitializeComponent();

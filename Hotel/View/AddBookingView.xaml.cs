@@ -1,21 +1,18 @@
-﻿using Hotel.ViewModel;
-using System.Threading;
-using System.Threading.Tasks;
+﻿using Hotel.Data;
+using Hotel.ViewModel;
+using System;
+using System.Collections.Generic;
+using System.Collections.ObjectModel;
+using System.Collections.Specialized;
+using System.Globalization;
+using System.Linq;
 using System.Windows;
 using System.Windows.Controls;
-using Hotel.Model;
-using System;
-using System.Collections.ObjectModel;
-using System.Windows.Media;
-using System.Globalization;
-using System.Windows.Input;
-using System.Collections.Generic;
-using System.Linq;
-using System.Collections.Specialized;
-using System.Windows.Data;
 using System.Windows.Controls.Primitives;
-using NHibernate.Util;
-using Unity.Attributes;
+using System.Windows.Data;
+using System.Windows.Input;
+using System.Windows.Media;
+using Unity.Interception.Utilities;
 using System.ComponentModel;
 
 namespace Hotel.View
@@ -210,7 +207,7 @@ namespace Hotel.View
 
         private void RedrawAvailabilityForBooking(Booking booking)
         {
-            booking.Rooms.ForEach(RedrawAvailabilityForRoom);
+            booking.RoomIds.ForEach(id => RedrawAvailabilityForRoom(Rooms.First(room => room.Id == id)));
         }
 
         private void FillDateGrid()
@@ -719,21 +716,13 @@ namespace Hotel.View
         {
             AddBookingViewModel viewModel = (AddBookingViewModel)DataContext;
             viewModel.SelectedDates = new BookingPeriod(SelectedRange.StartDate, SelectedRange.EndDate);
-            viewModel.Rooms = SelectedRooms;
+            viewModel.SetRooms(SelectedRooms);
         }
 
         private void SelectedGuests_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
             AddBookingViewModel viewModel = (AddBookingViewModel)DataContext;
-            if( viewModel.Guests == null)
-            {
-                viewModel.Guests = new List<Guest>();
-            }
-            viewModel.Guests.Clear();
-            foreach(object guest in ((ListBox)sender).SelectedItems)
-            {
-                viewModel.Guests.Add((Guest)guest);
-            }
+            viewModel.SetGuests(((ListBox)sender).SelectedItems.Cast<Guest>());
         }
 
         private void SetGridStyle()

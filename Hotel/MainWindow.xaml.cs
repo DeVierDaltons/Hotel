@@ -1,15 +1,7 @@
-using Hotel.Command;
-using Hotel.Model;
+using Hotel.Data;
 using Hotel.ViewModel;
 using System.Windows;
-using System.Windows.Controls;
-using System.Collections.Generic;
-using System.Linq;
-using System;
-using Hotel.View;
 using Unity.Attributes;
-using Hotel.Repository;
-using Hotel.DataAccessObjects;
 
 namespace Hotel
 {
@@ -34,6 +26,7 @@ namespace Hotel
 
         public void Initialize()
         {
+            HotelManager.Initialize();
             SetupGuestTab();
             GuestExplorerTab.DataContext = guestsViewModel;
             SetupRoomTab();
@@ -51,6 +44,7 @@ namespace Hotel
         {
             RoomExplorerTab.DataContext = RoomViewModel;
             RoomViewModel.Initialize();
+            RoomTabView.GetAddRoomPanel().Initialize(RoomViewModel.AddRoomViewDataContext);
         }
 
         public void SetupBookingTab()
