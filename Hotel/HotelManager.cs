@@ -184,9 +184,10 @@ namespace Hotel
         {
             ProcessingUpdatesFromServer = true;
             AllGuests.Add(item);
+            SubscribeToGuest(item);
             ProcessingUpdatesFromServer = false;
         }
-
+        
         public void RemoveGuest(Guest item)
         {
             ProcessingUpdatesFromServer = true;
@@ -206,6 +207,7 @@ namespace Hotel
             ProcessingUpdatesFromServer = true;
             item.Bookings = AllBookings.Where(booking => booking.RoomIds.Contains(item.Id)).ToList();
             AllRooms.Add(item);
+            SubscribeToRoom(item);
             ProcessingUpdatesFromServer = false;
         }
 
@@ -228,6 +230,7 @@ namespace Hotel
             ProcessingUpdatesFromServer = true;
             item.SetGuestsAndRooms(AllGuests, AllRooms);
             AllBookings.Add(item);
+            SubscribeToBooking(item);
             ProcessingUpdatesFromServer = false;
         }
 
