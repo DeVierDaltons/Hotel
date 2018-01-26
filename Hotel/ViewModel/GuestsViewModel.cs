@@ -8,6 +8,7 @@ using Unity.Attributes;
 using Hotel.View;
 using Hotel.Proxy;
 using System.Collections.Generic;
+using Hotel.Data.Extensions;
 
 namespace Hotel.ViewModel
 {
@@ -81,9 +82,7 @@ namespace Hotel.ViewModel
                 var g = new AddGuestViewModel();
                 g.Initialize(new EditGuestCommand(guest), () => { StartAddingGuest(); }, guest, () =>
                 {
-                    //HotelServiceProxy proxy = new HotelServiceProxy();
-                    //proxy.EditGuest(guest);
-                    //proxy.Close();
+                    HotelManager.AllGuests.First(candidate => candidate.Id == guest.Id).CopyDeltaProperties(guest);
                 });
                 CurrentGuest = g;
             }
@@ -91,7 +90,6 @@ namespace Hotel.ViewModel
 
         public void StartAddingGuest()
         {
-            
             var guest = new Guest();
             GroupBoxName = "New Guest";
             var g = new AddGuestViewModel();
@@ -126,6 +124,10 @@ namespace Hotel.ViewModel
         {
             FilterGuests();
             HotelManager.AllGuests.CollectionChanged += delegate { FilterGuests(); };
+            foreach(Guest guest in HotelManager.AllGuests)
+            {
+                guest.PropertyChanged += delegate { FilterGuests(); };
+            }
         }
 
         public void OnPropertyChanged([CallerMemberName] string name = "")

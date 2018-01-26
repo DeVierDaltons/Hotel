@@ -90,12 +90,6 @@ namespace Hotel.ViewModel
 
         #endregion Properties
 
-
-        public AddGuestViewModel()
-        {
-          
-        }
-
         private void OnSubmitClicked(object _)
         {
             GuestCommand.Execute(Guest);

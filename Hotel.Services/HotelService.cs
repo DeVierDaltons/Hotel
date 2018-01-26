@@ -33,9 +33,9 @@ namespace Hotel.Services
 
         private void UpdateClients(Action<ICallback> update)
         {
+            ICallback callingClient = OperationContext.Current.GetCallbackChannel<ICallback>();
             foreach (ICallback client in CallbackChannels)
             {
-                ICallback callingClient = OperationContext.Current.GetCallbackChannel<ICallback>();
                 if (callingClient != client)
                 {
                     update(client);
@@ -76,10 +76,7 @@ namespace Hotel.Services
         {
             Guest target = GuestRepository.First(candidate => candidate.Id == guest.Id);
             target.CopyDeltaProperties(guest);
-            foreach (ICallback client in CallbackChannels)
-            {
-                client.EditGuest(guest);
-            }
+            UpdateClients(client => client.EditGuest(guest));
         }
 
         public void EditRoom(Room room)
@@ -114,10 +111,7 @@ namespace Hotel.Services
         public void RemoveGuest(Guest guest)
         {
             GuestRepository.Remove(guest);
-            foreach (ICallback client in CallbackChannels)
-            {
-                client.RemoveGuest(guest);
-            }
+            UpdateClients(client => client.RemoveGuest(guest));
         }
 
         public void RemoveRoom(Room room)

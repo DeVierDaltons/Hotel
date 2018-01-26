@@ -1,5 +1,6 @@
 ﻿using Hotel.Contracts;
 using Hotel.Data;
+using Hotel.Data.Extensions;
 using Hotel.Proxy;
 using System;
 using System.Collections.Generic;
@@ -195,7 +196,9 @@ namespace Hotel
 
         public void EditGuest(Guest item)
         {
-            throw new NotImplementedException();
+            ProcessingUpdatesFromServer = true;
+            AllGuests.First(candidate => candidate.Id == item.Id).CopyDeltaProperties(item);
+            ProcessingUpdatesFromServer = false;
         }
 
         #endregion
