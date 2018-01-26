@@ -115,7 +115,6 @@ namespace Hotel.ViewModel
                        (g.City != null && g.City.ToLower().Contains(FilterGuestString)) ||
                        (g.Country != null && g.Country.ToLower().Contains(FilterGuestString)) ||
                        (g.ICEPhoneNumber != null && g.ICEPhoneNumber.ToLower().Contains(FilterGuestString)));
-
         }
 
         public void FilterGuests()
@@ -126,6 +125,7 @@ namespace Hotel.ViewModel
         public void Initialize()
         {
             FilterGuests();
+            HotelManager.AllGuests.CollectionChanged += delegate { FilterGuests(); };
         }
 
         public void OnPropertyChanged([CallerMemberName] string name = "")
