@@ -130,6 +130,7 @@ namespace Hotel.ViewModel
                 {
                     Guest newGuest = (Guest)args.NewItems[0];
                     SubscribeToGuest(newGuest);
+                    FilterGuests();
                 }
             };
             foreach(Guest guest in HotelManager.AllGuests)
@@ -140,7 +141,10 @@ namespace Hotel.ViewModel
 
         private void SubscribeToGuest(Guest guest)
         {
-            guest.PropertyChanged += delegate { FilterGuests(); };
+            guest.PropertyChanged += delegate
+            {
+                FilterGuests();
+            };
         }
 
         public void OnPropertyChanged([CallerMemberName] string name = "")
