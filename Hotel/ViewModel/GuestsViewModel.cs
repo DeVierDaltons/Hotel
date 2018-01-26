@@ -83,7 +83,7 @@ namespace Hotel.ViewModel
                 var g = new AddGuestViewModel();
                 g.Initialize(new EditGuestCommand(guest), () => { StartAddingGuest(); }, guest, () =>
                 {
-                    HotelManager.AllGuests.First(candidate => candidate.Id == guest.Id).CopyDeltaProperties(guest);
+                    HotelManager.EditGuest(guest);
                 });
                 CurrentGuest = g;
             }
@@ -96,7 +96,7 @@ namespace Hotel.ViewModel
             var g = new AddGuestViewModel();
             g.Initialize(new EditGuestCommand(guest), () => { StartAddingGuest(); }, guest, () =>
             {
-                HotelManager.AllGuests.Add(guest);
+                HotelManager.AddGuest(guest);
                 FilterGuests();
                 StartAddingGuest();
             });

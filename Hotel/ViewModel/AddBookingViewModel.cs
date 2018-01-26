@@ -69,7 +69,7 @@ namespace Hotel.ViewModel
         public void AddBooking()
         {
             Booking.SetDates(SelectedDates);
-            AllBookings.Add(Booking);
+            HotelManager.AddBooking(Booking);
             Booking = new Booking();
         }
 

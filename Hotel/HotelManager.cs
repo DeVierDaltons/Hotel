@@ -62,6 +62,80 @@ namespace Hotel
             }
         }
 
+        #region Proxy calls
+
+        public static void AddGuest(Guest newGuest)
+        {
+            Task.Run(() =>
+            {
+                ServiceProxy.AddGuest(newGuest);
+            });
+        }
+
+        public static void RemoveGuest(Guest guest)
+        {
+            Task.Run(() =>
+            {
+                ServiceProxy.RemoveGuest(guest);
+            });
+        }
+
+        public static void EditGuest(Guest guest)
+        {
+            Task.Run(() =>
+            {
+                ServiceProxy.EditGuest(guest);
+            });
+        }
+
+        public static void AddRoom(Room newRoom)
+        {
+            Task.Run(() =>
+            {
+                ServiceProxy.AddRoom(newRoom);
+            });
+        }
+
+        public static void RemoveRoom(Room room)
+        {
+            Task.Run(() =>
+            {
+                ServiceProxy.RemoveRoom(room);
+            });
+        }
+
+        public static void EditRoom(Room room)
+        {
+            Task.Run(() =>
+            {
+                ServiceProxy.EditRoom(room);
+            });
+        }
+
+        public static void AddBooking(Booking newBooking)
+        {
+            Task.Run(() =>
+            {
+                ServiceProxy.AddBooking(newBooking);
+            });
+        }
+
+        public static void RemoveBooking(Booking booking)
+        {
+            Task.Run(() =>
+            {
+                ServiceProxy.RemoveBooking(booking);
+            });
+        }
+
+        public static void EditBooking(Booking booking)
+        {
+            Task.Run(() =>
+            {
+                ServiceProxy.EditBooking(booking);
+            });
+        }
+        #endregion
         #region ICallback
 
         public void OnAddedGuest(Guest item)

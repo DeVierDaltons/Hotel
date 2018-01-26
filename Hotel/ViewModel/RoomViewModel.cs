@@ -34,7 +34,7 @@ namespace Hotel.ViewModel
             AddRoomViewDataContext.Initialize();
             AddRoomViewDataContext.SetCallback(() =>
             {
-                HotelManager.AllRooms.Add(AddRoomViewDataContext.Room);
+                HotelManager.AddRoom(AddRoomViewDataContext.Room);
             });
         }
 
