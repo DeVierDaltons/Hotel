@@ -9,7 +9,7 @@ using System.Threading.Tasks;
 
 namespace Hotel.Contracts
 {
-    [ServiceContract]
+    [ServiceContract(CallbackContract = typeof(ICallback))]
     public interface IHotelService
     {
         //Guest operations
@@ -45,5 +45,8 @@ namespace Hotel.Contracts
         void EditRoom(Room room);
         [OperationContract]
         List<Room> GetAllRooms();
+
+        [OperationContract]
+        void SubscribeClient();
     }
 }

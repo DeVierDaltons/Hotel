@@ -80,9 +80,9 @@ namespace Hotel.ViewModel
                 var g = new AddGuestViewModel();
                 g.Initialize(new EditGuestCommand(guest), () => { StartAddingGuest(); }, guest, () =>
                 {
-                    HotelServiceProxy proxy = new HotelServiceProxy();
-                    proxy.EditGuest(guest);
-                    proxy.Close();
+                    //HotelServiceProxy proxy = new HotelServiceProxy();
+                    //proxy.EditGuest(guest);
+                    //proxy.Close();
                 });
                 CurrentGuest = g;
             }
@@ -105,9 +105,9 @@ namespace Hotel.ViewModel
 
         public void FilterGuests()
         {
-            HotelServiceProxy proxy = new HotelServiceProxy();
-            DisplayedGuests = new ObservableCollection<Guest>(proxy.FilterGuests(FilterGuestString));
-            proxy.Close();
+            //HotelServiceProxy proxy = new HotelServiceProxy();
+            //DisplayedGuests = new ObservableCollection<Guest>(proxy.FilterGuests(FilterGuestString));
+            //proxy.Close();
         }
 
         public void Initialize()

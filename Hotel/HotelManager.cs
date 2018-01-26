@@ -1,16 +1,20 @@
-﻿using Hotel.Data;
+﻿using Hotel.Contracts;
+using Hotel.Data;
 using Hotel.Proxy;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using System.Collections.Specialized;
+using System.ComponentModel;
 using System.Linq;
+using System.ServiceModel;
 using System.Text;
 using System.Threading.Tasks;
 using Unity.Interception.Utilities;
 
 namespace Hotel
 {
-    public static class HotelManager
+    public class HotelManager : ICallback
     {
         public static ObservableCollection<Guest> AllGuests
         {
@@ -27,13 +31,19 @@ namespace Hotel
             get; private set;
         }
 
+        private static HotelServiceProxy proxy;
+
         public static void Initialize()
         {
-            HotelServiceProxy proxy = new HotelServiceProxy();
+            new HotelManager().Init();
+        }
+
+        private void Init()
+        {
+            proxy = new HotelServiceProxy(new InstanceContext(this));
             AllGuests = new ObservableCollection<Guest>(proxy.GetAllGuests());
             AllRooms = new ObservableCollection<Room>(proxy.GetAllRooms());
             AllBookings = new ObservableCollection<Booking>(proxy.GetAllBookings());
-            proxy.Close();
             LinkBookings();
             Subscribe();
         }
@@ -67,9 +77,7 @@ namespace Hotel
         {
             guest.PropertyChanged += delegate (object sender, System.ComponentModel.PropertyChangedEventArgs e)
             {
-                HotelServiceProxy proxy = new HotelServiceProxy();
                 proxy.EditGuest((Guest)sender);
-                proxy.Close();
             };
         }
 
@@ -77,19 +85,15 @@ namespace Hotel
         {
             room.PropertyChanged += delegate (object sender, System.ComponentModel.PropertyChangedEventArgs e)
             {
-                HotelServiceProxy proxy = new HotelServiceProxy();
                 proxy.EditRoom((Room)sender);
-                proxy.Close();
             };
         }
 
         private static void SubscribeToBooking(Booking booking)
         {
-            booking.PropertyChanged += delegate (object sender, System.ComponentModel.PropertyChangedEventArgs e)
+            booking.PropertyChanged += delegate (object sender, PropertyChangedEventArgs e)
             {
-                HotelServiceProxy proxy = new HotelServiceProxy();
                 proxy.EditBooking((Booking)sender);
-                proxy.Close();
             };
         }
 
@@ -97,9 +101,8 @@ namespace Hotel
 
         #region Collection change events
 
-        private static void AllGuests_CollectionChanged(object sender, System.Collections.Specialized.NotifyCollectionChangedEventArgs e)
+        private static void AllGuests_CollectionChanged(object sender, NotifyCollectionChangedEventArgs e)
         {
-            HotelServiceProxy proxy = new HotelServiceProxy();
             if (e.OldItems != null)
             {
                 proxy.RemoveGuest((Guest)e.OldItems[0]);
@@ -107,15 +110,16 @@ namespace Hotel
             else if (e.NewItems != null)
             {
                 Guest newGuest = (Guest)e.NewItems[0];
-                proxy.AddGuest(newGuest);
+                Task.Run(() =>
+                {
+                    proxy.AddGuest(newGuest);
+                });
                 SubscribeToGuest(newGuest);
             }
-            proxy.Close();
         }
 
-        private static void AllRooms_CollectionChanged(object sender, System.Collections.Specialized.NotifyCollectionChangedEventArgs e)
+        private static void AllRooms_CollectionChanged(object sender, NotifyCollectionChangedEventArgs e)
         {
-            HotelServiceProxy proxy = new HotelServiceProxy();
             if (e.OldItems != null)
             {
                 proxy.RemoveRoom((Room)e.OldItems[0]);
@@ -123,16 +127,17 @@ namespace Hotel
             else if (e.NewItems != null)
             {
                 Room newRoom = (Room)e.NewItems[0];
-                proxy.AddRoom(newRoom);
+                Task.Run(() =>
+                {
+                    proxy.AddRoom(newRoom);
+                });
                 SubscribeToRoom(newRoom);
                 newRoom.Bookings = new List<Booking>();
             }
-            proxy.Close();
         }
 
-        private static void AllBookings_CollectionChanged(object sender, System.Collections.Specialized.NotifyCollectionChangedEventArgs e)
+        private static void AllBookings_CollectionChanged(object sender, NotifyCollectionChangedEventArgs e)
         {
-            HotelServiceProxy proxy = new HotelServiceProxy();
             if (e.OldItems != null)
             {
                 proxy.RemoveBooking((Booking)e.OldItems[0]);
@@ -140,10 +145,27 @@ namespace Hotel
             else if (e.NewItems != null)
             {
                 Booking newBooking = (Booking)e.NewItems[0];
-                proxy.AddBooking(newBooking);
+                Task.Run(() =>
+                {
+                    proxy.AddBooking(newBooking);
+                });
                 SubscribeToBooking(newBooking);
             }
-            proxy.Close();
+        }
+
+        public void AddGuest(Guest item)
+        {
+            throw new NotImplementedException();
+        }
+
+        public void RemoveGuest(Guest item)
+        {
+            throw new NotImplementedException();
+        }
+
+        public void EditGuest(Guest item)
+        {
+            throw new NotImplementedException();
         }
 
         #endregion

@@ -1,17 +1,15 @@
 ﻿using Hotel.Contracts;
 using Hotel.Data;
 using Hotel.Data.Extensions;
-using Hotel.Data.Repository;
 using Hotel.Services.Repository;
+using System;
 using System.Collections.Generic;
-using System.Collections.ObjectModel;
 using System.Linq;
 using System.ServiceModel;
 
 namespace Hotel.Services
 {
-    [KnownType(typeof(Guest))]
-    [ServiceBehavior(ConcurrencyMode = ConcurrencyMode.Reentrant, InstanceContextMode = InstanceContextMode.PerSession)]
+    [ServiceBehavior(ConcurrencyMode = ConcurrencyMode.Reentrant, InstanceContextMode = InstanceContextMode.Single)]
     public class HotelService : IHotelService
     {
         RepositoryBackedObservableCollection<Guest> GuestRepository = new RepositoryBackedObservableCollection<Guest>(new NHibernateRepository<Guest>());
@@ -28,8 +26,14 @@ namespace Hotel.Services
             var channel = OperationContext.Current.GetCallbackChannel<ICallback>();
             if (!CallbackChannels.Contains(channel)) //if CallbackChannels not contain current one.
             {
+                (channel as ICommunicationObject).Closed += (object sender, EventArgs e) => UnsubscribeClient(channel);
                 CallbackChannels.Add(channel);
             }
+        }
+
+        private void UnsubscribeClient(ICallback callback)
+        {
+            CallbackChannels.Remove(callback);
         }
 
         #region add
@@ -41,7 +45,7 @@ namespace Hotel.Services
         public void AddGuest(Guest guest)
         {
             GuestRepository.Add(guest);
-            foreach(ICallback client in CallbackChannels)
+            foreach (ICallback client in CallbackChannels)
             {
                 client.AddGuest(guest);
             }
@@ -80,17 +84,17 @@ namespace Hotel.Services
         public List<Booking> FilterBookings(BookingStatus? status = null, Guest guest = null)
         {
             List<Booking> filteredList = new List<Booking>();
-            if (status == null && guest==null)
+            if (status == null && guest == null)
             {
                 return null;
             }
 
-            if(status != null)
+            if (status != null)
             {
                 filteredList = BookingRepository.Where(x => x.BookingStatus == status).ToList();
             }
 
-            if(guest != null)
+            if (guest != null)
             {
                 if (filteredList.Count > 0)
                 {
@@ -110,13 +114,13 @@ namespace Hotel.Services
             List<Guest> filteredGuests = new List<Guest>();
             foreach (Guest g in GuestRepository)
             {
-                 if((g.FirstName != null && g.FirstName.ToLower().Contains(filterString)) ||
-                (g.LastName != null && g.LastName.ToLower().Contains(filterString)) ||
-                (g.PhoneNumber != null && g.PhoneNumber.ToLower().Contains(filterString)) ||
-                (g.PostalCode != null && g.PostalCode.ToLower().Contains(filterString)) ||
-                (g.EmailAdress != null && g.EmailAdress.ToLower().Contains(filterString)) ||
-                (g.City != null && g.City.ToLower().Contains(filterString)) ||
-                (g.Country != null && g.Country.ToLower().Contains(filterString)))
+                if ((g.FirstName != null && g.FirstName.ToLower().Contains(filterString)) ||
+               (g.LastName != null && g.LastName.ToLower().Contains(filterString)) ||
+               (g.PhoneNumber != null && g.PhoneNumber.ToLower().Contains(filterString)) ||
+               (g.PostalCode != null && g.PostalCode.ToLower().Contains(filterString)) ||
+               (g.EmailAdress != null && g.EmailAdress.ToLower().Contains(filterString)) ||
+               (g.City != null && g.City.ToLower().Contains(filterString)) ||
+               (g.Country != null && g.Country.ToLower().Contains(filterString)))
                 {
                     filteredGuests.Add(g);
                 }
