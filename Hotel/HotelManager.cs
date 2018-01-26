@@ -201,6 +201,47 @@ namespace Hotel
             ProcessingUpdatesFromServer = false;
         }
 
+        public void AddRoom(Room item)
+        {
+            ProcessingUpdatesFromServer = true;
+            AllRooms.Add(item);
+            ProcessingUpdatesFromServer = false;
+        }
+
+        public void RemoveRoom(Room item)
+        {
+            ProcessingUpdatesFromServer = true;
+            AllRooms.Remove(item);
+            ProcessingUpdatesFromServer = false;
+        }
+
+        public void EditRoom(Room item)
+        {
+            ProcessingUpdatesFromServer = true;
+            AllRooms.First(candidate => candidate.Id == item.Id).CopyDeltaProperties(item);
+            ProcessingUpdatesFromServer = false;
+        }
+
+        public void AddBooking(Booking item)
+        {
+            ProcessingUpdatesFromServer = true;
+            AllBookings.Add(item);
+            ProcessingUpdatesFromServer = false;
+        }
+
+        public void RemoveBooking(Booking item)
+        {
+            ProcessingUpdatesFromServer = true;
+            AllBookings.Remove(item);
+            ProcessingUpdatesFromServer = false;
+        }
+
+        public void EditBooking(Booking item)
+        {
+            ProcessingUpdatesFromServer = true;
+            AllBookings.First(candidate => candidate.Id == item.Id).CopyDeltaProperties(item);
+            ProcessingUpdatesFromServer = false;
+        }
         #endregion
     }
 }

@@ -52,6 +52,7 @@ namespace Hotel.Services
         public void AddBooking(Booking booking)
         {
             BookingRepository.Add(booking);
+            UpdateClients(client => client.AddBooking(booking));
         }
 
         public void AddGuest(Guest guest)
@@ -63,6 +64,7 @@ namespace Hotel.Services
         public void AddRoom(Room room)
         {
             RoomRepository.Add(room);
+            UpdateClients(client => client.AddRoom(room));
         }
         #endregion
         #region edit
@@ -70,6 +72,7 @@ namespace Hotel.Services
         {
             Booking target = BookingRepository.First(candidate => candidate.Id == booking.Id);
             target.CopyDeltaProperties(booking);
+            UpdateClients(client => client.EditBooking(booking));
         }
 
         public void EditGuest(Guest guest)
@@ -83,6 +86,7 @@ namespace Hotel.Services
         {
             Room target = RoomRepository.First(candidate => candidate.Id == room.Id);
             target.CopyDeltaProperties(room);
+            UpdateClients(client => client.EditRoom(room));
         }
 
         #endregion
@@ -106,6 +110,7 @@ namespace Hotel.Services
         public void RemoveBooking(Booking booking)
         {
             BookingRepository.Remove(booking);
+            UpdateClients(client => client.RemoveBooking(booking));
         }
 
         public void RemoveGuest(Guest guest)
@@ -117,6 +122,7 @@ namespace Hotel.Services
         public void RemoveRoom(Room room)
         {
             RoomRepository.Remove(room);
+            UpdateClients(client => client.RemoveRoom(room));
         }
 
         #endregion

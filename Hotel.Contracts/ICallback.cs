@@ -17,5 +17,17 @@ namespace Hotel.Contracts
         void RemoveGuest(Guest item);
         [OperationContract]
         void EditGuest(Guest item);
+        [OperationContract]
+        void AddRoom(Room item);
+        [OperationContract]
+        void RemoveRoom(Room item);
+        [OperationContract]
+        void EditRoom(Room item);
+        [OperationContract]
+        void AddBooking(Booking item);
+        [OperationContract]
+        void RemoveBooking(Booking item);
+        [OperationContract]
+        void EditBooking(Booking item);
     }
 }
