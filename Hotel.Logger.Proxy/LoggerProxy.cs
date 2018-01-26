@@ -13,7 +13,7 @@ namespace Hotel.Logger.Proxy
 
         public void AddLogMessageBooking(string user, string message, Hotel.Data.Booking booking)
         {
-            throw new System.NotImplementedException();
+            Channel.AddLogMessageBooking(user, message, booking);
         }
 
         public void AddLogMessageGuest(string user, string message, Hotel.Data.Guest guest)

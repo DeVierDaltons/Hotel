@@ -24,6 +24,10 @@ namespace Hotel.Services
         {
             BookingRepository.Add(booking);
 
+            var loggerProxy = new LoggerProxy();
+            loggerProxy.AddLogMessageBooking(Environment.UserName, "Booking added", booking);
+            loggerProxy.Close();
+
         }
 
         public void AddGuest(Guest guest)
@@ -49,6 +53,10 @@ namespace Hotel.Services
         {
             Booking target = BookingRepository.First(candidate => candidate.Id == booking.Id);
             target.CopyDeltaProperties(booking);
+
+            var loggerProxy = new LoggerProxy();
+            loggerProxy.AddLogMessageBooking(Environment.UserName, "Booking edited", booking);
+            loggerProxy.Close();
         }
 
         public void EditGuest(Guest guest)
@@ -141,6 +149,10 @@ namespace Hotel.Services
         public void RemoveBooking(Booking booking)
         {
             BookingRepository.Remove(booking);
+
+            var loggerProxy = new LoggerProxy();
+            loggerProxy.AddLogMessageBooking(Environment.UserName, "Booking removed", booking);
+            loggerProxy.Close();
         }
 
         public void RemoveGuest(Guest guest)

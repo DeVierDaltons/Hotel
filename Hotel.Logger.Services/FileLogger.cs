@@ -60,7 +60,13 @@ namespace Hotel.Logger.Services
 
         public void ProcessLogMessageBooking(DateTime time, string user, string logMessage, Booking booking)
         {
-            throw new NotImplementedException();
+            this.Init();
+            _logFile.WriteLine(string.Format("--> TIME: {0}, USER: {1}, MESSAGE: {2} [BOOKING " +
+                "BookingStart: {3} BookingEnd: {4} BookingStatus: {5}]",
+                time.ToString("dd/MM/yyyy HH:mm:ss"), user, logMessage, 
+                booking.BookingPeriod.StartDate.ToString("dd/MM/yyyy HH:mm:ss"),
+                booking.BookingPeriod.EndDate.ToString("dd/MM/yyyy HH:mm:ss"), booking.BookingStatus));
+            this.Terminate();
         }
     }
 }

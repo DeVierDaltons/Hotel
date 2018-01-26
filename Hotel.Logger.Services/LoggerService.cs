@@ -51,7 +51,10 @@ namespace Hotel.Logger.Services
 
         public void AddLogMessageBooking(string user, string message, Hotel.Data.Booking booking)
         {
-            throw new NotImplementedException();
+            foreach (ILogSystem logSystem in _logSystems)
+            {
+                logSystem.ProcessLogMessageBooking(DateTime.Now, user, message, booking);
+            }
         }
     }
 }
