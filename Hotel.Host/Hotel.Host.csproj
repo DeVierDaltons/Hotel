@@ -34,7 +34,7 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
-	<Reference Include="Antlr3.Runtime, Version=3.5.0.2, Culture=neutral, PublicKeyToken=eb42632606e9261f, processorArchitecture=MSIL">
+    <Reference Include="Antlr3.Runtime, Version=3.5.0.2, Culture=neutral, PublicKeyToken=eb42632606e9261f, processorArchitecture=MSIL">
       <HintPath>..\packages\Antlr3.Runtime.3.5.1\lib\net40-client\Antlr3.Runtime.dll</HintPath>
     </Reference>
     <Reference Include="NHibernate, Version=5.0.0.0, Culture=neutral, PublicKeyToken=aa95f207798dfdb4" />
@@ -64,13 +64,27 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="App.config" />
+    <None Include="App.config">
+      <SubType>Designer</SubType>
+    </None>
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\Hotel.Contracts\Hotel.Contracts.csproj">
+      <Project>{95c7ffba-7df9-4f06-8f25-2d2f37b90014}</Project>
+      <Name>Hotel.Contracts</Name>
+    </ProjectReference>
     <ProjectReference Include="..\Hotel.Data\Hotel.Data.csproj">
       <Project>{AE7BE7A0-9396-4EC6-8563-E6FF5ED50498}</Project>
       <Name>Hotel.Data</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Hotel.Logger.Contracts\Hotel.Logger.Contracts.csproj">
+      <Project>{3ec574ed-fe96-44a6-be71-24a1b8d7d7f7}</Project>
+      <Name>Hotel.Logger.Contracts</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Hotel.Logger.Services\Hotel.Logger.Services.csproj">
+      <Project>{682f970b-1211-4dff-a79a-367bd5db2c76}</Project>
+      <Name>Hotel.Logger.Services</Name>
     </ProjectReference>
     <ProjectReference Include="..\Hotel.Services\Hotel.Services.csproj">
       <Project>{0a98bdfb-1a1c-4b99-9a3f-b2a37b631123}</Project>

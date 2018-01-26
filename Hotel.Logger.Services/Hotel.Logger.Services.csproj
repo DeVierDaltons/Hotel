@@ -12,9 +12,10 @@
     <AssemblyName>Hotel.Logger.Services</AssemblyName>
     <ProjectTypeGuids>{3D9AD99F-2412-4246-B90B-4EAA41C64699};{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}</ProjectTypeGuids>
     <StartArguments>/client:"WcfTestClient.exe"</StartArguments>
-    <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
+    <TargetFrameworkVersion>v4.6.1</TargetFrameworkVersion>
     <WcfConfigValidationEnabled>True</WcfConfigValidationEnabled>
     <XsdCodeGenEnabled>True</XsdCodeGenEnabled>
+    <TargetFrameworkProfile />
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
@@ -51,6 +52,10 @@
     <Compile Include="LoggerService.cs" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\Hotel.Data\Hotel.Data.csproj">
+      <Project>{ae7be7a0-9396-4ec6-8563-e6ff5ed50498}</Project>
+      <Name>Hotel.Data</Name>
+    </ProjectReference>
     <ProjectReference Include="..\Hotel.Logger.Contracts\Hotel.Logger.Contracts.csproj">
       <Project>{3ec574ed-fe96-44a6-be71-24a1b8d7d7f7}</Project>
       <Name>Hotel.Logger.Contracts</Name>

@@ -4,6 +4,7 @@ using Hotel.Data.Extensions;
 using Hotel.Data.Repository;
 using Hotel.Logger.Proxy;
 using Hotel.Services.Repository;
+using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Linq;
@@ -28,12 +29,19 @@ namespace Hotel.Services
         public void AddGuest(Guest guest)
         {
             GuestRepository.Add(guest);
-            SendMsgToLoggerSvc("Guest added!");
+
+            var loggerProxy = new LoggerProxy();
+            loggerProxy.AddLogMessageGuest(Environment.UserName, "Guest added", guest);
+            loggerProxy.Close();
         }
 
         public void AddRoom(Room room)
         {
             RoomRepository.Add(room);
+
+            var loggerProxy = new LoggerProxy();
+            loggerProxy.AddLogMessagerRoom(Environment.UserName, "Room added", room);
+            loggerProxy.Close();
         }
         #endregion
         #region edit
@@ -47,12 +55,20 @@ namespace Hotel.Services
         {
             Guest target = GuestRepository.First(candidate => candidate.Id == guest.Id);
             target.CopyDeltaProperties(guest);
+
+            var loggerProxy = new LoggerProxy();
+            loggerProxy.AddLogMessageGuest(Environment.UserName, "Guest edited", guest);
+            loggerProxy.Close();
         }
 
         public void EditRoom(Room room)
         {
             Room target = RoomRepository.First(candidate => candidate.Id == room.Id);
             target.CopyDeltaProperties(room);
+
+            var loggerProxy = new LoggerProxy();
+            loggerProxy.AddLogMessagerRoom(Environment.UserName, "Room edited", room);
+            loggerProxy.Close();
         }
 
         #endregion
@@ -130,19 +146,20 @@ namespace Hotel.Services
         public void RemoveGuest(Guest guest)
         {
             GuestRepository.Remove(guest);
+
+            var loggerProxy = new LoggerProxy();
+            loggerProxy.AddLogMessageGuest(Environment.UserName, "Guest removed", guest);
+            loggerProxy.Close();
         }
 
         public void RemoveRoom(Room room)
         {
             RoomRepository.Remove(room);
-        }
-        #endregion
 
-        private void SendMsgToLoggerSvc(string msg)
-        {
             var loggerProxy = new LoggerProxy();
-            loggerProxy.AddLogMessage(msg);
+            loggerProxy.AddLogMessagerRoom(Environment.UserName, "Room removed", room);
             loggerProxy.Close();
         }
+        #endregion
     }
 }
