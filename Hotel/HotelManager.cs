@@ -33,7 +33,6 @@ namespace Hotel
             get; private set;
         }
 
-        private static bool ProcessingUpdatesFromServer = false;
         private static HotelServiceProxy ServiceProxy;
 
         public static void Initialize()
@@ -48,7 +47,6 @@ namespace Hotel
             AllRooms = new ObservableCollection<Room>(ServiceProxy.GetAllRooms());
             AllBookings = new ObservableCollection<Booking>(ServiceProxy.GetAllBookings());
             LinkBookings();
-            Subscribe();
         }
 
         private static void LinkBookings()
@@ -64,189 +62,55 @@ namespace Hotel
             }
         }
 
-        private static void Subscribe()
-        {
-            AllGuests.CollectionChanged += AllGuests_CollectionChanged;
-            AllGuests.ForEach(SubscribeToGuest);
-            AllRooms.CollectionChanged += AllRooms_CollectionChanged;
-            AllRooms.ForEach(SubscribeToRoom);
-            AllBookings.CollectionChanged += AllBookings_CollectionChanged;
-            AllBookings.ForEach(SubscribeToBooking);
-        }
-
-        #region Item changed events
-
-        private static void SubscribeToGuest(Guest guest)
-        {
-            guest.PropertyChanged += delegate (object sender, System.ComponentModel.PropertyChangedEventArgs e)
-            {
-                if( ProcessingUpdatesFromServer) { return; }
-                Task.Run(() =>
-                {
-                    ServiceProxy.EditGuest((Guest)sender);
-                });
-            };
-        }
-
-        private static void SubscribeToRoom(Room room)
-        {
-            room.PropertyChanged += delegate (object sender, System.ComponentModel.PropertyChangedEventArgs e)
-            {
-                if( ProcessingUpdatesFromServer) { return; }
-                Task.Run(() =>
-                {
-                    ServiceProxy.EditRoom((Room)sender);
-                });
-            };
-        }
-
-        private static void SubscribeToBooking(Booking booking)
-        {
-            booking.PropertyChanged += delegate (object sender, PropertyChangedEventArgs e)
-            {
-                if( ProcessingUpdatesFromServer) { return; }
-                Task.Run(() =>
-                {
-                    ServiceProxy.EditBooking((Booking)sender);
-                });
-            };
-        }
-
-        #endregion
-
-        #region Collection change events
-
-        private static void AllGuests_CollectionChanged(object sender, NotifyCollectionChangedEventArgs e)
-        {
-            if( ProcessingUpdatesFromServer) { return; }
-            if (e.OldItems != null)
-            {
-                Task.Run(() =>
-                {
-                    ServiceProxy.RemoveGuest((Guest)e.OldItems[0]);
-                });
-            }
-            else if (e.NewItems != null)
-            {
-                Guest newGuest = (Guest)e.NewItems[0];
-                Task.Run(() =>
-                {
-                    ServiceProxy.AddGuest(newGuest);
-                });
-                SubscribeToGuest(newGuest);
-            }
-        }
-
-        private static void AllRooms_CollectionChanged(object sender, NotifyCollectionChangedEventArgs e)
-        {
-            if( ProcessingUpdatesFromServer) { return; }
-            if (e.OldItems != null)
-            {
-                Task.Run(() =>
-                {
-                    ServiceProxy.RemoveRoom((Room)e.OldItems[0]);
-                });
-            }
-            else if (e.NewItems != null)
-            {
-                Room newRoom = (Room)e.NewItems[0];
-                Task.Run(() =>
-                {
-                    ServiceProxy.AddRoom(newRoom);
-                });
-                SubscribeToRoom(newRoom);
-                newRoom.Bookings = new List<Booking>();
-            }
-        }
-
-        private static void AllBookings_CollectionChanged(object sender, NotifyCollectionChangedEventArgs e)
-        {
-            if( ProcessingUpdatesFromServer) { return; }
-            if (e.OldItems != null)
-            {
-                Task.Run(() =>
-                {
-                    ServiceProxy.RemoveBooking((Booking)e.OldItems[0]);
-                });
-            }
-            else if (e.NewItems != null)
-            {
-                Booking newBooking = (Booking)e.NewItems[0];
-                Task.Run(() =>
-                {
-                    ServiceProxy.AddBooking(newBooking);
-                });
-                SubscribeToBooking(newBooking);
-            }
-        }
+        #region ICallback
 
         public void OnAddedGuest(Guest item)
         {
-            ProcessingUpdatesFromServer = true;
             AllGuests.Add(item);
-            SubscribeToGuest(item);
-            ProcessingUpdatesFromServer = false;
         }
         
         public void OnRemovedGuest(Guest item)
         {
-            ProcessingUpdatesFromServer = true;
             AllGuests.Remove(item);
-            ProcessingUpdatesFromServer = false;
         }
 
         public void OnEditedGuest(Guest item)
         {
-            ProcessingUpdatesFromServer = true;
             AllGuests.First(candidate => candidate.Id == item.Id).CopyDeltaProperties(item);
-            ProcessingUpdatesFromServer = false;
         }
 
         public void OnAddedRoom(Room item)
         {
-            ProcessingUpdatesFromServer = true;
             item.Bookings = AllBookings.Where(booking => booking.RoomIds.Contains(item.Id)).ToList();
             AllRooms.Add(item);
-            SubscribeToRoom(item);
-            ProcessingUpdatesFromServer = false;
         }
 
         public void OnRemovedRoom(Room item)
         {
-            ProcessingUpdatesFromServer = true;
             AllRooms.Remove(item);
-            ProcessingUpdatesFromServer = false;
         }
 
         public void OnEditedRoom(Room item)
         {
-            ProcessingUpdatesFromServer = true;
             AllRooms.First(candidate => candidate.Id == item.Id).CopyDeltaProperties(item);
-            ProcessingUpdatesFromServer = false;
         }
 
         public void OnAddedBooking(Booking item)
         {
-            ProcessingUpdatesFromServer = true;
             item.SetGuestsAndRooms(AllGuests, AllRooms);
             AllBookings.Add(item);
-            SubscribeToBooking(item);
-            ProcessingUpdatesFromServer = false;
         }
 
         public void OnRemovedBooking(Booking item)
         {
-            ProcessingUpdatesFromServer = true;
             AllBookings.Remove(item);
-            ProcessingUpdatesFromServer = false;
         }
 
         public void OnEditedBooking(Booking item)
         {
-            ProcessingUpdatesFromServer = true;
             AllBookings.First(candidate => candidate.Id == item.Id).CopyDeltaProperties(item);
-            ProcessingUpdatesFromServer = false;
         }
+
         #endregion
     }
 }
