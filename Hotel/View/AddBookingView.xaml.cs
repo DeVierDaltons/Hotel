@@ -1,13 +1,13 @@
-﻿using Hotel.Data;
+using Hotel.Data;
 using Hotel.ViewModel;
+using System.Windows;
+using System.Windows.Controls;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Collections.Specialized;
 using System.Globalization;
 using System.Linq;
-using System.Windows;
-using System.Windows.Controls;
 using System.Windows.Controls.Primitives;
 using System.Windows.Data;
 using System.Windows.Input;
@@ -890,8 +890,40 @@ namespace Hotel.View
         private void SetFieldColour(Room room, int dateOffset)
         {
             Canvas canvas = FieldForRoomDateOffset[room][dateOffset];
-            canvas.Background = room.DayAvailable(StartDate.AddDays(dateOffset)) ? Brushes.Green : Brushes.Red;
+            if (room.DayAvailable(StartDate.AddDays(dateOffset)))
+            {
+                canvas.Background = Brushes.ForestGreen;
+            }
+            else
+            {
+                canvas.Background = Brushes.Red;
+                AddCheckersToCanvas(canvas);
+            }
             canvas.InvalidateVisual();
+        }
+
+        private static void AddCheckersToCanvas(Canvas canvas)
+        {
+            GeometryDrawing backgroundSquare = new GeometryDrawing(Brushes.Red, null, new RectangleGeometry(new Rect(0, 0, 100, 100)));
+
+            GeometryGroup aGeometryGroup = new GeometryGroup();
+            aGeometryGroup.Children.Add(new RectangleGeometry(new Rect(0, 0, 50, 50)));
+            aGeometryGroup.Children.Add(new RectangleGeometry(new Rect(50, 50, 50, 50)));
+
+            GeometryDrawing checkers = new GeometryDrawing(Brushes.Black, null, aGeometryGroup);
+
+            DrawingGroup checkersDrawingGroup = new DrawingGroup();
+            checkersDrawingGroup.Children.Add(backgroundSquare);
+            checkersDrawingGroup.Children.Add(checkers);
+
+            DrawingBrush myBrush = new DrawingBrush
+            {
+                Drawing = checkersDrawingGroup,
+                Viewport = new Rect(0, 0, 0.2, 0.2),
+                TileMode = TileMode.Tile
+            };
+
+            canvas.Background = myBrush;
         }
 
         private Canvas CreateRoomDateField(int column, int row)
