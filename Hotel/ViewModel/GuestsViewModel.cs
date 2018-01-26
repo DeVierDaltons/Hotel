@@ -1,5 +1,4 @@
-﻿using Hotel.Model;
-using Hotel.Repository;
+﻿using Hotel.Data;
 using System.ComponentModel;
 using System.Runtime.CompilerServices;
 using System;
@@ -7,6 +6,10 @@ using System.Linq;
 using System.Collections.ObjectModel;
 using Unity.Attributes;
 using Hotel.View;
+using Hotel.Proxy;
+using System.Collections.Generic;
+using Hotel.Data.Extensions;
+using System.Collections.Specialized;
 
 namespace Hotel.ViewModel
 {
@@ -29,16 +32,7 @@ namespace Hotel.ViewModel
         }
 
         public event PropertyChangedEventHandler PropertyChanged;
-
-        private RepositoryBackedObservableCollection<Guest> _guests;
-
-        [Unity.Attributes.Dependency]
-        public RepositoryBackedObservableCollection<Guest> Guests
-        {
-            get { return _guests; }
-            set { _guests = value; OnPropertyChanged(); }
-        }
-
+        
         private ObservableCollection<Guest> _DisplayedGuests;
 
         public ObservableCollection<Guest> DisplayedGuests
@@ -47,15 +41,13 @@ namespace Hotel.ViewModel
             set { _DisplayedGuests = value; OnPropertyChanged(); }
         }
 
-        private string _FilterGuestString;
+        private string _FilterGuestString = "";
 
         public string FilterGuestString
         {
             get { return _FilterGuestString; }
             set { _FilterGuestString = value.ToLower(); OnPropertyChanged(); FilterGuests(); }
         }
-        #endregion
-      
 
         private Guest _SelectedGuest;
 
@@ -80,9 +72,7 @@ namespace Hotel.ViewModel
         }
 
 
-        public void ViewBookingsForGuest()
-        {
-        }
+        #endregion
 
         public void StartEditingGuest(object selectedItem)
         {
@@ -91,7 +81,10 @@ namespace Hotel.ViewModel
                 var guest = selectedItem as Guest;
                 GroupBoxName = string.Format("Editing {0}", guest.FirstName);
                 var g = new AddGuestViewModel();
-                g.Initialize(new EditGuestCommand(guest), () => { StartAddingGuest(); }, guest, null);
+                g.Initialize(new EditGuestCommand(guest), () => { StartAddingGuest(); }, guest, () =>
+                {
+                    HotelManager.EditGuest(guest);
+                });
                 CurrentGuest = g;
             }
         }
@@ -103,30 +96,55 @@ namespace Hotel.ViewModel
             var g = new AddGuestViewModel();
             g.Initialize(new EditGuestCommand(guest), () => { StartAddingGuest(); }, guest, () =>
             {
-                Guests.Add(guest);
+                HotelManager.AddGuest(guest);
+                FilterGuests();
                 StartAddingGuest();
             });
             CurrentGuest = g;
         }
 
-        public void FilterGuests()
+        private bool MatchesFilter(Guest g)
         {
-            DisplayedGuests = new ObservableCollection<Guest>(Guests.Where(g =>
-               (g.FirstName != null && g.FirstName.ToLower().Contains(FilterGuestString)) ||
-               (g.LastName != null && g.LastName.ToLower().Contains(FilterGuestString)) ||
-               (g.PhoneNumber != null && g.PhoneNumber.ToLower().Contains(FilterGuestString)) ||
-               (g.PostalCode != null && g.PostalCode.ToLower().Contains(FilterGuestString)) ||
-               (g.EmailAdress != null && g.EmailAdress.ToLower().Contains(FilterGuestString)) ||
-               (g.City != null && g.City.ToLower().Contains(FilterGuestString)) ||
-               (g.Country != null && g.Country.ToLower().Contains(FilterGuestString))));
+            return    ((g.FirstName != null && g.FirstName.ToLower().Contains(FilterGuestString)) ||
+                       (g.LastName != null && g.LastName.ToLower().Contains(FilterGuestString)) ||
+                       (g.PhoneNumber != null && g.PhoneNumber.ToLower().Contains(FilterGuestString)) ||
+                       (g.EmailAdress != null && g.EmailAdress.ToLower().Contains(FilterGuestString)) ||
+                       (g.Address != null && g.Address.ToLower().Contains(FilterGuestString)) ||
+                       (g.PostalCode != null && g.PostalCode.ToLower().Contains(FilterGuestString)) ||
+                       (g.City != null && g.City.ToLower().Contains(FilterGuestString)) ||
+                       (g.Country != null && g.Country.ToLower().Contains(FilterGuestString)) ||
+                       (g.ICEPhoneNumber != null && g.ICEPhoneNumber.ToLower().Contains(FilterGuestString)));
         }
 
-        /// <summary>
-        /// DO NOT REMOVE, has to be done after the dependencies have been injected, so NOT in the constructor.
-        /// </summary>
+        public void FilterGuests()
+        {
+            DisplayedGuests = new ObservableCollection<Guest>(HotelManager.AllGuests.Where(MatchesFilter));
+        }
+
         public void Initialize()
         {
-            DisplayedGuests = Guests;
+            FilterGuests();
+            HotelManager.AllGuests.CollectionChanged += delegate(object sender, NotifyCollectionChangedEventArgs args)
+            {
+                if(args.NewItems != null)
+                {
+                    Guest newGuest = (Guest)args.NewItems[0];
+                    SubscribeToGuest(newGuest);
+                    FilterGuests();
+                }
+            };
+            foreach(Guest guest in HotelManager.AllGuests)
+            {
+                SubscribeToGuest(guest);
+            }
+        }
+
+        private void SubscribeToGuest(Guest guest)
+        {
+            guest.PropertyChanged += delegate
+            {
+                FilterGuests();
+            };
         }
 
         public void OnPropertyChanged([CallerMemberName] string name = "")

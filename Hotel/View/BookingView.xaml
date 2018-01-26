@@ -4,7 +4,7 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:core="clr-namespace:System;assembly=mscorlib"
-        xmlns:models="clr-namespace:Hotel.Model"
+        xmlns:models="clr-namespace:Hotel.Data;assembly=Hotel.Data"
              xmlns:views="clr-namespace:Hotel.View"
         mc:Ignorable="d"
         >
@@ -45,8 +45,8 @@
             </StackPanel>
             <DataGrid Name="BookingsList" Grid.Column="0" Grid.Row="1" Grid.ColumnSpan="2" CanUserAddRows="False" Unloaded="DataGrid_Unloaded" ItemsSource="{Binding DisplayedBookings}" SelectedItem="{Binding SelectedBooking}" Margin="0,0,0,20" AutoGenerateColumns="False">
                 <DataGrid.Columns>
-                    <DataGridTextColumn Binding="{Binding StartDayString}" Header="Start day" IsReadOnly="True" ></DataGridTextColumn>
-                    <DataGridTextColumn Binding="{Binding EndDayString}" Header="End day" IsReadOnly="True" ></DataGridTextColumn>
+                    <DataGridTextColumn Binding="{Binding BookingPeriod.StartDate, StringFormat=d}" Header="Start day" IsReadOnly="True" ></DataGridTextColumn>
+                    <DataGridTextColumn Binding="{Binding BookingPeriod.EndDate, StringFormat=d}" Header="End day" IsReadOnly="True" ></DataGridTextColumn>
                     <DataGridTextColumn Binding="{Binding GuestName}" Header="Guest name" IsReadOnly="True" ></DataGridTextColumn>
                     <DataGridTextColumn Binding="{Binding RoomsDescription}" Header="Room number" IsReadOnly="True" ></DataGridTextColumn>
                     <DataGridTemplateColumn Header="Status">

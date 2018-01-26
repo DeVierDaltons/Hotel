@@ -1,7 +1,8 @@
 ﻿using Hotel.Command;
-using Hotel.Model;
-using Hotel.Repository;
+using Hotel.Data;
+using Hotel.Data.Extensions;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.ComponentModel;
 using System.Linq;
 using System.Runtime.CompilerServices;
@@ -17,55 +18,38 @@ namespace Hotel.ViewModel
         public ICommand AddBookingCommand { get; private set; }
         public Booking Booking { get; set; } = new Booking();
 
-        private RepositoryBackedObservableCollection<Booking> _allBookings;
-        public RepositoryBackedObservableCollection<Booking> AllBookings
+        public ObservableCollection<Booking> AllBookings
         {
-            get { return _allBookings; }
-            set { _allBookings = value; OnPropertyChanged(); }
+            get { return HotelManager.AllBookings; }
         }
 
-        private RepositoryBackedObservableCollection<Room> _roomsRepo;
-        public RepositoryBackedObservableCollection<Room> AllRooms
+        public ObservableCollection<Room> AllRooms
         {
-            get { return _roomsRepo; }
-            set { _roomsRepo = value; OnPropertyChanged(); }
-        }
-        
-        public RepositoryBackedObservableCollection<Guest> _allGuests { get; set; }
-        public RepositoryBackedObservableCollection<Guest> AllGuests
-        {
-            get { return _allGuests; }
-            set { _allGuests = value; OnPropertyChanged(); }
+            get { return HotelManager.AllRooms; }
         }
 
-        public ICollection<Guest> Guests
+        public ObservableCollection<Guest> AllGuests
         {
-            get { return Booking.Guests; }
-            set { Booking.Guests = value; OnPropertyChanged(); }
-        }
-
-        public ICollection<Room> Rooms
-        {
-            get { return Booking.Rooms; }
-            set { Booking.Rooms = value; OnPropertyChanged(); }
+            get { return HotelManager.AllGuests; }
         }
 
         public BookingPeriod SelectedDates { get; set; }
         #endregion
 
-        public void Initialize()
+        public AddBookingViewModel()
         {
             AddBookingCommand = new AddBookingCommand(this);
+            Booking.SetGuestsAndRooms(AllGuests, AllRooms);
         }
 
         private bool GuestsValid()
         {
-            return Booking.Guests != null && Booking.Guests.Count > 0;
+            return Booking.GuestIds != null && Booking.GuestIds.Count > 0;
         }
 
         private bool RoomsValid()
         {
-            return Booking.Rooms != null && Booking.Rooms.Count > 0;
+            return Booking.RoomIds != null && Booking.RoomIds.Count > 0;
         }
 
         private bool DatesValid()
@@ -75,17 +59,17 @@ namespace Hotel.ViewModel
 
         public bool ValidateInput()
         {
-            if( !GuestsValid() || !RoomsValid() || !DatesValid() )
+            if (!GuestsValid() || !RoomsValid() || !DatesValid())
             {
                 return false;
             }
-            return Booking.Rooms.All(room => room.TimePeriodAvailable(SelectedDates));
+            return Booking.RoomIds.All(id => AllRooms.First(room => room.Id == id).TimePeriodAvailable(SelectedDates));
         }
 
         public void AddBooking()
         {
             Booking.SetDates(SelectedDates);
-            (AllBookings as RepositoryBackedObservableCollection<Booking>).Add(Booking);
+            HotelManager.AddBooking(Booking);
             Booking = new Booking();
         }
 
@@ -93,6 +77,16 @@ namespace Hotel.ViewModel
         {
             PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(name));
             CommandManager.InvalidateRequerySuggested();
+        }
+
+        public void SetGuests(IEnumerable<Guest> selectedGuests)
+        {
+            Booking.GuestIds = selectedGuests.ConvertEnumerable(guest => guest.Id).ToList();
+        }
+
+        public void SetRooms(List<Room> selectedRooms)
+        {
+            Booking.RoomIds = selectedRooms.ConvertEnumerable(room => room.Id).ToList();
         }
     }
 }

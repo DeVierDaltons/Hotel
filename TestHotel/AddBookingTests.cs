@@ -1,13 +1,8 @@
 using Microsoft.VisualStudio.TestTools.UnitTesting;
-using System.Collections.ObjectModel;
-using Hotel.Model;
 using Hotel.Command;
 using Hotel.ViewModel;
-using Hotel.Repository;
-using Hotel.DataAccessObjects;
-using System.Windows.Controls;
 using System;
-using System.Linq;
+using Hotel.Data;
 
 namespace TestHotel
 {
@@ -42,7 +37,6 @@ namespace TestHotel
             AddBookingViewModel vm = new AddBookingViewModel()
             {
                 Booking = new Booking(),
-                Guests = null,
                 SelectedDates = null
             };
             Assert.IsFalse(new AddBookingCommand(vm).CanExecute(null));

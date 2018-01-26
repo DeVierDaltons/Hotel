@@ -1,6 +1,5 @@
 ﻿using Hotel.Command;
-using Hotel.Model;
-using Hotel.Repository;
+using Hotel.Data;
 using System;
 using System.ComponentModel;
 using System.Runtime.CompilerServices;

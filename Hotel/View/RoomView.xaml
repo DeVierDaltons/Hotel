@@ -4,7 +4,7 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:core="clr-namespace:System;assembly=mscorlib"
-        xmlns:models="clr-namespace:Hotel.Model"
+        xmlns:models="clr-namespace:Hotel.Data;assembly=Hotel.Data"
         xmlns:view="clr-namespace:Hotel.View"
         mc:Ignorable="d"
         >
@@ -27,7 +27,7 @@
             <Grid.RowDefinitions>
                 <RowDefinition Height="*"></RowDefinition>
             </Grid.RowDefinitions>
-            <DataGrid Grid.Row="0" CanUserAddRows="False"  Grid.Column="0" Unloaded="DataGrid_Unloaded" ItemsSource="{Binding Rooms, Mode=TwoWay, NotifyOnSourceUpdated=True}" Margin="0,0,0,20" AutoGenerateColumns="False" >
+            <DataGrid Grid.Row="0" IsReadOnly="True" Grid.Column="0" Unloaded="DataGrid_Unloaded" ItemsSource="{Binding Rooms, Mode=OneWay, NotifyOnSourceUpdated=True}" Margin="0,0,0,20" AutoGenerateColumns="False" >
                 <DataGrid.Columns>
                     <DataGridTextColumn Binding="{Binding RoomNumber, Mode=TwoWay}" Header="Room number"></DataGridTextColumn>
                     <DataGridTextColumn Binding="{Binding Beds, Mode=TwoWay}" Header="Amount of beds" ></DataGridTextColumn>

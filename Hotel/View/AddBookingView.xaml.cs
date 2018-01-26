@@ -1,21 +1,18 @@
-﻿using Hotel.ViewModel;
-using System.Threading;
-using System.Threading.Tasks;
+using Hotel.Data;
+using Hotel.ViewModel;
 using System.Windows;
 using System.Windows.Controls;
-using Hotel.Model;
 using System;
-using System.Collections.ObjectModel;
-using System.Windows.Media;
-using System.Globalization;
-using System.Windows.Input;
 using System.Collections.Generic;
-using System.Linq;
+using System.Collections.ObjectModel;
 using System.Collections.Specialized;
-using System.Windows.Data;
+using System.Globalization;
+using System.Linq;
 using System.Windows.Controls.Primitives;
-using NHibernate.Util;
-using Unity.Attributes;
+using System.Windows.Data;
+using System.Windows.Input;
+using System.Windows.Media;
+using Unity.Interception.Utilities;
 using System.ComponentModel;
 
 namespace Hotel.View
@@ -210,7 +207,7 @@ namespace Hotel.View
 
         private void RedrawAvailabilityForBooking(Booking booking)
         {
-            booking.Rooms.ForEach(RedrawAvailabilityForRoom);
+            booking.RoomIds.ForEach(id => RedrawAvailabilityForRoom(Rooms.First(room => room.Id == id)));
         }
 
         private void FillDateGrid()
@@ -719,21 +716,13 @@ namespace Hotel.View
         {
             AddBookingViewModel viewModel = (AddBookingViewModel)DataContext;
             viewModel.SelectedDates = new BookingPeriod(SelectedRange.StartDate, SelectedRange.EndDate);
-            viewModel.Rooms = SelectedRooms;
+            viewModel.SetRooms(SelectedRooms);
         }
 
         private void SelectedGuests_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
             AddBookingViewModel viewModel = (AddBookingViewModel)DataContext;
-            if( viewModel.Guests == null)
-            {
-                viewModel.Guests = new List<Guest>();
-            }
-            viewModel.Guests.Clear();
-            foreach(object guest in ((ListBox)sender).SelectedItems)
-            {
-                viewModel.Guests.Add((Guest)guest);
-            }
+            viewModel.SetGuests(((ListBox)sender).SelectedItems.Cast<Guest>());
         }
 
         private void SetGridStyle()
@@ -901,8 +890,40 @@ namespace Hotel.View
         private void SetFieldColour(Room room, int dateOffset)
         {
             Canvas canvas = FieldForRoomDateOffset[room][dateOffset];
-            canvas.Background = room.DayAvailable(StartDate.AddDays(dateOffset)) ? Brushes.Green : Brushes.Red;
+            if (room.DayAvailable(StartDate.AddDays(dateOffset)))
+            {
+                canvas.Background = Brushes.ForestGreen;
+            }
+            else
+            {
+                canvas.Background = Brushes.Red;
+                AddCheckersToCanvas(canvas);
+            }
             canvas.InvalidateVisual();
+        }
+
+        private static void AddCheckersToCanvas(Canvas canvas)
+        {
+            GeometryDrawing backgroundSquare = new GeometryDrawing(Brushes.Red, null, new RectangleGeometry(new Rect(0, 0, 100, 100)));
+
+            GeometryGroup aGeometryGroup = new GeometryGroup();
+            aGeometryGroup.Children.Add(new RectangleGeometry(new Rect(0, 0, 50, 50)));
+            aGeometryGroup.Children.Add(new RectangleGeometry(new Rect(50, 50, 50, 50)));
+
+            GeometryDrawing checkers = new GeometryDrawing(Brushes.Black, null, aGeometryGroup);
+
+            DrawingGroup checkersDrawingGroup = new DrawingGroup();
+            checkersDrawingGroup.Children.Add(backgroundSquare);
+            checkersDrawingGroup.Children.Add(checkers);
+
+            DrawingBrush myBrush = new DrawingBrush
+            {
+                Drawing = checkersDrawingGroup,
+                Viewport = new Rect(0, 0, 0.2, 0.2),
+                TileMode = TileMode.Tile
+            };
+
+            canvas.Background = myBrush;
         }
 
         private Canvas CreateRoomDateField(int column, int row)
