@@ -12,22 +12,22 @@ namespace Hotel.Contracts
     public interface ICallback
     {
         [OperationContract]
-        void AddGuest(Guest item);
+        void OnAddedGuest(Guest item);
         [OperationContract]
-        void RemoveGuest(Guest item);
+        void OnRemovedGuest(Guest item);
         [OperationContract]
-        void EditGuest(Guest item);
+        void OnEditedGuest(Guest item);
         [OperationContract]
-        void AddRoom(Room item);
+        void OnAddedRoom(Room item);
         [OperationContract]
-        void RemoveRoom(Room item);
+        void OnRemovedRoom(Room item);
         [OperationContract]
-        void EditRoom(Room item);
+        void OnEditedRoom(Room item);
         [OperationContract]
-        void AddBooking(Booking item);
+        void OnAddedBooking(Booking item);
         [OperationContract]
-        void RemoveBooking(Booking item);
+        void OnRemovedBooking(Booking item);
         [OperationContract]
-        void EditBooking(Booking item);
+        void OnEditedBooking(Booking item);
     }
 }

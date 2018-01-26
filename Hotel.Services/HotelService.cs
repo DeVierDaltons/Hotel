@@ -33,13 +33,9 @@ namespace Hotel.Services
 
         private void UpdateClients(Action<ICallback> update)
         {
-            ICallback callingClient = OperationContext.Current.GetCallbackChannel<ICallback>();
             foreach (ICallback client in CallbackChannels)
             {
-                if (callingClient != client)
-                {
-                    update(client);
-                }
+                update(client);
             }
         }
 
@@ -52,19 +48,19 @@ namespace Hotel.Services
         public void AddBooking(Booking booking)
         {
             BookingRepository.Add(booking);
-            UpdateClients(client => client.AddBooking(booking));
+            UpdateClients(client => client.OnAddedBooking(booking));
         }
 
         public void AddGuest(Guest guest)
         {
             GuestRepository.Add(guest);
-            UpdateClients(client => client.AddGuest(guest));
+            UpdateClients(client => client.OnAddedGuest(guest));
         }
 
         public void AddRoom(Room room)
         {
             RoomRepository.Add(room);
-            UpdateClients(client => client.AddRoom(room));
+            UpdateClients(client => client.OnAddedRoom(room));
         }
         #endregion
         #region edit
@@ -72,21 +68,21 @@ namespace Hotel.Services
         {
             Booking target = BookingRepository.First(candidate => candidate.Id == booking.Id);
             target.CopyDeltaProperties(booking);
-            UpdateClients(client => client.EditBooking(booking));
+            UpdateClients(client => client.OnEditedBooking(booking));
         }
 
         public void EditGuest(Guest guest)
         {
             Guest target = GuestRepository.First(candidate => candidate.Id == guest.Id);
             target.CopyDeltaProperties(guest);
-            UpdateClients(client => client.EditGuest(guest));
+            UpdateClients(client => client.OnEditedGuest(guest));
         }
 
         public void EditRoom(Room room)
         {
             Room target = RoomRepository.First(candidate => candidate.Id == room.Id);
             target.CopyDeltaProperties(room);
-            UpdateClients(client => client.EditRoom(room));
+            UpdateClients(client => client.OnEditedRoom(room));
         }
 
         #endregion
@@ -110,19 +106,19 @@ namespace Hotel.Services
         public void RemoveBooking(Booking booking)
         {
             BookingRepository.Remove(booking);
-            UpdateClients(client => client.RemoveBooking(booking));
+            UpdateClients(client => client.OnRemovedBooking(booking));
         }
 
         public void RemoveGuest(Guest guest)
         {
             GuestRepository.Remove(guest);
-            UpdateClients(client => client.RemoveGuest(guest));
+            UpdateClients(client => client.OnRemovedGuest(guest));
         }
 
         public void RemoveRoom(Room room)
         {
             RoomRepository.Remove(room);
-            UpdateClients(client => client.RemoveRoom(room));
+            UpdateClients(client => client.OnRemovedRoom(room));
         }
 
         #endregion

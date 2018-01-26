@@ -180,7 +180,7 @@ namespace Hotel
             }
         }
 
-        public void AddGuest(Guest item)
+        public void OnAddedGuest(Guest item)
         {
             ProcessingUpdatesFromServer = true;
             AllGuests.Add(item);
@@ -188,21 +188,21 @@ namespace Hotel
             ProcessingUpdatesFromServer = false;
         }
         
-        public void RemoveGuest(Guest item)
+        public void OnRemovedGuest(Guest item)
         {
             ProcessingUpdatesFromServer = true;
             AllGuests.Remove(item);
             ProcessingUpdatesFromServer = false;
         }
 
-        public void EditGuest(Guest item)
+        public void OnEditedGuest(Guest item)
         {
             ProcessingUpdatesFromServer = true;
             AllGuests.First(candidate => candidate.Id == item.Id).CopyDeltaProperties(item);
             ProcessingUpdatesFromServer = false;
         }
 
-        public void AddRoom(Room item)
+        public void OnAddedRoom(Room item)
         {
             ProcessingUpdatesFromServer = true;
             item.Bookings = AllBookings.Where(booking => booking.RoomIds.Contains(item.Id)).ToList();
@@ -211,21 +211,21 @@ namespace Hotel
             ProcessingUpdatesFromServer = false;
         }
 
-        public void RemoveRoom(Room item)
+        public void OnRemovedRoom(Room item)
         {
             ProcessingUpdatesFromServer = true;
             AllRooms.Remove(item);
             ProcessingUpdatesFromServer = false;
         }
 
-        public void EditRoom(Room item)
+        public void OnEditedRoom(Room item)
         {
             ProcessingUpdatesFromServer = true;
             AllRooms.First(candidate => candidate.Id == item.Id).CopyDeltaProperties(item);
             ProcessingUpdatesFromServer = false;
         }
 
-        public void AddBooking(Booking item)
+        public void OnAddedBooking(Booking item)
         {
             ProcessingUpdatesFromServer = true;
             item.SetGuestsAndRooms(AllGuests, AllRooms);
@@ -234,14 +234,14 @@ namespace Hotel
             ProcessingUpdatesFromServer = false;
         }
 
-        public void RemoveBooking(Booking item)
+        public void OnRemovedBooking(Booking item)
         {
             ProcessingUpdatesFromServer = true;
             AllBookings.Remove(item);
             ProcessingUpdatesFromServer = false;
         }
 
-        public void EditBooking(Booking item)
+        public void OnEditedBooking(Booking item)
         {
             ProcessingUpdatesFromServer = true;
             AllBookings.First(candidate => candidate.Id == item.Id).CopyDeltaProperties(item);
